@@ -1,0 +1,7 @@
+@PACKAGE_INIT@
+
+find_dependency(KF5ConfigWidgets "@KF5_VERSION@")
+find_dependency(KF5IconThemes "@KF5_VERSION@")
+
+include("${CMAKE_CURRENT_LIST_DIR}/KF5StyleTargets.cmake")
+
