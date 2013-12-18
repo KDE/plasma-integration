@@ -43,20 +43,19 @@ static QString qt2KdeFilter(const QStringList &f)
     QStringList           list(f);
     list.replaceInStrings("/", "\\/");
     QStringList::const_iterator it(list.begin()), end(list.end());
-    bool                  first=true;
+    bool                  first = true;
 
-    for (; it!=end; ++it)
-    {
-        int ob=it->lastIndexOf('('),
-        cb=it->lastIndexOf(')');
+    for (; it != end; ++it) {
+        int ob = it->lastIndexOf('('),
+            cb = it->lastIndexOf(')');
 
-        if (-1!=cb && ob<cb)
-        {
-            if (first)
-                first=false;
-            else
+        if (-1 != cb && ob < cb) {
+            if (first) {
+                first = false;
+            } else {
                 str << '\n';
-            str << it->mid(ob+1, (cb-ob)-1) << '|' << it->mid(0, ob);
+            }
+            str << it->mid(ob + 1, (cb - ob) - 1) << '|' << it->mid(0, ob);
         }
     }
 
@@ -72,12 +71,11 @@ static QString kde2QtFilter(const QStringList &list, const QString &kde)
     int                   pos;
     QString               sel;
 
-    for (; it!=end; ++it) {
-        if (-1!=(pos=it->indexOf(kde)) && pos>0 &&
-            ('('==(*it)[pos-1] || ' '==(*it)[pos-1]) &&
-            it->length()>=kde.length()+pos &&
-            (')'==(*it)[pos+kde.length()] || ' '==(*it)[pos+kde.length()]))
-        {
+    for (; it != end; ++it) {
+        if (-1 != (pos = it->indexOf(kde)) && pos > 0 &&
+                ('(' == (*it)[pos - 1] || ' ' == (*it)[pos - 1]) &&
+                it->length() >= kde.length() + pos &&
+                (')' == (*it)[pos + kde.length()] || ' ' == (*it)[pos + kde.length()])) {
             return *it;
         }
     }
@@ -120,7 +118,7 @@ QList<QUrl> KDEPlatformFileDialog::selectedFiles()
 {
     QList<QUrl> ret;
     KFileItemList items = m_fileWidget->dirOperator()->selectedItems();
-    Q_FOREACH(const KFileItem& item, items) {
+    Q_FOREACH (const KFileItem &item, items) {
         ret += item.url();
     }
     return ret;
@@ -168,20 +166,23 @@ KDEPlatformFileDialogHelper::~KDEPlatformFileDialogHelper()
 
 void KDEPlatformFileDialogHelper::initializeDialog()
 {
-    m_dialog->m_fileWidget->setOperationMode(options()->acceptMode()==QFileDialogOptions::AcceptOpen ? KFileWidget::Opening : KFileWidget::Saving);
-    if (options()->windowTitle().isEmpty())
+    m_dialog->m_fileWidget->setOperationMode(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? KFileWidget::Opening : KFileWidget::Saving);
+    if (options()->windowTitle().isEmpty()) {
         m_dialog->setWindowTitle(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? i18n("Opening...") : i18n("Saving..."));
-    else
+    } else {
         m_dialog->setWindowTitle(options()->windowTitle());
+    }
     setDirectory(options()->initialDirectory());
 
     QStringList filters = options()->mimeTypeFilters();
-    if (!filters.isEmpty())
+    if (!filters.isEmpty()) {
         m_dialog->m_fileWidget->setMimeFilter(filters);
+    }
 
     QStringList nameFilters = options()->nameFilters();
-    if (!nameFilters.isEmpty())
+    if (!nameFilters.isEmpty()) {
         m_dialog->m_fileWidget->setFilter(qt2KdeFilter(nameFilters));
+    }
 }
 
 void KDEPlatformFileDialogHelper::exec()
@@ -198,10 +199,11 @@ bool KDEPlatformFileDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowMo
     initializeDialog();
     m_dialog->setWindowFlags(windowFlags);
     m_dialog->setModal(windowModality != Qt::NonModal);
-    if (windowModality == Qt::NonModal)
+    if (windowModality == Qt::NonModal) {
         m_dialog->show();
-    else
+    } else {
         m_dialog->exec();
+    }
     return true;
 }
 
@@ -220,17 +222,17 @@ QUrl KDEPlatformFileDialogHelper::directory() const
     return m_dialog->directory();
 }
 
-void KDEPlatformFileDialogHelper::selectFile(const QUrl& filename)
+void KDEPlatformFileDialogHelper::selectFile(const QUrl &filename)
 {
     m_dialog->selectFile(filename);
 }
 
-void KDEPlatformFileDialogHelper::setDirectory(const QUrl& directory)
+void KDEPlatformFileDialogHelper::setDirectory(const QUrl &directory)
 {
     m_dialog->setDirectory(directory);
 }
 
-void KDEPlatformFileDialogHelper::selectNameFilter(const QString& filter)
+void KDEPlatformFileDialogHelper::selectNameFilter(const QString &filter)
 {
     m_dialog->selectNameFilter(qt2KdeFilter(QStringList(filter)));
 }

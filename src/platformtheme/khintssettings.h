@@ -32,52 +32,54 @@ class QPalette;
 class KHintsSettings : public QObject
 {
     Q_OBJECT
-    public:
-        /**
-        * An identifier for change signals.
-        * @note Copied from KGlobalSettings
-        */
-        enum ChangeType { PaletteChanged = 0, FontChanged, StyleChanged,
+public:
+    /**
+    * An identifier for change signals.
+    * @note Copied from KGlobalSettings
+    */
+    enum ChangeType { PaletteChanged = 0, FontChanged, StyleChanged,
                       SettingsChanged, IconChanged, CursorChanged,
                       ToolbarStyleChanged, ClipboardConfigChanged,
-                      BlockShortcuts, NaturalSortingChanged };
-        /**
-        * Valid values for the settingsChanged signal
-        * @note Copied from KGlobalSettings
-        */
-        enum SettingsCategory { SETTINGS_MOUSE, SETTINGS_COMPLETION, SETTINGS_PATHS,
+                      BlockShortcuts, NaturalSortingChanged
+                    };
+    /**
+    * Valid values for the settingsChanged signal
+    * @note Copied from KGlobalSettings
+    */
+    enum SettingsCategory { SETTINGS_MOUSE, SETTINGS_COMPLETION, SETTINGS_PATHS,
                             SETTINGS_POPUPMENU, SETTINGS_QT, SETTINGS_SHORTCUTS,
-                            SETTINGS_LOCALE, SETTINGS_STYLE };
-        explicit KHintsSettings();
-        virtual ~KHintsSettings();
+                            SETTINGS_LOCALE, SETTINGS_STYLE
+                          };
+    explicit KHintsSettings();
+    virtual ~KHintsSettings();
 
-        inline QVariant hint(QPlatformTheme::ThemeHint hint)
-        {
-            return m_hints[hint];
+    inline QVariant hint(QPlatformTheme::ThemeHint hint)
+    {
+        return m_hints[hint];
+    }
+    inline QPalette *palette(QPlatformTheme::Palette type)
+    {
+        if (!m_palettes.contains(type)) {
+            return 0;
         }
-        inline QPalette* palette(QPlatformTheme::Palette type)
-        {
-            if (!m_palettes.contains(type)) {
-                return 0;
-            }
-            return m_palettes[type];
-        }
+        return m_palettes[type];
+    }
 
-    private Q_SLOTS:
-        void delayedDBusConnects();
-        void setupIconLoader();
-        void toolbarStyleChanged();
-        void slotNotifyChange(int type, int arg);
+private Q_SLOTS:
+    void delayedDBusConnects();
+    void setupIconLoader();
+    void toolbarStyleChanged();
+    void slotNotifyChange(int type, int arg);
 
-    private:
-        void loadPalettes();
-        void iconChanged(int group);
-        void updateQtSettings(KConfigGroup &cg);
-        Qt::ToolButtonStyle toolButtonStyle(const KConfigGroup &cg) const;
+private:
+    void loadPalettes();
+    void iconChanged(int group);
+    void updateQtSettings(KConfigGroup &cg);
+    Qt::ToolButtonStyle toolButtonStyle(const KConfigGroup &cg) const;
 
-        QStringList xdgIconThemePaths() const;
-        QHash<QPlatformTheme::Palette, QPalette*> m_palettes;
-        QHash<QPlatformTheme::ThemeHint, QVariant> m_hints;
+    QStringList xdgIconThemePaths() const;
+    QHash<QPlatformTheme::Palette, QPalette *> m_palettes;
+    QHash<QPlatformTheme::ThemeHint, QVariant> m_hints;
 };
 
 #endif //KHINTS_SETTINGS_H

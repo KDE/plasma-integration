@@ -59,44 +59,45 @@ QVariant KdePlatformTheme::themeHint(QPlatformTheme::ThemeHint hintType) const
 const QPalette *KdePlatformTheme::palette(Palette type) const
 {
     QPalette *palette = m_hints->palette(type);
-    if (palette)
+    if (palette) {
         return palette;
-    else
+    } else {
         return QPlatformTheme::palette(type);
+    }
 }
 
 const QFont *KdePlatformTheme::font(Font type) const
 {
     KFontSettingsData::FontTypes fdtype;
-    switch(type) {
-        case SystemFont:
-            fdtype = KFontSettingsData::GeneralFont; break;
-        case MenuFont:
-        case MenuBarFont:
-        case MenuItemFont:
-            fdtype = KFontSettingsData::MenuFont; break;
-        case MessageBoxFont:
-        case LabelFont:
-        case TipLabelFont:
-        case StatusBarFont:
-        case PushButtonFont:
-        case ToolButtonFont:
-        case ItemViewFont:
-        case ListViewFont:
-        case HeaderViewFont:
-        case ListBoxFont:
-        case ComboMenuItemFont:
-        case ComboLineEditFont:
-            fdtype = KFontSettingsData::GeneralFont; break;
-        case TitleBarFont:
-        case MdiSubWindowTitleFont:
-        case DockWidgetTitleFont:
-            fdtype = KFontSettingsData::WindowTitleFont; break;
-        case SmallFont:
-        case MiniFont:
-            fdtype = KFontSettingsData::SmallestReadableFont; break;
-        default:
-            fdtype = KFontSettingsData::GeneralFont; break;
+    switch (type) {
+    case SystemFont:
+        fdtype = KFontSettingsData::GeneralFont; break;
+    case MenuFont:
+    case MenuBarFont:
+    case MenuItemFont:
+        fdtype = KFontSettingsData::MenuFont; break;
+    case MessageBoxFont:
+    case LabelFont:
+    case TipLabelFont:
+    case StatusBarFont:
+    case PushButtonFont:
+    case ToolButtonFont:
+    case ItemViewFont:
+    case ListViewFont:
+    case HeaderViewFont:
+    case ListBoxFont:
+    case ComboMenuItemFont:
+    case ComboLineEditFont:
+        fdtype = KFontSettingsData::GeneralFont; break;
+    case TitleBarFont:
+    case MdiSubWindowTitleFont:
+    case DockWidgetTitleFont:
+        fdtype = KFontSettingsData::WindowTitleFont; break;
+    case SmallFont:
+    case MiniFont:
+        fdtype = KFontSettingsData::SmallestReadableFont; break;
+    default:
+        fdtype = KFontSettingsData::GeneralFont; break;
     }
 
     return m_fontsData->font(fdtype);
@@ -113,82 +114,81 @@ void KdePlatformTheme::loadSettings()
     m_hints = new KHintsSettings;
 }
 
-
 QList<QKeySequence> KdePlatformTheme::keyBindings(QKeySequence::StandardKey key) const
 {
     switch (key) {
-        case QKeySequence::HelpContents:
-            return KStandardShortcut::shortcut(KStandardShortcut::Help);
-        case QKeySequence::WhatsThis:
-            return KStandardShortcut::shortcut(KStandardShortcut::WhatsThis);
-        case QKeySequence::Open:
-            return KStandardShortcut::shortcut(KStandardShortcut::Open);
-        case QKeySequence::Close:
-            return KStandardShortcut::shortcut(KStandardShortcut::Close);
-        case QKeySequence::Save:
-            return KStandardShortcut::shortcut(KStandardShortcut::Save);
-        case QKeySequence::New:
-            return KStandardShortcut::shortcut(KStandardShortcut::New);
-        case QKeySequence::Cut:
-            return KStandardShortcut::shortcut(KStandardShortcut::Cut);
-        case QKeySequence::Copy:
-            return KStandardShortcut::shortcut(KStandardShortcut::Copy);
-        case QKeySequence::Paste:
-            return KStandardShortcut::shortcut(KStandardShortcut::Paste);
-        case QKeySequence::Undo:
-            return KStandardShortcut::shortcut(KStandardShortcut::Undo);
-        case QKeySequence::Redo:
-            return KStandardShortcut::shortcut(KStandardShortcut::Redo);
-        case QKeySequence::Back:
-            return KStandardShortcut::shortcut(KStandardShortcut::Back);
-        case QKeySequence::Forward:
-            return KStandardShortcut::shortcut(KStandardShortcut::Forward);
-        case QKeySequence::Refresh:
-            return KStandardShortcut::shortcut(KStandardShortcut::Reload);
-        case QKeySequence::ZoomIn:
-            return KStandardShortcut::shortcut(KStandardShortcut::ZoomIn);
-        case QKeySequence::ZoomOut:
-            return KStandardShortcut::shortcut(KStandardShortcut::ZoomOut);
-        case QKeySequence::Print:
-            return KStandardShortcut::shortcut(KStandardShortcut::Print);
-        case QKeySequence::Find:
-            return KStandardShortcut::shortcut(KStandardShortcut::Find);
-        case QKeySequence::FindNext:
-            return KStandardShortcut::shortcut(KStandardShortcut::FindNext);
-        case QKeySequence::FindPrevious:
-            return KStandardShortcut::shortcut(KStandardShortcut::FindPrev);
-        case QKeySequence::Replace:
-            return KStandardShortcut::shortcut(KStandardShortcut::Replace);
-        case QKeySequence::SelectAll:
-            return KStandardShortcut::shortcut(KStandardShortcut::SelectAll);
-        case QKeySequence::MoveToNextWord:
-            return KStandardShortcut::shortcut(KStandardShortcut::ForwardWord);
-        case QKeySequence::MoveToPreviousWord:
-            return KStandardShortcut::shortcut(KStandardShortcut::BackwardWord);
-        case QKeySequence::MoveToNextPage:
-            return KStandardShortcut::shortcut(KStandardShortcut::Next);
-        case QKeySequence::MoveToPreviousPage:
-            return KStandardShortcut::shortcut(KStandardShortcut::Prior);
-        case QKeySequence::MoveToStartOfLine:
-            return KStandardShortcut::shortcut(KStandardShortcut::BeginningOfLine);
-        case QKeySequence::MoveToEndOfLine:
-            return KStandardShortcut::shortcut(KStandardShortcut::EndOfLine);
-        case QKeySequence::MoveToStartOfDocument:
-            return KStandardShortcut::shortcut(KStandardShortcut::Home);
-        case QKeySequence::MoveToEndOfDocument:
-            return KStandardShortcut::shortcut(KStandardShortcut::End);
-        case QKeySequence::SaveAs:
-            return KStandardShortcut::shortcut(KStandardShortcut::SaveAs);
-        case QKeySequence::Preferences:
-            return KStandardShortcut::shortcut(KStandardShortcut::Preferences);
-        case QKeySequence::Quit:
-            return KStandardShortcut::shortcut(KStandardShortcut::Quit);
-        case QKeySequence::FullScreen:
-            return KStandardShortcut::shortcut(KStandardShortcut::FullScreen);
-        case QKeySequence::Deselect:
-            return KStandardShortcut::shortcut(KStandardShortcut::Deselect);
-        default:
-            return QPlatformTheme::keyBindings(key);
+    case QKeySequence::HelpContents:
+        return KStandardShortcut::shortcut(KStandardShortcut::Help);
+    case QKeySequence::WhatsThis:
+        return KStandardShortcut::shortcut(KStandardShortcut::WhatsThis);
+    case QKeySequence::Open:
+        return KStandardShortcut::shortcut(KStandardShortcut::Open);
+    case QKeySequence::Close:
+        return KStandardShortcut::shortcut(KStandardShortcut::Close);
+    case QKeySequence::Save:
+        return KStandardShortcut::shortcut(KStandardShortcut::Save);
+    case QKeySequence::New:
+        return KStandardShortcut::shortcut(KStandardShortcut::New);
+    case QKeySequence::Cut:
+        return KStandardShortcut::shortcut(KStandardShortcut::Cut);
+    case QKeySequence::Copy:
+        return KStandardShortcut::shortcut(KStandardShortcut::Copy);
+    case QKeySequence::Paste:
+        return KStandardShortcut::shortcut(KStandardShortcut::Paste);
+    case QKeySequence::Undo:
+        return KStandardShortcut::shortcut(KStandardShortcut::Undo);
+    case QKeySequence::Redo:
+        return KStandardShortcut::shortcut(KStandardShortcut::Redo);
+    case QKeySequence::Back:
+        return KStandardShortcut::shortcut(KStandardShortcut::Back);
+    case QKeySequence::Forward:
+        return KStandardShortcut::shortcut(KStandardShortcut::Forward);
+    case QKeySequence::Refresh:
+        return KStandardShortcut::shortcut(KStandardShortcut::Reload);
+    case QKeySequence::ZoomIn:
+        return KStandardShortcut::shortcut(KStandardShortcut::ZoomIn);
+    case QKeySequence::ZoomOut:
+        return KStandardShortcut::shortcut(KStandardShortcut::ZoomOut);
+    case QKeySequence::Print:
+        return KStandardShortcut::shortcut(KStandardShortcut::Print);
+    case QKeySequence::Find:
+        return KStandardShortcut::shortcut(KStandardShortcut::Find);
+    case QKeySequence::FindNext:
+        return KStandardShortcut::shortcut(KStandardShortcut::FindNext);
+    case QKeySequence::FindPrevious:
+        return KStandardShortcut::shortcut(KStandardShortcut::FindPrev);
+    case QKeySequence::Replace:
+        return KStandardShortcut::shortcut(KStandardShortcut::Replace);
+    case QKeySequence::SelectAll:
+        return KStandardShortcut::shortcut(KStandardShortcut::SelectAll);
+    case QKeySequence::MoveToNextWord:
+        return KStandardShortcut::shortcut(KStandardShortcut::ForwardWord);
+    case QKeySequence::MoveToPreviousWord:
+        return KStandardShortcut::shortcut(KStandardShortcut::BackwardWord);
+    case QKeySequence::MoveToNextPage:
+        return KStandardShortcut::shortcut(KStandardShortcut::Next);
+    case QKeySequence::MoveToPreviousPage:
+        return KStandardShortcut::shortcut(KStandardShortcut::Prior);
+    case QKeySequence::MoveToStartOfLine:
+        return KStandardShortcut::shortcut(KStandardShortcut::BeginningOfLine);
+    case QKeySequence::MoveToEndOfLine:
+        return KStandardShortcut::shortcut(KStandardShortcut::EndOfLine);
+    case QKeySequence::MoveToStartOfDocument:
+        return KStandardShortcut::shortcut(KStandardShortcut::Home);
+    case QKeySequence::MoveToEndOfDocument:
+        return KStandardShortcut::shortcut(KStandardShortcut::End);
+    case QKeySequence::SaveAs:
+        return KStandardShortcut::shortcut(KStandardShortcut::SaveAs);
+    case QKeySequence::Preferences:
+        return KStandardShortcut::shortcut(KStandardShortcut::Preferences);
+    case QKeySequence::Quit:
+        return KStandardShortcut::shortcut(KStandardShortcut::Quit);
+    case QKeySequence::FullScreen:
+        return KStandardShortcut::shortcut(KStandardShortcut::FullScreen);
+    case QKeySequence::Deselect:
+        return KStandardShortcut::shortcut(KStandardShortcut::Deselect);
+    default:
+        return QPlatformTheme::keyBindings(key);
     }
 }
 
@@ -197,15 +197,15 @@ bool KdePlatformTheme::usePlatformNativeDialog(QPlatformTheme::DialogType type) 
     return type == QPlatformTheme::FileDialog;
 }
 
-QPlatformDialogHelper* KdePlatformTheme::createPlatformDialogHelper(QPlatformTheme::DialogType type) const
+QPlatformDialogHelper *KdePlatformTheme::createPlatformDialogHelper(QPlatformTheme::DialogType type) const
 {
-    switch(type) {
-        case QPlatformTheme::FileDialog:
-            return new KDEPlatformFileDialogHelper;
-        case QPlatformTheme::FontDialog:
-        case QPlatformTheme::ColorDialog:
-        case QPlatformTheme::MessageDialog:
-        default:
-            return 0;
+    switch (type) {
+    case QPlatformTheme::FileDialog:
+        return new KDEPlatformFileDialogHelper;
+    case QPlatformTheme::FontDialog:
+    case QPlatformTheme::ColorDialog:
+    case QPlatformTheme::MessageDialog:
+    default:
+        return 0;
     }
 }

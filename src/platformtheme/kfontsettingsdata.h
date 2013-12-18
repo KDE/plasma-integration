@@ -24,8 +24,7 @@
 #include <QObject>
 #include <QFont>
 
-struct KFontData
-{
+struct KFontData {
     const char *ConfigGroupKey;
     const char *ConfigKey;
     const char *FontName;
@@ -36,35 +35,34 @@ struct KFontData
 
 class KFontSettingsData : public QObject
 {
-  Q_OBJECT
-  public:
+    Q_OBJECT
+public:
     // if adding a new type here also add an entry to DefaultFontData
-    enum FontTypes
-    {
+    enum FontTypes {
         GeneralFont = 0,
         FixedFont,
         ToolbarFont,
         MenuFont,
         WindowTitleFont,
-        TaskbarFont ,
+        TaskbarFont,
         SmallestReadableFont,
         FontTypesCount
     };
 
-  public:
+public:
     KFontSettingsData();
     ~KFontSettingsData();
 
-  public Q_SLOTS:
+public Q_SLOTS:
     void dropFontSettingsCache();
 
-  private Q_SLOTS:
+private Q_SLOTS:
     void delayedDBusConnects();
 
-  public: // access, is not const due to caching
-    QFont *font( FontTypes fontType );
+public: // access, is not const due to caching
+    QFont *font(FontTypes fontType);
 
-  protected:
+protected:
     QFont *mFonts[FontTypesCount];
 };
 

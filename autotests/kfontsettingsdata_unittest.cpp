@@ -56,59 +56,59 @@ Q_COREAPP_STARTUP_FUNCTION(prepareEnvironment);
 class KFontSettingsData_UnitTest : public QWidget
 {
     Q_OBJECT
-    public:
-        virtual bool event(QEvent* e)
-        {
-            if (e->type() == QEvent::ApplicationFontChange) {
-                m_appChangedFont = true;
-            }
-            return QWidget::event(e);
+public:
+    virtual bool event(QEvent *e)
+    {
+        if (e->type() == QEvent::ApplicationFontChange) {
+            m_appChangedFont = true;
         }
-    private:
-        bool m_appChangedFont;
-        KFontSettingsData *m_fonts;
-    private Q_SLOTS:
-        void initTestCase()
-        {
-            m_appChangedFont = false;
-            m_fonts = new KFontSettingsData;
-        }
+        return QWidget::event(e);
+    }
+private:
+    bool m_appChangedFont;
+    KFontSettingsData *m_fonts;
+private Q_SLOTS:
+    void initTestCase()
+    {
+        m_appChangedFont = false;
+        m_fonts = new KFontSettingsData;
+    }
 
-        void testFonts()
-        {
-            QCOMPARE(m_fonts->font(KFontSettingsData::GeneralFont)->family(), QStringLiteral("OxyFontTest"));
-            QCOMPARE(m_fonts->font(KFontSettingsData::FixedFont)->family(), QStringLiteral("OxyFixedTest Mono"));
-            QCOMPARE(m_fonts->font(KFontSettingsData::ToolbarFont)->family(), QStringLiteral("OxyToolbarTest"));
-            QCOMPARE(m_fonts->font(KFontSettingsData::MenuFont)->family(), QStringLiteral("OxyMenuTest"));
-            QCOMPARE(m_fonts->font(KFontSettingsData::WindowTitleFont)->family(), QStringLiteral("OxyActiveTest"));
-            QCOMPARE(m_fonts->font(KFontSettingsData::TaskbarFont)->family(), QStringLiteral("OxyTaskbarTest"));
-            QCOMPARE(m_fonts->font(KFontSettingsData::SmallestReadableFont)->family(), QStringLiteral("OxySmallestReadableTest"));
-        }
+    void testFonts()
+    {
+        QCOMPARE(m_fonts->font(KFontSettingsData::GeneralFont)->family(), QStringLiteral("OxyFontTest"));
+        QCOMPARE(m_fonts->font(KFontSettingsData::FixedFont)->family(), QStringLiteral("OxyFixedTest Mono"));
+        QCOMPARE(m_fonts->font(KFontSettingsData::ToolbarFont)->family(), QStringLiteral("OxyToolbarTest"));
+        QCOMPARE(m_fonts->font(KFontSettingsData::MenuFont)->family(), QStringLiteral("OxyMenuTest"));
+        QCOMPARE(m_fonts->font(KFontSettingsData::WindowTitleFont)->family(), QStringLiteral("OxyActiveTest"));
+        QCOMPARE(m_fonts->font(KFontSettingsData::TaskbarFont)->family(), QStringLiteral("OxyTaskbarTest"));
+        QCOMPARE(m_fonts->font(KFontSettingsData::SmallestReadableFont)->family(), QStringLiteral("OxySmallestReadableTest"));
+    }
 
-        void testFontsChanged()
-        {
-            QByteArray configPath = qgetenv("XDG_CONFIG_HOME");
-            configPath.append("/kdeglobals");
-            QFile::remove(configPath);
-            QFile::copy(CHANGED_CONFIGFILE, configPath);
+    void testFontsChanged()
+    {
+        QByteArray configPath = qgetenv("XDG_CONFIG_HOME");
+        configPath.append("/kdeglobals");
+        QFile::remove(configPath);
+        QFile::copy(CHANGED_CONFIGFILE, configPath);
 
-            QEventLoop loop;
-            QDBusConnection::sessionBus().connect( QString(), "/KDEPlatformTheme", "org.kde.KDEPlatformTheme",
-                                                      "refreshFonts", &loop, SLOT(quit()) );
+        QEventLoop loop;
+        QDBusConnection::sessionBus().connect(QString(), "/KDEPlatformTheme", "org.kde.KDEPlatformTheme",
+                                              "refreshFonts", &loop, SLOT(quit()));
 
-            QDBusMessage message = QDBusMessage::createSignal("/KDEPlatformTheme", "org.kde.KDEPlatformTheme", "refreshFonts" );
-            QDBusConnection::sessionBus().send(message);
-            loop.exec();
+        QDBusMessage message = QDBusMessage::createSignal("/KDEPlatformTheme", "org.kde.KDEPlatformTheme", "refreshFonts");
+        QDBusConnection::sessionBus().send(message);
+        loop.exec();
 
-            QVERIFY(m_appChangedFont);
-            QCOMPARE(m_fonts->font(KFontSettingsData::GeneralFont)->family(), QStringLiteral("ChangedFontTest"));
-            QCOMPARE(m_fonts->font(KFontSettingsData::FixedFont)->family(), QStringLiteral("ChangedFixedTest Mono"));
-            QCOMPARE(m_fonts->font(KFontSettingsData::ToolbarFont)->family(), QStringLiteral("ChangedToolbarTest"));
-            QCOMPARE(m_fonts->font(KFontSettingsData::MenuFont)->family(), QStringLiteral("ChangedMenuTest"));
-            QCOMPARE(m_fonts->font(KFontSettingsData::WindowTitleFont)->family(), QStringLiteral("ChangedActiveTest"));
-            QCOMPARE(m_fonts->font(KFontSettingsData::TaskbarFont)->family(), QStringLiteral("ChangedTaskbarTest"));
-            QCOMPARE(m_fonts->font(KFontSettingsData::SmallestReadableFont)->family(), QStringLiteral("ChangedSmallestReadableTest"));
-        }
+        QVERIFY(m_appChangedFont);
+        QCOMPARE(m_fonts->font(KFontSettingsData::GeneralFont)->family(), QStringLiteral("ChangedFontTest"));
+        QCOMPARE(m_fonts->font(KFontSettingsData::FixedFont)->family(), QStringLiteral("ChangedFixedTest Mono"));
+        QCOMPARE(m_fonts->font(KFontSettingsData::ToolbarFont)->family(), QStringLiteral("ChangedToolbarTest"));
+        QCOMPARE(m_fonts->font(KFontSettingsData::MenuFont)->family(), QStringLiteral("ChangedMenuTest"));
+        QCOMPARE(m_fonts->font(KFontSettingsData::WindowTitleFont)->family(), QStringLiteral("ChangedActiveTest"));
+        QCOMPARE(m_fonts->font(KFontSettingsData::TaskbarFont)->family(), QStringLiteral("ChangedTaskbarTest"));
+        QCOMPARE(m_fonts->font(KFontSettingsData::SmallestReadableFont)->family(), QStringLiteral("ChangedSmallestReadableTest"));
+    }
 };
 
 QTEST_MAIN(KFontSettingsData_UnitTest)

@@ -63,9 +63,9 @@ KHintsSettings::KHintsSettings() : QObject(0)
     m_hints[QPlatformTheme::SystemIconFallbackThemeName] = "hicolor";
     m_hints[QPlatformTheme::IconThemeSearchPaths] = xdgIconThemePaths();
     m_hints[QPlatformTheme::StyleNames] = (QStringList() << cg.readEntry("widgetStyle", QString())
-                                         << "oxygen"
-                                         << "fusion"
-                                         << "windows");
+                                           << "oxygen"
+                                           << "fusion"
+                                           << "windows");
     m_hints[QPlatformTheme::DialogButtonBoxLayout] = QDialogButtonBox::KdeLayout;
     m_hints[QPlatformTheme::DialogButtonBoxButtonsHaveIcons] = cg.readEntry("ShowIconsOnPushButtons", true);
     m_hints[QPlatformTheme::UseFullScreenForPopupMenu] = true;
@@ -74,7 +74,7 @@ KHintsSettings::KHintsSettings() : QObject(0)
     m_hints[QPlatformTheme::IconPixmapSizes] = QVariant::fromValue(QList<int>() << 512 << 256 << 128 << 64 << 32 << 22 << 16 << 8);
 
     //TODO Check if we can add themeHints for these two options
-    if (qobject_cast<QApplication*>(QCoreApplication::instance())) {
+    if (qobject_cast<QApplication *>(QCoreApplication::instance())) {
         QApplication::setWheelScrollLines(cg.readEntry("WheelScrollLines", QApplication::wheelScrollLines()));
     }
 
@@ -97,17 +97,20 @@ QStringList KHintsSettings::xdgIconThemePaths() const
     QStringList paths;
 
     const QFileInfo homeIconDir(QDir::homePath() + QStringLiteral("/.icons"));
-    if (homeIconDir.isDir())
+    if (homeIconDir.isDir()) {
         paths << homeIconDir.absoluteFilePath();
+    }
 
     QString xdgDirString = QFile::decodeName(qgetenv("XDG_DATA_DIRS"));
-    if (xdgDirString.isEmpty())
+    if (xdgDirString.isEmpty()) {
         xdgDirString = QLatin1String("/usr/local/share/:/usr/share/");
+    }
 
     foreach (const QString &xdgDir, xdgDirString.split(QLatin1Char(':'))) {
         const QFileInfo xdgIconsDir(xdgDir + QStringLiteral("/icons"));
-        if (xdgIconsDir.isDir())
+        if (xdgIconsDir.isDir()) {
             paths << xdgIconsDir.absoluteFilePath();
+        }
     }
 
     return paths;
@@ -116,9 +119,9 @@ QStringList KHintsSettings::xdgIconThemePaths() const
 void KHintsSettings::delayedDBusConnects()
 {
     QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/KToolBar"), QStringLiteral("org.kde.KToolBar"),
-                                                   QStringLiteral("styleChanged"), this, SLOT(toolbarStyleChanged()));
+                                          QStringLiteral("styleChanged"), this, SLOT(toolbarStyleChanged()));
     QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/KGlobalSettings"), QStringLiteral("org.kde.KGlobalSettings"),
-                                                   QStringLiteral("notifyChange"), this, SLOT(slotNotifyChange(int, int)));
+                                          QStringLiteral("notifyChange"), this, SLOT(slotNotifyChange(int,int)));
 }
 
 void KHintsSettings::setupIconLoader()
@@ -137,7 +140,7 @@ void KHintsSettings::toolbarStyleChanged()
     QWidgetList widgets = QApplication::allWidgets();
     for (int i = 0; i < widgets.size(); ++i) {
         QWidget *widget = widgets.at(i);
-        if (qobject_cast<QToolButton*>(widget)) {
+        if (qobject_cast<QToolButton *>(widget)) {
             QEvent event(QEvent::StyleChange);
             QApplication::sendEvent(widget, &event);
         }
@@ -150,7 +153,7 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
     ptr->reparseConfiguration();
     KConfigGroup cg(ptr, "KDE");
 
-    switch(type) {
+    switch (type) {
     case PaletteChanged: {
         loadPalettes();
         QEvent ev(QEvent::ApplicationPaletteChange);
@@ -175,7 +178,7 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         iconChanged(arg); //Once the KCM is ported to use IconChanged, this should not be needed
         break;
     case StyleChanged: {
-        QApplication *app = qobject_cast<QApplication*>(QCoreApplication::instance());
+        QApplication *app = qobject_cast<QApplication *>(QCoreApplication::instance());
         if (!app) {
             return;
         }
@@ -186,9 +189,9 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         }
 
         m_hints[QPlatformTheme::StyleNames] = (QStringList() << theme
-                                         << "oxygen"
-                                         << "fusion"
-                                         << "windows");
+                                               << "oxygen"
+                                               << "fusion"
+                                               << "windows");
         app->setStyle(theme);
         loadPalettes();
         break;
@@ -216,13 +219,13 @@ void KHintsSettings::iconChanged(int group)
     m_hints[QPlatformTheme::ToolBarIconSize] = currentSize;
 
     //If we are not a QApplication, means that we are a QGuiApplication, then we do nothing.
-    if (!qobject_cast<QApplication*>(QCoreApplication::instance())) {
+    if (!qobject_cast<QApplication *>(QCoreApplication::instance())) {
         return;
     }
 
     QWidgetList widgets = QApplication::allWidgets();
-    Q_FOREACH(QWidget* widget, widgets) {
-        if (qobject_cast<QToolBar*>(widget) || qobject_cast<QMainWindow*>(widget)) {
+    Q_FOREACH (QWidget *widget, widgets) {
+        if (qobject_cast<QToolBar *>(widget) || qobject_cast<QMainWindow *>(widget)) {
             QEvent event(QEvent::StyleChange);
             QApplication::sendEvent(widget, &event);
         }
@@ -248,21 +251,21 @@ void KHintsSettings::updateQtSettings(KConfigGroup &cg)
     bool showIcons = cg.readEntry("ShowIconsInMenuItems", !QApplication::testAttribute(Qt::AA_DontShowIconsInMenus));
     QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, !showIcons);
 
-    QApplication *app = qobject_cast<QApplication*>(QCoreApplication::instance());
+    QApplication *app = qobject_cast<QApplication *>(QCoreApplication::instance());
     if (app) {
         QApplication::setWheelScrollLines(cg.readEntry("WheelScrollLines", QApplication::wheelScrollLines()));
     }
 }
 
-Qt::ToolButtonStyle KHintsSettings::toolButtonStyle(const KConfigGroup& cg) const
+Qt::ToolButtonStyle KHintsSettings::toolButtonStyle(const KConfigGroup &cg) const
 {
     const QString buttonStyle = cg.readEntry("ToolButtonStyle", "TextBesideIcon").toLower();
     return buttonStyle == "textbesideicon" ? Qt::ToolButtonTextBesideIcon
-                             : buttonStyle == "icontextright" ? Qt::ToolButtonTextBesideIcon
-                             : buttonStyle == "textundericon" ? Qt::ToolButtonTextUnderIcon
-                             : buttonStyle == "icontextbottom" ? Qt::ToolButtonTextUnderIcon
-                             : buttonStyle == "textonly" ? Qt::ToolButtonTextOnly
-                             : Qt::ToolButtonIconOnly;
+           : buttonStyle == "icontextright" ? Qt::ToolButtonTextBesideIcon
+           : buttonStyle == "textundericon" ? Qt::ToolButtonTextUnderIcon
+           : buttonStyle == "icontextbottom" ? Qt::ToolButtonTextUnderIcon
+           : buttonStyle == "textonly" ? Qt::ToolButtonTextOnly
+           : Qt::ToolButtonIconOnly;
 }
 
 void KHintsSettings::loadPalettes()

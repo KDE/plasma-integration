@@ -43,14 +43,14 @@ public:
     virtual QIconEngine *createIconEngine(const QString &iconName) const;
     virtual QList<QKeySequence> keyBindings(QKeySequence::StandardKey key) const;
 
-    virtual QPlatformDialogHelper* createPlatformDialogHelper(DialogType type) const;
+    virtual QPlatformDialogHelper *createPlatformDialogHelper(DialogType type) const;
     virtual bool usePlatformNativeDialog(DialogType type) const;
 
 private:
     void loadSettings();
 
     KHintsSettings *m_hints;
-    KFontSettingsData* m_fontsData;
+    KFontSettingsData *m_fontsData;
 };
 
 #endif // KDEPLATFORMTHEME_H

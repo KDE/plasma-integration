@@ -28,7 +28,7 @@ class KFileWidget;
 class QDialogButtonBox;
 class KDEPlatformFileDialog : public QDialog
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     friend class KDEPlatformFileDialogHelper;
 
@@ -51,8 +51,8 @@ private Q_SLOTS:
     void selectionChanged();
 
 protected:
-    KFileWidget* m_fileWidget;
-    QDialogButtonBox* m_buttons;
+    KFileWidget *m_fileWidget;
+    QDialogButtonBox *m_buttons;
 };
 
 class KDEPlatformFileDialogHelper : public QPlatformFileDialogHelper
@@ -77,7 +77,7 @@ public:
     virtual bool show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent);
 
 private:
-    KDEPlatformFileDialog* m_dialog;
+    KDEPlatformFileDialog *m_dialog;
 };
 
 #endif // KDEPLATFORMFONTDIALOGHELPER_H

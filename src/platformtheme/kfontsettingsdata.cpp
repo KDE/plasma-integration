@@ -35,22 +35,23 @@ KFontSettingsData::KFontSettingsData()
 {
     QMetaObject::invokeMethod(this, "delayedDBusConnects", Qt::QueuedConnection);
 
-    for( int i=0; i<FontTypesCount; ++i )
+    for (int i = 0; i < FontTypesCount; ++i) {
         mFonts[i] = 0;
+    }
 }
 
 KFontSettingsData::~KFontSettingsData()
 {
-    for( int i=0; i<FontTypesCount; ++i )
+    for (int i = 0; i < FontTypesCount; ++i) {
         delete mFonts[i];
+    }
 }
 
 // NOTE: keep in sync with kdebase/workspace/kcontrol/fonts/fonts.cpp
 static const char GeneralId[] =      "General";
 static const char DefaultFont[] =    "Sans Serif";
 
-static const KFontData DefaultFontData[KFontSettingsData::FontTypesCount] =
-{
+static const KFontData DefaultFontData[KFontSettingsData::FontTypesCount] = {
     { GeneralId, "font",                 DefaultFont,  9, -1, QFont::SansSerif },
     { GeneralId, "fixed",                "Monospace",  9, -1, QFont::TypeWriter },
     { GeneralId, "toolBarFont",          DefaultFont,  8, -1, QFont::SansSerif },
@@ -60,17 +61,17 @@ static const KFontData DefaultFontData[KFontSettingsData::FontTypesCount] =
     { GeneralId, "smallestReadableFont", DefaultFont,  8, -1, QFont::SansSerif }
 };
 
-QFont *KFontSettingsData::font( FontTypes fontType )
+QFont *KFontSettingsData::font(FontTypes fontType)
 {
     QFont *cachedFont = mFonts[fontType];
 
     if (!cachedFont) {
         const KFontData &fontData = DefaultFontData[fontType];
-        cachedFont = new QFont( fontData.FontName, fontData.Size, fontData.Weight );
-        cachedFont->setStyleHint( fontData.StyleHint );
+        cachedFont = new QFont(fontData.FontName, fontData.Size, fontData.Weight);
+        cachedFont->setStyleHint(fontData.StyleHint);
 
         const KConfigGroup configGroup(KSharedConfig::openConfig("kdeglobals"), fontData.ConfigGroupKey);
-        QString fontInfo = configGroup.readEntry( fontData.ConfigKey, QString() );
+        QString fontInfo = configGroup.readEntry(fontData.ConfigKey, QString());
 
         //If we have serialized information for this font, restore it
         //NOTE: We are not using KConfig directly because we can't call QFont::QFont from here
@@ -86,15 +87,14 @@ QFont *KFontSettingsData::font( FontTypes fontType )
 
 void KFontSettingsData::dropFontSettingsCache()
 {
-    for( int i=0; i<FontTypesCount; ++i )
-    {
+    for (int i = 0; i < FontTypesCount; ++i) {
         delete mFonts[i];
         mFonts[i] = 0;
     }
 
     QWindowSystemInterface::handleThemeChange(0);
 
-    if (qobject_cast<QApplication*>(QCoreApplication::instance())) {
+    if (qobject_cast<QApplication *>(QCoreApplication::instance())) {
         QApplication::setFont(*font(KFontSettingsData::GeneralFont));
     } else {
         QGuiApplication::setFont(*font(KFontSettingsData::GeneralFont));
@@ -103,6 +103,6 @@ void KFontSettingsData::dropFontSettingsCache()
 
 void KFontSettingsData::delayedDBusConnects()
 {
-    QDBusConnection::sessionBus().connect( QString(), "/KDEPlatformTheme", "org.kde.KDEPlatformTheme",
-                                                      "refreshFonts", this, SLOT(dropFontSettingsCache()) );
+    QDBusConnection::sessionBus().connect(QString(), "/KDEPlatformTheme", "org.kde.KDEPlatformTheme",
+                                          "refreshFonts", this, SLOT(dropFontSettingsCache()));
 }
