@@ -107,6 +107,14 @@ private Q_SLOTS:
                                               "notifyChange",  &m_loop, SLOT(quit()));
     }
 
+    void cleanupTestCase()
+    {
+        QString configPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
+        configPath.append("/kdeglobals");
+
+        QFile::remove(configPath);
+    }
+
     void testPlatformHints()
     {
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::CursorFlashTime).toInt(), 1042);
@@ -118,7 +126,15 @@ private Q_SLOTS:
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::ItemViewActivateItemOnSingleClick).toBool(), false);
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::SystemIconThemeName).toString(), QLatin1String("non-existent-icon-theme"));
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::SystemIconFallbackThemeName).toString(), QLatin1String("hicolor"));
-        QVERIFY(m_qpa->themeHint(QPlatformTheme::IconThemeSearchPaths).toString().isEmpty());
+
+        QStringList iconThemeSearchPaths = m_qpa->themeHint(QPlatformTheme::IconThemeSearchPaths).toStringList();
+        foreach (const QString &iconPath, iconThemeSearchPaths) {
+            QVERIFY(iconPath.endsWith(QLatin1String("/icons")));
+            QVERIFY(QFile::exists(iconPath));
+        }
+        // there must be *some* icons in XDG_DATA_DIRS, right?
+        QVERIFY(!iconThemeSearchPaths.isEmpty());
+
         QStringList styles;
         styles << "non-existent-widget-style" << "oxygen" << "fusion" << "windows";
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::StyleNames).toStringList(), styles);
