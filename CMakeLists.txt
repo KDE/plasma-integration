@@ -16,7 +16,9 @@ include(FeatureSummary)
 include(CMakePackageConfigHelpers)
 include(ECMSetupVersion)
 
-ecm_setup_version(5.0.0 VARIABLE_PREFIX FRAMEWORKINTEGRATION
+set(KF5_VERSION "5.0.0")
+
+ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX FRAMEWORKINTEGRATION
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/frameworkintegration_version.h"
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/frameworkintegrationConfigVersion.cmake")
 
