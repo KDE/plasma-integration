@@ -18,8 +18,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef KGLOBALSETTINGSDATA_H
-#define KGLOBALSETTINGSDATA_H
+#ifndef KFONTSETTINGSDATA_H
+#define KFONTSETTINGSDATA_H
 
 #include <QObject>
 #include <QFont>
@@ -66,4 +66,4 @@ protected:
     QFont *mFonts[FontTypesCount];
 };
 
-#endif
+#endif // KFONTSETTINGSDATA_H

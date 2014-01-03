@@ -18,8 +18,8 @@
  *  Boston, MA 02110-1301, USA.
  */
 
-#ifndef KDEPLATFORMFONTDIALOGHELPER_H
-#define KDEPLATFORMFONTDIALOGHELPER_H
+#ifndef KDEPLATFORMFILEDIALOGHELPER_H
+#define KDEPLATFORMFILEDIALOGHELPER_H
 
 #include <qpa/qplatformdialoghelper.h>
 #include <QDialog>
@@ -80,4 +80,4 @@ private:
     KDEPlatformFileDialog *m_dialog;
 };
 
-#endif // KDEPLATFORMFONTDIALOGHELPER_H
+#endif // KDEPLATFORMFILEDIALOGHELPER_H
