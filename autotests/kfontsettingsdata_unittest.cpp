@@ -114,3 +114,4 @@ private Q_SLOTS:
 QTEST_MAIN(KFontSettingsData_UnitTest)
 
 #include "kfontsettingsdata_unittest.moc"
+
