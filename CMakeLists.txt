@@ -13,6 +13,7 @@ include(KDECMakeSettings)
 find_package(Qt5 5.2.0 CONFIG REQUIRED Widgets DBus)
 
 include(FeatureSummary)
+include(GenerateExportHeader)
 include(CMakePackageConfigHelpers)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
