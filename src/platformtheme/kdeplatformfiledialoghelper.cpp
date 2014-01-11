@@ -202,8 +202,6 @@ bool KDEPlatformFileDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowMo
     m_dialog->setModal(windowModality != Qt::NonModal);
     if (windowModality == Qt::NonModal) {
         m_dialog->show();
-    } else {
-        m_dialog->exec();
     }
     return true;
 }
