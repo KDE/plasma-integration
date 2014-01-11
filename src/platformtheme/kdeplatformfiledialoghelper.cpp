@@ -187,6 +187,7 @@ void KDEPlatformFileDialogHelper::initializeDialog()
 
 void KDEPlatformFileDialogHelper::exec()
 {
+    m_dialog->exec();
 }
 
 void KDEPlatformFileDialogHelper::hide()
