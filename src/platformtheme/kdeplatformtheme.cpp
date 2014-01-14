@@ -96,6 +96,8 @@ const QFont *KdePlatformTheme::font(Font type) const
     case SmallFont:
     case MiniFont:
         fdtype = KFontSettingsData::SmallestReadableFont; break;
+    case FixedFont:
+        fdtype = KFontSettingsData::FixedFont; break;
     default:
         fdtype = KFontSettingsData::GeneralFont; break;
     }
