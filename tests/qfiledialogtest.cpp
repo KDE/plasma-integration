@@ -27,12 +27,35 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
     QCommandLineParser parser;
-    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("mode")), QStringLiteral("File dialog mode: open or save"), QStringLiteral("type"), QStringLiteral("open")));
+    parser.addHelpOption();
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("acceptMode")), QStringLiteral("File dialog acceptMode: 'open' or 'save'"), QStringLiteral("type"), QStringLiteral("open")));
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("fileMode")), QStringLiteral("File dialog fileMode: 'AnyFile' or 'ExistingFile' or 'Directory' or 'ExistingFiles'"), QStringLiteral("type")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("filter")), QStringLiteral("Dialog filter"), QStringLiteral("filter"), QStringLiteral("Everything (*)")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("modal")), QStringLiteral("Test modal dialog"), QStringLiteral("modality"), QStringLiteral("on")));
     parser.process(app);
+    
     QFileDialog dialog;
-    dialog.setAcceptMode(parser.value(QStringLiteral("mode")) == QStringLiteral("open") ? QFileDialog::AcceptOpen : QFileDialog::AcceptSave);
+    dialog.setAcceptMode(
+        parser.value(QStringLiteral("acceptMode")) == QStringLiteral("open")
+        ? QFileDialog::AcceptOpen
+        : QFileDialog::AcceptSave);
+    
+    QString fileModeValue = parser.value(QStringLiteral("fileMode"));
+    if (fileModeValue.isEmpty())
+    {
+        // do nothing which uses the default value
+    }
+    else if (fileModeValue == QStringLiteral("AnyFile"))
+    {
+        qDebug() << "setFileMode";
+        dialog.setFileMode(QFileDialog::AnyFile);
+    }
+    else
+    {
+        qDebug() << "Not implemented or not valid:" << fileModeValue ;
+        exit(0);
+    }
+    
     dialog.setNameFilter(parser.value(QStringLiteral("filter")));
 
     int ret;
