@@ -32,6 +32,7 @@ int main(int argc, char **argv)
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("fileMode")), QStringLiteral("File dialog fileMode: 'AnyFile' or 'ExistingFile' or 'Directory' or 'ExistingFiles'"), QStringLiteral("type")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("filter")), QStringLiteral("Dialog filter"), QStringLiteral("filter"), QStringLiteral("Everything (*)")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("modal")), QStringLiteral("Test modal dialog"), QStringLiteral("modality"), QStringLiteral("on")));
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectFile")), QStringLiteral("selectFile(<filename>)"), QStringLiteral("filename")));
     parser.process(app);
     
     QFileDialog dialog;
@@ -57,6 +58,8 @@ int main(int argc, char **argv)
     }
     
     dialog.setNameFilter(parser.value(QStringLiteral("filter")));
+    
+    dialog.selectFile(parser.value(QStringLiteral("selectFile")));
 
     int ret;
     if (parser.value(QStringLiteral("modal")) == QStringLiteral("off")) {
