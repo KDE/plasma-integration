@@ -46,7 +46,6 @@ int main(int argc, char **argv)
         // do nothing which uses the default value
     }
     else if (fileModeValue == QStringLiteral("AnyFile")) {
-        qDebug() << "setFileMode";
         dialog.setFileMode(QFileDialog::AnyFile);
     }
     else {
