@@ -42,17 +42,14 @@ int main(int argc, char **argv)
         : QFileDialog::AcceptSave);
     
     QString fileModeValue = parser.value(QStringLiteral("fileMode"));
-    if (fileModeValue.isEmpty())
-    {
+    if (fileModeValue.isEmpty()) {
         // do nothing which uses the default value
     }
-    else if (fileModeValue == QStringLiteral("AnyFile"))
-    {
+    else if (fileModeValue == QStringLiteral("AnyFile")) {
         qDebug() << "setFileMode";
         dialog.setFileMode(QFileDialog::AnyFile);
     }
-    else
-    {
+    else {
         qDebug() << "Not implemented or not valid:" << fileModeValue ;
         exit(0);
     }
