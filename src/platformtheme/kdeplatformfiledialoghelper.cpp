@@ -90,15 +90,15 @@ KDEPlatformFileDialog::KDEPlatformFileDialog()
 {
     setLayout(new QVBoxLayout);
     connect(m_fileWidget, SIGNAL(filterChanged(QString)), SIGNAL(filterSelected(QString)));
-    connect(m_fileWidget, SIGNAL(accepted()), SLOT(accept()));
     layout()->addWidget(m_fileWidget);
 
     m_buttons = new QDialogButtonBox(this);
     m_buttons->addButton(m_fileWidget->okButton(), QDialogButtonBox::AcceptRole);
     m_buttons->addButton(m_fileWidget->cancelButton(), QDialogButtonBox::RejectRole);
-    connect(m_buttons, SIGNAL(accepted()), m_fileWidget, SLOT(slotOk()));
     connect(m_buttons, SIGNAL(rejected()), m_fileWidget, SLOT(slotCancel()));
-    connect(m_buttons, SIGNAL(rejected()), SLOT(reject()));
+    connect(m_fileWidget->okButton(), SIGNAL(clicked(bool)), m_fileWidget, SLOT(slotOk()));
+    connect(m_fileWidget, SIGNAL(accepted()), m_fileWidget, SLOT(accept()));
+    connect(m_fileWidget, SIGNAL(accepted()), SLOT(accept()));
     layout()->addWidget(m_buttons);
 }
 
@@ -109,12 +109,7 @@ QUrl KDEPlatformFileDialog::directory()
 
 QList<QUrl> KDEPlatformFileDialog::selectedFiles()
 {
-    QList<QUrl> ret;
-    KFileItemList items = m_fileWidget->dirOperator()->selectedItems();
-    Q_FOREACH (const KFileItem &item, items) {
-        ret += item.url();
-    }
-    return ret;
+    return m_fileWidget->selectedUrls();
 }
 
 void KDEPlatformFileDialog::selectFile(const QUrl &filename)
