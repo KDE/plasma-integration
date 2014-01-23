@@ -32,7 +32,8 @@ int main(int argc, char **argv)
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("fileMode")), QStringLiteral("File dialog fileMode: 'AnyFile' or 'ExistingFile' or 'Directory' or 'ExistingFiles'"), QStringLiteral("type")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("filter")), QStringLiteral("Dialog filter"), QStringLiteral("filter"), QStringLiteral("Everything (*)")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("modal")), QStringLiteral("Test modal dialog"), QStringLiteral("modality"), QStringLiteral("on")));
-    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectFile")), QStringLiteral("selectFile(<filename>)"), QStringLiteral("filename")));
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectFile")), QStringLiteral("Initially selected file"), QStringLiteral("filename")));
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectDirectory")), QStringLiteral("Initially selected directory"), QStringLiteral("dirname")));
     parser.process(app);
     
     QFileDialog dialog;
@@ -42,19 +43,16 @@ int main(int argc, char **argv)
         : QFileDialog::AcceptSave);
     
     QString fileModeValue = parser.value(QStringLiteral("fileMode"));
-    if (fileModeValue.isEmpty()) {
-        // do nothing which uses the default value
-    }
-    else if (fileModeValue == QStringLiteral("AnyFile")) {
+    if (fileModeValue == QStringLiteral("AnyFile")) {
         dialog.setFileMode(QFileDialog::AnyFile);
     }
-    else {
+    else if (!fileModeValue.isEmpty()) {
         qDebug() << "Not implemented or not valid:" << fileModeValue ;
         exit(0);
     }
     
     dialog.setNameFilter(parser.value(QStringLiteral("filter")));
-    
+    dialog.setDirectory(parser.value(QStringLiteral("selectDirectory")));
     dialog.selectFile(parser.value(QStringLiteral("selectFile")));
 
     int ret;
