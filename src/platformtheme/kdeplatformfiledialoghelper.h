@@ -47,9 +47,6 @@ Q_SIGNALS:
     void directoryEntered(const QUrl &directory);
     void filterSelected(const QString &filter);
 
-private Q_SLOTS:
-    void selectionChanged();
-
 protected:
     KFileWidget *m_fileWidget;
     QDialogButtonBox *m_buttons;

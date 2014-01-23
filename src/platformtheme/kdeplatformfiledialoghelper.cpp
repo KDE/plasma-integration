@@ -23,6 +23,7 @@
 #include <kfilewidget.h>
 #include <klocalizedstring.h>
 #include <kdiroperator.h>
+#include <KUrlComboBox>
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
 #include <QPushButton>
@@ -88,25 +89,17 @@ KDEPlatformFileDialog::KDEPlatformFileDialog()
     , m_fileWidget(new KFileWidget(QUrl(), this))
 {
     setLayout(new QVBoxLayout);
-    connect(m_fileWidget, SIGNAL(selectionChanged()), SLOT(selectionChanged()));
-    connect(m_fileWidget, SIGNAL(fileHighlighted(QUrl)), SLOT(selectionChanged()));
     connect(m_fileWidget, SIGNAL(filterChanged(QString)), SIGNAL(filterSelected(QString)));
     connect(m_fileWidget, SIGNAL(accepted()), SLOT(accept()));
     layout()->addWidget(m_fileWidget);
 
     m_buttons = new QDialogButtonBox(this);
-    m_buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    m_buttons->addButton(m_fileWidget->okButton(), QDialogButtonBox::AcceptRole);
+    m_buttons->addButton(m_fileWidget->cancelButton(), QDialogButtonBox::RejectRole);
     connect(m_buttons, SIGNAL(accepted()), m_fileWidget, SLOT(slotOk()));
     connect(m_buttons, SIGNAL(rejected()), m_fileWidget, SLOT(slotCancel()));
     connect(m_buttons, SIGNAL(rejected()), SLOT(reject()));
     layout()->addWidget(m_buttons);
-
-    m_buttons->button(QDialogButtonBox::Ok)->setEnabled(!m_fileWidget->selectedUrls().isEmpty());
-}
-
-void KDEPlatformFileDialog::selectionChanged()
-{
-    m_buttons->button(QDialogButtonBox::Ok)->setEnabled(!m_fileWidget->dirOperator()->selectedItems().isEmpty());
 }
 
 QUrl KDEPlatformFileDialog::directory()
@@ -126,7 +119,9 @@ QList<QUrl> KDEPlatformFileDialog::selectedFiles()
 
 void KDEPlatformFileDialog::selectFile(const QUrl &filename)
 {
-    m_fileWidget->setUrl(filename);
+    QUrl dirUrl = filename.adjusted(QUrl::RemoveFilename);
+    m_fileWidget->setUrl(dirUrl);
+    m_fileWidget->setSelection(filename.fileName());
 }
 
 QString KDEPlatformFileDialog::selectedNameFilter()
