@@ -42,7 +42,7 @@ static QString qt2KdeFilter(const QStringList &f)
     QString               filter;
     QTextStream           str(&filter, QIODevice::WriteOnly);
     QStringList           list(f);
-    list.replaceInStrings("/", "\\/");
+    list.replaceInStrings(QStringLiteral("/"), QStringLiteral("\\/"));
     QStringList::const_iterator it(list.begin()), end(list.end());
     bool                  first = true;
 
