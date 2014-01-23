@@ -99,6 +99,7 @@ KDEPlatformFileDialog::KDEPlatformFileDialog()
     connect(m_fileWidget->okButton(), SIGNAL(clicked(bool)), m_fileWidget, SLOT(slotOk()));
     connect(m_fileWidget, SIGNAL(accepted()), m_fileWidget, SLOT(accept()));
     connect(m_fileWidget, SIGNAL(accepted()), SLOT(accept()));
+    connect(m_fileWidget->cancelButton(), SIGNAL(clicked(bool)), SLOT(reject()));
     layout()->addWidget(m_buttons);
 }
 
