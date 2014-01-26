@@ -28,13 +28,15 @@ int main(int argc, char **argv)
     QApplication app(argc, argv);
     QCommandLineParser parser;
     parser.addHelpOption();
-    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("staticFunction")), QStringLiteral("Test one of the static convencience function: 'getExistingDirectory'"), QStringLiteral("function name"), QStringLiteral("getExistingDirectory")));
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("staticFunction")), QStringLiteral("Test one of the static convencience function: 'getExistingDirectory'"), QStringLiteral("function name")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("acceptMode")), QStringLiteral("File dialog acceptMode: 'open' or 'save'"), QStringLiteral("type"), QStringLiteral("open")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("fileMode")), QStringLiteral("File dialog fileMode: 'AnyFile' or 'ExistingFile' or 'Directory' or 'ExistingFiles'"), QStringLiteral("type")));
-    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("filter")), QStringLiteral("Dialog filter"), QStringLiteral("filter"), QStringLiteral("Everything (*)")));
-    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("modal")), QStringLiteral("Test modal dialog"), QStringLiteral("modality"), QStringLiteral("on")));
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("nameFilter")), QStringLiteral("Dialog nameFilter, e. g. 'cppfiles (*.cpp *.h *.hpp)', can be specified multiple times"), QStringLiteral("nameFilter"), QStringLiteral("Everything (*)")));
+    // add option mimeTypeFilter later
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectNameFilter")), QStringLiteral("Initially selected nameFilter"), QStringLiteral("selectNameFilter")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectFile")), QStringLiteral("Initially selected file"), QStringLiteral("filename")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectDirectory")), QStringLiteral("Initially selected directory"), QStringLiteral("dirname")));
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("modal")), QStringLiteral("Test modal dialog"), QStringLiteral("modality"), QStringLiteral("on")));
     parser.process(app);
 
     if (parser.value(QStringLiteral("staticFunction")) == QStringLiteral("getExistingDirectory")) {
@@ -59,7 +61,19 @@ int main(int argc, char **argv)
         exit(0);
     }
     
-    dialog.setNameFilter(parser.value(QStringLiteral("filter")));
+    QStringList nameFilterList = parser.values(QStringLiteral("nameFilter"));
+    if (nameFilterList.size() == 1) {
+        dialog.setNameFilter(nameFilterList.first());
+    }
+    else {
+        dialog.setNameFilters(nameFilterList);
+    }
+
+    QString selectNameFilter = parser.value(QStringLiteral("selectNameFilter"));
+    if (!selectNameFilter.isEmpty()) {
+        dialog.selectNameFilter(selectNameFilter);
+    }
+
     dialog.setDirectory(parser.value(QStringLiteral("selectDirectory")));
     dialog.selectFile(parser.value(QStringLiteral("selectFile")));
 
@@ -74,7 +88,7 @@ int main(int argc, char **argv)
     if (dialog.result() == QDialog::Accepted) {
         qDebug() << "selected files" << dialog.selectedFiles();
         qDebug() << "selected urls" << dialog.selectedUrls();
-        qDebug() << "selected name filter" << dialog.selectedNameFilter();
+        qDebug() << "selected name nameFilter" << dialog.selectedNameFilter();
     }
     return ret;
 }
