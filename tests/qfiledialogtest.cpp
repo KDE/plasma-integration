@@ -28,6 +28,7 @@ int main(int argc, char **argv)
     QApplication app(argc, argv);
     QCommandLineParser parser;
     parser.addHelpOption();
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("staticFunction")), QStringLiteral("Test one of the static convencience function: 'getExistingDirectory'"), QStringLiteral("function name"), QStringLiteral("getExistingDirectory")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("acceptMode")), QStringLiteral("File dialog acceptMode: 'open' or 'save'"), QStringLiteral("type"), QStringLiteral("open")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("fileMode")), QStringLiteral("File dialog fileMode: 'AnyFile' or 'ExistingFile' or 'Directory' or 'ExistingFiles'"), QStringLiteral("type")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("filter")), QStringLiteral("Dialog filter"), QStringLiteral("filter"), QStringLiteral("Everything (*)")));
@@ -35,6 +36,13 @@ int main(int argc, char **argv)
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectFile")), QStringLiteral("Initially selected file"), QStringLiteral("filename")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectDirectory")), QStringLiteral("Initially selected directory"), QStringLiteral("dirname")));
     parser.process(app);
+
+    if (parser.value(QStringLiteral("staticFunction")) == QStringLiteral("getExistingDirectory")) {
+        QString dir = QFileDialog::getExistingDirectory(nullptr, QStringLiteral("getExistingDirectory test"), QStringLiteral("/tmp"));
+        qDebug() << dir;
+        qDebug() << "exit";
+        return 0;
+    }
     
     QFileDialog dialog;
     dialog.setAcceptMode(
