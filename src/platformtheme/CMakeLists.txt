@@ -4,6 +4,7 @@ set(platformtheme_SRCS
     kfontsettingsdata.cpp
     khintssettings.cpp
     kdeplatformfiledialoghelper.cpp
+    kdeplatformsystemtrayicon.cpp
     main.cpp
 )
 
@@ -23,6 +24,7 @@ target_link_libraries(KDEPlatformTheme
         KF5::IconThemes
         KF5::KIOFileWidgets
         KF5::I18n
+        KF5::Notifications
 )
 
 install(TARGETS KDEPlatformTheme DESTINATION ${QT_PLUGIN_INSTALL_DIR}/platformthemes)

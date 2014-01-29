@@ -23,6 +23,7 @@
 #include "kfontsettingsdata.h"
 #include "khintssettings.h"
 #include "kdeplatformfiledialoghelper.h"
+#include "kdeplatformsystemtrayicon.h"
 
 #include <QCoreApplication>
 #include <QFont>
@@ -210,4 +211,9 @@ QPlatformDialogHelper *KdePlatformTheme::createPlatformDialogHelper(QPlatformThe
     default:
         return 0;
     }
+}
+
+QPlatformSystemTrayIcon *KdePlatformTheme::createPlatformSystemTrayIcon() const
+{
+    return new KDEPlatformSystemTrayIcon;
 }

@@ -46,6 +46,8 @@ public:
     virtual QPlatformDialogHelper *createPlatformDialogHelper(DialogType type) const;
     virtual bool usePlatformNativeDialog(DialogType type) const;
 
+    virtual QPlatformSystemTrayIcon *createPlatformSystemTrayIcon() const Q_DECL_OVERRIDE;
+
 private:
     void loadSettings();
 
