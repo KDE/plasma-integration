@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(FrameworkIntegration)
 
-find_package(ECM 0.0.9 REQUIRED NO_MODULE)
+find_package(ECM 0.0.10 REQUIRED NO_MODULE)
 
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
 
@@ -14,7 +14,7 @@ find_package(Qt5 5.2.0 CONFIG REQUIRED Widgets DBus)
 
 include(FeatureSummary)
 
-set(KF5_VERSION "5.0.0")
+set(KF5_VERSION "4.96.0")
 
 find_package(KF5Config ${KF5_VERSION} REQUIRED)
 find_package(KF5ConfigWidgets ${KF5_VERSION} REQUIRED)
