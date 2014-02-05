@@ -129,7 +129,7 @@ private Q_SLOTS:
 
         QStringList iconThemeSearchPaths = m_qpa->themeHint(QPlatformTheme::IconThemeSearchPaths).toStringList();
         foreach (const QString &iconPath, iconThemeSearchPaths) {
-            QVERIFY(iconPath.endsWith(QLatin1String("/icons")));
+            QVERIFY( iconPath.endsWith(QLatin1String("/icons")) || iconPath.endsWith(QLatin1String("/.icons")) );
             QVERIFY(QFile::exists(iconPath));
         }
         // there must be *some* icons in XDG_DATA_DIRS, right?
