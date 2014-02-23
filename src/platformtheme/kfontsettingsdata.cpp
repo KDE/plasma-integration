@@ -38,7 +38,6 @@ KFontSettingsData::KFontSettingsData()
     for (int i = 0; i < FontTypesCount; ++i) {
         mFonts[i] = 0;
     }
-    mKdeGlobals = KSharedConfig::openConfig("kdeglobals");
 }
 
 KFontSettingsData::~KFontSettingsData()
@@ -71,6 +70,9 @@ QFont *KFontSettingsData::font(FontTypes fontType)
         cachedFont = new QFont(fontData.FontName, fontData.Size, fontData.Weight);
         cachedFont->setStyleHint(fontData.StyleHint);
 
+        if (!mKdeGlobals) {
+            mKdeGlobals = KSharedConfig::openConfig("kdeglobals");
+        }
         const KConfigGroup configGroup(mKdeGlobals, fontData.ConfigGroupKey);
         QString fontInfo = configGroup.readEntry(fontData.ConfigKey, QString());
 
@@ -88,6 +90,9 @@ QFont *KFontSettingsData::font(FontTypes fontType)
 
 void KFontSettingsData::dropFontSettingsCache()
 {
+    if (mKdeGlobals) {
+        mKdeGlobals->reparseConfiguration();
+    }
     for (int i = 0; i < FontTypesCount; ++i) {
         delete mFonts[i];
         mFonts[i] = 0;
