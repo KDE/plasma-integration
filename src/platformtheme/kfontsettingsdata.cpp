@@ -38,6 +38,7 @@ KFontSettingsData::KFontSettingsData()
     for (int i = 0; i < FontTypesCount; ++i) {
         mFonts[i] = 0;
     }
+    mKdeGlobals = KSharedConfig::openConfig("kdeglobals");
 }
 
 KFontSettingsData::~KFontSettingsData()
@@ -70,7 +71,7 @@ QFont *KFontSettingsData::font(FontTypes fontType)
         cachedFont = new QFont(fontData.FontName, fontData.Size, fontData.Weight);
         cachedFont->setStyleHint(fontData.StyleHint);
 
-        const KConfigGroup configGroup(KSharedConfig::openConfig("kdeglobals"), fontData.ConfigGroupKey);
+        const KConfigGroup configGroup(mKdeGlobals, fontData.ConfigGroupKey);
         QString fontInfo = configGroup.readEntry(fontData.ConfigKey, QString());
 
         //If we have serialized information for this font, restore it

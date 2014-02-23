@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <QFont>
+#include <ksharedconfig.h>
 
 struct KFontData {
     const char *ConfigGroupKey;
@@ -62,8 +63,9 @@ private Q_SLOTS:
 public: // access, is not const due to caching
     QFont *font(FontTypes fontType);
 
-protected:
+private:
     QFont *mFonts[FontTypesCount];
+    KSharedConfigPtr mKdeGlobals;
 };
 
 #endif // KFONTSETTINGSDATA_H
