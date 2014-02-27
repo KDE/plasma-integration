@@ -71,7 +71,7 @@ QFont *KFontSettingsData::font(FontTypes fontType)
         cachedFont->setStyleHint(fontData.StyleHint);
 
         if (!mKdeGlobals) {
-            mKdeGlobals = KSharedConfig::openConfig("kdeglobals");
+            mKdeGlobals = KSharedConfig::openConfig("kdeglobals", KConfig::NoGlobals);
         }
         const KConfigGroup configGroup(mKdeGlobals, fontData.ConfigGroupKey);
         QString fontInfo = configGroup.readEntry(fontData.ConfigKey, QString());

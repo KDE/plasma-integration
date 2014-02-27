@@ -25,6 +25,7 @@
 #include <QVariant>
 
 #include <qpa/qplatformtheme.h>
+#include <ksharedconfig.h>
 
 class KConfigGroup;
 
@@ -80,6 +81,7 @@ private:
     QStringList xdgIconThemePaths() const;
     QHash<QPlatformTheme::Palette, QPalette *> m_palettes;
     QHash<QPlatformTheme::ThemeHint, QVariant> m_hints;
+    KSharedConfigPtr mKdeGlobals;
 };
 
 #endif //KHINTS_SETTINGS_H

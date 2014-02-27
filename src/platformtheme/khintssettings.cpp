@@ -44,21 +44,21 @@
 
 KHintsSettings::KHintsSettings() : QObject(0)
 {
-    KSharedConfig::Ptr ptr = KSharedConfig::openConfig("kdeglobals");
-    KConfigGroup cg(ptr, "KDE");
+    mKdeGlobals = KSharedConfig::openConfig("kdeglobals", KConfig::NoGlobals);
+    KConfigGroup cg(mKdeGlobals, "KDE");
 
     m_hints[QPlatformTheme::CursorFlashTime] = qBound(200, cg.readEntry("CursorBlinkRate", 1000), 2000);
     m_hints[QPlatformTheme::MouseDoubleClickInterval] = cg.readEntry("DoubleClickInterval", 400);
     m_hints[QPlatformTheme::StartDragDistance] = cg.readEntry("StartDragDist", 10);
     m_hints[QPlatformTheme::StartDragTime] = cg.readEntry("StartDragTime", 500);
 
-    KConfigGroup cgToolbar(ptr, "Toolbar style");
+    KConfigGroup cgToolbar(mKdeGlobals, "Toolbar style");
     m_hints[QPlatformTheme::ToolButtonStyle] = toolButtonStyle(cgToolbar);
 
-    KConfigGroup cgToolbarIcon(ptr, "MainToolbarIcons");
+    KConfigGroup cgToolbarIcon(mKdeGlobals, "MainToolbarIcons");
     m_hints[QPlatformTheme::ToolBarIconSize] = cgToolbarIcon.readEntry("Size", 22);
     m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = cg.readEntry("SingleClick", true);
-    KConfigGroup cgIcons(ptr, "Icons");
+    KConfigGroup cgIcons(mKdeGlobals, "Icons");
     m_hints[QPlatformTheme::SystemIconThemeName] = cgIcons.readEntry("Theme", "oxygen");
     m_hints[QPlatformTheme::SystemIconFallbackThemeName] = "hicolor";
     m_hints[QPlatformTheme::IconThemeSearchPaths] = xdgIconThemePaths();
@@ -131,9 +131,8 @@ void KHintsSettings::setupIconLoader()
 
 void KHintsSettings::toolbarStyleChanged()
 {
-    KSharedConfig::Ptr ptr = KSharedConfig::openConfig("kdeglobals");
-    ptr->reparseConfiguration();
-    KConfigGroup cg(ptr, "Toolbar style");
+    mKdeGlobals->reparseConfiguration();
+    KConfigGroup cg(mKdeGlobals, "Toolbar style");
 
     m_hints[QPlatformTheme::ToolButtonStyle] = toolButtonStyle(cg);
     //from gtksymbol.cpp
@@ -149,9 +148,8 @@ void KHintsSettings::toolbarStyleChanged()
 
 void KHintsSettings::slotNotifyChange(int type, int arg)
 {
-    KSharedConfig::Ptr ptr = KSharedConfig::openConfig("kdeglobals");
-    ptr->reparseConfiguration();
-    KConfigGroup cg(ptr, "KDE");
+    mKdeGlobals->reparseConfiguration();
+    KConfigGroup cg(mKdeGlobals, "KDE");
 
     switch (type) {
     case PaletteChanged: {
@@ -205,8 +203,7 @@ void KHintsSettings::iconChanged(int group)
 {
     KIconLoader::Group iconGroup = (KIconLoader::Group) group;
     if (iconGroup != KIconLoader::MainToolbar) {
-        KSharedConfig::Ptr ptr = KSharedConfig::openConfig("kdeglobals");
-        KConfigGroup cgIcons(ptr, "Icons");
+        KConfigGroup cgIcons(mKdeGlobals, "Icons");
         m_hints[QPlatformTheme::SystemIconThemeName] = cgIcons.readEntry("Theme", "oxygen");
         return;
     }
@@ -273,6 +270,5 @@ void KHintsSettings::loadPalettes()
     qDeleteAll(m_palettes);
     m_palettes.clear();
 
-    KSharedConfig::Ptr globals = KSharedConfig::openConfig("kdeglobals");
-    m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(globals));
+    m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(mKdeGlobals));
 }
