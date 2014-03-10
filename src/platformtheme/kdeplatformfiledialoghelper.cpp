@@ -173,6 +173,9 @@ void KDEPlatformFileDialogHelper::initializeDialog()
     QStringList nameFilters = options()->nameFilters();
     if (!nameFilters.isEmpty()) {
         m_dialog->m_fileWidget->setFilter(qt2KdeFilter(nameFilters));
+        if (!options()->initiallySelectedNameFilter().isEmpty()) {
+            selectNameFilter(options()->initiallySelectedNameFilter());
+        }
     }
 }
 

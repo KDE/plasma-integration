@@ -39,3 +39,7 @@ frameworkintegration_tests(
 frameworkintegration_tests(
   kstyle_unittest
 )
+
+frameworkintegration_tests(
+  kfiledialog_unittest
+)
