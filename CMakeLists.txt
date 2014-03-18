@@ -34,6 +34,13 @@ find_package(KF5KIO ${KF5_VERSION} REQUIRED)
 find_package(KF5Notifications ${KF5_VERSION} REQUIRED)
 find_package(KF5WidgetsAddons ${KF5_VERSION} REQUIRED)
 
+find_package(OxygenFont 0.4)
+
+set_package_properties(OxygenFont PROPERTIES
+    PURPOSE "Default font for KDE Applications"
+    TYPE RUNTIME
+)
+
 add_subdirectory(src)
 add_subdirectory(autotests)
 add_subdirectory(tests)

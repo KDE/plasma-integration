@@ -52,12 +52,12 @@ static const char GeneralId[] =      "General";
 static const char DefaultFont[] =    "Sans Serif";
 
 static const KFontData DefaultFontData[KFontSettingsData::FontTypesCount] = {
-    { GeneralId, "font",                 DefaultFont,  9, -1, QFont::SansSerif },
-    { GeneralId, "fixed",                "Monospace",  9, -1, QFont::TypeWriter },
-    { GeneralId, "toolBarFont",          DefaultFont,  8, -1, QFont::SansSerif },
-    { GeneralId, "menuFont",             DefaultFont,  9, -1, QFont::SansSerif },
-    { "WM",      "activeFont",           DefaultFont,  8, -1, QFont::SansSerif },
-    { GeneralId, "taskbarFont",          DefaultFont,  9, -1, QFont::SansSerif },
+    { GeneralId, "font",                 DefaultFont,  10, -1, QFont::SansSerif },
+    { GeneralId, "fixed",                "Oxygen Mono",  9, -1, QFont::TypeWriter },
+    { GeneralId, "toolBarFont",          DefaultFont,  9, -1, QFont::SansSerif },
+    { GeneralId, "menuFont",             DefaultFont,  10, -1, QFont::SansSerif },
+    { "WM",      "activeFont",           DefaultFont,  10, -1, QFont::SansSerif },
+    { GeneralId, "taskbarFont",          DefaultFont,  10, -1, QFont::SansSerif },
     { GeneralId, "smallestReadableFont", DefaultFont,  8, -1, QFont::SansSerif }
 };
 
