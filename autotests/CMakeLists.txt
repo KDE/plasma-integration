@@ -28,7 +28,10 @@ frameworkintegration_tests(
   ../src/platformtheme/kfontsettingsdata.cpp
   ../src/platformtheme/khintssettings.cpp
   ../src/platformtheme/kdeplatformfiledialoghelper.cpp
+  ../src/platformtheme/kdeplatformfiledialogbase.cpp
   ../src/platformtheme/kdeplatformsystemtrayicon.cpp
+  ../src/platformtheme/kdirselectdialog.cpp
+  ../src/platformtheme/kfiletreeview.cpp
 )
 
 frameworkintegration_tests(

@@ -4,7 +4,10 @@ set(platformtheme_SRCS
     kfontsettingsdata.cpp
     khintssettings.cpp
     kdeplatformfiledialoghelper.cpp
+    kdeplatformfiledialogbase.cpp
     kdeplatformsystemtrayicon.cpp
+    kfiletreeview.cpp
+    kdirselectdialog.cpp
     main.cpp
 )
 

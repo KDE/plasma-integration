@@ -22,11 +22,11 @@
 #define KDEPLATFORMFILEDIALOGHELPER_H
 
 #include <qpa/qplatformdialoghelper.h>
-#include <QDialog>
+#include "kdeplatformfiledialogbase_p.h"
 
 class KFileWidget;
 class QDialogButtonBox;
-class KDEPlatformFileDialog : public QDialog
+class KDEPlatformFileDialog : public KDEPlatformFileDialogBase
 {
     Q_OBJECT
 public:
@@ -40,16 +40,8 @@ public:
     QString selectedNameFilter();
     QList<QUrl> selectedFiles();
 
-Q_SIGNALS:
-    void fileSelected(const QUrl &file);
-    void filesSelected(const QList<QUrl> &files);
-    void currentChanged(const QUrl &path);
-    void directoryEntered(const QUrl &directory);
-    void filterSelected(const QString &filter);
-
 protected:
     KFileWidget *m_fileWidget;
-    QDialogButtonBox *m_buttons;
 };
 
 class KDEPlatformFileDialogHelper : public QPlatformFileDialogHelper
@@ -74,7 +66,7 @@ public:
     virtual bool show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent);
 
 private:
-    KDEPlatformFileDialog *m_dialog;
+    KDEPlatformFileDialogBase *m_dialog;
 };
 
 #endif // KDEPLATFORMFILEDIALOGHELPER_H

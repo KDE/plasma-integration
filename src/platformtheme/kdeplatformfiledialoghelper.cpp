@@ -1,5 +1,6 @@
 /*  This file is part of the KDE libraries
  *  Copyright 2013 Aleix Pol Gonzalez <aleixpol@blue-systems.com>
+ *  Copyright 2014 Martin Klapetek <mklapetek@kde.org>
  *
  *  This library is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -19,6 +20,9 @@
  */
 
 #include "kdeplatformfiledialoghelper.h"
+#include "kdeplatformfiledialogbase_p.h"
+#include "kdirselectdialog_p.h"
+
 #include <kfilefiltercombo.h>
 #include <kfilewidget.h>
 #include <klocalizedstring.h>
@@ -85,7 +89,7 @@ static QString kde2QtFilter(const QStringList &list, const QString &kde)
 }
 
 KDEPlatformFileDialog::KDEPlatformFileDialog()
-    : QDialog()
+    : KDEPlatformFileDialogBase()
     , m_fileWidget(new KFileWidget(QUrl(), this))
 {
     setLayout(new QVBoxLayout);
@@ -157,24 +161,34 @@ KDEPlatformFileDialogHelper::~KDEPlatformFileDialogHelper()
 
 void KDEPlatformFileDialogHelper::initializeDialog()
 {
-    m_dialog->m_fileWidget->setOperationMode(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? KFileWidget::Opening : KFileWidget::Saving);
-    if (options()->windowTitle().isEmpty()) {
-        m_dialog->setWindowTitle(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? i18n("Opening...") : i18n("Saving..."));
+    if (options()->testOption(QFileDialogOptions::ShowDirsOnly)) {
+        KDirSelectDialog *dialog = new KDirSelectDialog(m_dialog->directory());
+        delete m_dialog;
+        m_dialog = dialog;
+        connect(m_dialog, SIGNAL(accepted()), SIGNAL(accept()));
+        connect(m_dialog, SIGNAL(rejected()), SIGNAL(reject()));
     } else {
-        m_dialog->setWindowTitle(options()->windowTitle());
-    }
-    setDirectory(options()->initialDirectory());
+        // needed for accessing m_fileWidget
+        KDEPlatformFileDialog *dialog = qobject_cast<KDEPlatformFileDialog*>(m_dialog);
+        dialog->m_fileWidget->setOperationMode(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? KFileWidget::Opening : KFileWidget::Saving);
+        if (options()->windowTitle().isEmpty()) {
+            dialog->setWindowTitle(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? i18n("Opening...") : i18n("Saving..."));
+        } else {
+            dialog->setWindowTitle(options()->windowTitle());
+        }
+        setDirectory(options()->initialDirectory());
 
-    QStringList filters = options()->mimeTypeFilters();
-    if (!filters.isEmpty()) {
-        m_dialog->m_fileWidget->setMimeFilter(filters);
-    }
+        QStringList filters = options()->mimeTypeFilters();
+        if (!filters.isEmpty()) {
+            dialog->m_fileWidget->setMimeFilter(filters);
+        }
 
-    QStringList nameFilters = options()->nameFilters();
-    if (!nameFilters.isEmpty()) {
-        m_dialog->m_fileWidget->setFilter(qt2KdeFilter(nameFilters));
-        if (!options()->initiallySelectedNameFilter().isEmpty()) {
-            selectNameFilter(options()->initiallySelectedNameFilter());
+        QStringList nameFilters = options()->nameFilters();
+        if (!nameFilters.isEmpty()) {
+            dialog->m_fileWidget->setFilter(qt2KdeFilter(nameFilters));
+            if (!options()->initiallySelectedNameFilter().isEmpty()) {
+                selectNameFilter(options()->initiallySelectedNameFilter());
+            }
         }
     }
 }
