@@ -41,6 +41,7 @@ set_package_properties(OxygenFont PROPERTIES
     TYPE RUNTIME
 )
 
+add_definitions(-DTRANSLATION_DOMAIN=\"frameworkintegration5\")
 add_subdirectory(src)
 add_subdirectory(autotests)
 add_subdirectory(tests)
