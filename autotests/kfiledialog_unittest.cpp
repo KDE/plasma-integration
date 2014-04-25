@@ -67,6 +67,19 @@ private Q_SLOTS:
         dialog.setDirectory(QDir::rootPath());
         QCOMPARE(dialog.directory().absolutePath(), QDir::rootPath());
     }
+
+    /*
+     * Disabled because of a bug in Qt that causes the wrong viewMode value to be returned. A patch
+     * is in Qt's gettit: https://codereview.qt-project.org/#change,84137 and should land in Qt 5.3.1
+     * TODO: enable once we depend on Qt 5.3.1.
+    void testSetView()
+    {
+        QFileDialog dialog;
+        dialog.setViewMode(QFileDialog::Detail);
+        dialog.show();
+        QCOMPARE(dialog.viewMode(), QFileDialog::Detail);
+    }
+    */
 };
 
 QTEST_MAIN(KFileDialog_UnitTest)

@@ -124,6 +124,21 @@ void KDEPlatformFileDialog::selectFile(const QUrl &filename)
     m_fileWidget->setSelection(filename.fileName());
 }
 
+void KDEPlatformFileDialog::setViewMode(QFileDialogOptions::ViewMode view)
+{
+    switch (view) {
+    case QFileDialogOptions::ViewMode::Detail:
+        m_fileWidget->dirOperator()->setView(KFile::FileView::Detail);
+        break;
+    case QFileDialogOptions::ViewMode::List:
+        m_fileWidget->dirOperator()->setView(KFile::FileView::Simple);
+        break;
+    default:
+        m_fileWidget->dirOperator()->setView(KFile::FileView::Default);
+        break;
+    }
+}
+
 QString KDEPlatformFileDialog::selectedNameFilter()
 {
     return m_fileWidget->filterWidget()->currentFilter();
@@ -177,6 +192,7 @@ void KDEPlatformFileDialogHelper::initializeDialog()
             dialog->setWindowTitle(options()->windowTitle());
         }
         setDirectory(options()->initialDirectory());
+        dialog->setViewMode(options()->viewMode());
 
         QStringList filters = options()->mimeTypeFilters();
         if (!filters.isEmpty()) {
@@ -191,6 +207,7 @@ void KDEPlatformFileDialogHelper::initializeDialog()
             }
         }
     }
+
 }
 
 void KDEPlatformFileDialogHelper::exec()
