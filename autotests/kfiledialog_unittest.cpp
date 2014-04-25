@@ -61,6 +61,12 @@ private Q_SLOTS:
         QCOMPARE(dialog.selectedNameFilter(), selectNameFilter);
     }
 
+    void testSetDirectory()
+    {
+        QFileDialog dialog;
+        dialog.setDirectory(QDir::rootPath());
+        QCOMPARE(dialog.directory().absolutePath(), QDir::rootPath());
+    }
 };
 
 QTEST_MAIN(KFileDialog_UnitTest)

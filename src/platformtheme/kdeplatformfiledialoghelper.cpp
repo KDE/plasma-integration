@@ -136,7 +136,7 @@ void KDEPlatformFileDialog::selectNameFilter(const QString &filter)
 
 void KDEPlatformFileDialog::setDirectory(const QUrl &directory)
 {
-    m_fileWidget->setStartDir(directory);
+    m_fileWidget->setUrl(directory);
 }
 
 ////////////////////////////////////////////////
