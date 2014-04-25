@@ -70,8 +70,12 @@ private Q_SLOTS:
 
     /*
      * Disabled because of a bug in Qt that causes the wrong viewMode value to be returned. A patch
-     * is in Qt's gettit: https://codereview.qt-project.org/#change,84137 and should land in Qt 5.3.1
-     * TODO: enable once we depend on Qt 5.3.1.
+     * is in Qt's gerrit: https://codereview.qt-project.org/#change,84137
+     * It's not yet in Qt 5.4 therefore Qt 5.5 is the minimal version with this patch. However, the
+     * patch is likely going to be accepted earlier. The version check below will have to
+     * be changed accordingly once the patch lands.
+     */
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
     void testSetView()
     {
         QFileDialog dialog;
@@ -79,7 +83,7 @@ private Q_SLOTS:
         dialog.show();
         QCOMPARE(dialog.viewMode(), QFileDialog::Detail);
     }
-    */
+#endif
 };
 
 QTEST_MAIN(KFileDialog_UnitTest)
