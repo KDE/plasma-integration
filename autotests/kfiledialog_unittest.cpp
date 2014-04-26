@@ -20,8 +20,11 @@
 
 #include <QTest>
 #include <QFileDialog>
+#include <KFileWidget>
+#include <KDirOperator>
 
-#include <QDebug>
+Q_DECLARE_METATYPE(QFileDialog::ViewMode)
+Q_DECLARE_METATYPE(KFile::FileView)
 
 class KFileDialog_UnitTest : public QObject
 {
@@ -68,22 +71,40 @@ private Q_SLOTS:
         QCOMPARE(dialog.directory().absolutePath(), QDir::rootPath());
     }
 
-    /*
-     * Disabled because of a bug in Qt that causes the wrong viewMode value to be returned. A patch
-     * is in Qt's gerrit: https://codereview.qt-project.org/#change,84137
-     * It's not yet in Qt 5.4 therefore Qt 5.5 is the minimal version with this patch. However, the
-     * patch is likely going to be accepted earlier. The version check below will have to
-     * be changed accordingly once the patch lands.
-     */
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
+    void testSetView_data()
+    {
+        QTest::addColumn<QFileDialog::ViewMode>("qtViewMode");
+        QTest::addColumn<KFile::FileView>("kdeViewMode");
+        QTest::newRow("detail") << QFileDialog::Detail << KFile::Detail;
+        QTest::newRow("list") << QFileDialog::List << KFile::Simple;
+    }
+
     void testSetView()
     {
+        QFETCH(QFileDialog::ViewMode, qtViewMode);
+        QFETCH(KFile::FileView, kdeViewMode);
         QFileDialog dialog;
-        dialog.setViewMode(QFileDialog::Detail);
+        dialog.setViewMode(qtViewMode);
         dialog.show();
-        QCOMPARE(dialog.viewMode(), QFileDialog::Detail);
-    }
+
+        foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+            KFileWidget * fw = widget->findChild<KFileWidget *>();
+            if(fw) {
+                QCOMPARE(fw->dirOperator()->viewMode(), kdeViewMode);
+            }
+        }
+
+/*
+ * Disabled because of a bug in Qt that causes the wrong viewMode value to be returned. A patch
+ * is in Qt's gerrit: https://codereview.qt-project.org/#change,84137
+ * It's not yet in Qt 5.4 therefore Qt 5.5 is the minimal version with this patch. However, the
+ * patch is likely going to be accepted earlier. The version check below will have to
+ * be changed accordingly once the patch lands.
+ */
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
+        QCOMPARE(dialog.viewMode(), qtViewMode);
 #endif
+    }
 };
 
 QTEST_MAIN(KFileDialog_UnitTest)

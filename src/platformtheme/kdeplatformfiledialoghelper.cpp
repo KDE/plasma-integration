@@ -128,13 +128,13 @@ void KDEPlatformFileDialog::setViewMode(QFileDialogOptions::ViewMode view)
 {
     switch (view) {
     case QFileDialogOptions::ViewMode::Detail:
-        m_fileWidget->dirOperator()->setView(KFile::FileView::Detail);
+        m_fileWidget->setViewMode(KFile::FileView::Detail);
         break;
     case QFileDialogOptions::ViewMode::List:
-        m_fileWidget->dirOperator()->setView(KFile::FileView::Simple);
+        m_fileWidget->setViewMode(KFile::FileView::Simple);
         break;
     default:
-        m_fileWidget->dirOperator()->setView(KFile::FileView::Default);
+        m_fileWidget->setViewMode(KFile::FileView::Default);
         break;
     }
 }
