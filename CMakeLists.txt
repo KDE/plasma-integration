@@ -19,20 +19,21 @@ include(KDECMakeSettings)
 set(REQUIRED_QT_VERSION 5.2.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Widgets DBus)
 
-set(KF5_VERSION "4.98.0")
+set(KF5_VERSION "4.98.0") # handled by release scripts # handled by release scripts
+set(KF5_DEP_VERSION "4.98.0") # handled by release scripts
 
 ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX FRAMEWORKINTEGRATION
                   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/frameworkintegration_version.h"
                   PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5FrameworkIntegrationConfigVersion.cmake"
                   SOVERSION 5)
 
-find_package(KF5Config ${KF5_VERSION} REQUIRED)
-find_package(KF5ConfigWidgets ${KF5_VERSION} REQUIRED)
-find_package(KF5I18n ${KF5_VERSION} REQUIRED)
-find_package(KF5IconThemes ${KF5_VERSION} REQUIRED)
-find_package(KF5KIO ${KF5_VERSION} REQUIRED)
-find_package(KF5Notifications ${KF5_VERSION} REQUIRED)
-find_package(KF5WidgetsAddons ${KF5_VERSION} REQUIRED)
+find_package(KF5Config ${KF5_DEP_VERSION} REQUIRED)
+find_package(KF5ConfigWidgets ${KF5_DEP_VERSION} REQUIRED)
+find_package(KF5I18n ${KF5_DEP_VERSION} REQUIRED)
+find_package(KF5IconThemes ${KF5_DEP_VERSION} REQUIRED)
+find_package(KF5KIO ${KF5_DEP_VERSION} REQUIRED)
+find_package(KF5Notifications ${KF5_DEP_VERSION} REQUIRED)
+find_package(KF5WidgetsAddons ${KF5_DEP_VERSION} REQUIRED)
 
 find_package(OxygenFont 0.4)
 
