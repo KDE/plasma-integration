@@ -62,6 +62,6 @@ install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF5FrameworkIntegrationConfig.cmake"
 install(EXPORT KF5FrameworkIntegrationTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5FrameworkIntegrationTargets.cmake NAMESPACE KF5:: )
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/frameworkintegration_version.h
-        DESTINATION ${INCLUDE_INSTALL_DIR} COMPONENT Devel )
+        DESTINATION ${KF5_INCLUDE_INSTALL_DIR} COMPONENT Devel )
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
