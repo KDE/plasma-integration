@@ -24,7 +24,9 @@
 #include <KDirOperator>
 
 Q_DECLARE_METATYPE(QFileDialog::ViewMode)
+Q_DECLARE_METATYPE(QFileDialog::FileMode)
 Q_DECLARE_METATYPE(KFile::FileView)
+Q_DECLARE_METATYPE(KFile::Modes)
 
 class KFileDialog_UnitTest : public QObject
 {
@@ -104,6 +106,34 @@ private Q_SLOTS:
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
         QCOMPARE(dialog.viewMode(), qtViewMode);
 #endif
+    }
+
+    void testSetFileMode_data()
+    {
+        QTest::addColumn<QFileDialog::FileMode>("qtFileMode");
+        QTest::addColumn<KFile::Modes>("kdeFileMode");
+        QTest::newRow("anyfile") << QFileDialog::AnyFile << KFile::Modes(KFile::File);
+        QTest::newRow("existingfile") << QFileDialog::ExistingFile << KFile::Modes(KFile::File | KFile::ExistingOnly);
+        QTest::newRow("directory") << QFileDialog::Directory << KFile::Modes(KFile::Directory);
+        QTest::newRow("existingfiles") << QFileDialog::ExistingFiles << KFile::Modes(KFile::Files | KFile::ExistingOnly);
+    }
+
+    void testSetFileMode()
+    {
+        QFETCH(QFileDialog::FileMode, qtFileMode);
+        QFETCH(KFile::Modes, kdeFileMode);
+        QFileDialog dialog;
+        dialog.setFileMode(qtFileMode);
+        dialog.show();
+
+        foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+            KFileWidget * fw = widget->findChild<KFileWidget *>();
+            if(fw) {
+                QCOMPARE(fw->mode(), kdeFileMode);
+            }
+        }
+
+        QCOMPARE(dialog.fileMode(), qtFileMode);
     }
 };
 

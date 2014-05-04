@@ -139,6 +139,27 @@ void KDEPlatformFileDialog::setViewMode(QFileDialogOptions::ViewMode view)
     }
 }
 
+void KDEPlatformFileDialog::setFileMode(QFileDialogOptions::FileMode mode)
+{
+    switch (mode) {
+    case QFileDialogOptions::FileMode::AnyFile:
+        m_fileWidget->setMode(KFile::File);
+        break;
+    case QFileDialogOptions::FileMode::ExistingFile:
+        m_fileWidget->setMode(KFile::Mode::File | KFile::Mode::ExistingOnly);
+        break;
+    case QFileDialogOptions::FileMode::Directory:
+        m_fileWidget->setMode(KFile::Mode::Directory);
+        break;
+    case QFileDialogOptions::FileMode::ExistingFiles:
+        m_fileWidget->setMode(KFile::Mode::Files | KFile::Mode::ExistingOnly);
+        break;
+    default:
+        m_fileWidget->setMode(KFile::File);
+        break;
+    }
+}
+
 QString KDEPlatformFileDialog::selectedNameFilter()
 {
     return m_fileWidget->filterWidget()->currentFilter();
@@ -193,6 +214,7 @@ void KDEPlatformFileDialogHelper::initializeDialog()
         }
         setDirectory(options()->initialDirectory());
         dialog->setViewMode(options()->viewMode());
+        dialog->setFileMode(options()->fileMode());
 
         QStringList filters = options()->mimeTypeFilters();
         if (!filters.isEmpty()) {

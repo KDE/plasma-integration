@@ -38,6 +38,7 @@ public:
     void setDirectory(const QUrl &directory);
     void selectFile(const QUrl &filename);
     void setViewMode(QFileDialogOptions::ViewMode view);
+    void setFileMode(QFileDialogOptions::FileMode mode);
     QString selectedNameFilter();
     QList<QUrl> selectedFiles();
 
