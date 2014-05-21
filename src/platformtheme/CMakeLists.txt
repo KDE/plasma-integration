@@ -1,3 +1,18 @@
+if(NOT APPLE)
+  find_package(XCB COMPONENTS XCB)
+  set_package_properties(XCB PROPERTIES
+    TYPE RECOMMENDED
+    PURPOSE "Required for flushing the XCB connection on the X11 Platform"
+  )
+  set(HAVE_X11 ${XCB_XCB_FOUND})
+  if (XCB_XCB_FOUND)
+    find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
+  endif()
+else()
+    set(HAVE_X11 FALSE)
+endif()
+
+configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-platformtheme.h )
 
 set(platformtheme_SRCS
     kdeplatformtheme.cpp
@@ -29,5 +44,9 @@ target_link_libraries(KDEPlatformTheme
         KF5::I18n
         KF5::Notifications
 )
+
+if(HAVE_X11)
+  target_link_libraries(KDEPlatformTheme PRIVATE Qt5::X11Extras XCB::XCB)
+endif()
 
 install(TARGETS KDEPlatformTheme DESTINATION ${QT_PLUGIN_INSTALL_DIR}/platformthemes)
