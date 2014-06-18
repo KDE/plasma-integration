@@ -28,6 +28,8 @@
 #include <klocalizedstring.h>
 #include <kdiroperator.h>
 #include <KUrlComboBox>
+#include <KSharedConfig>
+#include <KWindowConfig>
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
 #include <QPushButton>
@@ -192,6 +194,9 @@ KDEPlatformFileDialogHelper::KDEPlatformFileDialogHelper()
 
 KDEPlatformFileDialogHelper::~KDEPlatformFileDialogHelper()
 {
+    KSharedConfig::Ptr conf = KSharedConfig::openConfig();
+    KConfigGroup group = conf->group("FileDialogSize");
+    KWindowConfig::saveWindowSize(m_dialog->windowHandle(), group);
     delete m_dialog;
 }
 
@@ -229,11 +234,12 @@ void KDEPlatformFileDialogHelper::initializeDialog()
             }
         }
     }
-
 }
 
 void KDEPlatformFileDialogHelper::exec()
 {
+//  FIXME should KWindowConfig::restoreWindowSize, but then we dont' have a windowHandle yet and
+//  after exec is already too late.
     m_dialog->exec();
 }
 
@@ -249,6 +255,8 @@ bool KDEPlatformFileDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowMo
     m_dialog->setModal(windowModality != Qt::NonModal);
     if (windowModality == Qt::NonModal) {
         m_dialog->show();
+        KSharedConfig::Ptr conf = KSharedConfig::openConfig();
+        KWindowConfig::restoreWindowSize(m_dialog->windowHandle(), conf->group("FileDialogSize"));
     }
     return true;
 }

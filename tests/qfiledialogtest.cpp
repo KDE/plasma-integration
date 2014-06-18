@@ -26,6 +26,7 @@
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
+    app.setApplicationName(QStringLiteral("QFileDialogTest"));
     QCommandLineParser parser;
     parser.addHelpOption();
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("staticFunction")), QStringLiteral("Test one of the static convencience function: 'getExistingDirectory'"), QStringLiteral("function name")));
