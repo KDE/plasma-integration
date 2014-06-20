@@ -98,12 +98,10 @@ private Q_SLOTS:
 
 /*
  * Disabled because of a bug in Qt that causes the wrong viewMode value to be returned. A patch
- * is in Qt's gerrit: https://codereview.qt-project.org/#change,84137
- * It's not yet in Qt 5.4 therefore Qt 5.5 is the minimal version with this patch. However, the
- * patch is likely going to be accepted earlier. The version check below will have to
- * be changed accordingly once the patch lands.
+ * is in Qt's gerrit: https://codereview.qt-project.org/#change,84137 and is in Qt since 5.3.1.
+ * TODO: remove the version check once this project requires Qt 5.3.1 or higher.
  */
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 3, 1))
         QCOMPARE(dialog.viewMode(), qtViewMode);
 #endif
     }
