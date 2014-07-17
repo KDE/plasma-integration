@@ -47,13 +47,13 @@ KFontSettingsData::~KFontSettingsData()
     }
 }
 
-// NOTE: keep in sync with kdebase/workspace/kcontrol/fonts/fonts.cpp
+// NOTE: keep in sync with plasma-desktop/kcms/fonts/fonts.cpp
 static const char GeneralId[] =      "General";
-static const char DefaultFont[] =    "Sans Serif";
+static const char DefaultFont[] =    "Oxygen-Sans";
 
 static const KFontData DefaultFontData[KFontSettingsData::FontTypesCount] = {
     { GeneralId, "font",                 DefaultFont,  10, -1, QFont::SansSerif },
-    { GeneralId, "fixed",                "Oxygen Mono",  9, -1, QFont::TypeWriter },
+    { GeneralId, "fixed",                "Oxygen Mono",  9, -1, QFont::Monospace },
     { GeneralId, "toolBarFont",          DefaultFont,  9, -1, QFont::SansSerif },
     { GeneralId, "menuFont",             DefaultFont,  10, -1, QFont::SansSerif },
     { "WM",      "activeFont",           DefaultFont,  10, -1, QFont::SansSerif },

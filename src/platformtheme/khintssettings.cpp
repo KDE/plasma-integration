@@ -59,7 +59,7 @@ KHintsSettings::KHintsSettings() : QObject(0)
     m_hints[QPlatformTheme::ToolBarIconSize] = cgToolbarIcon.readEntry("Size", 22);
     m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = cg.readEntry("SingleClick", true);
     KConfigGroup cgIcons(mKdeGlobals, "Icons");
-    m_hints[QPlatformTheme::SystemIconThemeName] = cgIcons.readEntry("Theme", "oxygen");
+    m_hints[QPlatformTheme::SystemIconThemeName] = cgIcons.readEntry("Theme", "breeze");
     m_hints[QPlatformTheme::SystemIconFallbackThemeName] = "hicolor";
     m_hints[QPlatformTheme::IconThemeSearchPaths] = xdgIconThemePaths();
     m_hints[QPlatformTheme::StyleNames] = (QStringList() << cg.readEntry("widgetStyle", QString())
@@ -101,13 +101,14 @@ QStringList KHintsSettings::xdgIconThemePaths() const
         paths << homeIconDir.absoluteFilePath();
     }
 
-    QString xdgDirString = QFile::decodeName(qgetenv("XDG_DATA_DIRS"));
+    QString xdgDirString = QFile::decodeName(qgetenv("XDG_ICON_DIRS"));
+
     if (xdgDirString.isEmpty()) {
-        xdgDirString = QLatin1String("/usr/local/share/:/usr/share/");
+        xdgDirString = QLatin1String("/usr/local/share/icons:/usr/share/icons");
     }
 
     foreach (const QString &xdgDir, xdgDirString.split(QLatin1Char(':'))) {
-        const QFileInfo xdgIconsDir(xdgDir + QStringLiteral("/icons"));
+        const QFileInfo xdgIconsDir(xdgDir);
         if (xdgIconsDir.isDir()) {
             paths << xdgIconsDir.absoluteFilePath();
         }
@@ -204,7 +205,7 @@ void KHintsSettings::iconChanged(int group)
     KIconLoader::Group iconGroup = (KIconLoader::Group) group;
     if (iconGroup != KIconLoader::MainToolbar) {
         KConfigGroup cgIcons(mKdeGlobals, "Icons");
-        m_hints[QPlatformTheme::SystemIconThemeName] = cgIcons.readEntry("Theme", "oxygen");
+        m_hints[QPlatformTheme::SystemIconThemeName] = cgIcons.readEntry("Theme", "breeze");
         return;
     }
 
