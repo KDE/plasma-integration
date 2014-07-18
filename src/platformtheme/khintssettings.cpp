@@ -104,7 +104,7 @@ QStringList KHintsSettings::xdgIconThemePaths() const
     QString xdgDirString = QFile::decodeName(qgetenv("XDG_DATA_DIRS"));
 
     if (xdgDirString.isEmpty()) {
-        xdgDirString = QLatin1String("/usr/local/share/icons:/usr/share/icons");
+        xdgDirString = QLatin1String("/usr/local/share:/usr/share");
     }
 
     foreach (const QString &xdgDir, xdgDirString.split(QLatin1Char(':'))) {
