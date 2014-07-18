@@ -101,14 +101,14 @@ QStringList KHintsSettings::xdgIconThemePaths() const
         paths << homeIconDir.absoluteFilePath();
     }
 
-    QString xdgDirString = QFile::decodeName(qgetenv("XDG_ICON_DIRS"));
+    QString xdgDirString = QFile::decodeName(qgetenv("XDG_DATA_DIRS"));
 
     if (xdgDirString.isEmpty()) {
         xdgDirString = QLatin1String("/usr/local/share/icons:/usr/share/icons");
     }
 
     foreach (const QString &xdgDir, xdgDirString.split(QLatin1Char(':'))) {
-        const QFileInfo xdgIconsDir(xdgDir);
+        const QFileInfo xdgIconsDir(xdgDir + QStringLiteral("/icons"));
         if (xdgIconsDir.isDir()) {
             paths << xdgIconsDir.absoluteFilePath();
         }
