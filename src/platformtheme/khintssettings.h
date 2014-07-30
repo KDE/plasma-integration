@@ -73,6 +73,7 @@ private Q_SLOTS:
     void slotNotifyChange(int type, int arg);
 
 private:
+    QVariant readConfigValue(const QString &group, const QString &key, const QVariant &defaultValue);
     void loadPalettes();
     void iconChanged(int group);
     void updateQtSettings(KConfigGroup &cg);
@@ -82,6 +83,8 @@ private:
     QHash<QPlatformTheme::Palette, QPalette *> m_palettes;
     QHash<QPlatformTheme::ThemeHint, QVariant> m_hints;
     KSharedConfigPtr mKdeGlobals;
+    KSharedConfigPtr mDefaultLnfConfig;
+    KSharedConfigPtr mLnfConfig;
 };
 
 #endif //KHINTS_SETTINGS_H
