@@ -41,6 +41,7 @@ public:
     virtual QList<QUrl> selectedFiles() = 0;
 
 Q_SIGNALS:
+    void closed();
     void fileSelected(const QUrl &file);
     void filesSelected(const QList<QUrl> &files);
     void currentChanged(const QUrl &path);
@@ -48,6 +49,7 @@ Q_SIGNALS:
     void filterSelected(const QString &filter);
 
 protected:
+    void closeEvent(QCloseEvent *e);
     QDialogButtonBox *m_buttons;
 
 };

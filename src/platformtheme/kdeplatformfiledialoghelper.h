@@ -48,6 +48,7 @@ protected:
 
 class KDEPlatformFileDialogHelper : public QPlatformFileDialogHelper
 {
+    Q_OBJECT
 public:
     KDEPlatformFileDialogHelper();
     virtual ~KDEPlatformFileDialogHelper();
@@ -67,6 +68,9 @@ public:
     virtual void exec() Q_DECL_OVERRIDE;
     virtual void hide() Q_DECL_OVERRIDE;
     virtual bool show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent) Q_DECL_OVERRIDE;
+
+private Q_SLOTS:
+    void saveSize();
 
 private:
     KDEPlatformFileDialogBase *m_dialog;

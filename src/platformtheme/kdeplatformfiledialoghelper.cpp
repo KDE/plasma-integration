@@ -34,6 +34,7 @@
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
 #include <QPushButton>
+#include <QWindow>
 
 #include <QTextStream>
 #include <QEventLoop>
@@ -189,6 +190,8 @@ KDEPlatformFileDialogHelper::KDEPlatformFileDialogHelper()
     : QPlatformFileDialogHelper()
     , m_dialog(new KDEPlatformFileDialog)
 {
+    connect(m_dialog, SIGNAL(closed()), SLOT(saveSize()));
+    connect(m_dialog, SIGNAL(finished(int)), SLOT(saveSize()));
     connect(m_dialog, SIGNAL(currentChanged(QUrl)), SIGNAL(currentChanged(QUrl)));
     connect(m_dialog, SIGNAL(directoryEntered(QUrl)), SIGNAL(directoryEntered(QUrl)));
     connect(m_dialog, SIGNAL(fileSelected(QUrl)), SIGNAL(fileSelected(QUrl)));
@@ -200,9 +203,7 @@ KDEPlatformFileDialogHelper::KDEPlatformFileDialogHelper()
 
 KDEPlatformFileDialogHelper::~KDEPlatformFileDialogHelper()
 {
-    KSharedConfig::Ptr conf = KSharedConfig::openConfig();
-    KConfigGroup group = conf->group("FileDialogSize");
-    KWindowConfig::saveWindowSize(m_dialog->windowHandle(), group);
+    saveSize();
     delete m_dialog;
 }
 
@@ -244,14 +245,26 @@ void KDEPlatformFileDialogHelper::initializeDialog()
 
 void KDEPlatformFileDialogHelper::exec()
 {
-//  FIXME should KWindowConfig::restoreWindowSize, but then we dont' have a windowHandle yet and
-//  after exec is already too late.
+    m_dialog->winId(); // ensure there's a window created
+    KSharedConfig::Ptr conf = KSharedConfig::openConfig();
+    KWindowConfig::restoreWindowSize(m_dialog->windowHandle(), conf->group("FileDialogSize"));
+    // NOTICE: QWindow::setGeometry() does NOT impact the backing QWidget geometry even if the platform
+    // window was created -> QTBUG-40584. We therefore copy the size here.
+    // TODO: remove once this was resolved in QWidget QPA
+    m_dialog->resize(m_dialog->windowHandle()->size());
     m_dialog->exec();
 }
 
 void KDEPlatformFileDialogHelper::hide()
 {
     m_dialog->hide();
+}
+
+void KDEPlatformFileDialogHelper::saveSize()
+{
+    KSharedConfig::Ptr conf = KSharedConfig::openConfig();
+    KConfigGroup group = conf->group("FileDialogSize");
+    KWindowConfig::saveWindowSize(m_dialog->windowHandle(), group);
 }
 
 bool KDEPlatformFileDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent)

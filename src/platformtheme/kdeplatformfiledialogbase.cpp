@@ -24,4 +24,10 @@ KDEPlatformFileDialogBase::KDEPlatformFileDialogBase()
 {
 }
 
+void KDEPlatformFileDialogBase::closeEvent(QCloseEvent *e)
+{
+    Q_EMIT closed();
+    QDialog::closeEvent(e);
+}
+
 #include "moc_kdeplatformfiledialogbase_p.cpp"
