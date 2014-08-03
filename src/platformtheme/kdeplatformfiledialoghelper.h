@@ -54,19 +54,19 @@ public:
 
     void initializeDialog();
 
-    virtual bool defaultNameFilterDisables() const;
-    virtual QUrl directory() const;
-    virtual QList<QUrl> selectedFiles() const;
-    virtual QString selectedNameFilter() const;
-    virtual void selectNameFilter(const QString &filter);
-    virtual void selectFile(const QUrl &filename);
-    virtual void setFilter();
-    virtual void setDirectory(const QUrl &directory);
+    virtual bool defaultNameFilterDisables() const Q_DECL_OVERRIDE;
+    virtual QUrl directory() const Q_DECL_OVERRIDE;
+    virtual QList<QUrl> selectedFiles() const Q_DECL_OVERRIDE;
+    virtual QString selectedNameFilter() const Q_DECL_OVERRIDE;
+    virtual void selectNameFilter(const QString &filter) Q_DECL_OVERRIDE;
+    virtual void selectFile(const QUrl &filename) Q_DECL_OVERRIDE;
+    virtual void setFilter() Q_DECL_OVERRIDE;
+    virtual void setDirectory(const QUrl &directory) Q_DECL_OVERRIDE;
     virtual bool isSupportedUrl(const QUrl& url) const Q_DECL_OVERRIDE;
 
-    virtual void exec();
-    virtual void hide();
-    virtual bool show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent);
+    virtual void exec() Q_DECL_OVERRIDE;
+    virtual void hide() Q_DECL_OVERRIDE;
+    virtual bool show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent) Q_DECL_OVERRIDE;
 
 private:
     KDEPlatformFileDialogBase *m_dialog;
