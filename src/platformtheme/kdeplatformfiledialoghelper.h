@@ -62,6 +62,7 @@ public:
     virtual void selectFile(const QUrl &filename);
     virtual void setFilter();
     virtual void setDirectory(const QUrl &directory);
+    virtual bool isSupportedUrl(const QUrl& url) const Q_DECL_OVERRIDE;
 
     virtual void exec();
     virtual void hide();

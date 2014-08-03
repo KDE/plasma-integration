@@ -30,6 +30,7 @@
 #include <KUrlComboBox>
 #include <KSharedConfig>
 #include <KWindowConfig>
+#include <KProtocolInfo>
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
 #include <QPushButton>
@@ -175,6 +176,11 @@ void KDEPlatformFileDialog::selectNameFilter(const QString &filter)
 void KDEPlatformFileDialog::setDirectory(const QUrl &directory)
 {
     m_fileWidget->setUrl(directory);
+}
+
+bool KDEPlatformFileDialogHelper::isSupportedUrl(const QUrl& url) const
+{
+    return KProtocolInfo::protocols().contains(url.scheme());
 }
 
 ////////////////////////////////////////////////
