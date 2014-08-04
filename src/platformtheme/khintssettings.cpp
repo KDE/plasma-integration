@@ -79,7 +79,8 @@ KHintsSettings::KHintsSettings() : QObject(0)
                << "fusion"
                << "windows";
     const QString lnfStyle = readConfigValue("KDE", "widgetStyle", QString()).toString();
-    if (!lnfStyle.isEmpty() && !styleNames.contains(lnfStyle)) {
+    if (!lnfStyle.isEmpty()) {
+        styleNames.removeOne(lnfStyle);
         styleNames.prepend(lnfStyle);
     }
     m_hints[QPlatformTheme::StyleNames] = styleNames;
