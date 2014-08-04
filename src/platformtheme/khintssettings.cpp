@@ -42,13 +42,13 @@
 #include <ksharedconfig.h>
 #include <kcolorscheme.h>
 
-KHintsSettings::KHintsSettings() : QObject(0), mLnfConfig(0)
+KHintsSettings::KHintsSettings() : QObject(0)
 {
     mKdeGlobals = KSharedConfig::openConfig("kdeglobals", KConfig::NoGlobals);
     KConfigGroup cg(mKdeGlobals, "KDE");
 
     // try to extract the proper defaults file from a lookandfeel package
-    const QString looknfeel = cg.readEntry("LookAndFeelPackage", "org.kde.lookandfeel");
+    const QString looknfeel = cg.readEntry("LookAndFeelPackage", "org.kde.defaultlookandfeel");
     mDefaultLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/" + looknfeel + "/contents/defaults"));
     if (looknfeel != "org.kde.lookandfeel") {
         mLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/org.kde.lookandfeel/contents/defaults"));
@@ -257,7 +257,6 @@ void KHintsSettings::iconChanged(int group)
 {
     KIconLoader::Group iconGroup = (KIconLoader::Group) group;
     if (iconGroup != KIconLoader::MainToolbar) {
-        KConfigGroup cgIcons(mKdeGlobals, "Icons");
         m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue("Icons", "Theme", "breeze");
 
         return;
