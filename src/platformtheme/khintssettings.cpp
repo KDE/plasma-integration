@@ -328,22 +328,22 @@ void KHintsSettings::loadPalettes()
     if (mKdeGlobals->hasGroup("Colors:View")) {
         m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(mKdeGlobals));
     } else {
-        const QString scheme = readConfigValue("KDE", "ColorScheme", "Breeze").toString();
 
         KConfigGroup cg(mKdeGlobals, "KDE");
         const QString looknfeel = cg.readEntry("LookAndFeelPackage", "org.kde.lookandfeel");
-        QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/" + looknfeel + "/contents/" + scheme + ".colors");
+        QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/" + looknfeel + "/contents/colors");
         if (!path.isEmpty()) {
             m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(path)));
             return;
         }
 
-        path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/org.kde.loonandfeel/contents/" + scheme + ".colors");
+        path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/org.kde.loonandfeel/contents/colors");
         if (!path.isEmpty()) {
             m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(path)));
             return;
         }
 
+        const QString scheme = readConfigValue("KDE", "ColorScheme", "Breeze").toString();
         path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "color-schemes/" + scheme + ".colors");
 
         if (!path.isEmpty()) {
