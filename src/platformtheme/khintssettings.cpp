@@ -66,7 +66,7 @@ KHintsSettings::KHintsSettings() : QObject(0)
     KConfigGroup cgToolbarIcon(mKdeGlobals, "MainToolbarIcons");
     m_hints[QPlatformTheme::ToolBarIconSize] = cgToolbarIcon.readEntry("Size", 22);
 
-    m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = readConfigValue("KDE", "SingleClick", true);
+    m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = cg.readEntry("SingleClick", true);
 
     m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue("Icons", "Theme", "breeze");
 
@@ -298,7 +298,7 @@ void KHintsSettings::updateQtSettings(KConfigGroup &cg)
     int startDragTime = cg.readEntry("StartDragTime", 10);
     m_hints[QPlatformTheme::StartDragTime] = startDragTime;
 
-    m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = readConfigValue("KDE", "SingleClick", true);
+    m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = cg.readEntry("SingleClick", true);
 
     bool showIcons = cg.readEntry("ShowIconsInMenuItems", !QApplication::testAttribute(Qt::AA_DontShowIconsInMenus));
     QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, !showIcons);
