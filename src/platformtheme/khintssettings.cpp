@@ -48,7 +48,7 @@ KHintsSettings::KHintsSettings() : QObject(0)
     KConfigGroup cg(mKdeGlobals, "KDE");
 
     // try to extract the proper defaults file from a lookandfeel package
-    const QString looknfeel = cg.readEntry("LookAndFeelPackage", "org.kde.defaultlookandfeel");
+    const QString looknfeel = cg.readEntry("LookAndFeelPackage", "org.kde.lookandfeel");
     mDefaultLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/" + looknfeel + "/contents/defaults"));
     if (looknfeel != "org.kde.lookandfeel") {
         mLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/org.kde.lookandfeel/contents/defaults"));
@@ -121,7 +121,8 @@ QVariant KHintsSettings::readConfigValue(const QString &group, const QString &ke
     }
 
     if (mLnfConfig) {
-        KConfigGroup lnfCg(mLnfConfig, group);
+        KConfigGroup lnfCg(mLnfConfig, "kdeglobals");
+        lnfCg = KConfigGroup(&lnfCg, group);
         if (lnfCg.isValid()) {
             value = lnfCg.readEntry(key, defaultValue);
 
