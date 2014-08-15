@@ -1,7 +1,5 @@
 # Framework Integration
 
-Integration of Qt application with KDE work spaces
-
 ## Introduction
 
 Framework Integration is a set of plugins responsible for better integration of
