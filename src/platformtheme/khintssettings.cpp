@@ -42,10 +42,20 @@
 #include <ksharedconfig.h>
 #include <kcolorscheme.h>
 
+static const QString defaultLookAndFeelPackage = "org.kde.breeze.desktop";
+
 KHintsSettings::KHintsSettings() : QObject(0)
 {
     mKdeGlobals = KSharedConfig::openConfig("kdeglobals", KConfig::NoGlobals);
     KConfigGroup cg(mKdeGlobals, "KDE");
+
+    // try to extract the proper defaults file from a lookandfeel package
+    const QString looknfeel = cg.readEntry("LookAndFeelPackage", defaultLookAndFeelPackage);
+    mDefaultLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/" + looknfeel + "/contents/defaults"));
+    if (looknfeel != defaultLookAndFeelPackage) {
+        mLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/" + defaultLookAndFeelPackage + "/contents/defaults"));
+    }
+
 
     m_hints[QPlatformTheme::CursorFlashTime] = qBound(200, cg.readEntry("CursorBlinkRate", 1000), 2000);
     m_hints[QPlatformTheme::MouseDoubleClickInterval] = cg.readEntry("DoubleClickInterval", 400);
@@ -57,15 +67,26 @@ KHintsSettings::KHintsSettings() : QObject(0)
 
     KConfigGroup cgToolbarIcon(mKdeGlobals, "MainToolbarIcons");
     m_hints[QPlatformTheme::ToolBarIconSize] = cgToolbarIcon.readEntry("Size", 22);
+
     m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = cg.readEntry("SingleClick", true);
-    KConfigGroup cgIcons(mKdeGlobals, "Icons");
-    m_hints[QPlatformTheme::SystemIconThemeName] = cgIcons.readEntry("Theme", "breeze");
+
+    m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue("Icons", "Theme", "breeze");
+
     m_hints[QPlatformTheme::SystemIconFallbackThemeName] = "hicolor";
     m_hints[QPlatformTheme::IconThemeSearchPaths] = xdgIconThemePaths();
-    m_hints[QPlatformTheme::StyleNames] = (QStringList() << cg.readEntry("widgetStyle", QString())
-                                           << "oxygen"
-                                           << "fusion"
-                                           << "windows");
+
+    QStringList styleNames;
+    styleNames << cg.readEntry("widgetStyle", QString())
+               << "oxygen"
+               << "fusion"
+               << "windows";
+    const QString lnfStyle = readConfigValue("KDE", "widgetStyle", QString()).toString();
+    if (!lnfStyle.isEmpty()) {
+        styleNames.removeOne(lnfStyle);
+        styleNames.prepend(lnfStyle);
+    }
+    m_hints[QPlatformTheme::StyleNames] = styleNames;
+
     m_hints[QPlatformTheme::DialogButtonBoxLayout] = QDialogButtonBox::KdeLayout;
     m_hints[QPlatformTheme::DialogButtonBoxButtonsHaveIcons] = cg.readEntry("ShowIconsOnPushButtons", true);
     m_hints[QPlatformTheme::UseFullScreenForPopupMenu] = true;
@@ -90,6 +111,35 @@ KHintsSettings::KHintsSettings() : QObject(0)
 KHintsSettings::~KHintsSettings()
 {
     qDeleteAll(m_palettes);
+}
+
+QVariant KHintsSettings::readConfigValue(const QString &group, const QString &key, const QVariant &defaultValue)
+{
+    KConfigGroup userCg(mKdeGlobals, group);
+    QVariant value = userCg.readEntry(key, QString());
+
+    if (!value.isNull()) {
+        return value;
+    }
+
+    if (mLnfConfig) {
+        KConfigGroup lnfCg(mLnfConfig, "kdeglobals");
+        lnfCg = KConfigGroup(&lnfCg, group);
+        if (lnfCg.isValid()) {
+            value = lnfCg.readEntry(key, defaultValue);
+
+            if (!value.isNull()) {
+                return value;
+            }
+        }
+    }
+
+    KConfigGroup lnfCg(mDefaultLnfConfig, group);
+    if (lnfCg.isValid()) {
+        return lnfCg.readEntry(key, defaultValue);
+    }
+
+    return defaultValue;
 }
 
 QStringList KHintsSettings::xdgIconThemePaths() const
@@ -187,10 +237,17 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
             return;
         }
 
-        m_hints[QPlatformTheme::StyleNames] = (QStringList() << theme
-                                               << "oxygen"
-                                               << "fusion"
-                                               << "windows");
+        QStringList styleNames;
+        styleNames << cg.readEntry("widgetStyle", QString())
+                << "oxygen"
+                << "fusion"
+                << "windows";
+        const QString lnfStyle = readConfigValue("KDE", "widgetStyle", QString()).toString();
+        if (!lnfStyle.isEmpty() && !styleNames.contains(lnfStyle)) {
+            styleNames.prepend(lnfStyle);
+        }
+        m_hints[QPlatformTheme::StyleNames] = styleNames;
+
         app->setStyle(theme);
         loadPalettes();
         break;
@@ -204,8 +261,8 @@ void KHintsSettings::iconChanged(int group)
 {
     KIconLoader::Group iconGroup = (KIconLoader::Group) group;
     if (iconGroup != KIconLoader::MainToolbar) {
-        KConfigGroup cgIcons(mKdeGlobals, "Icons");
-        m_hints[QPlatformTheme::SystemIconThemeName] = cgIcons.readEntry("Theme", "breeze");
+        m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue("Icons", "Theme", "breeze");
+
         return;
     }
 
@@ -271,5 +328,29 @@ void KHintsSettings::loadPalettes()
     qDeleteAll(m_palettes);
     m_palettes.clear();
 
-    m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(mKdeGlobals));
+    if (mKdeGlobals->hasGroup("Colors:View")) {
+        m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(mKdeGlobals));
+    } else {
+
+        KConfigGroup cg(mKdeGlobals, "KDE");
+        const QString looknfeel = cg.readEntry("LookAndFeelPackage", defaultLookAndFeelPackage);
+        QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/" + looknfeel + "/contents/colors");
+        if (!path.isEmpty()) {
+            m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(path)));
+            return;
+        }
+
+        path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/org.kde.loonandfeel/contents/colors");
+        if (!path.isEmpty()) {
+            m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(path)));
+            return;
+        }
+
+        const QString scheme = readConfigValue("KDE", "ColorScheme", "Breeze").toString();
+        path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "color-schemes/" + scheme + ".colors");
+
+        if (!path.isEmpty()) {
+            m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(path)));
+        }
+    }
 }
