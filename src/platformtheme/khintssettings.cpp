@@ -42,15 +42,17 @@
 #include <ksharedconfig.h>
 #include <kcolorscheme.h>
 
+static const QString defaultLookAndFeelPackage = "org.kde.breeze";
+
 KHintsSettings::KHintsSettings() : QObject(0)
 {
     mKdeGlobals = KSharedConfig::openConfig("kdeglobals", KConfig::NoGlobals);
     KConfigGroup cg(mKdeGlobals, "KDE");
 
     // try to extract the proper defaults file from a lookandfeel package
-    const QString looknfeel = cg.readEntry("LookAndFeelPackage", "org.kde.lookandfeel");
+    const QString looknfeel = cg.readEntry("LookAndFeelPackage", defaultLookAndFeelPackage);
     mDefaultLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/" + looknfeel + "/contents/defaults"));
-    if (looknfeel != "org.kde.lookandfeel") {
+    if (looknfeel != defaultLookAndFeelPackage) {
         mLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/org.kde.lookandfeel/contents/defaults"));
     }
 
@@ -331,7 +333,7 @@ void KHintsSettings::loadPalettes()
     } else {
 
         KConfigGroup cg(mKdeGlobals, "KDE");
-        const QString looknfeel = cg.readEntry("LookAndFeelPackage", "org.kde.lookandfeel");
+        const QString looknfeel = cg.readEntry("LookAndFeelPackage", defaultLookAndFeelPackage);
         QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/" + looknfeel + "/contents/colors");
         if (!path.isEmpty()) {
             m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(path)));
