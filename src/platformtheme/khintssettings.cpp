@@ -42,7 +42,7 @@
 #include <ksharedconfig.h>
 #include <kcolorscheme.h>
 
-static const QString defaultLookAndFeelPackage = "org.kde.breeze";
+static const QString defaultLookAndFeelPackage = "org.kde.breeze.desktop";
 
 KHintsSettings::KHintsSettings() : QObject(0)
 {
