@@ -53,7 +53,7 @@ KHintsSettings::KHintsSettings() : QObject(0)
     const QString looknfeel = cg.readEntry("LookAndFeelPackage", defaultLookAndFeelPackage);
     mDefaultLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/" + looknfeel + "/contents/defaults"));
     if (looknfeel != defaultLookAndFeelPackage) {
-        mLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/org.kde.lookandfeel/contents/defaults"));
+        mLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/" + defaultLookAndFeelPackage + "/contents/defaults"));
     }
 
 
