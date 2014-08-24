@@ -29,7 +29,7 @@ int main(int argc, char **argv)
     app.setApplicationName(QStringLiteral("QFileDialogTest"));
     QCommandLineParser parser;
     parser.addHelpOption();
-    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("staticFunction")), QStringLiteral("Test one of the static convencience function: 'getExistingDirectory'"), QStringLiteral("function name")));
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("staticFunction")), QStringLiteral("Test one of the static convenience function: 'getOpenFileUrl', 'getExistingDirectory'"), QStringLiteral("function name")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("acceptMode")), QStringLiteral("File dialog acceptMode: 'open' or 'save'"), QStringLiteral("type"), QStringLiteral("open")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("fileMode")), QStringLiteral("File dialog fileMode: 'AnyFile' or 'ExistingFile' or 'Directory' or 'ExistingFiles'"), QStringLiteral("type")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("nameFilter")), QStringLiteral("Dialog nameFilter, e. g. 'cppfiles (*.cpp *.h *.hpp)', can be specified multiple times"), QStringLiteral("nameFilter"), QStringLiteral("Everything (*)")));
@@ -40,13 +40,16 @@ int main(int argc, char **argv)
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("modal")), QStringLiteral("Test modal dialog"), QStringLiteral("modality"), QStringLiteral("on")));
     parser.process(app);
 
-    if (parser.value(QStringLiteral("staticFunction")) == QStringLiteral("getExistingDirectory")) {
+    const QString staticFunction = parser.value(QStringLiteral("staticFunction"));
+    if (staticFunction == QLatin1String("getExistingDirectory")) {
         QString dir = QFileDialog::getExistingDirectory(nullptr, QStringLiteral("getExistingDirectory test"), QStringLiteral("/tmp"));
         qDebug() << dir;
-        qDebug() << "exit";
+        return 0;
+    } else if (staticFunction == QLatin1String("getOpenFileUrl")) {
+        qDebug() << QFileDialog::getOpenFileUrl(Q_NULLPTR, QStringLiteral("getOpenFileUrl test"), QUrl::fromLocalFile(QDir::homePath()));
         return 0;
     }
-    
+
     QFileDialog dialog;
     dialog.setAcceptMode(
         parser.value(QStringLiteral("acceptMode")) == QStringLiteral("open")
