@@ -68,4 +68,7 @@ install(EXPORT KF5FrameworkIntegrationTargets DESTINATION "${CMAKECONFIG_INSTALL
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/frameworkintegration_version.h
         DESTINATION ${KF5_INCLUDE_INSTALL_DIR} COMPONENT Devel )
 
+install(FILES plasma_workspace.notifyrc DESTINATION ${KNOTIFYRC_INSTALL_DIR})
+
+
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
