@@ -191,9 +191,9 @@ QList<QKeySequence> KdePlatformTheme::keyBindings(QKeySequence::StandardKey key)
     case QKeySequence::Deselect:
         return KStandardShortcut::shortcut(KStandardShortcut::Deselect);
     case QKeySequence::DeleteStartOfWord:
-        return KStandardShortcut::shortcut(KStandardShortcut::DeleteWordForward);
-    case QKeySequence::DeleteEndOfWord:
         return KStandardShortcut::shortcut(KStandardShortcut::DeleteWordBack);
+    case QKeySequence::DeleteEndOfWord:
+        return KStandardShortcut::shortcut(KStandardShortcut::DeleteWordForward);
     case QKeySequence::NextChild:
         return KStandardShortcut::shortcut(KStandardShortcut::TabNext);
     case QKeySequence::PreviousChild:
