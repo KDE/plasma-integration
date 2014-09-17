@@ -177,7 +177,7 @@ QList<QKeySequence> KdePlatformTheme::keyBindings(QKeySequence::StandardKey key)
     case QKeySequence::MoveToEndOfLine:
         return KStandardShortcut::shortcut(KStandardShortcut::EndOfLine);
     case QKeySequence::MoveToStartOfDocument:
-        return KStandardShortcut::shortcut(KStandardShortcut::Home);
+        return KStandardShortcut::shortcut(KStandardShortcut::Begin);
     case QKeySequence::MoveToEndOfDocument:
         return KStandardShortcut::shortcut(KStandardShortcut::End);
     case QKeySequence::SaveAs:
@@ -190,6 +190,14 @@ QList<QKeySequence> KdePlatformTheme::keyBindings(QKeySequence::StandardKey key)
         return KStandardShortcut::shortcut(KStandardShortcut::FullScreen);
     case QKeySequence::Deselect:
         return KStandardShortcut::shortcut(KStandardShortcut::Deselect);
+    case QKeySequence::DeleteStartOfWord:
+        return KStandardShortcut::shortcut(KStandardShortcut::DeleteWordForward);
+    case QKeySequence::DeleteEndOfWord:
+        return KStandardShortcut::shortcut(KStandardShortcut::DeleteWordBack);
+    case QKeySequence::NextChild:
+        return KStandardShortcut::shortcut(KStandardShortcut::TabNext);
+    case QKeySequence::PreviousChild:
+        return KStandardShortcut::shortcut(KStandardShortcut::TabPrev);
     default:
         return QPlatformTheme::keyBindings(key);
     }
