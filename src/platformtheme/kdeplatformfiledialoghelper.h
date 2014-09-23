@@ -33,14 +33,14 @@ public:
     friend class KDEPlatformFileDialogHelper;
 
     explicit KDEPlatformFileDialog();
-    QUrl directory();
-    void selectNameFilter(const QString &filter);
-    void setDirectory(const QUrl &directory);
-    void selectFile(const QUrl &filename);
+    QUrl directory() Q_DECL_OVERRIDE;
+    void selectNameFilter(const QString &filter) Q_DECL_OVERRIDE;
+    void setDirectory(const QUrl &directory) Q_DECL_OVERRIDE;
+    void selectFile(const QUrl &filename) Q_DECL_OVERRIDE;
     void setViewMode(QFileDialogOptions::ViewMode view);
     void setFileMode(QFileDialogOptions::FileMode mode);
-    QString selectedNameFilter();
-    QList<QUrl> selectedFiles();
+    QString selectedNameFilter() Q_DECL_OVERRIDE;
+    QList<QUrl> selectedFiles() Q_DECL_OVERRIDE;
 
 protected:
     KFileWidget *m_fileWidget;

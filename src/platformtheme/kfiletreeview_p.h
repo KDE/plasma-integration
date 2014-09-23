@@ -73,7 +73,7 @@ public:
     /**
      * @reimplemented
      */
-    QSize sizeHint() const;
+    QSize sizeHint() const Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
     /**

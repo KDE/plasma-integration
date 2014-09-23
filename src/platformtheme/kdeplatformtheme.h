@@ -37,14 +37,14 @@ public:
     KdePlatformTheme();
     ~KdePlatformTheme();
 
-    virtual QVariant themeHint(ThemeHint hint) const;
-    virtual const QPalette *palette(Palette type = SystemPalette) const;
-    virtual const QFont *font(Font type) const;
-    virtual QIconEngine *createIconEngine(const QString &iconName) const;
-    virtual QList<QKeySequence> keyBindings(QKeySequence::StandardKey key) const;
+    virtual QVariant themeHint(ThemeHint hint) const Q_DECL_OVERRIDE;
+    virtual const QPalette *palette(Palette type = SystemPalette) const Q_DECL_OVERRIDE;
+    virtual const QFont *font(Font type) const Q_DECL_OVERRIDE;
+    virtual QIconEngine *createIconEngine(const QString &iconName) const Q_DECL_OVERRIDE;
+    virtual QList<QKeySequence> keyBindings(QKeySequence::StandardKey key) const Q_DECL_OVERRIDE;
 
-    virtual QPlatformDialogHelper *createPlatformDialogHelper(DialogType type) const;
-    virtual bool usePlatformNativeDialog(DialogType type) const;
+    virtual QPlatformDialogHelper *createPlatformDialogHelper(DialogType type) const Q_DECL_OVERRIDE;
+    virtual bool usePlatformNativeDialog(DialogType type) const Q_DECL_OVERRIDE;
 
     virtual QPlatformSystemTrayIcon *createPlatformSystemTrayIcon() const Q_DECL_OVERRIDE;
 
