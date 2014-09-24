@@ -348,7 +348,7 @@ void KHintsSettings::loadPalettes()
             return;
         }
 
-        const QString scheme = readConfigValue("KDE", "ColorScheme", "Breeze").toString();
+        const QString scheme = readConfigValue("General", "ColorScheme", "Breeze").toString();
         path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "color-schemes/" + scheme + ".colors");
 
         if (!path.isEmpty()) {
