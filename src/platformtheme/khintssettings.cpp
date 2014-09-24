@@ -77,6 +77,7 @@ KHintsSettings::KHintsSettings() : QObject(0)
 
     QStringList styleNames;
     styleNames << cg.readEntry("widgetStyle", QString())
+               << "breeze"
                << "oxygen"
                << "fusion"
                << "windows";
@@ -239,6 +240,7 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
 
         QStringList styleNames;
         styleNames << cg.readEntry("widgetStyle", QString())
+                << "breeze"
                 << "oxygen"
                 << "fusion"
                 << "windows";
