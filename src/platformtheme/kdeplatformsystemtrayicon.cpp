@@ -212,6 +212,11 @@ void SystemTrayMenuItem::setVisible(bool isVisible)
     m_action->setVisible(isVisible);
 }
 
+void SystemTrayMenuItem::setIconSize(int size)
+{
+    Q_UNUSED(size);
+}
+
 quintptr SystemTrayMenuItem::tag() const
 {
     return m_tag;
