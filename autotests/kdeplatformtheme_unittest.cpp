@@ -136,7 +136,7 @@ private Q_SLOTS:
         QVERIFY(!iconThemeSearchPaths.isEmpty());
 
         QStringList styles;
-        styles << "non-existent-widget-style" << "oxygen" << "fusion" << "windows";
+        styles << "non-existent-widget-style" << "breeze" << "oxygen" << "fusion" << "windows";
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::StyleNames).toStringList(), styles);
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::DialogButtonBoxLayout).toInt(), (int) QDialogButtonBox::KdeLayout);
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::DialogButtonBoxButtonsHaveIcons).toBool(), false);
@@ -235,7 +235,7 @@ private Q_SLOTS:
         m_loop.exec();
 
         QStringList styles;
-        styles << "another-non-existent-widget-style" << "oxygen" << "fusion" << "windows";
+        styles << "another-non-existent-widget-style" << "breeze" << "oxygen" << "fusion" << "windows";
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::StyleNames).toStringList(), styles);
 
         sendNotifyChange(KHintsSettings::SettingsChanged, KHintsSettings::SETTINGS_STYLE);
