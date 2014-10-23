@@ -164,6 +164,17 @@ void KDEPlatformFileDialog::setFileMode(QFileDialogOptions::FileMode mode)
     }
 }
 
+void KDEPlatformFileDialog::setCustomLabel(QFileDialogOptions::DialogLabel label, const QString &text)
+{
+    if (label == QFileDialogOptions::Accept) { // OK button
+        m_fileWidget->okButton()->setText(text);
+    } else if (label == QFileDialogOptions::Reject) { // Cancel button
+        m_fileWidget->cancelButton()->setText(text);
+    } else if (label == QFileDialogOptions::LookIn) { // Location label
+        m_fileWidget->setLocationLabel(text);
+    }
+}
+
 QString KDEPlatformFileDialog::selectedNameFilter()
 {
     return m_fileWidget->filterWidget()->currentFilter();
@@ -228,17 +239,33 @@ void KDEPlatformFileDialogHelper::initializeDialog()
         dialog->setViewMode(options()->viewMode());
         dialog->setFileMode(options()->fileMode());
 
+        // custom labels
+        if (options()->isLabelExplicitlySet(QFileDialogOptions::Accept)) { // OK button
+            dialog->setCustomLabel(QFileDialogOptions::Accept, options()->labelText(QFileDialogOptions::Accept));
+        } else if (options()->isLabelExplicitlySet(QFileDialogOptions::Reject)) { // Cancel button
+            dialog->setCustomLabel(QFileDialogOptions::Reject, options()->labelText(QFileDialogOptions::Reject));
+        } else if (options()->isLabelExplicitlySet(QFileDialogOptions::LookIn)) { // Location label
+            dialog->setCustomLabel(QFileDialogOptions::LookIn, options()->labelText(QFileDialogOptions::LookIn));
+        }
+
+        // MIME filters
         QStringList filters = options()->mimeTypeFilters();
         if (!filters.isEmpty()) {
             dialog->m_fileWidget->setMimeFilter(filters);
         }
 
+        // name filters
         QStringList nameFilters = options()->nameFilters();
         if (!nameFilters.isEmpty()) {
             dialog->m_fileWidget->setFilter(qt2KdeFilter(nameFilters));
             if (!options()->initiallySelectedNameFilter().isEmpty()) {
                 selectNameFilter(options()->initiallySelectedNameFilter());
             }
+        }
+
+        // overwrite option
+        if (options()->testOption(QFileDialogOptions::FileDialogOption::DontConfirmOverwrite)) {
+            dialog->m_fileWidget->setConfirmOverwrite(false);
         }
     }
 }

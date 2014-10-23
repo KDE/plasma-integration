@@ -39,6 +39,7 @@ public:
     void selectFile(const QUrl &filename) Q_DECL_OVERRIDE;
     void setViewMode(QFileDialogOptions::ViewMode view);
     void setFileMode(QFileDialogOptions::FileMode mode);
+    void setCustomLabel(QFileDialogOptions::DialogLabel label, const QString & text);
     QString selectedNameFilter() Q_DECL_OVERRIDE;
     QList<QUrl> selectedFiles() Q_DECL_OVERRIDE;
 
