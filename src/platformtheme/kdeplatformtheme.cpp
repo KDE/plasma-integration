@@ -1,6 +1,7 @@
 /*  This file is part of the KDE libraries
  *  Copyright 2013 Kevin Ottens <ervin+bluesystems@kde.org>
  *  Copyright 2013 Aleix Pol Gonzalez <aleixpol@blue-systems.com>
+ *  Copyright 2014 Lukáš Tinkl <ltinkl@redhat.com>
  *
  *  This library is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -31,10 +32,13 @@
 #include <QString>
 #include <QStringList>
 #include <QVariant>
+#include <QDebug>
 
 #include <kiconengine.h>
 #include <kiconloader.h>
 #include <kstandardshortcut.h>
+#include <KStandardGuiItem>
+#include <KLocalizedString>
 
 KdePlatformTheme::KdePlatformTheme()
 {
@@ -206,6 +210,54 @@ QList<QKeySequence> KdePlatformTheme::keyBindings(QKeySequence::StandardKey key)
 bool KdePlatformTheme::usePlatformNativeDialog(QPlatformTheme::DialogType type) const
 {
     return type == QPlatformTheme::FileDialog;
+}
+
+QString KdePlatformTheme::standardButtonText(int button) const
+{
+    switch (static_cast<QPlatformDialogHelper::StandardButton>(button)) {
+    case QPlatformDialogHelper::NoButton:
+        qWarning() << Q_FUNC_INFO << "Unsupported standard button:" << button;
+        return QString();
+    case QPlatformDialogHelper::Ok:
+        return KStandardGuiItem::ok().text();
+    case QPlatformDialogHelper::Save:
+        return KStandardGuiItem::save().text();
+    case QPlatformDialogHelper::SaveAll:
+        return i18nc("@action:button", "Save All");
+    case QPlatformDialogHelper::Open:
+        return KStandardGuiItem::open().text();
+    case QPlatformDialogHelper::Yes:
+        return KStandardGuiItem::yes().text();
+    case QPlatformDialogHelper::YesToAll:
+        return i18nc("@action:button", "Yes to All");
+    case QPlatformDialogHelper::No:
+        return KStandardGuiItem::no().text();
+    case QPlatformDialogHelper::NoToAll:
+        return i18nc("@action:button", "No to All");
+    case QPlatformDialogHelper::Abort:
+        // FIXME KStandardGuiItem::stop() doesn't seem right here
+        return i18nc("@action:button", "Abort");
+    case QPlatformDialogHelper::Retry:
+        return i18nc("@action:button", "Retry");
+    case QPlatformDialogHelper::Ignore:
+        return i18nc("@action:button", "Ignore");
+    case QPlatformDialogHelper::Close:
+        return KStandardGuiItem::close().text();
+    case QPlatformDialogHelper::Cancel:
+        return KStandardGuiItem::cancel().text();
+    case QPlatformDialogHelper::Discard:
+        return KStandardGuiItem::discard().text();
+    case QPlatformDialogHelper::Help:
+        return KStandardGuiItem::help().text();
+    case QPlatformDialogHelper::Apply:
+        return KStandardGuiItem::apply().text();
+    case QPlatformDialogHelper::Reset:
+        return KStandardGuiItem::reset().text();
+    case QPlatformDialogHelper::RestoreDefaults:
+        return KStandardGuiItem::defaults().text();
+    default:
+        return QPlatformTheme::defaultStandardButtonText(button);
+    }
 }
 
 QPlatformDialogHelper *KdePlatformTheme::createPlatformDialogHelper(QPlatformTheme::DialogType type) const

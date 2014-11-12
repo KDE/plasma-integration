@@ -46,6 +46,8 @@ public:
     virtual QPlatformDialogHelper *createPlatformDialogHelper(DialogType type) const Q_DECL_OVERRIDE;
     virtual bool usePlatformNativeDialog(DialogType type) const Q_DECL_OVERRIDE;
 
+    virtual QString standardButtonText(int button) const Q_DECL_OVERRIDE;
+
     virtual QPlatformSystemTrayIcon *createPlatformSystemTrayIcon() const Q_DECL_OVERRIDE;
 
 private:
