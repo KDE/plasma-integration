@@ -212,6 +212,7 @@ bool KdePlatformTheme::usePlatformNativeDialog(QPlatformTheme::DialogType type) 
     return type == QPlatformTheme::FileDialog;
 }
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
 QString KdePlatformTheme::standardButtonText(int button) const
 {
     switch (static_cast<QPlatformDialogHelper::StandardButton>(button)) {
@@ -259,6 +260,7 @@ QString KdePlatformTheme::standardButtonText(int button) const
         return QPlatformTheme::defaultStandardButtonText(button);
     }
 }
+#endif
 
 QPlatformDialogHelper *KdePlatformTheme::createPlatformDialogHelper(QPlatformTheme::DialogType type) const
 {
