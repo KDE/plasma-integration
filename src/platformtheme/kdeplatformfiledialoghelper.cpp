@@ -51,7 +51,7 @@ static QString qt2KdeFilter(const QStringList &f)
     QTextStream           str(&filter, QIODevice::WriteOnly);
     QStringList           list(f);
     list.replaceInStrings(QStringLiteral("/"), QStringLiteral("\\/"));
-    QStringList::const_iterator it(list.begin()), end(list.end());
+    QStringList::const_iterator it(list.constBegin()), end(list.constEnd());
     bool                  first = true;
 
     for (; it != end; ++it) {
@@ -76,7 +76,7 @@ static QString qt2KdeFilter(const QStringList &f)
  */
 static QString kde2QtFilter(const QStringList &list, const QString &kde)
 {
-    QStringList::const_iterator it(list.begin()), end(list.end());
+    QStringList::const_iterator it(list.constBegin()), end(list.constEnd());
     int                   pos;
     QString               sel;
 
@@ -236,7 +236,7 @@ void KDEPlatformFileDialogHelper::initializeDialog()
             dialog->setWindowTitle(options()->windowTitle());
         }
         setDirectory(options()->initialDirectory());
-        dialog->setViewMode(options()->viewMode());
+        //dialog->setViewMode(options()->viewMode()); // don't override our options, fixes remembering the chosen view mode and sizes!
         dialog->setFileMode(options()->fileMode());
 
         // custom labels
