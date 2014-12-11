@@ -320,7 +320,7 @@ void KDEPlatformSystemTrayIcon::showMessage(const QString &msg, const QString &t
     if (!m_sni) {
         return;
     }
-    m_sni->showMessage(title, msg, icon.themeName(), secs);
+    m_sni->showMessage(title, msg, icon.name(), secs);
 }
 
 bool KDEPlatformSystemTrayIcon::isSystemTrayAvailable() const
