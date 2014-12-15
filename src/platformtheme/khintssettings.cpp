@@ -206,9 +206,16 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
     switch (type) {
     case PaletteChanged: {
         loadPalettes();
-        QEvent ev(QEvent::ApplicationPaletteChange);
-        QGuiApplication::sendEvent(QGuiApplication::instance(), &ev);
-    }   break;
+
+        //QApplication::setPalette and QGuiApplication::setPalette are different functions
+        //and non virtual. Call the correct one
+        if (qobject_cast<QApplication *>(QCoreApplication::instance())) {
+            QApplication::setPalette(*m_palettes[QPlatformTheme::SystemPalette]);
+        } else if (qobject_cast<QGuiApplication *>(QCoreApplication::instance())) {
+            QGuiApplication::setPalette(*m_palettes[QPlatformTheme::SystemPalette]);
+        }
+        break;
+    }
     case SettingsChanged: {
 
         SettingsCategory category = static_cast<SettingsCategory>(arg);
