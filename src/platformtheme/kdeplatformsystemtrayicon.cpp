@@ -91,7 +91,9 @@ void SystemTrayMenu::removeMenuItem(QPlatformMenuItem *menuItem)
 {
     if (SystemTrayMenuItem *ours = qobject_cast<SystemTrayMenuItem*>(menuItem)) {
         m_items.removeOne(ours);
-        m_menu->removeAction(ours->action());
+        if (ours->action()) {
+            m_menu->removeAction(ours->action());
+        }
     }
 }
 
