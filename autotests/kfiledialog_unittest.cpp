@@ -73,37 +73,42 @@ private Q_SLOTS:
         QCOMPARE(dialog.directory().absolutePath(), QDir::rootPath());
     }
 
-    void testSetView_data()
+    void testViewMode()
     {
-        QTest::addColumn<QFileDialog::ViewMode>("qtViewMode");
-        QTest::addColumn<KFile::FileView>("kdeViewMode");
-        QTest::newRow("detail") << QFileDialog::Detail << KFile::Detail;
-        QTest::newRow("list") << QFileDialog::List << KFile::Simple;
-    }
+        // Open a file dialog, and change view mode to tree
+        {
+            QFileDialog dialog;
+            dialog.show();
 
-    void testSetView()
-    {
-        QFETCH(QFileDialog::ViewMode, qtViewMode);
-        QFETCH(KFile::FileView, kdeViewMode);
-        QFileDialog dialog;
-        dialog.setViewMode(qtViewMode);
-        dialog.show();
-
-        foreach (QWidget *widget, QApplication::topLevelWidgets()) {
-            KFileWidget * fw = widget->findChild<KFileWidget *>();
-            if(fw) {
-                QCOMPARE(fw->dirOperator()->viewMode(), kdeViewMode);
-            }
+            KFileWidget *fw = findFileWidget();
+            QVERIFY(fw);
+            fw->setViewMode(KFile::Tree);
+            fw->slotCancel(); // the saving happens there
         }
+        // Open another one, and check that the view mode is now tree, change it to simple
+        {
+            QFileDialog dialog;
+            dialog.show();
 
-/*
- * Disabled because of a bug in Qt that causes the wrong viewMode value to be returned. A patch
- * is in Qt's gerrit: https://codereview.qt-project.org/#change,84137 and is in Qt since 5.3.1.
- * TODO: remove the version check once this project requires Qt 5.3.1 or higher.
- */
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 3, 1))
-        QCOMPARE(dialog.viewMode(), qtViewMode);
-#endif
+            KFileWidget *fw = findFileWidget();
+            QVERIFY(fw);
+            KDirOperator *op = fw->dirOperator();
+            QCOMPARE(fileViewToString(op->viewMode()), fileViewToString(KFile::Tree));
+            fw->setViewMode(KFile::Simple);
+            fw->slotCancel();
+        }
+        // Open another one, and check that the view mode is now simple
+        {
+            QFileDialog dialog;
+            dialog.show();
+
+            KFileWidget *fw = findFileWidget();
+            QVERIFY(fw);
+            KDirOperator *op = fw->dirOperator();
+            QCOMPARE(fileViewToString(op->viewMode()), fileViewToString(KFile::Simple));
+            fw->setViewMode(KFile::Detail);
+            fw->slotCancel();
+        }
     }
 
     void testSetFileMode_data()
@@ -124,14 +129,41 @@ private Q_SLOTS:
         dialog.setFileMode(qtFileMode);
         dialog.show();
 
-        foreach (QWidget *widget, QApplication::topLevelWidgets()) {
-            KFileWidget * fw = widget->findChild<KFileWidget *>();
-            if(fw) {
-                QCOMPARE(fw->mode(), kdeFileMode);
-            }
-        }
+        KFileWidget *fw = findFileWidget();
+        QVERIFY(fw);
+        QCOMPARE(fw->mode(), kdeFileMode);
 
         QCOMPARE(dialog.fileMode(), qtFileMode);
+    }
+private:
+    static QString fileViewToString(KFile::FileView fv)
+    {
+        switch (fv) {
+            case KFile::Detail:
+                return QStringLiteral("Detail");
+            case KFile::Simple:
+                return QStringLiteral("Simple");
+            case KFile::Tree:
+                return QStringLiteral("Tree");
+            case KFile::DetailTree:
+                return QStringLiteral("DetailTree");
+            default:
+                break;
+        }
+        return QStringLiteral("ERROR");
+    }
+
+    static KFileWidget *findFileWidget()
+    {
+        QList<KFileWidget *> widgets;
+        foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+            KFileWidget *fw = widget->findChild<KFileWidget *>();
+            if (fw) {
+                widgets.append(fw);
+            }
+        }
+        Q_ASSERT(widgets.count() == 1);
+        return (widgets.count() == 1) ? widgets.first() : Q_NULLPTR;
     }
 };
 
