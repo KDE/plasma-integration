@@ -46,10 +46,17 @@ static void prepareEnvironment()
     QStandardPaths::setTestModeEnabled(true);
 
     QString configPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
+
+    if(!QDir(configPath).mkpath(".")) {
+        qFatal("Failed to create test configuration directory.");
+    }
+
     configPath.append("/kdeglobals");
 
     QFile::remove(configPath);
-    QFile::copy(CONFIGFILE, configPath);
+    if(!QFile::copy(CONFIGFILE, configPath)) {
+        qFatal("Failed to copy kdeglobals required for tests.");
+    }
 }
 
 Q_COREAPP_STARTUP_FUNCTION(prepareEnvironment);
