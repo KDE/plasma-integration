@@ -33,6 +33,7 @@
 #include <QApplication>
 #include <QGuiApplication>
 #include <QDialogButtonBox>
+#include <QScreen>
 
 #include <QDBusConnection>
 #include <QDBusInterface>
@@ -41,6 +42,16 @@
 #include <kconfiggroup.h>
 #include <ksharedconfig.h>
 #include <kcolorscheme.h>
+
+#ifndef UNIT_TEST
+#include <config-platformtheme.h>
+#else
+#define HAVE_X11 0
+#endif
+#if HAVE_X11
+#include <QX11Info>
+#include <X11/Xcursor/Xcursor.h>
+#endif
 
 static const QString defaultLookAndFeelPackage = "org.kde.breeze.desktop";
 
@@ -234,6 +245,9 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
     case IconChanged:
         iconChanged(arg); //Once the KCM is ported to use IconChanged, this should not be needed
         break;
+    case CursorChanged:
+        updateCursorTheme();
+        break;
     case StyleChanged: {
         QApplication *app = qobject_cast<QApplication *>(QCoreApplication::instance());
         if (!app) {
@@ -362,4 +376,34 @@ void KHintsSettings::loadPalettes()
             m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(path)));
         }
     }
+}
+
+void KHintsSettings::updateCursorTheme()
+{
+    KConfig config("kcminputrc");
+    KConfigGroup g(&config, "Mouse");
+
+    QString theme = g.readEntry("cursorTheme", QString());
+    int size      = g.readEntry("cursorSize", -1);
+
+    // Default cursor size is 16 points
+    if (size == -1) {
+        if (QScreen *s = QGuiApplication::primaryScreen()) {
+            size = s->logicalDotsPerInchY() * 16 / 72;
+        } else {
+            size = 0;
+        }
+    }
+
+#if HAVE_X11
+    if (QX11Info::isPlatformX11()) {
+        // Note that in X11R7.1 and earlier, calling XcursorSetTheme()
+        // with a NULL theme would cause Xcursor to use "default", but
+        // in 7.2 and later it will cause it to revert to the theme that
+        // was configured when the application was started.
+        XcursorSetTheme(QX11Info::display(), theme.isNull() ?
+                        "default" : QFile::encodeName(theme).constData());
+        XcursorSetDefaultSize(QX11Info::display(), size);
+    }
+#endif
 }

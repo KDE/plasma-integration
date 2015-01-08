@@ -7,6 +7,11 @@ if(NOT APPLE)
   set(HAVE_X11 ${XCB_XCB_FOUND})
   if (XCB_XCB_FOUND)
     find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
+    find_package(X11)
+    set_package_properties(X11 PROPERTIES DESCRIPTION "Required for updating the Cursor theme on X11"
+                           URL "http://www.x.org"
+                           TYPE REQUIRED
+                           )
   endif()
 else()
     set(HAVE_X11 FALSE)
@@ -46,7 +51,7 @@ target_link_libraries(KDEPlatformTheme
 )
 
 if(HAVE_X11)
-  target_link_libraries(KDEPlatformTheme PRIVATE Qt5::X11Extras XCB::XCB)
+  target_link_libraries(KDEPlatformTheme PRIVATE Qt5::X11Extras XCB::XCB ${X11_Xcursor_LIB})
 endif()
 
 install(TARGETS KDEPlatformTheme DESTINATION ${QT_PLUGIN_INSTALL_DIR}/platformthemes)

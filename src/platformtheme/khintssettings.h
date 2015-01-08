@@ -76,6 +76,7 @@ private:
     void iconChanged(int group);
     void updateQtSettings(KConfigGroup &cg);
     Qt::ToolButtonStyle toolButtonStyle(const KConfigGroup &cg) const;
+    void updateCursorTheme();
 
     QStringList xdgIconThemePaths() const;
     QHash<QPlatformTheme::Palette, QPalette *> m_palettes;
