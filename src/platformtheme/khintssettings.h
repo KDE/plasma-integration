@@ -54,15 +54,13 @@ public:
     explicit KHintsSettings();
     virtual ~KHintsSettings();
 
-    inline QVariant hint(QPlatformTheme::ThemeHint hint)
+    inline QVariant hint(QPlatformTheme::ThemeHint hint) const
     {
         return m_hints[hint];
     }
-    inline QPalette *palette(QPlatformTheme::Palette type)
+
+    inline QPalette *palette(QPlatformTheme::Palette type) const
     {
-        if (!m_palettes.contains(type)) {
-            return 0;
-        }
         return m_palettes[type];
     }
 
