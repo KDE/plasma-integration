@@ -54,4 +54,4 @@ if(HAVE_X11)
   target_link_libraries(KDEPlatformTheme PRIVATE Qt5::X11Extras XCB::XCB ${X11_Xcursor_LIB})
 endif()
 
-install(TARGETS KDEPlatformTheme DESTINATION ${QT_PLUGIN_INSTALL_DIR}/platformthemes)
+install(TARGETS KDEPlatformTheme DESTINATION ${KDE_INSTALL_QTPLUGINDIR}/platformthemes)
