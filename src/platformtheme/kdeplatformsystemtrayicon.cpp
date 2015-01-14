@@ -24,9 +24,7 @@
 #include <QMenu>
 #include <QRect>
 #include <QApplication>
-#include <QDBusConnection>
-#include <QDBusConnectionInterface>
-#include <QDBusReply>
+#include <QDBusInterface>
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 3, 0))
 SystemTrayMenu::SystemTrayMenu()
@@ -327,8 +325,12 @@ void KDEPlatformSystemTrayIcon::showMessage(const QString &msg, const QString &t
 
 bool KDEPlatformSystemTrayIcon::isSystemTrayAvailable() const
 {
-    QDBusReply<bool> reply = QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.StatusNotifierWatcher");
-    return reply.value();
+    QDBusInterface systrayHost("org.kde.StatusNotifierWatcher", "/StatusNotifierWatcher", "org.kde.StatusNotifierWatcher");
+    if (systrayHost.isValid()) {
+        return systrayHost.property("IsStatusNotifierHostRegistered").toBool();
+    }
+
+    return false;
 }
 
 bool KDEPlatformSystemTrayIcon::supportsMessages() const
