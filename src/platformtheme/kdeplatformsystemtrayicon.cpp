@@ -144,7 +144,6 @@ QMenu *SystemTrayMenu::menu() const
 SystemTrayMenuItem::SystemTrayMenuItem()
     : QPlatformMenuItem()
     , m_tag(0)
-    , m_menu(Q_NULLPTR)
     , m_action(new QAction(this))
 {
     connect(m_action, &QAction::triggered, this, &QPlatformMenuItem::activated);
@@ -187,7 +186,9 @@ void SystemTrayMenuItem::setIsSeparator(bool isSeparator)
 
 void SystemTrayMenuItem::setMenu(QPlatformMenu *menu)
 {
-    m_menu = menu;
+    if (SystemTrayMenu *ourMenu = qobject_cast<SystemTrayMenu *>(menu)) {
+        m_action->setMenu(ourMenu->menu());
+    }
 }
 
 void SystemTrayMenuItem::setRole(QPlatformMenuItem::MenuRole role)

@@ -82,7 +82,6 @@ public:
 
 private:
     quintptr m_tag;
-    QPlatformMenu *m_menu;
     QAction *m_action;
 };
 #endif
