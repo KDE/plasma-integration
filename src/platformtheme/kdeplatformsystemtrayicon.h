@@ -98,7 +98,7 @@ public:
     void updateToolTip(const QString &tooltip) Q_DECL_OVERRIDE;
     void updateMenu(QPlatformMenu *menu) Q_DECL_OVERRIDE;
     QRect geometry() const Q_DECL_OVERRIDE;
-    void showMessage(const QString &msg, const QString &title,
+    void showMessage(const QString &title, const QString &msg,
                      const QIcon &icon, MessageIcon iconType, int secs) Q_DECL_OVERRIDE;
 
     bool isSystemTrayAvailable() const Q_DECL_OVERRIDE;

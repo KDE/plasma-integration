@@ -314,7 +314,7 @@ QRect KDEPlatformSystemTrayIcon::geometry() const
     return QRect();
 }
 
-void KDEPlatformSystemTrayIcon::showMessage(const QString &msg, const QString &title,
+void KDEPlatformSystemTrayIcon::showMessage(const QString &title, const QString &msg,
                                             const QIcon &icon, MessageIcon iconType, int secs)
 {
     Q_UNUSED(iconType)
