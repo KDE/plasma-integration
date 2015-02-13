@@ -76,7 +76,7 @@ public:
     void setText(const QString &text) Q_DECL_OVERRIDE;
     void setVisible(bool isVisible) Q_DECL_OVERRIDE;
     quintptr tag() const Q_DECL_OVERRIDE;
-    void setIconSize(int size) /*Q_DECL_OVERRIDE*/; //enable when depending on Qt5.4
+    void setIconSize(int size) Q_DECL_OVERRIDE /*Q_DECL_OVERRIDE*/; //enable when depending on Qt5.4
 
     QAction *action() const;
 

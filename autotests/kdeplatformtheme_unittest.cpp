@@ -71,7 +71,7 @@ public:
 
     }
 
-    virtual bool eventFilter(QObject *, QEvent *e)
+    bool eventFilter(QObject *, QEvent *e) Q_DECL_OVERRIDE
     {
         if (e->type() == m_type) {
             gotEvent = true;
