@@ -37,20 +37,20 @@ public:
     KdePlatformTheme();
     ~KdePlatformTheme();
 
-    virtual QVariant themeHint(ThemeHint hint) const Q_DECL_OVERRIDE;
-    virtual const QPalette *palette(Palette type = SystemPalette) const Q_DECL_OVERRIDE;
-    virtual const QFont *font(Font type) const Q_DECL_OVERRIDE;
-    virtual QIconEngine *createIconEngine(const QString &iconName) const Q_DECL_OVERRIDE;
-    virtual QList<QKeySequence> keyBindings(QKeySequence::StandardKey key) const Q_DECL_OVERRIDE;
+    QVariant themeHint(ThemeHint hint) const Q_DECL_OVERRIDE;
+    const QPalette *palette(Palette type = SystemPalette) const Q_DECL_OVERRIDE;
+    const QFont *font(Font type) const Q_DECL_OVERRIDE;
+    QIconEngine *createIconEngine(const QString &iconName) const Q_DECL_OVERRIDE;
+    QList<QKeySequence> keyBindings(QKeySequence::StandardKey key) const Q_DECL_OVERRIDE;
 
-    virtual QPlatformDialogHelper *createPlatformDialogHelper(DialogType type) const Q_DECL_OVERRIDE;
-    virtual bool usePlatformNativeDialog(DialogType type) const Q_DECL_OVERRIDE;
+    QPlatformDialogHelper *createPlatformDialogHelper(DialogType type) const Q_DECL_OVERRIDE;
+    bool usePlatformNativeDialog(DialogType type) const Q_DECL_OVERRIDE;
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
-    virtual QString standardButtonText(int button) const Q_DECL_OVERRIDE;
+    QString standardButtonText(int button) const Q_DECL_OVERRIDE;
 #endif
 
-    virtual QPlatformSystemTrayIcon *createPlatformSystemTrayIcon() const Q_DECL_OVERRIDE;
+    QPlatformSystemTrayIcon *createPlatformSystemTrayIcon() const Q_DECL_OVERRIDE;
 
 private:
     void loadSettings();

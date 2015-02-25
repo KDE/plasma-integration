@@ -56,19 +56,19 @@ public:
 
     void initializeDialog();
 
-    virtual bool defaultNameFilterDisables() const Q_DECL_OVERRIDE;
-    virtual QUrl directory() const Q_DECL_OVERRIDE;
-    virtual QList<QUrl> selectedFiles() const Q_DECL_OVERRIDE;
-    virtual QString selectedNameFilter() const Q_DECL_OVERRIDE;
-    virtual void selectNameFilter(const QString &filter) Q_DECL_OVERRIDE;
-    virtual void selectFile(const QUrl &filename) Q_DECL_OVERRIDE;
-    virtual void setFilter() Q_DECL_OVERRIDE;
-    virtual void setDirectory(const QUrl &directory) Q_DECL_OVERRIDE;
-    virtual bool isSupportedUrl(const QUrl& url) const Q_DECL_OVERRIDE;
+    bool defaultNameFilterDisables() const Q_DECL_OVERRIDE;
+    QUrl directory() const Q_DECL_OVERRIDE;
+    QList<QUrl> selectedFiles() const Q_DECL_OVERRIDE;
+    QString selectedNameFilter() const Q_DECL_OVERRIDE;
+    void selectNameFilter(const QString &filter) Q_DECL_OVERRIDE;
+    void selectFile(const QUrl &filename) Q_DECL_OVERRIDE;
+    void setFilter() Q_DECL_OVERRIDE;
+    void setDirectory(const QUrl &directory) Q_DECL_OVERRIDE;
+    bool isSupportedUrl(const QUrl& url) const Q_DECL_OVERRIDE;
 
-    virtual void exec() Q_DECL_OVERRIDE;
-    virtual void hide() Q_DECL_OVERRIDE;
-    virtual bool show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent) Q_DECL_OVERRIDE;
+    void exec() Q_DECL_OVERRIDE;
+    void hide() Q_DECL_OVERRIDE;
+    bool show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent) Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void saveSize();

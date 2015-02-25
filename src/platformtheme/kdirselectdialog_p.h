@@ -92,12 +92,12 @@ public:
      */
     QUrl startDir() const;
 
-    virtual QUrl directory() Q_DECL_OVERRIDE;
-    virtual void selectNameFilter(const QString &filter) Q_DECL_OVERRIDE;
-    virtual void setDirectory(const QUrl &directory) Q_DECL_OVERRIDE;
-    virtual void selectFile(const QUrl &filename) Q_DECL_OVERRIDE;
-    virtual QString selectedNameFilter() Q_DECL_OVERRIDE;
-    virtual QList<QUrl> selectedFiles() Q_DECL_OVERRIDE;
+    QUrl directory() Q_DECL_OVERRIDE;
+    void selectNameFilter(const QString &filter) Q_DECL_OVERRIDE;
+    void setDirectory(const QUrl &directory) Q_DECL_OVERRIDE;
+    void selectFile(const QUrl &filename) Q_DECL_OVERRIDE;
+    QString selectedNameFilter() Q_DECL_OVERRIDE;
+    QList<QUrl> selectedFiles() Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
     /**
@@ -111,7 +111,7 @@ protected:
     /**
      * Reimplemented for saving the dialog geometry.
      */
-    virtual void hideEvent(QHideEvent *event) Q_DECL_OVERRIDE;
+    void hideEvent(QHideEvent *event) Q_DECL_OVERRIDE;
 
 private:
     class Private;
