@@ -38,6 +38,9 @@ SystemTrayMenu::SystemTrayMenu()
 
 SystemTrayMenu::~SystemTrayMenu()
 {
+    if (m_menu) {
+        m_menu->deleteLater();
+    }
 }
 
 QPlatformMenuItem *SystemTrayMenu::createMenuItem() const
@@ -53,7 +56,9 @@ void SystemTrayMenu::insertMenuItem(QPlatformMenuItem *menuItem, QPlatformMenuIt
             for (auto it = m_items.begin(); it != m_items.end(); ++it) {
                 if (*it == oursBefore) {
                     m_items.insert(it, ours);
-                    m_menu->insertAction(oursBefore->action(), ours->action());
+                    if (m_menu) {
+                        m_menu->insertAction(oursBefore->action(), ours->action());
+                    }
                     inserted = true;
                     break;
                 }
@@ -61,7 +66,9 @@ void SystemTrayMenu::insertMenuItem(QPlatformMenuItem *menuItem, QPlatformMenuIt
         }
         if (!inserted) {
             m_items.append(ours);
-            m_menu->addAction(ours->action());
+            if (m_menu) {
+                m_menu->addAction(ours->action());
+            }
         }
     }
 }
@@ -89,7 +96,7 @@ void SystemTrayMenu::removeMenuItem(QPlatformMenuItem *menuItem)
 {
     if (SystemTrayMenuItem *ours = qobject_cast<SystemTrayMenuItem*>(menuItem)) {
         m_items.removeOne(ours);
-        if (ours->action()) {
+        if (ours->action() && m_menu) {
             m_menu->removeAction(ours->action());
         }
     }
@@ -97,11 +104,17 @@ void SystemTrayMenu::removeMenuItem(QPlatformMenuItem *menuItem)
 
 void SystemTrayMenu::setEnabled(bool enabled)
 {
+    if (!m_menu) {
+        return;
+    }
     m_menu->setEnabled(enabled);
 }
 
 void SystemTrayMenu::setIcon(const QIcon &icon)
 {
+    if (!m_menu) {
+        return;
+    }
     m_menu->setIcon(icon);
 }
 
@@ -112,11 +125,17 @@ void SystemTrayMenu::setTag(quintptr tag)
 
 void SystemTrayMenu::setText(const QString &text)
 {
+    if (!m_menu) {
+        return;
+    }
     m_menu->setTitle(text);
 }
 
 void SystemTrayMenu::setVisible(bool visible)
 {
+    if (!m_menu) {
+        return;
+    }
     m_menu->setVisible(visible);
 }
 
@@ -128,6 +147,9 @@ void SystemTrayMenu::syncMenuItem(QPlatformMenuItem *menuItem)
 
 void SystemTrayMenu::syncSeparatorsCollapsible(bool enable)
 {
+    if (!m_menu) {
+        return;
+    }
     m_menu->setSeparatorsCollapsible(enable);
 }
 

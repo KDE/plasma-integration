@@ -53,7 +53,7 @@ public:
 
 private:
     quintptr m_tag;
-    QScopedPointer<QMenu> m_menu;
+    QPointer<QMenu> m_menu;
     QList<SystemTrayMenuItem*> m_items;
 };
 
