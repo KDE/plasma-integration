@@ -47,3 +47,7 @@ frameworkintegration_tests(
 frameworkintegration_tests(
   kfiledialog_unittest
 )
+
+frameworkintegration_tests(
+  ksni_unittest
+)
