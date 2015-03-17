@@ -299,7 +299,7 @@ bool KDEPlatformFileDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowMo
     initializeDialog();
     m_dialog->setWindowFlags(windowFlags);
     m_dialog->setWindowModality(windowModality);
-    if (parent && !parent->inherits("QWidgetWindow")) // see #334963 and #344586 for details
+    if (!parent || (parent && !parent->inherits("QWidgetWindow"))) // see #334963 and #344586 for details
         m_dialog->show();
     KSharedConfig::Ptr conf = KSharedConfig::openConfig();
     KWindowConfig::restoreWindowSize(m_dialog->windowHandle(), conf->group("FileDialogSize"));
