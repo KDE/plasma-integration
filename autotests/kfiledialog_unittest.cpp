@@ -111,6 +111,60 @@ private Q_SLOTS:
         }
     }
 
+    void testOpenDialog()
+    {
+        // Open parentless
+        {
+            QFileDialog dialog;
+            dialog.open();
+
+            KFileWidget *fw = findFileWidget();
+            QVERIFY(fw);
+            QCOMPARE(fw->isVisible(), true);
+            fw->slotCancel();
+        }
+        // Open with parent
+        {
+            QWidget w;
+            w.show();
+
+            QFileDialog dialog(&w);
+            dialog.open();
+
+            KFileWidget *fw = findFileWidget();
+            QVERIFY(fw);
+            QCOMPARE(fw->isVisible(), true);
+            fw->slotCancel();
+        }
+    }
+
+    void testShowDialog()
+    {
+        // Show parentless
+        {
+            QFileDialog dialog;
+            dialog.show();
+
+            KFileWidget *fw = findFileWidget();
+            QVERIFY(fw);
+            QCOMPARE(fw->isVisible(), true);
+            fw->slotCancel();
+        }
+        // Show with parent
+        {
+            QWidget w;
+            w.show();
+
+            QFileDialog dialog(&w);
+            dialog.show();
+
+            KFileWidget *fw = findFileWidget();
+            QVERIFY(fw);
+            QCOMPARE(fw->isVisible(), true);
+            fw->slotCancel();
+        }
+    }
+
     void testSetFileMode_data()
     {
         QTest::addColumn<QFileDialog::FileMode>("qtFileMode");

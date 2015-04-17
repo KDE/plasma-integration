@@ -1,10 +1,15 @@
 include(ECMMarkAsTest)
 
 find_package(Qt5Test ${REQUIRED_QT_VERSION} CONFIG QUIET)
+find_package(Qt5Qml ${REQUIRED_QT_VERSION} CONFIG QUIET)
 
 if(NOT Qt5Test_FOUND)
     message(STATUS "Qt5Test not found, autotests will not be built.")
     return()
+endif()
+
+if(NOT Qt5Qml_FOUND)
+    message(STATUS "Qt5Qml not found, QML autotests will not be built.")
 endif()
 
 include_directories( ${Qt5Gui_PRIVATE_INCLUDE_DIRS} )
@@ -51,3 +56,8 @@ frameworkintegration_tests(
 frameworkintegration_tests(
   ksni_unittest
 )
+
+if(Qt5Qml_FOUND)
+    frameworkintegration_tests(kfiledialogqml_unittest)
+    target_link_libraries(kfiledialogqml_unittest Qt5::Qml)
+endif()
