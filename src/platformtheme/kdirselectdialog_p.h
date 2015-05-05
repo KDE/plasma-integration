@@ -61,6 +61,11 @@ public:
     QUrl url() const;
 
     /**
+     * Returns the root url
+     */
+    QUrl rootUrl() const;
+
+    /**
      * Returns a pointer to the view which is used for displaying the directories.
      */
     QAbstractItemView *view() const;

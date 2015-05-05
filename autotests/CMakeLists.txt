@@ -57,6 +57,13 @@ frameworkintegration_tests(
   ksni_unittest
 )
 
+frameworkintegration_tests(
+  kdirselectdialog_unittest
+  ../src/platformtheme/kdeplatformfiledialogbase.cpp
+  ../src/platformtheme/kdirselectdialog.cpp
+  ../src/platformtheme/kfiletreeview.cpp
+)
+
 if(Qt5Qml_FOUND)
     frameworkintegration_tests(kfiledialogqml_unittest)
     target_link_libraries(kfiledialogqml_unittest Qt5::Qml)

@@ -432,6 +432,11 @@ QUrl KDirSelectDialog::url() const
     return d->m_treeView->currentUrl();
 }
 
+QUrl KDirSelectDialog::rootUrl() const
+{
+    return d->m_rootUrl;
+}
+
 QAbstractItemView *KDirSelectDialog::view() const
 {
     return d->m_treeView;
@@ -455,7 +460,13 @@ void KDirSelectDialog::setCurrentUrl(const QUrl &url)
 
     if (url.scheme() != d->m_rootUrl.scheme()) {
         QUrl u(url);
-        u.setPath("/");//NOTE portability?
+        //We need the url to end with / because some code ahead (kdirmodel) is expecting
+        //to find the / separator. It can happen that a valid url like smb: does not have
+        //one so we should add it.
+        if (!u.toString().endsWith(QChar('/'))) {
+            u.setPath("/");
+        }
+
         d->m_treeView->setRootUrl(u);
         d->m_rootUrl = u;
     }
