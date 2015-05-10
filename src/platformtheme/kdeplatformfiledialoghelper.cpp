@@ -153,7 +153,7 @@ void KDEPlatformFileDialog::setFileMode(QFileDialogOptions::FileMode mode)
         m_fileWidget->setMode(KFile::Mode::File | KFile::Mode::ExistingOnly);
         break;
     case QFileDialogOptions::FileMode::Directory:
-        m_fileWidget->setMode(KFile::Mode::Directory);
+        m_fileWidget->setMode(KFile::Mode::Directory | KFile::Mode::ExistingOnly);
         break;
     case QFileDialogOptions::FileMode::ExistingFiles:
         m_fileWidget->setMode(KFile::Mode::Files | KFile::Mode::ExistingOnly);

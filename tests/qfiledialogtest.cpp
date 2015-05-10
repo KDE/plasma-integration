@@ -55,16 +55,21 @@ int main(int argc, char **argv)
         parser.value(QStringLiteral("acceptMode")) == QStringLiteral("open")
         ? QFileDialog::AcceptOpen
         : QFileDialog::AcceptSave);
-    
+
     QString fileModeValue = parser.value(QStringLiteral("fileMode"));
-    if (fileModeValue == QStringLiteral("AnyFile")) {
+    if (fileModeValue == QLatin1String("AnyFile")) {
         dialog.setFileMode(QFileDialog::AnyFile);
-    }
-    else if (!fileModeValue.isEmpty()) {
+    } else if (fileModeValue == QLatin1String("ExistingFile")) {
+        dialog.setFileMode(QFileDialog::ExistingFile);
+    } else if (fileModeValue == QLatin1String("ExistingFiles")) {
+        dialog.setFileMode(QFileDialog::ExistingFiles);
+    } else if (fileModeValue == QLatin1String("Directory")) {
+        dialog.setFileMode(QFileDialog::Directory);
+    } else if (!fileModeValue.isEmpty()) {
         qDebug() << "Not implemented or not valid:" << fileModeValue ;
         exit(0);
     }
-    
+
     QStringList nameFilterList = parser.values(QStringLiteral("nameFilter"));
     if (nameFilterList.size() == 1) {
         dialog.setNameFilter(nameFilterList.first());
