@@ -376,12 +376,11 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
 
     d->m_startURL = KFileWidget::getStartUrl(startDir, d->m_recentDirClass);
     if (localOnly && !d->m_startURL.isLocalFile()) {
-        d->m_startURL = QUrl();
         QString docPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
         if (QDir(docPath).exists()) {
-            d->m_startURL.setPath(docPath);
+            d->m_startURL = QUrl::fromLocalFile(docPath);
         } else {
-            d->m_startURL.setPath(QDir::homePath());
+            d->m_startURL = QUrl::fromLocalFile(QDir::homePath());
         }
     }
 
