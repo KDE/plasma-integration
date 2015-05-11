@@ -221,9 +221,8 @@ KDEPlatformFileDialogHelper::~KDEPlatformFileDialogHelper()
 void KDEPlatformFileDialogHelper::initializeDialog()
 {
     if (options()->testOption(QFileDialogOptions::ShowDirsOnly)) {
-        KDirSelectDialog *dialog = new KDirSelectDialog(m_dialog->directory());
         delete m_dialog;
-        m_dialog = dialog;
+        m_dialog = new KDirSelectDialog(options()->initialDirectory());
         connect(m_dialog, SIGNAL(accepted()), SIGNAL(accept()));
         connect(m_dialog, SIGNAL(rejected()), SIGNAL(reject()));
     } else {
