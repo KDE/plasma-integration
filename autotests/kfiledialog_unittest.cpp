@@ -171,7 +171,7 @@ private Q_SLOTS:
         QTest::addColumn<KFile::Modes>("kdeFileMode");
         QTest::newRow("anyfile") << QFileDialog::AnyFile << KFile::Modes(KFile::File);
         QTest::newRow("existingfile") << QFileDialog::ExistingFile << KFile::Modes(KFile::File | KFile::ExistingOnly);
-        QTest::newRow("directory") << QFileDialog::Directory << KFile::Modes(KFile::Directory);
+        QTest::newRow("directory") << QFileDialog::Directory << KFile::Modes(KFile::Directory | KFile::ExistingOnly);
         QTest::newRow("existingfiles") << QFileDialog::ExistingFiles << KFile::Modes(KFile::Files | KFile::ExistingOnly);
     }
 
