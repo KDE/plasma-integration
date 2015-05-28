@@ -38,14 +38,15 @@ remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 
 add_library(KDEPlatformTheme MODULE ${platformtheme_SRCS})
 
-# We link to KIO to pull in the qfiledialog hooks
 target_link_libraries(KDEPlatformTheme
     PRIVATE
         Qt5::DBus
         KF5::ConfigWidgets
         KF5::ConfigCore
         KF5::IconThemes
-        KF5::KIOFileWidgets
+        KF5::KIOFileWidgets # KFileFilterCombo, KDirSortFilterProxyModel, KRecentDirs
+        KF5::KIOWidgets
+        KF5::XmlGui
         KF5::I18n
         KF5::Notifications
 )
