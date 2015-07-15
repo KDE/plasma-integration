@@ -221,7 +221,7 @@ KDEPlatformFileDialogHelper::~KDEPlatformFileDialogHelper()
 void KDEPlatformFileDialogHelper::initializeDialog()
 {
     if (options()->testOption(QFileDialogOptions::ShowDirsOnly)) {
-        delete m_dialog;
+        m_dialog->deleteLater();
         m_dialog = new KDirSelectDialog(
 #if QT_VERSION >= QT_VERSION_CHECK(5,5,0)
             options()->initialDirectory()
