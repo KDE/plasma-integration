@@ -20,7 +20,7 @@ include(KDEInstallDirs)
 include(KDEFrameworkCompilerSettings)
 include(KDECMakeSettings)
 
-set(REQUIRED_QT_VERSION 5.2.0)
+set(REQUIRED_QT_VERSION 5.3.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Widgets DBus)
 
 set(KF5_VERSION "5.13.0") # handled by release scripts
