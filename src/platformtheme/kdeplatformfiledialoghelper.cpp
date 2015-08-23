@@ -231,6 +231,8 @@ void KDEPlatformFileDialogHelper::initializeDialog()
         );
         connect(m_dialog, SIGNAL(accepted()), SIGNAL(accept()));
         connect(m_dialog, SIGNAL(rejected()), SIGNAL(reject()));
+        if (!options()->windowTitle().isEmpty())
+            m_dialog->setWindowTitle(options()->windowTitle());
     } else {
         // needed for accessing m_fileWidget
         KDEPlatformFileDialog *dialog = qobject_cast<KDEPlatformFileDialog*>(m_dialog);
