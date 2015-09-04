@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8.12)
 project(FrameworkIntegration)
 
 include(FeatureSummary)
-find_package(ECM 5.13.0  NO_MODULE)
+find_package(ECM 5.14.0  NO_MODULE)
 set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://projects.kde.org/projects/kdesupport/extra-cmake-modules")
 feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
@@ -24,7 +24,7 @@ set(REQUIRED_QT_VERSION 5.3.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Widgets DBus)
 
 set(KF5_VERSION "5.14.0") # handled by release scripts
-set(KF5_DEP_VERSION "5.13.0") # handled by release scripts
+set(KF5_DEP_VERSION "5.14.0") # handled by release scripts
 
 ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX FRAMEWORKINTEGRATION
                   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/frameworkintegration_version.h"
