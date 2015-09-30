@@ -22,6 +22,20 @@
 
 KDEPlatformFileDialogBase::KDEPlatformFileDialogBase()
 {
+    m_timer.setInterval(0);
+    m_timer.setSingleShot(true);
+    connect(&m_timer, &QTimer::timeout, this, &KDEPlatformFileDialogBase::show);
+}
+
+void KDEPlatformFileDialogBase::delayedShow()
+{
+    m_timer.start();
+}
+
+void KDEPlatformFileDialogBase::discardDelayedShow()
+{
+    // this is used when hide() is called before timer triggers.
+    m_timer.stop();
 }
 
 void KDEPlatformFileDialogBase::closeEvent(QCloseEvent *e)

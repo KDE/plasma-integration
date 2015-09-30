@@ -74,6 +74,7 @@ private Q_SLOTS:
     void saveSize();
 
 private:
+    void restoreSize();
     KDEPlatformFileDialogBase *m_dialog;
 };
 

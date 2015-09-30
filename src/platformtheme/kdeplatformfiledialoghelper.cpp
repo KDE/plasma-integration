@@ -37,7 +37,6 @@
 #include <QWindow>
 
 #include <QTextStream>
-#include <QEventLoop>
 
 namespace
 {
@@ -281,19 +280,17 @@ void KDEPlatformFileDialogHelper::initializeDialog()
 
 void KDEPlatformFileDialogHelper::exec()
 {
-    m_dialog->hide(); // ensure dialog is not shown (exec would block input)
-    m_dialog->winId(); // ensure there's a window created
-    KSharedConfig::Ptr conf = KSharedConfig::openConfig();
-    KWindowConfig::restoreWindowSize(m_dialog->windowHandle(), conf->group("FileDialogSize"));
-    // NOTICE: QWindow::setGeometry() does NOT impact the backing QWidget geometry even if the platform
-    // window was created -> QTBUG-40584. We therefore copy the size here.
-    // TODO: remove once this was resolved in QWidget QPA
-    m_dialog->resize(m_dialog->windowHandle()->size());
+    restoreSize();
+    // KDEPlatformFileDialog::show() will always be called during QFileDialog::exec()
+    // discard the delayed show() it and use exec() and it will call show() for us.
+    // We can't hide and show it here because of https://bugreports.qt.io/browse/QTBUG-48248
+    m_dialog->discardDelayedShow();
     m_dialog->exec();
 }
 
 void KDEPlatformFileDialogHelper::hide()
 {
+    m_dialog->discardDelayedShow();
     m_dialog->hide();
 }
 
@@ -304,15 +301,29 @@ void KDEPlatformFileDialogHelper::saveSize()
     KWindowConfig::saveWindowSize(m_dialog->windowHandle(), group);
 }
 
+void KDEPlatformFileDialogHelper::restoreSize()
+{
+    m_dialog->winId(); // ensure there's a window created
+    KSharedConfig::Ptr conf = KSharedConfig::openConfig();
+    KWindowConfig::restoreWindowSize(m_dialog->windowHandle(), conf->group("FileDialogSize"));
+    // NOTICE: QWindow::setGeometry() does NOT impact the backing QWidget geometry even if the platform
+    // window was created -> QTBUG-40584. We therefore copy the size here.
+    // TODO: remove once this was resolved in QWidget QPA
+    m_dialog->resize(m_dialog->windowHandle()->size());
+}
+
 bool KDEPlatformFileDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent)
 {
     Q_UNUSED(parent)
     initializeDialog();
     m_dialog->setWindowFlags(windowFlags);
     m_dialog->setWindowModality(windowModality);
-    m_dialog->show();
-    KSharedConfig::Ptr conf = KSharedConfig::openConfig();
-    KWindowConfig::restoreWindowSize(m_dialog->windowHandle(), conf->group("FileDialogSize"));
+    restoreSize();
+    // Use a delayed show here to delay show() after the internal Qt invisible QDialog.
+    // The delayed call shouldn't matter, because for other "real" native QPlatformDialog
+    // implementation like Mac and Windows, the native dialog is not necessarily
+    // show up immediately.
+    m_dialog->delayedShow();
     return true;
 }
 

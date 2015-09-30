@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include <QUrl>
+#include <QTimer>
 
 class KFileWidget;
 class QDialogButtonBox;
@@ -40,6 +41,9 @@ public:
     virtual QString selectedNameFilter() = 0;
     virtual QList<QUrl> selectedFiles() = 0;
 
+    void delayedShow();
+    void discardDelayedShow();
+
 Q_SIGNALS:
     void closed();
     void fileSelected(const QUrl &file);
@@ -51,6 +55,7 @@ Q_SIGNALS:
 protected:
     void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
     QDialogButtonBox *m_buttons;
+    QTimer m_timer;
 };
 
 #endif
