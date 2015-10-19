@@ -49,7 +49,7 @@ KFontSettingsData::~KFontSettingsData()
 
 // NOTE: keep in sync with plasma-desktop/kcms/fonts/fonts.cpp
 static const char GeneralId[] =      "General";
-static const char DefaultFont[] =    "Oxygen-Sans";
+static const char DefaultFont[] =    "Noto Sans";
 
 static const KFontData DefaultFontData[KFontSettingsData::FontTypesCount] = {
     { GeneralId, "font",                 DefaultFont,  10, -1, QFont::SansSerif },

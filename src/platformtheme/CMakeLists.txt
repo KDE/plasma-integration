@@ -56,3 +56,10 @@ if(HAVE_X11)
 endif()
 
 install(TARGETS KDEPlatformTheme DESTINATION ${KDE_INSTALL_QTPLUGINDIR}/platformthemes)
+
+install(FILES frameworksintegration-5.16-font.upd
+  DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR}
+  )
+install(PROGRAMS frameworksintegration-5.16-font.sh
+  DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR}
+  )

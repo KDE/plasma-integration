@@ -39,13 +39,6 @@ find_package(KF5KIO ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5Notifications ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5WidgetsAddons ${KF5_DEP_VERSION} REQUIRED)
 
-find_package(OxygenFont 0.4)
-
-set_package_properties(OxygenFont PROPERTIES
-    PURPOSE "Default font for KDE Applications"
-    TYPE RUNTIME
-)
-
 add_definitions(-DTRANSLATION_DOMAIN=\"frameworkintegration5\")
 if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
     ki18n_install(po)
@@ -76,3 +69,4 @@ install(FILES plasma_workspace.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR}
 
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
+message("** frameworkintegration uses Noto Sans (https://www.google.com/get/noto/) and Oxygen Mono (http://download.kde.org/stable/plasma/5.4.0/oxygen-fonts-5.4.0.tar.xz) fonts, ensure these are installed for use at runtime")
