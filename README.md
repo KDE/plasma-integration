@@ -39,9 +39,3 @@ for asking users the same question again.
 The plugin KDEPlatformTheme provides KDE integration for
 QPlatformThemePlugin.
 
-## Links
-
-- Home page: <https://projects.kde.org/projects/frameworks/frameworkintegration>
-- Mailing list: <https://mail.kde.org/mailman/listinfo/kde-frameworks-devel>
-- IRC channel: #kde-devel on Freenode
-- Git repository: <https://projects.kde.org/projects/frameworks/frameworkintegration/repository>
