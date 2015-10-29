@@ -106,10 +106,13 @@ KHintsSettings::KHintsSettings() : QObject(0)
     m_hints[QPlatformTheme::UiEffects] = cg.readEntry("GraphicEffectsLevel", 0) != 0 ? QPlatformTheme::GeneralUiEffect : 0;
     m_hints[QPlatformTheme::IconPixmapSizes] = QVariant::fromValue(QList<int>() << 512 << 256 << 128 << 64 << 32 << 22 << 16 << 8);
 
-    //TODO Check if we can add themeHints for these two options
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
+    m_hints[QPlatformTheme::WheelScrollLines] = cg.readEntry("WheelScrollLines", QApplication::wheelScrollLines());
+#else
     if (qobject_cast<QApplication *>(QCoreApplication::instance())) {
         QApplication::setWheelScrollLines(cg.readEntry("WheelScrollLines", QApplication::wheelScrollLines()));
     }
+#endif
 
     bool showIcons = cg.readEntry("ShowIconsInMenuItems", !QApplication::testAttribute(Qt::AA_DontShowIconsInMenus));
     QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, !showIcons);
@@ -329,10 +332,15 @@ void KHintsSettings::updateQtSettings(KConfigGroup &cg)
     bool showIcons = cg.readEntry("ShowIconsInMenuItems", !QApplication::testAttribute(Qt::AA_DontShowIconsInMenus));
     QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, !showIcons);
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
+    int wheelScrollLines = cg.readEntry("WheelScrollLines", QApplication::wheelScrollLines());
+    m_hints[QPlatformTheme::WheelScrollLines] = wheelScrollLines;
+#else
     QApplication *app = qobject_cast<QApplication *>(QCoreApplication::instance());
     if (app) {
         QApplication::setWheelScrollLines(cg.readEntry("WheelScrollLines", QApplication::wheelScrollLines()));
     }
+#endif
 }
 
 Qt::ToolButtonStyle KHintsSettings::toolButtonStyle(const KConfigGroup &cg) const
