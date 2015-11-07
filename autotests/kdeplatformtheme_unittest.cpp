@@ -59,7 +59,7 @@ static void prepareEnvironment()
     }
 }
 
-Q_COREAPP_STARTUP_FUNCTION(prepareEnvironment);
+Q_CONSTRUCTOR_FUNCTION(prepareEnvironment)
 
 class EventTest : public QObject
 {
@@ -124,10 +124,10 @@ private Q_SLOTS:
 
     void testPlatformHints()
     {
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::CursorFlashTime).toInt(), 1042);
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::MouseDoubleClickInterval).toInt(), 4343);
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::StartDragDistance).toInt(), 15);
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::StartDragTime).toInt(), 555);
+        QCOMPARE(qApp->cursorFlashTime(), 1042);
+        QCOMPARE(qApp->doubleClickInterval(), 4343);
+        QCOMPARE(qApp->startDragDistance(), 15);
+        QCOMPARE(qApp->startDragTime(), 555);
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::ToolButtonStyle).toInt(), (int) Qt::ToolButtonTextOnly);
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::ToolBarIconSize).toInt(), 2);
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::ItemViewActivateItemOnSingleClick).toBool(), false);
@@ -158,34 +158,34 @@ private Q_SLOTS:
 
     void testPlatformPalette()
     {
-        const QPalette *palette = m_qpa->palette();
+        const QPalette palette = qApp->palette();
         QPalette::ColorGroup states[3] = {QPalette::Active, QPalette::Inactive, QPalette::Disabled};
         QColor greenColor(QColor(0, 128, 0));
         QBrush greenBrush(greenColor);
         for (int i = 0; i < 3; i++) {
-            QCOMPARE(palette->brush(states[i], QPalette::ButtonText), greenBrush);
-            QCOMPARE(palette->brush(states[i], QPalette::WindowText), greenBrush);
-            QCOMPARE(palette->brush(states[i], QPalette::Window), greenBrush);
-            QCOMPARE(palette->brush(states[i], QPalette::Base), greenBrush);
-            QCOMPARE(palette->brush(states[i], QPalette::Text), greenBrush);
-            QCOMPARE(palette->brush(states[i], QPalette::Button), greenBrush);
-            QCOMPARE(palette->brush(states[i], QPalette::ButtonText), greenBrush);
-            QCOMPARE(palette->brush(states[i], QPalette::Highlight), greenBrush);
-            QCOMPARE(palette->brush(states[i], QPalette::HighlightedText), greenBrush);
-            QCOMPARE(palette->brush(states[i], QPalette::ToolTipBase), greenBrush);
-            QCOMPARE(palette->brush(states[i], QPalette::ToolTipText), greenBrush);
+            QCOMPARE(palette.brush(states[i], QPalette::ButtonText), greenBrush);
+            QCOMPARE(palette.brush(states[i], QPalette::WindowText), greenBrush);
+            QCOMPARE(palette.brush(states[i], QPalette::Window), greenBrush);
+            QCOMPARE(palette.brush(states[i], QPalette::Base), greenBrush);
+            QCOMPARE(palette.brush(states[i], QPalette::Text), greenBrush);
+            QCOMPARE(palette.brush(states[i], QPalette::Button), greenBrush);
+            QCOMPARE(palette.brush(states[i], QPalette::ButtonText), greenBrush);
+            QCOMPARE(palette.brush(states[i], QPalette::Highlight), greenBrush);
+            QCOMPARE(palette.brush(states[i], QPalette::HighlightedText), greenBrush);
+            QCOMPARE(palette.brush(states[i], QPalette::ToolTipBase), greenBrush);
+            QCOMPARE(palette.brush(states[i], QPalette::ToolTipText), greenBrush);
 
             //KColorScheme applies modifications and we can't disable them, so I extracted
             //the values and blindly compare them.
-            QCOMPARE(palette->color(states[i], QPalette::Light).green(), 162);
-            QCOMPARE(palette->color(states[i], QPalette::Midlight).green(), 144);
-            QCOMPARE(palette->color(states[i], QPalette::Mid).green(), 109);
-            QCOMPARE(palette->color(states[i], QPalette::Dark).green(), 62);
-            QCOMPARE(palette->color(states[i], QPalette::Shadow).green(), 43);
+            QCOMPARE(palette.color(states[i], QPalette::Light).green(), 162);
+            QCOMPARE(palette.color(states[i], QPalette::Midlight).green(), 144);
+            QCOMPARE(palette.color(states[i], QPalette::Mid).green(), 109);
+            QCOMPARE(palette.color(states[i], QPalette::Dark).green(), 62);
+            QCOMPARE(palette.color(states[i], QPalette::Shadow).green(), 43);
 
-            QCOMPARE(palette->brush(states[i], QPalette::AlternateBase), greenBrush);
-            QCOMPARE(palette->brush(states[i], QPalette::Link), greenBrush);
-            QCOMPARE(palette->brush(states[i], QPalette::LinkVisited), greenBrush);
+            QCOMPARE(palette.brush(states[i], QPalette::AlternateBase), greenBrush);
+            QCOMPARE(palette.brush(states[i], QPalette::Link), greenBrush);
+            QCOMPARE(palette.brush(states[i], QPalette::LinkVisited), greenBrush);
         }
     }
 
@@ -219,15 +219,15 @@ private Q_SLOTS:
         sendNotifyChange(KHintsSettings::SettingsChanged, KHintsSettings::SETTINGS_QT);
         m_loop.exec();
 
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::CursorFlashTime).toInt(), 1022);
+        QCOMPARE(qApp->cursorFlashTime(), 1022);
 
         sendNotifyChange(KHintsSettings::SettingsChanged, KHintsSettings::SETTINGS_MOUSE);
         m_loop.exec();
 
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::ItemViewActivateItemOnSingleClick).toBool(), true);
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::MouseDoubleClickInterval).toInt(), 401);
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::StartDragDistance).toInt(), 35);
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::StartDragTime).toInt(), 501);
+        QCOMPARE(qApp->doubleClickInterval(), 401);
+        QCOMPARE(qApp->startDragDistance(), 35);
+        QCOMPARE(qApp->startDragTime(), 501);
 
         QCOMPARE(qApp->wheelScrollLines(), 122);
         QCOMPARE(qApp->testAttribute(Qt::AA_DontShowIconsInMenus), true);
