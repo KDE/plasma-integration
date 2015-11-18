@@ -47,7 +47,7 @@ static void prepareEnvironment()
 
     QString configPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
 
-    if(!QDir(configPath).mkpath(".")) {
+    if(!QDir(configPath).mkpath(QStringLiteral("."))) {
         qFatal("Failed to create test configuration directory.");
     }
 
@@ -93,7 +93,7 @@ public:
 private:
     void sendNotifyChange(KHintsSettings::ChangeType type, int arg = -1)
     {
-        QDBusMessage message = QDBusMessage::createSignal("/KGlobalSettings", "org.kde.KGlobalSettings", "notifyChange");
+        QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/KGlobalSettings"), QStringLiteral("org.kde.KGlobalSettings"), QStringLiteral("notifyChange"));
         QList<QVariant> args;
         args.append(static_cast<int>(type));
         if (arg >= 0) {
@@ -110,8 +110,8 @@ private Q_SLOTS:
     void initTestCase()
     {
         m_qpa = new KdePlatformTheme();
-        QDBusConnection::sessionBus().connect(QString(), "/KGlobalSettings", "org.kde.KGlobalSettings",
-                                              "notifyChange",  &m_loop, SLOT(quit()));
+        QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/KGlobalSettings"), QStringLiteral("org.kde.KGlobalSettings"),
+                                              QStringLiteral("notifyChange"),  &m_loop, SLOT(quit()));
     }
 
     void cleanupTestCase()
@@ -143,7 +143,7 @@ private Q_SLOTS:
         QVERIFY(!iconThemeSearchPaths.isEmpty());
 
         QStringList styles;
-        styles << "non-existent-widget-style" << "breeze" << "oxygen" << "fusion" << "windows";
+        styles << QStringLiteral("non-existent-widget-style") << QStringLiteral("breeze") << QStringLiteral("oxygen") << QStringLiteral("fusion") << QStringLiteral("windows");
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::StyleNames).toStringList(), styles);
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::DialogButtonBoxLayout).toInt(), (int) QDialogButtonBox::KdeLayout);
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::DialogButtonBoxButtonsHaveIcons).toBool(), false);
@@ -202,10 +202,10 @@ private Q_SLOTS:
         QFile::remove(configPath);
         QFile::copy(CHANGED_CONFIGFILE, configPath);
 
-        QDBusConnection::sessionBus().connect(QString(), "/KIconLoader", "org.kde.KIconLoader",
-                                              "iconChanged",  &m_loop, SLOT(quit()));
+        QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/KIconLoader"), QStringLiteral("org.kde.KIconLoader"),
+                                              QStringLiteral("iconChanged"),  &m_loop, SLOT(quit()));
 
-        QDBusMessage message = QDBusMessage::createSignal("/KIconLoader", "org.kde.KIconLoader", "iconChanged");
+        QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/KIconLoader"), QStringLiteral("org.kde.KIconLoader"), QStringLiteral("iconChanged"));
         message.setArguments(QList<QVariant>() << int(KIconLoader::MainToolbar));
         QDBusConnection::sessionBus().send(message);
         m_loop.exec();
@@ -242,7 +242,7 @@ private Q_SLOTS:
         m_loop.exec();
 
         QStringList styles;
-        styles << "another-non-existent-widget-style" << "breeze" << "oxygen" << "fusion" << "windows";
+        styles << QStringLiteral("another-non-existent-widget-style") << QStringLiteral("breeze") << QStringLiteral("oxygen") << QStringLiteral("fusion") << QStringLiteral("windows");
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::StyleNames).toStringList(), styles);
 
         sendNotifyChange(KHintsSettings::SettingsChanged, KHintsSettings::SETTINGS_STYLE);

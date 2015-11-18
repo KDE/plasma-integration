@@ -71,7 +71,7 @@ QFont *KFontSettingsData::font(FontTypes fontType)
         cachedFont->setStyleHint(fontData.StyleHint);
 
         if (!mKdeGlobals) {
-            mKdeGlobals = KSharedConfig::openConfig("kdeglobals", KConfig::NoGlobals);
+            mKdeGlobals = KSharedConfig::openConfig(QStringLiteral("kdeglobals"), KConfig::NoGlobals);
         }
         const KConfigGroup configGroup(mKdeGlobals, fontData.ConfigGroupKey);
         QString fontInfo = configGroup.readEntry(fontData.ConfigKey, QString());
@@ -109,6 +109,6 @@ void KFontSettingsData::dropFontSettingsCache()
 
 void KFontSettingsData::delayedDBusConnects()
 {
-    QDBusConnection::sessionBus().connect(QString(), "/KDEPlatformTheme", "org.kde.KDEPlatformTheme",
-                                          "refreshFonts", this, SLOT(dropFontSettingsCache()));
+    QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/KDEPlatformTheme"), QStringLiteral("org.kde.KDEPlatformTheme"),
+                                          QStringLiteral("refreshFonts"), this, SLOT(dropFontSettingsCache()));
 }

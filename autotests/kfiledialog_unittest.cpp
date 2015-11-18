@@ -45,7 +45,7 @@ private Q_SLOTS:
     {
         QFileDialog dialog;
 
-        QStringList nameFilterList = QStringList() << "c (*.cpp)" << "h (*.h)";
+        QStringList nameFilterList = QStringList() << QStringLiteral("c (*.cpp)") << QStringLiteral("h (*.h)");
         dialog.setNameFilters(nameFilterList);
         QCOMPARE(dialog.nameFilters(), nameFilterList);
     }
@@ -54,11 +54,11 @@ private Q_SLOTS:
     {
         QFileDialog dialog;
 
-        QStringList nameFilterList = QStringList() << "c (*.cpp)" << "h (*.h)";
+        QStringList nameFilterList = QStringList() << QStringLiteral("c (*.cpp)") << QStringLiteral("h (*.h)");
         dialog.setNameFilters(nameFilterList);
         QCOMPARE(dialog.nameFilters(), nameFilterList);
 
-        QString selectNameFilter("h (*.h)");
+        QString selectNameFilter(QStringLiteral("h (*.h)"));
         dialog.selectNameFilter(selectNameFilter);
         QEXPECT_FAIL("", "Does currently not work. Works, once the dialog gets shown, though.", Continue);
         QCOMPARE(dialog.selectedNameFilter(), selectNameFilter);

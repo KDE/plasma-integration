@@ -96,10 +96,10 @@ private Q_SLOTS:
         QFile::copy(CHANGED_CONFIGFILE, configPath);
 
         QEventLoop loop;
-        QDBusConnection::sessionBus().connect(QString(), "/KDEPlatformTheme", "org.kde.KDEPlatformTheme",
-                                              "refreshFonts", &loop, SLOT(quit()));
+        QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/KDEPlatformTheme"), QStringLiteral("org.kde.KDEPlatformTheme"),
+                                              QStringLiteral("refreshFonts"), &loop, SLOT(quit()));
 
-        QDBusMessage message = QDBusMessage::createSignal("/KDEPlatformTheme", "org.kde.KDEPlatformTheme", "refreshFonts");
+        QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/KDEPlatformTheme"), QStringLiteral("org.kde.KDEPlatformTheme"), QStringLiteral("refreshFonts"));
         QDBusConnection::sessionBus().send(message);
         loop.exec();
 

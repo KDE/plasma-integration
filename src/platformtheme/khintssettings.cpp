@@ -53,11 +53,11 @@
 #include <X11/Xcursor/Xcursor.h>
 #endif
 
-static const QString defaultLookAndFeelPackage = "org.kde.breeze.desktop";
+static const QString defaultLookAndFeelPackage = QStringLiteral("org.kde.breeze.desktop");
 
 KHintsSettings::KHintsSettings() : QObject(0)
 {
-    mKdeGlobals = KSharedConfig::openConfig("kdeglobals", KConfig::NoGlobals);
+    mKdeGlobals = KSharedConfig::openConfig(QStringLiteral("kdeglobals"), KConfig::NoGlobals);
     KConfigGroup cg(mKdeGlobals, "KDE");
 
     // try to extract the proper defaults file from a lookandfeel package
@@ -81,18 +81,18 @@ KHintsSettings::KHintsSettings() : QObject(0)
 
     m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = cg.readEntry("SingleClick", true);
 
-    m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue("Icons", "Theme", "breeze");
+    m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue(QStringLiteral("Icons"), QStringLiteral("Theme"), "breeze");
 
     m_hints[QPlatformTheme::SystemIconFallbackThemeName] = "hicolor";
     m_hints[QPlatformTheme::IconThemeSearchPaths] = xdgIconThemePaths();
 
     QStringList styleNames;
     styleNames << cg.readEntry("widgetStyle", QString())
-               << "breeze"
-               << "oxygen"
-               << "fusion"
-               << "windows";
-    const QString lnfStyle = readConfigValue("KDE", "widgetStyle", QString()).toString();
+               << QStringLiteral("breeze")
+               << QStringLiteral("oxygen")
+               << QStringLiteral("fusion")
+               << QStringLiteral("windows");
+    const QString lnfStyle = readConfigValue(QStringLiteral("KDE"), QStringLiteral("widgetStyle"), QString()).toString();
     if (!lnfStyle.isEmpty()) {
         styleNames.removeOne(lnfStyle);
         styleNames.prepend(lnfStyle);
@@ -168,7 +168,7 @@ QStringList KHintsSettings::xdgIconThemePaths() const
     QString xdgDirString = QFile::decodeName(qgetenv("XDG_DATA_DIRS"));
 
     if (xdgDirString.isEmpty()) {
-        xdgDirString = QLatin1String("/usr/local/share:/usr/share");
+        xdgDirString = QStringLiteral("/usr/local/share:/usr/share");
     }
 
     foreach (const QString &xdgDir, xdgDirString.split(QLatin1Char(':'))) {
@@ -263,11 +263,11 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
 
         QStringList styleNames;
         styleNames << cg.readEntry("widgetStyle", QString())
-                << "breeze"
-                << "oxygen"
-                << "fusion"
-                << "windows";
-        const QString lnfStyle = readConfigValue("KDE", "widgetStyle", QString()).toString();
+                << QStringLiteral("breeze")
+                << QStringLiteral("oxygen")
+                << QStringLiteral("fusion")
+                << QStringLiteral("windows");
+        const QString lnfStyle = readConfigValue(QStringLiteral("KDE"), QStringLiteral("widgetStyle"), QString()).toString();
         if (!lnfStyle.isEmpty() && !styleNames.contains(lnfStyle)) {
             styleNames.prepend(lnfStyle);
         }
@@ -286,7 +286,7 @@ void KHintsSettings::iconChanged(int group)
 {
     KIconLoader::Group iconGroup = (KIconLoader::Group) group;
     if (iconGroup != KIconLoader::MainToolbar) {
-        m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue("Icons", "Theme", "breeze");
+        m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue(QStringLiteral("Icons"), QStringLiteral("Theme"), "breeze");
 
         return;
     }
@@ -344,11 +344,11 @@ void KHintsSettings::updateQtSettings(KConfigGroup &cg)
 Qt::ToolButtonStyle KHintsSettings::toolButtonStyle(const KConfigGroup &cg) const
 {
     const QString buttonStyle = cg.readEntry("ToolButtonStyle", "TextBesideIcon").toLower();
-    return buttonStyle == "textbesideicon" ? Qt::ToolButtonTextBesideIcon
-           : buttonStyle == "icontextright" ? Qt::ToolButtonTextBesideIcon
-           : buttonStyle == "textundericon" ? Qt::ToolButtonTextUnderIcon
-           : buttonStyle == "icontextbottom" ? Qt::ToolButtonTextUnderIcon
-           : buttonStyle == "textonly" ? Qt::ToolButtonTextOnly
+    return buttonStyle == QLatin1String("textbesideicon") ? Qt::ToolButtonTextBesideIcon
+           : buttonStyle == QLatin1String("icontextright") ? Qt::ToolButtonTextBesideIcon
+           : buttonStyle == QLatin1String("textundericon") ? Qt::ToolButtonTextUnderIcon
+           : buttonStyle == QLatin1String("icontextbottom") ? Qt::ToolButtonTextUnderIcon
+           : buttonStyle == QLatin1String("textonly") ? Qt::ToolButtonTextOnly
            : Qt::ToolButtonIconOnly;
 }
 
@@ -369,13 +369,13 @@ void KHintsSettings::loadPalettes()
             return;
         }
 
-        path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "plasma/look-and-feel/org.kde.loonandfeel/contents/colors");
+        path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("plasma/look-and-feel/org.kde.loonandfeel/contents/colors"));
         if (!path.isEmpty()) {
             m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(path)));
             return;
         }
 
-        const QString scheme = readConfigValue("General", "ColorScheme", "Breeze").toString();
+        const QString scheme = readConfigValue(QStringLiteral("General"), QStringLiteral("ColorScheme"), "Breeze").toString();
         path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "color-schemes/" + scheme + ".colors");
 
         if (!path.isEmpty()) {
@@ -386,7 +386,7 @@ void KHintsSettings::loadPalettes()
 
 void KHintsSettings::updateCursorTheme()
 {
-    KConfig config("kcminputrc");
+    KConfig config(QStringLiteral("kcminputrc"));
     KConfigGroup g(&config, "Mouse");
 
     QString theme = g.readEntry("cursorTheme", QString());

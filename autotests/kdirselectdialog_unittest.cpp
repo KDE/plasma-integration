@@ -31,9 +31,9 @@ private Q_SLOTS:
         QTest::addColumn<QUrl>("url");
         QTest::addColumn<QUrl>("expectedUrl");
 
-        QTest::newRow("only_scheme") << QUrl("trash:") << QUrl("trash:/");
-        QTest::newRow("with_no_host") << QUrl("trash://") << QUrl("trash://");
-        QTest::newRow("with_root_path") << QUrl("trash:///") << QUrl("trash:///");
+        QTest::newRow("only_scheme") << QUrl(QStringLiteral("trash:")) << QUrl(QStringLiteral("trash:/"));
+        QTest::newRow("with_no_host") << QUrl(QStringLiteral("trash://")) << QUrl(QStringLiteral("trash://"));
+        QTest::newRow("with_root_path") << QUrl(QStringLiteral("trash:///")) << QUrl(QStringLiteral("trash:///"));
     }
 
     void testSetCurrentUrl()

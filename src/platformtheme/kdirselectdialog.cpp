@@ -291,7 +291,7 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     topLayout->addWidget(page);
 
     QPushButton *folderButton = new QPushButton;
-    KGuiItem::assign(folderButton, KGuiItem(i18nc("@action:button", "New Folder..."), "folder-new"));
+    KGuiItem::assign(folderButton, KGuiItem(i18nc("@action:button", "New Folder..."), QStringLiteral("folder-new")));
     connect(folderButton, SIGNAL(clicked()), this, SLOT(slotNewFolder()));
 
     m_buttons = new QDialogButtonBox(this);
@@ -308,7 +308,7 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     d->m_actions->addAssociatedWidget(this);
     d->m_placesView = new KFilePlacesView(page);
     d->m_placesView->setModel(new KFilePlacesModel(d->m_placesView));
-    d->m_placesView->setObjectName(QLatin1String("speedbar"));
+    d->m_placesView->setObjectName(QStringLiteral("speedbar"));
     d->m_placesView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     d->m_placesView->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     connect(d->m_placesView, SIGNAL(urlChanged(QUrl)),
@@ -339,21 +339,21 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
 
     QAction *newFolder = new QAction(i18nc("@action:inmenu", "New Folder..."), this);
     d->m_actions->addAction(newFolder->objectName(), newFolder);
-    newFolder->setIcon(QIcon::fromTheme("folder-new"));
+    newFolder->setIcon(QIcon::fromTheme(QStringLiteral("folder-new")));
     newFolder->setShortcut(Qt::Key_F10);
     connect(newFolder, SIGNAL(triggered(bool)), this, SLOT(slotNewFolder()));
     d->m_contextMenu->addAction(newFolder);
 
     d->moveToTrash = new QAction(i18nc("@action:inmenu", "Move to Trash"), this);
     d->m_actions->addAction(d->moveToTrash->objectName(), d->moveToTrash);
-    d->moveToTrash->setIcon(QIcon::fromTheme("user-trash"));
+    d->moveToTrash->setIcon(QIcon::fromTheme(QStringLiteral("user-trash")));
     d->moveToTrash->setShortcut(Qt::Key_Delete);
     connect(d->moveToTrash, SIGNAL(triggered(bool)), this, SLOT(slotMoveToTrash()));
     d->m_contextMenu->addAction(d->moveToTrash);
 
     d->deleteAction = new QAction(i18nc("@action:inmenu", "Delete"), this);
     d->m_actions->addAction(d->deleteAction->objectName(), d->deleteAction);
-    d->deleteAction->setIcon(QIcon::fromTheme("edit-delete"));
+    d->deleteAction->setIcon(QIcon::fromTheme(QStringLiteral("edit-delete")));
     d->deleteAction->setShortcut(Qt::SHIFT + Qt::Key_Delete);
     connect(d->deleteAction, SIGNAL(triggered(bool)), this, SLOT(slotDelete()));
     d->m_contextMenu->addAction(d->deleteAction);
@@ -369,7 +369,7 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
 
     QAction *propertiesAction = new QAction(i18nc("@action:inmenu", "Properties"), this);
     d->m_actions->addAction(propertiesAction->objectName(), propertiesAction);
-    propertiesAction->setIcon(QIcon::fromTheme("document-properties"));
+    propertiesAction->setIcon(QIcon::fromTheme(QStringLiteral("document-properties")));
     propertiesAction->setShortcut(Qt::ALT + Qt::Key_Return);
     connect(propertiesAction, SIGNAL(triggered(bool)), this, SLOT(slotProperties()));
     d->m_contextMenu->addAction(propertiesAction);
@@ -387,7 +387,7 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     d->m_startDir = d->m_startURL;
     d->m_rootUrl = d->m_treeView->rootUrl();
 
-    d->readConfig(KSharedConfig::openConfig(), "DirSelect Dialog");
+    d->readConfig(KSharedConfig::openConfig(), QStringLiteral("DirSelect Dialog"));
 
     mainLayout->addWidget(d->m_treeView, 1);
     mainLayout->addWidget(d->m_urlCombo, 0);
@@ -463,7 +463,7 @@ void KDirSelectDialog::setCurrentUrl(const QUrl &url)
         //to find the / separator. It can happen that a valid url like smb: does not have
         //one so we should add it.
         if (!u.toString().endsWith(QChar('/'))) {
-            u.setPath("/");
+            u.setPath(QStringLiteral("/"));
         }
 
         d->m_treeView->setRootUrl(u);
@@ -503,7 +503,7 @@ void KDirSelectDialog::accept()
 
 void KDirSelectDialog::hideEvent(QHideEvent *event)
 {
-    d->saveConfig(KSharedConfig::openConfig(), "DirSelect Dialog");
+    d->saveConfig(KSharedConfig::openConfig(), QStringLiteral("DirSelect Dialog"));
 
     QDialog::hideEvent(event);
 }
