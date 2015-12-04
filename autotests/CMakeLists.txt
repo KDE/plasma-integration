@@ -1,4 +1,5 @@
 include(ECMMarkAsTest)
+include(ECMMarkNonGuiExecutable)
 
 find_package(Qt5Test ${REQUIRED_QT_VERSION} CONFIG QUIET)
 find_package(Qt5Qml ${REQUIRED_QT_VERSION} CONFIG QUIET)
@@ -25,6 +26,7 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
     set_target_properties(${_testname} PROPERTIES COMPILE_FLAGS "-DUNIT_TEST")
     add_test(frameworkintegration-${_testname} ${_testname})
     ecm_mark_as_test(${_testname})
+    ecm_mark_nongui_executable(${_testname})
     target_link_libraries(${_testname} Qt5::Test Qt5::DBus KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::Style KF5::KIOFileWidgets KF5::I18n KF5::Notifications)
 endmacro()
 
