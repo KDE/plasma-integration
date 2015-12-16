@@ -27,7 +27,7 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
     add_test(frameworkintegration-${_testname} ${_testname})
     ecm_mark_as_test(${_testname})
     ecm_mark_nongui_executable(${_testname})
-    target_link_libraries(${_testname} Qt5::Test Qt5::DBus KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::Style KF5::KIOFileWidgets KF5::I18n KF5::Notifications)
+    target_link_libraries(${_testname} Qt5::Test Qt5::DBus KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::KIOFileWidgets KF5::I18n KF5::Notifications)
 endmacro()
 
 frameworkintegration_tests(
@@ -45,10 +45,6 @@ frameworkintegration_tests(
 frameworkintegration_tests(
   kfontsettingsdata_unittest
   ../src/platformtheme/kfontsettingsdata.cpp
-)
-
-frameworkintegration_tests(
-  kstyle_unittest
 )
 
 frameworkintegration_tests(

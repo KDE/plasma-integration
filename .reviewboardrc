@@ -1,4 +1,4 @@
 REVIEWBOARD_URL = "https://git.reviewboard.kde.org"
-REPOSITORY = 'git://anongit.kde.org/frameworkintegration'
+REPOSITORY = 'git://anongit.kde.org/plasma-integration'
 BRANCH = 'master'
-TARGET_GROUPS = 'kdeframeworks'
+TARGET_GROUPS = 'plasma'

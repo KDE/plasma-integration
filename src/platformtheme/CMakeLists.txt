@@ -36,9 +36,9 @@ include_directories(
 )
 remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 
-add_library(KDEPlatformTheme MODULE ${platformtheme_SRCS})
+add_library(KDEPlasmaPlatformTheme MODULE ${platformtheme_SRCS})
 
-target_link_libraries(KDEPlatformTheme
+target_link_libraries(KDEPlasmaPlatformTheme
     PRIVATE
         Qt5::DBus
         KF5::ConfigWidgets
@@ -52,14 +52,8 @@ target_link_libraries(KDEPlatformTheme
 )
 
 if(HAVE_X11)
-  target_link_libraries(KDEPlatformTheme PRIVATE Qt5::X11Extras XCB::XCB ${X11_Xcursor_LIB})
+  target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt5::X11Extras XCB::XCB ${X11_Xcursor_LIB})
 endif()
 
-install(TARGETS KDEPlatformTheme DESTINATION ${KDE_INSTALL_QTPLUGINDIR}/platformthemes)
+install(TARGETS KDEPlasmaPlatformTheme DESTINATION ${KDE_INSTALL_QTPLUGINDIR}/platformthemes)
 
-install(FILES frameworksintegration-5.16-font.upd
-  DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR}
-  )
-install(PROGRAMS frameworksintegration-5.16-font.sh
-  DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR}
-  )

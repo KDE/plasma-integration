@@ -26,11 +26,6 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Widgets DBus)
 set(KF5_VERSION "5.18.0") # handled by release scripts
 set(KF5_DEP_VERSION "5.17.0") # handled by release scripts
 
-ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX FRAMEWORKINTEGRATION
-                  VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/frameworkintegration_version.h"
-                  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5FrameworkIntegrationConfigVersion.cmake"
-                  SOVERSION 5)
-
 find_package(KF5Config ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5ConfigWidgets ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5I18n ${KF5_DEP_VERSION} REQUIRED)
@@ -47,26 +42,6 @@ add_subdirectory(src)
 add_subdirectory(autotests)
 add_subdirectory(tests)
 
-# create a Config.cmake and a ConfigVersion.cmake file and install them
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5FrameworkIntegration")
-
-ecm_configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/KF5FrameworkIntegrationConfig.cmake.in"
-                              "${CMAKE_CURRENT_BINARY_DIR}/KF5FrameworkIntegrationConfig.cmake"
-                              INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
-                              )
-
-install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF5FrameworkIntegrationConfig.cmake"
-               "${CMAKE_CURRENT_BINARY_DIR}/KF5FrameworkIntegrationConfigVersion.cmake"
-        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        COMPONENT Devel )
-
-install(EXPORT KF5FrameworkIntegrationTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5FrameworkIntegrationTargets.cmake NAMESPACE KF5:: )
-
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/frameworkintegration_version.h
-        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5} COMPONENT Devel )
-
-install(FILES plasma_workspace.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR})
-
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
-message("** frameworkintegration uses Noto Sans (https://www.google.com/get/noto/) and Oxygen Mono (http://download.kde.org/stable/plasma/5.4.0/oxygen-fonts-5.4.0.tar.xz) fonts, ensure these are installed for use at runtime")
+message("** plasma-integration uses Noto Sans (https://www.google.com/get/noto/) and Oxygen Mono (http://download.kde.org/stable/plasma/5.4.0/oxygen-fonts-5.4.0.tar.xz) fonts, ensure these are installed for use at runtime")
