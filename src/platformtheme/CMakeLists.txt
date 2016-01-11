@@ -1,20 +1,11 @@
-if(NOT APPLE)
-  find_package(XCB COMPONENTS XCB)
-  set_package_properties(XCB PROPERTIES
-    TYPE RECOMMENDED
-    PURPOSE "Required for flushing the XCB connection on the X11 Platform"
-  )
-  set(HAVE_X11 ${XCB_XCB_FOUND})
-  if (XCB_XCB_FOUND)
-    find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
-    find_package(X11)
-    set_package_properties(X11 PROPERTIES DESCRIPTION "Required for updating the Cursor theme on X11"
-                           URL "http://www.x.org"
-                           TYPE REQUIRED
-                           )
-  endif()
-else()
-    set(HAVE_X11 FALSE)
+find_package(X11)
+set_package_properties(X11 PROPERTIES DESCRIPTION "Required for updating the Cursor theme on X11"
+                        URL "http://www.x.org"
+                        TYPE REQUIRED
+                        )
+set(HAVE_X11 ${X11_FOUND})
+if(HAVE_X11)
+  find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
 endif()
 
 configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-platformtheme.h )
@@ -52,7 +43,7 @@ target_link_libraries(KDEPlasmaPlatformTheme
 )
 
 if(HAVE_X11)
-  target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt5::X11Extras XCB::XCB ${X11_Xcursor_LIB})
+  target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt5::X11Extras ${X11_Xcursor_LIB})
 endif()
 
 install(TARGETS KDEPlasmaPlatformTheme DESTINATION ${KDE_INSTALL_QTPLUGINDIR}/platformthemes)
