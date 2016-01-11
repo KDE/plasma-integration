@@ -22,16 +22,6 @@
 
 #include "kdeplatformtheme.h"
 
-#include <config-platformtheme.h>
-#if (QT_VERSION < QT_VERSION_CHECK(5, 3, 1))
-#if HAVE_X11
-#include <QCoreApplication>
-#include <QAbstractEventDispatcher>
-#include <QX11Info>
-#include <xcb/xcb.h>
-#endif
-#endif
-
 class KdePlatformThemePlugin : public QPlatformThemePlugin
 {
     Q_OBJECT
@@ -44,37 +34,8 @@ public:
     {
         Q_UNUSED(key)
         Q_UNUSED(paramList)
-#if (QT_VERSION < QT_VERSION_CHECK(5, 3, 1))
-        // Must be done after we have an event-dispatcher. By posting a method invocation
-        // we are sure that by the time the method is called we have an event-dispatcher.
-        QMetaObject::invokeMethod(this, "setupXcbFlush", Qt::QueuedConnection);
-#endif
         return new KdePlatformTheme;
     }
-
-public Q_SLOTS:
-    void setupXcbFlush();
 };
-
-void KdePlatformThemePlugin::setupXcbFlush()
-{
-#if (QT_VERSION < QT_VERSION_CHECK(5, 3, 1))
-#if HAVE_X11
-    // this is a workaround for BUG 334858
-    // it ensures that the xcb connection gets flushed before the EventDispatcher
-    // is going to block. Qt does not guarantee this in all cases.
-    // For Qt this issue is addressed in https://codereview.qt-project.org/85654
-    // TODO: remove again once we depend on a Qt version with the patch.
-    if (!QX11Info::isPlatformX11() || qstrcmp(qVersion(), "5.3.1") >= 0) {
-        return;
-    }
-    connect(QCoreApplication::eventDispatcher(), &QAbstractEventDispatcher::aboutToBlock,
-        []() {
-            xcb_flush(QX11Info::connection());
-        }
-    );
-#endif
-#endif
-}
 
 #include "main.moc"

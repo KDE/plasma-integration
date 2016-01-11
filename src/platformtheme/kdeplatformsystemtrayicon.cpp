@@ -26,7 +26,6 @@
 #include <QApplication>
 #include <QDBusInterface>
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 3, 0))
 SystemTrayMenu::SystemTrayMenu()
     : QPlatformMenu()
     , m_tag(0)
@@ -252,7 +251,6 @@ QAction *SystemTrayMenuItem::action() const
 {
     return m_action;
 }
-#endif
 
 KDEPlatformSystemTrayIcon::KDEPlatformSystemTrayIcon()
     : QPlatformSystemTrayIcon()
@@ -312,24 +310,18 @@ void KDEPlatformSystemTrayIcon::updateToolTip(const QString &tooltip)
 
 void KDEPlatformSystemTrayIcon::updateMenu(QPlatformMenu *menu)
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 3, 0))
     if (!m_sni) {
         return;
     }
     if (SystemTrayMenu *ourMenu = qobject_cast<SystemTrayMenu*>(menu)) {
         m_sni->setContextMenu(ourMenu->menu());
     }
-#else
-    Q_UNUSED(menu)
-#endif
 }
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 3, 0))
 QPlatformMenu *KDEPlatformSystemTrayIcon::createMenu() const
 {
     return new SystemTrayMenu();
 }
-#endif
 
 QRect KDEPlatformSystemTrayIcon::geometry() const
 {

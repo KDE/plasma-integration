@@ -221,13 +221,7 @@ void KDEPlatformFileDialogHelper::initializeDialog()
 {
     if (options()->testOption(QFileDialogOptions::ShowDirsOnly)) {
         m_dialog->deleteLater();
-        m_dialog = new KDirSelectDialog(
-#if QT_VERSION >= QT_VERSION_CHECK(5,5,0)
-            options()->initialDirectory()
-#else
-            m_dialog->directory()
-#endif
-        );
+        m_dialog = new KDirSelectDialog(options()->initialDirectory());
         connect(m_dialog, SIGNAL(accepted()), SIGNAL(accept()));
         connect(m_dialog, SIGNAL(rejected()), SIGNAL(reject()));
         if (!options()->windowTitle().isEmpty())
@@ -241,9 +235,7 @@ void KDEPlatformFileDialogHelper::initializeDialog()
         } else {
             dialog->setWindowTitle(options()->windowTitle());
         }
-#if QT_VERSION >= QT_VERSION_CHECK(5,5,0)
         setDirectory(options()->initialDirectory());
-#endif
         //dialog->setViewMode(options()->viewMode()); // don't override our options, fixes remembering the chosen view mode and sizes!
         dialog->setFileMode(options()->fileMode());
 

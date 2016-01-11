@@ -46,9 +46,7 @@ public:
     QPlatformDialogHelper *createPlatformDialogHelper(DialogType type) const Q_DECL_OVERRIDE;
     bool usePlatformNativeDialog(DialogType type) const Q_DECL_OVERRIDE;
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
     QString standardButtonText(int button) const Q_DECL_OVERRIDE;
-#endif
 
     QPlatformSystemTrayIcon *createPlatformSystemTrayIcon() const Q_DECL_OVERRIDE;
 

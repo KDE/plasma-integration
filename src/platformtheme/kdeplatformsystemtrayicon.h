@@ -28,7 +28,6 @@ class SystemTrayMenuItem;
 class QAction;
 class QMenu;
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 3, 0))
 class SystemTrayMenu : public QPlatformMenu
 {
     Q_OBJECT
@@ -76,11 +75,7 @@ public:
     void setText(const QString &text) Q_DECL_OVERRIDE;
     void setVisible(bool isVisible) Q_DECL_OVERRIDE;
     quintptr tag() const Q_DECL_OVERRIDE;
-    void setIconSize(int size)
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
-    Q_DECL_OVERRIDE
-#endif
-    ;
+    void setIconSize(int size) Q_DECL_OVERRIDE;
 
     QAction *action() const;
 
@@ -88,7 +83,6 @@ private:
     quintptr m_tag;
     QAction *m_action;
 };
-#endif
 
 class KDEPlatformSystemTrayIcon : public QPlatformSystemTrayIcon
 {
@@ -108,9 +102,7 @@ public:
     bool isSystemTrayAvailable() const Q_DECL_OVERRIDE;
     bool supportsMessages() const Q_DECL_OVERRIDE;
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 3, 0))
     QPlatformMenu *createMenu() const Q_DECL_OVERRIDE;
-#endif
 
 private:
     KStatusNotifierItem *m_sni;
