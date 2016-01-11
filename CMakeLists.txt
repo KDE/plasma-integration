@@ -34,7 +34,7 @@ find_package(KF5KIO ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5Notifications ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5WidgetsAddons ${KF5_DEP_VERSION} REQUIRED)
 
-add_definitions(-DTRANSLATION_DOMAIN=\"frameworkintegration5\")
+add_definitions(-DTRANSLATION_DOMAIN=\"plasmaintegration5\")
 if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
     ki18n_install(po)
 endif()
