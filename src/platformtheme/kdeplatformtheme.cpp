@@ -25,8 +25,10 @@
 #include "khintssettings.h"
 #include "kdeplatformfiledialoghelper.h"
 #include "kdeplatformsystemtrayicon.h"
+#include "kwaylandintegration.h"
 
 #include <QCoreApplication>
+#include <QGuiApplication>
 #include <QFont>
 #include <QPalette>
 #include <QString>
@@ -43,6 +45,10 @@
 KdePlatformTheme::KdePlatformTheme()
 {
     loadSettings();
+    if (QGuiApplication::platformName().startsWith(QLatin1String("wayland"))) {
+        m_kwaylandIntegration.reset(new KWaylandIntegration());
+        m_kwaylandIntegration->init();
+    }
 }
 
 KdePlatformTheme::~KdePlatformTheme()

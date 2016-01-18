@@ -19,6 +19,7 @@ set(platformtheme_SRCS
     kdeplatformsystemtrayicon.cpp
     kfiletreeview.cpp
     kdirselectdialog.cpp
+    kwaylandintegration.cpp
     main.cpp
 )
 
@@ -40,6 +41,7 @@ target_link_libraries(KDEPlasmaPlatformTheme
         KF5::XmlGui
         KF5::I18n
         KF5::Notifications
+        KF5::WaylandClient
 )
 
 if(HAVE_X11)

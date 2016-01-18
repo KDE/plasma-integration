@@ -13,7 +13,7 @@ if(NOT Qt5Qml_FOUND)
     message(STATUS "Qt5Qml not found, QML autotests will not be built.")
 endif()
 
-include_directories( ${Qt5Gui_PRIVATE_INCLUDE_DIRS} )
+include_directories( ${Qt5Gui_PRIVATE_INCLUDE_DIRS} ${CMAKE_BINARY_DIR}/src/platformtheme )
 
 set(CONFIGFILE "${CMAKE_CURRENT_SOURCE_DIR}/kdeplatformtheme_kdeglobals")
 set(CHANGED_CONFIGFILE "${CMAKE_CURRENT_SOURCE_DIR}/kdeplatformtheme_changed_kdeglobals")
@@ -27,11 +27,10 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
     add_test(frameworkintegration-${_testname} ${_testname})
     ecm_mark_as_test(${_testname})
     ecm_mark_nongui_executable(${_testname})
-    target_link_libraries(${_testname} Qt5::Test Qt5::DBus KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::KIOFileWidgets KF5::I18n KF5::Notifications)
+    target_link_libraries(${_testname} Qt5::Test Qt5::DBus KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::KIOFileWidgets KF5::I18n KF5::Notifications KF5::WaylandClient)
 endmacro()
 
-frameworkintegration_tests(
-  kdeplatformtheme_unittest
+set(platformThemeSRCS
   ../src/platformtheme/kdeplatformtheme.cpp
   ../src/platformtheme/kfontsettingsdata.cpp
   ../src/platformtheme/khintssettings.cpp
@@ -40,6 +39,12 @@ frameworkintegration_tests(
   ../src/platformtheme/kdeplatformsystemtrayicon.cpp
   ../src/platformtheme/kdirselectdialog.cpp
   ../src/platformtheme/kfiletreeview.cpp
+  ../src/platformtheme/kwaylandintegration.cpp
+)
+
+frameworkintegration_tests(
+  kdeplatformtheme_unittest
+  ${platformThemeSRCS}
 )
 
 frameworkintegration_tests(

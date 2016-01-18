@@ -29,6 +29,7 @@
 
 class KHintsSettings;
 class KFontSettingsData;
+class KWaylandIntegration;
 class QIconEngine;
 
 class KdePlatformTheme : public QPlatformTheme
@@ -55,6 +56,7 @@ private:
 
     KHintsSettings *m_hints;
     KFontSettingsData *m_fontsData;
+    QScopedPointer<KWaylandIntegration> m_kwaylandIntegration;
 };
 
 #endif // KDEPLATFORMTHEME_H
