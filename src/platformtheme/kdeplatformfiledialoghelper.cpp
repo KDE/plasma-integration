@@ -248,19 +248,19 @@ void KDEPlatformFileDialogHelper::initializeDialog()
             dialog->setCustomLabel(QFileDialogOptions::LookIn, options()->labelText(QFileDialogOptions::LookIn));
         }
 
-        // MIME filters
-        QStringList filters = options()->mimeTypeFilters();
-        if (!filters.isEmpty()) {
-            dialog->m_fileWidget->setMimeFilter(filters);
+        const QStringList mimeFilters = options()->mimeTypeFilters();
+        const QStringList nameFilters = options()->nameFilters();
+        if (!mimeFilters.isEmpty()) {
+            dialog->m_fileWidget->setMimeFilter(mimeFilters);
+
+            if ( mimeFilters.contains( QStringLiteral("inode/directory") ) )
+                dialog->m_fileWidget->setMode( dialog->m_fileWidget->mode() | KFile::Directory );
+        } else if (!nameFilters.isEmpty()) {
+            dialog->m_fileWidget->setFilter(qt2KdeFilter(nameFilters));
         }
 
-        // name filters
-        QStringList nameFilters = options()->nameFilters();
-        if (!nameFilters.isEmpty()) {
-            dialog->m_fileWidget->setFilter(qt2KdeFilter(nameFilters));
-            if (!options()->initiallySelectedNameFilter().isEmpty()) {
-                selectNameFilter(options()->initiallySelectedNameFilter());
-            }
+        if (!options()->initiallySelectedNameFilter().isEmpty()) {
+            selectNameFilter(options()->initiallySelectedNameFilter());
         }
 
         // overwrite option
