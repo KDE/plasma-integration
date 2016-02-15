@@ -36,6 +36,9 @@
 #include <QPushButton>
 #include <QWindow>
 
+#include <KIO/StatJob>
+#include <KJobWidgets>
+
 #include <QTextStream>
 
 namespace
@@ -186,7 +189,27 @@ void KDEPlatformFileDialog::selectNameFilter(const QString &filter)
 
 void KDEPlatformFileDialog::setDirectory(const QUrl &directory)
 {
-    m_fileWidget->setUrl(directory);
+    if (!directory.isLocalFile())  {
+        // Qt can not determine if the remote URL points to a file or a
+        // directory, that is why options()->initialDirectory() always returns
+        // the full URL.
+        KIO::StatJob *job = KIO::stat(directory);
+        KJobWidgets::setWindow(job, this);
+        if (job->exec()) {
+            KIO::UDSEntry entry = job->statResult();
+            if (!entry.isDir()) {
+                // this is probably a file remove the file part
+                m_fileWidget->setUrl(directory.adjusted(QUrl::RemoveFilename));
+                m_fileWidget->setSelection(directory.fileName());
+            }
+            else {
+                m_fileWidget->setUrl(directory);
+            }
+        }
+    }
+    else {
+        m_fileWidget->setUrl(directory);
+    }
 }
 
 bool KDEPlatformFileDialogHelper::isSupportedUrl(const QUrl& url) const
