@@ -75,6 +75,7 @@ private Q_SLOTS:
     {
         m_appChangedFont = false;
         m_fonts = new KFontSettingsData;
+        qApp->processEvents(); // give time to delayed dbus connect
     }
 
     void testFonts()
@@ -93,7 +94,7 @@ private Q_SLOTS:
         QByteArray configPath = qgetenv("XDG_CONFIG_HOME");
         configPath.append("/kdeglobals");
         QFile::remove(configPath);
-        QFile::copy(CHANGED_CONFIGFILE, configPath);
+        QVERIFY(QFile::copy(CHANGED_CONFIGFILE, configPath));
 
         QEventLoop loop;
         QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/KDEPlatformTheme"), QStringLiteral("org.kde.KDEPlatformTheme"),
