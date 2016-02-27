@@ -17,7 +17,7 @@ include(ECMSetupVersion)
 include(ECMGenerateHeaders)
 
 include(KDEInstallDirs)
-include(KDEFrameworkCompilerSettings)
+include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 
 set(REQUIRED_QT_VERSION 5.5.0)
