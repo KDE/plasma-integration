@@ -87,6 +87,11 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
                         }
                     }
                 );
+                const auto flags = w->flags();
+                const auto ourMode = (flags.testFlag(Qt::FramelessWindowHint) || flags.testFlag(Qt::Popup) || flags.testFlag(Qt::ToolTip)) ? ServerSideDecoration::Mode::None : ServerSideDecoration::Mode::Server;
+                if (deco->defaultMode() != ourMode) {
+                    deco->requestMode(ourMode);
+                }
                 w->setProperty("org.kde.plasma.integration.waylandserverdecoration", QVariant::fromValue(deco));
                 break;
             }
