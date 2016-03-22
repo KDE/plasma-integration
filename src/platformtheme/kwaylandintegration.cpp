@@ -67,7 +67,7 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
     }
     if (event->type() == QEvent::PlatformSurface) {
         QWindow *w = qobject_cast<QWindow*>(watched);
-        if (!w) {
+        if (!w || w->parent()) {
             return false;
         }
         if (auto e = dynamic_cast<QPlatformSurfaceEvent*>(event)) {
