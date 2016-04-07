@@ -67,7 +67,7 @@ QFont *KFontSettingsData::font(FontTypes fontType)
 
     if (!cachedFont) {
         const KFontData &fontData = DefaultFontData[fontType];
-        cachedFont = new QFont(fontData.FontName, fontData.Size, fontData.Weight);
+        cachedFont = new QFont(QLatin1String(fontData.FontName), fontData.Size, fontData.Weight);
         cachedFont->setStyleHint(fontData.StyleHint);
 
         if (!mKdeGlobals) {

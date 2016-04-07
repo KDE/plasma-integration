@@ -57,8 +57,8 @@ static QString qt2KdeFilter(const QStringList &f)
     bool                  first = true;
 
     for (; it != end; ++it) {
-        int ob = it->lastIndexOf('('),
-            cb = it->lastIndexOf(')');
+        int ob = it->lastIndexOf(QLatin1Char('(')),
+            cb = it->lastIndexOf(QLatin1Char(')'));
 
         if (-1 != cb && ob < cb) {
             if (first) {
@@ -80,13 +80,12 @@ static QString kde2QtFilter(const QStringList &list, const QString &kde)
 {
     QStringList::const_iterator it(list.constBegin()), end(list.constEnd());
     int                   pos;
-    QString               sel;
 
     for (; it != end; ++it) {
         if (-1 != (pos = it->indexOf(kde)) && pos > 0 &&
-                ('(' == (*it)[pos - 1] || ' ' == (*it)[pos - 1]) &&
+                (QLatin1Char('(') == (*it)[pos - 1] || QLatin1Char(' ') == (*it)[pos - 1]) &&
                 it->length() >= kde.length() + pos &&
-                (')' == (*it)[pos + kde.length()] || ' ' == (*it)[pos + kde.length()])) {
+                (QLatin1Char(')') == (*it)[pos + kde.length()] || QLatin1Char(' ') == (*it)[pos + kde.length()])) {
             return *it;
         }
     }

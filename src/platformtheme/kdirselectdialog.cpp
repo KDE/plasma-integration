@@ -130,7 +130,7 @@ void KDirSelectDialog::Private::slotMkdir()
     bool ok;
     QString where = m_parent->url().toDisplayString(QUrl::PreferLocalFile);
     QString name = i18nc("folder name", "New Folder");
-    if (m_parent->url().isLocalFile() && QFileInfo(m_parent->url().toLocalFile() + '/' + name).exists()) {
+    if (m_parent->url().isLocalFile() && QFileInfo::exists(m_parent->url().toLocalFile() + QLatin1Char('/') + name)) {
         name = KIO::suggestName(m_parent->url(), name);
     }
 
@@ -146,11 +146,11 @@ void KDirSelectDialog::Private::slotMkdir()
     bool exists = false;
     QUrl folderurl(m_parent->url());
 
-    const QStringList dirs = directory.split('/', QString::SkipEmptyParts);
+    const QStringList dirs = directory.split(QLatin1Char('/'), QString::SkipEmptyParts);
     QStringList::ConstIterator it = dirs.begin();
 
     for (; it != dirs.end(); ++it) {
-        folderurl.setPath(folderurl.path() + '/' + *it);
+        folderurl.setPath(folderurl.path() + QLatin1Char('/') + *it);
         KIO::StatJob *job = KIO::stat(folderurl);
         KJobWidgets::setWindow(job, m_parent);
         job->setDetails(0); //We only want to know if it exists, 0 == that.
@@ -462,7 +462,7 @@ void KDirSelectDialog::setCurrentUrl(const QUrl &url)
         //We need the url to end with / because some code ahead (kdirmodel) is expecting
         //to find the / separator. It can happen that a valid url like smb: does not have
         //one so we should add it.
-        if (!u.toString().endsWith(QChar('/'))) {
+        if (!u.toString().endsWith(QLatin1Char('/'))) {
             u.setPath(QStringLiteral("/"));
         }
 
@@ -473,8 +473,8 @@ void KDirSelectDialog::setCurrentUrl(const QUrl &url)
     //Check if url represents a hidden folder and enable showing them
     QString fileName = url.fileName();
     //TODO a better hidden file check?
-    bool isHidden = fileName.length() > 1 && fileName[0] == '.' &&
-                    (fileName.length() > 2 ? fileName[1] != '.' : true);
+    bool isHidden = fileName.length() > 1 && fileName[0] == QLatin1Char('.') &&
+                    (fileName.length() > 2 ? fileName[1] != QLatin1Char('.') : true);
     bool showHiddenFiles = isHidden && !d->m_treeView->showHiddenFiles();
     if (showHiddenFiles) {
         d->showHiddenFoldersAction->setChecked(true);

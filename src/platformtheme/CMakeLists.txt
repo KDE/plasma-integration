@@ -26,8 +26,6 @@ set(platformtheme_SRCS
 include_directories(
     ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
 )
-remove_definitions(-DQT_NO_CAST_FROM_ASCII)
-
 add_library(KDEPlasmaPlatformTheme MODULE ${platformtheme_SRCS})
 
 target_link_libraries(KDEPlasmaPlatformTheme
