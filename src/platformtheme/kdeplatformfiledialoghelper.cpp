@@ -253,7 +253,7 @@ void KDEPlatformFileDialogHelper::initializeDialog()
         KDEPlatformFileDialog *dialog = qobject_cast<KDEPlatformFileDialog*>(m_dialog);
         dialog->m_fileWidget->setOperationMode(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? KFileWidget::Opening : KFileWidget::Saving);
         if (options()->windowTitle().isEmpty()) {
-            dialog->setWindowTitle(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? i18n("Opening...") : i18n("Saving..."));
+            dialog->setWindowTitle(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? i18nc("@title:window", "Open File") : i18nc("@title:window", "Save File"));
         } else {
             dialog->setWindowTitle(options()->windowTitle());
         }
