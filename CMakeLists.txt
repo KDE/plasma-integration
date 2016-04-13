@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.12)
 
 project(FrameworkIntegration)
+set(PROJECT_VERSION "5.6.90")
+set(PROJECT_VERSION_MAJOR 5)
 
 include(FeatureSummary)
 find_package(ECM 5.17.0  NO_MODULE)
