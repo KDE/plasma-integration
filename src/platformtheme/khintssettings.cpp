@@ -43,9 +43,9 @@
 #include <ksharedconfig.h>
 #include <kcolorscheme.h>
 
-#ifndef UNIT_TEST
 #include <config-platformtheme.h>
-#else
+#ifdef UNIT_TEST
+#undef HAVE_X11
 #define HAVE_X11 0
 #endif
 #if HAVE_X11
@@ -88,7 +88,7 @@ KHintsSettings::KHintsSettings() : QObject(0)
 
     QStringList styleNames;
     styleNames << cg.readEntry("widgetStyle", QString())
-               << QStringLiteral("breeze")
+               << QStringLiteral(BREEZE_STYLE_NAME)
                << QStringLiteral("oxygen")
                << QStringLiteral("fusion")
                << QStringLiteral("windows");
@@ -261,7 +261,7 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
 
         QStringList styleNames;
         styleNames << cg.readEntry("widgetStyle", QString())
-                << QStringLiteral("breeze")
+                << QStringLiteral(BREEZE_STYLE_NAME)
                 << QStringLiteral("oxygen")
                 << QStringLiteral("fusion")
                 << QStringLiteral("windows");

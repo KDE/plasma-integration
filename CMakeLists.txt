@@ -38,6 +38,11 @@ find_package(KF5WidgetsAddons ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5WindowSystem ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5Wayland 5.5 CONFIG REQUIRED)
 
+find_package(Breeze ${PROJECT_VERSION} CONFIG)
+set_package_properties(Breeze PROPERTIES
+                       TYPE REQUIRED
+                       PURPOSE "For setting the default QStyle name")
+
 add_definitions(-DTRANSLATION_DOMAIN=\"plasmaintegration5\")
 if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
     ki18n_install(po)
