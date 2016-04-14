@@ -25,10 +25,12 @@
 #include <Qt>
 #include <QTest>
 #include <QDir>
+#include <QDrag>
 #include <QFile>
 #include <QString>
 #include <QPalette>
 #include <QDebug>
+#include <QMimeData>
 #include <QIconEngine>
 #include <QToolButton>
 #include <QApplication>
@@ -38,8 +40,11 @@
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDBusMessage>
+#include <QTimer>
+#include <QX11Info>
 
 #include <kiconloader.h>
+#include <KWindowInfo>
 
 static void prepareEnvironment()
 {
@@ -292,6 +297,30 @@ private Q_SLOTS:
             QCOMPARE(palette->brush(states[i], QPalette::Link), redBrush);
             QCOMPARE(palette->brush(states[i], QPalette::LinkVisited), redBrush);
         }
+    }
+
+    void dndWindowFlagsTest()
+    {
+        if (!QX11Info::isPlatformX11()) {
+            QSKIP("This test requires xcb platform.");
+        }
+
+        QDrag *drag = new QDrag(this);
+        QMimeData *data = new QMimeData;
+        data->setData("Text/Plain", "drag data");
+        drag->setMimeData(data);
+        bool succeeded = false;
+        QTimer::singleShot(1000, [&succeeded] {
+            auto windows = QGuiApplication::allWindows();
+            auto it = std::find_if(windows.constBegin(), windows.constEnd(), [] (QWindow *w) { return w->inherits("QShapedPixmapWindow"); });
+            if (it != windows.constEnd()) {
+                KWindowInfo info((*it)->winId(), NET::WMWindowType);
+                succeeded = info.windowType(NET::DNDIconMask) == NET::DNDIcon;
+            }
+            QTest::keyClick(windows.first(), Qt::Key_Escape);
+        });
+        drag->exec();
+        QVERIFY(succeeded);
     }
 };
 

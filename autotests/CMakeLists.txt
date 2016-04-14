@@ -27,7 +27,7 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
     add_test(frameworkintegration-${_testname} ${_testname})
     ecm_mark_as_test(${_testname})
     ecm_mark_nongui_executable(${_testname})
-    target_link_libraries(${_testname} Qt5::Test Qt5::DBus KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::KIOFileWidgets KF5::I18n KF5::Notifications KF5::WaylandClient)
+    target_link_libraries(${_testname} Qt5::Test Qt5::DBus Qt5::X11Extras KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::KIOFileWidgets KF5::I18n KF5::Notifications KF5::WindowSystem KF5::WaylandClient)
 endmacro()
 
 set(platformThemeSRCS
@@ -40,6 +40,7 @@ set(platformThemeSRCS
   ../src/platformtheme/kdirselectdialog.cpp
   ../src/platformtheme/kfiletreeview.cpp
   ../src/platformtheme/kwaylandintegration.cpp
+  ../src/platformtheme/x11integration.cpp
 )
 
 frameworkintegration_tests(

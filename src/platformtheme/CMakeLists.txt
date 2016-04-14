@@ -20,6 +20,7 @@ set(platformtheme_SRCS
     kfiletreeview.cpp
     kdirselectdialog.cpp
     kwaylandintegration.cpp
+    x11integration.cpp
     main.cpp
 )
 
@@ -31,6 +32,7 @@ add_library(KDEPlasmaPlatformTheme MODULE ${platformtheme_SRCS})
 target_link_libraries(KDEPlasmaPlatformTheme
     PRIVATE
         Qt5::DBus
+        Qt5::X11Extras
         KF5::ConfigWidgets
         KF5::ConfigCore
         KF5::IconThemes
@@ -39,6 +41,7 @@ target_link_libraries(KDEPlasmaPlatformTheme
         KF5::XmlGui
         KF5::I18n
         KF5::Notifications
+        KF5::WindowSystem
         KF5::WaylandClient
 )
 
