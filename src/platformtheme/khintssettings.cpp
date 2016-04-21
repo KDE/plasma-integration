@@ -55,9 +55,13 @@
 
 static const QString defaultLookAndFeelPackage = QStringLiteral("org.kde.breeze.desktop");
 
-KHintsSettings::KHintsSettings() : QObject(0)
+KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
+    : QObject(0)
+    , mKdeGlobals(kdeglobals)
 {
-    mKdeGlobals = KSharedConfig::openConfig(QStringLiteral("kdeglobals"), KConfig::NoGlobals);
+    if (!mKdeGlobals) {
+        mKdeGlobals = KSharedConfig::openConfig(QStringLiteral("kdeglobals"), KConfig::NoGlobals);
+    }
     KConfigGroup cg(mKdeGlobals, "KDE");
 
     // try to extract the proper defaults file from a lookandfeel package

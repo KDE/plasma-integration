@@ -51,7 +51,7 @@ public:
                             SETTINGS_POPUPMENU, SETTINGS_QT, SETTINGS_SHORTCUTS,
                             SETTINGS_LOCALE, SETTINGS_STYLE
                           };
-    explicit KHintsSettings();
+    explicit KHintsSettings(KSharedConfig::Ptr kdeglobals = KSharedConfig::Ptr());
     virtual ~KHintsSettings();
 
     inline QVariant hint(QPlatformTheme::ThemeHint hint) const
@@ -63,6 +63,7 @@ public:
     {
         return m_palettes[type];
     }
+    QStringList xdgIconThemePaths() const;
 
 private Q_SLOTS:
     void delayedDBusConnects();
@@ -78,7 +79,6 @@ private:
     Qt::ToolButtonStyle toolButtonStyle(const KConfigGroup &cg) const;
     void updateCursorTheme();
 
-    QStringList xdgIconThemePaths() const;
     QHash<QPlatformTheme::Palette, QPalette *> m_palettes;
     QHash<QPlatformTheme::ThemeHint, QVariant> m_hints;
     KSharedConfigPtr mKdeGlobals;

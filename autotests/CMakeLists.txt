@@ -68,6 +68,11 @@ frameworkintegration_tests(
   ../src/platformtheme/kfiletreeview.cpp
 )
 
+frameworkintegration_tests(
+  khintssettings_unittest
+  ../src/platformtheme/khintssettings.cpp
+)
+
 if(Qt5Qml_FOUND)
     frameworkintegration_tests(kfiledialogqml_unittest)
     target_link_libraries(kfiledialogqml_unittest Qt5::Qml)
