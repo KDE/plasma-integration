@@ -51,7 +51,6 @@ void KHintsSettingsTest::testDefaults()
     QCOMPARE(hints.hint(QPlatformTheme::IconThemeSearchPaths).toStringList(), hints.xdgIconThemePaths());
 
     const QStringList expectedStyles = QStringList{QStringLiteral(BREEZE_STYLE_NAME), QStringLiteral("oxygen"), QStringLiteral("fusion"), QStringLiteral("windows")};
-    QEXPECT_FAIL("", "Empty entry included", Continue);
     QCOMPARE(hints.hint(QPlatformTheme::StyleNames).toStringList(), expectedStyles);
 
     QCOMPARE(hints.hint(QPlatformTheme::DialogButtonBoxLayout).toInt(), int(QDialogButtonBox::KdeLayout));

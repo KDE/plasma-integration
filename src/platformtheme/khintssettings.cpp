@@ -90,12 +90,17 @@ KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
     m_hints[QPlatformTheme::SystemIconFallbackThemeName] = QStringLiteral("hicolor");
     m_hints[QPlatformTheme::IconThemeSearchPaths] = xdgIconThemePaths();
 
-    QStringList styleNames;
-    styleNames << cg.readEntry("widgetStyle", QString())
-               << QStringLiteral(BREEZE_STYLE_NAME)
-               << QStringLiteral("oxygen")
-               << QStringLiteral("fusion")
-               << QStringLiteral("windows");
+    QStringList styleNames{
+        QStringLiteral(BREEZE_STYLE_NAME),
+        QStringLiteral("oxygen"),
+        QStringLiteral("fusion"),
+        QStringLiteral("windows")
+    };
+    const QString configuredStyle = cg.readEntry("widgetStyle", QString());
+    if (!configuredStyle.isEmpty()) {
+        styleNames.removeOne(configuredStyle);
+        styleNames.prepend(configuredStyle);
+    }
     const QString lnfStyle = readConfigValue(QStringLiteral("KDE"), QStringLiteral("widgetStyle"), QString()).toString();
     if (!lnfStyle.isEmpty()) {
         styleNames.removeOne(lnfStyle);
