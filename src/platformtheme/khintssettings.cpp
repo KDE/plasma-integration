@@ -146,9 +146,10 @@ QVariant KHintsSettings::readConfigValue(const QString &group, const QString &ke
         }
     }
 
-    KConfigGroup lnfCg(mDefaultLnfConfig, group);
+    KConfigGroup lnfCg(mDefaultLnfConfig, "kdeglobals");
+    lnfCg = KConfigGroup(&lnfCg, group);
     if (lnfCg.isValid()) {
-        return lnfCg.readEntry(key, defaultValue);
+        return  lnfCg.readEntry(key, defaultValue);
     }
 
     return defaultValue;
