@@ -32,20 +32,22 @@ private Q_SLOTS:
     void initTestCase()
     {
         qputenv("KDE_FORK_SLAVES", "yes");
+        m_engine = new QQmlEngine;
     }
 
     void cleanupTestCase()
     {
+        delete m_engine;
     }
 
     void testShowDialogParentless()
     {
         KFileWidget *fw;
         {
-            QQmlEngine engine;
-            QQmlComponent component(&engine);
+            QQmlComponent component(m_engine);
             component.loadUrl(QUrl::fromLocalFile(QFINDTESTDATA("qml/filedialog_parentless.qml")));
-            component.create();
+            QScopedPointer<QObject> object(component.create());
+            QVERIFY(!object.isNull());
 
             fw = findFileWidget();
             QVERIFY(fw);
@@ -54,17 +56,17 @@ private Q_SLOTS:
             QCOMPARE(fw->isVisible(), true);
             fw->slotCancel();
         }
-        delete fw;
     }
 
     void testShowDialogWithParent()
     {
         KFileWidget *fw;
         {
-            QQmlEngine engine;
-            QQmlComponent component(&engine);
+            QQmlComponent component(m_engine);
             component.loadUrl(QUrl::fromLocalFile(QFINDTESTDATA("qml/filedialog_withparent.qml")));
-            component.create();
+            QScopedPointer<QObject> object(component.create());
+            QVERIFY(!object.isNull());
+
 
             fw = findFileWidget();
             QVERIFY(fw);
@@ -73,7 +75,6 @@ private Q_SLOTS:
             QCOMPARE(fw->isVisible(), true);
             fw->slotCancel();
         }
-        delete fw;
     }
 
 private:
@@ -89,6 +90,8 @@ private:
         Q_ASSERT(widgets.count() == 1);
         return (widgets.count() == 1) ? widgets.first() : Q_NULLPTR;
     }
+
+    QQmlEngine *m_engine = nullptr;
 };
 
 QTEST_MAIN(KFileDialogQml_UnitTest)
