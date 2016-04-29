@@ -31,7 +31,8 @@
 #include <kconfiggroup.h>
 
 KFontSettingsData::KFontSettingsData()
-    : QObject(0)
+    : QObject(0),
+    mKdeGlobals(KSharedConfig::openConfig())
 {
     QMetaObject::invokeMethod(this, "delayedDBusConnects", Qt::QueuedConnection);
 
@@ -70,9 +71,6 @@ QFont *KFontSettingsData::font(FontTypes fontType)
         cachedFont = new QFont(QLatin1String(fontData.FontName), fontData.Size, fontData.Weight);
         cachedFont->setStyleHint(fontData.StyleHint);
 
-        if (!mKdeGlobals) {
-            mKdeGlobals = KSharedConfig::openConfig(QStringLiteral("kdeglobals"), KConfig::NoGlobals);
-        }
         const KConfigGroup configGroup(mKdeGlobals, fontData.ConfigGroupKey);
         QString fontInfo = configGroup.readEntry(fontData.ConfigKey, QString());
 
@@ -90,9 +88,7 @@ QFont *KFontSettingsData::font(FontTypes fontType)
 
 void KFontSettingsData::dropFontSettingsCache()
 {
-    if (mKdeGlobals) {
-        mKdeGlobals->reparseConfiguration();
-    }
+    mKdeGlobals->reparseConfiguration();
     for (int i = 0; i < FontTypesCount; ++i) {
         delete mFonts[i];
         mFonts[i] = 0;

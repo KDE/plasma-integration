@@ -60,7 +60,7 @@ KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
     , mKdeGlobals(kdeglobals)
 {
     if (!mKdeGlobals) {
-        mKdeGlobals = KSharedConfig::openConfig(QStringLiteral("kdeglobals"), KConfig::NoGlobals);
+        mKdeGlobals = KSharedConfig::openConfig();
     }
     KConfigGroup cg(mKdeGlobals, "KDE");
 
