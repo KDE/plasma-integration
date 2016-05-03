@@ -395,7 +395,6 @@ void KHintsSettings::updateCursorTheme()
     KConfig config(QStringLiteral("kcminputrc"));
     KConfigGroup g(&config, "Mouse");
 
-    QString theme = g.readEntry("cursorTheme", QString());
     int size      = g.readEntry("cursorSize", -1);
 
     // Default cursor size is 16 points
@@ -409,6 +408,7 @@ void KHintsSettings::updateCursorTheme()
 
 #if HAVE_X11
     if (QX11Info::isPlatformX11()) {
+        const QString theme = g.readEntry("cursorTheme", QString());
         // Note that in X11R7.1 and earlier, calling XcursorSetTheme()
         // with a NULL theme would cause Xcursor to use "default", but
         // in 7.2 and later it will cause it to revert to the theme that
