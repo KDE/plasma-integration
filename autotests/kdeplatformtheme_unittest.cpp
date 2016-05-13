@@ -46,6 +46,7 @@
 #include <QTimer>
 #include <QX11Info>
 
+#include <KIconTheme>
 #include <kiconloader.h>
 #include <KWindowInfo>
 
@@ -201,6 +202,13 @@ private Q_SLOTS:
     {
         QIconEngine *engine = m_qpa->createIconEngine(QStringLiteral("test-icon"));
         QCOMPARE(engine->key(), QStringLiteral("KIconEngine"));
+    }
+
+    void testPlatformIconEngineTheme()
+    {
+        // The current theme should be what we defined.
+        KdePlatformTheme().createIconEngine(QStringLiteral("test-icon"));
+        QCOMPARE(KIconLoader::global()->theme()->current(), QStringLiteral("non-existent-icon-theme"));
     }
 
     void testPlatformIconChanges()
