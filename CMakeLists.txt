@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.12)
 
-project(FrameworkIntegration)
+project(PlasmaIntegration)
 set(PROJECT_VERSION "5.6.90")
 set(PROJECT_VERSION_MAJOR 5)
 
