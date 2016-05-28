@@ -31,6 +31,8 @@ int main(int argc, char **argv)
     parser.addHelpOption();
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("staticFunction")), QStringLiteral("Test one of the static convenience function: 'getOpenFileUrl', 'getExistingDirectory'"), QStringLiteral("function name")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("acceptMode")), QStringLiteral("File dialog acceptMode: 'open' or 'save'"), QStringLiteral("type"), QStringLiteral("open")));
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("confirmOverwrite")), QStringLiteral("Test overwrite option: 'on' or 'off'"), QStringLiteral("option"), QStringLiteral("on")));
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("nativeDialog")), QStringLiteral("Use the platform native dialog: 'on' or 'off'"), QStringLiteral("option"), QStringLiteral("on")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("fileMode")), QStringLiteral("File dialog fileMode: 'AnyFile' or 'ExistingFile' or 'Directory' or 'ExistingFiles'"), QStringLiteral("type")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("nameFilter")), QStringLiteral("Dialog nameFilter, e. g. 'cppfiles (*.cpp *.h *.hpp)', can be specified multiple times"), QStringLiteral("nameFilter"), QStringLiteral("Everything (*)")));
     // add option mimeTypeFilter later
@@ -81,6 +83,14 @@ int main(int argc, char **argv)
     QString selectNameFilter = parser.value(QStringLiteral("selectNameFilter"));
     if (!selectNameFilter.isEmpty()) {
         dialog.selectNameFilter(selectNameFilter);
+    }
+
+    if (parser.value(QStringLiteral("confirmOverwrite")) == QStringLiteral("off")) {
+        dialog.setOption(QFileDialog::DontConfirmOverwrite, true);
+    }
+
+    if (parser.value(QStringLiteral("nativeDialog")) == QStringLiteral("off")) {
+        dialog.setOption(QFileDialog::DontUseNativeDialog, true);
     }
 
     dialog.setDirectory(parser.value(QStringLiteral("selectDirectory")));

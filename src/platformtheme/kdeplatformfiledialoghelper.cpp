@@ -289,6 +289,8 @@ void KDEPlatformFileDialogHelper::initializeDialog()
         // overwrite option
         if (options()->testOption(QFileDialogOptions::FileDialogOption::DontConfirmOverwrite)) {
             dialog->m_fileWidget->setConfirmOverwrite(false);
+         } else if (options()->acceptMode() == QFileDialogOptions::AcceptSave) {
+             dialog->m_fileWidget->setConfirmOverwrite(true);
         }
     }
 }

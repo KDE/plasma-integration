@@ -19,6 +19,9 @@
  */
 
 #include <QTest>
+#include <QTimer>
+#include <QDir>
+#include <QTemporaryFile>
 #include <QFileDialog>
 #include <KFileWidget>
 #include <KDirOperator>
@@ -200,7 +203,61 @@ private Q_SLOTS:
 
         QCOMPARE(dialog.fileMode(), qtFileMode);
     }
+
+    void testSaveOverwrite_data()
+    {
+        QTest::addColumn<bool>("qtOverwriteOption");
+        QTest::addColumn<bool>("messageBoxExpected");
+        QTest::newRow("checkoverwrite") << false << true;
+        QTest::newRow("allowoverwrite") << true << false;
+    }
+
+    void testSaveOverwrite()
+    {
+        QFETCH(bool, qtOverwriteOption);
+        QFETCH(bool, messageBoxExpected);
+
+        QTemporaryFile tempFile(QDir::tempPath()+"/kfiledialogtest_XXXXXX");
+        tempFile.setAutoRemove(true);
+        tempFile.open();
+        QString tempName = tempFile.fileName();
+        tempFile.close();
+        int idx = tempName.lastIndexOf('/');
+
+        QFileDialog dialog;
+        dialog.setAcceptMode(QFileDialog::AcceptSave);
+        if (qtOverwriteOption) dialog.setOption(QFileDialog::DontConfirmOverwrite);
+        dialog.setDirectory(tempName.left(idx+1));
+        dialog.selectFile(tempName.mid(idx+1));
+        dialog.open();
+
+        KFileWidget *fw = findFileWidget();
+        QVERIFY(fw);
+        QTest::qWaitForWindowExposed(fw->window());
+        QCOMPARE(fw->isVisible(), true);
+
+        messageBoxSeen = false;
+        QTimer::singleShot(500, this, SLOT(checkMessageBox()));
+        fw->slotOk();
+
+        fw->slotCancel();
+        QVERIFY(messageBoxSeen == messageBoxExpected);
+    }
+
+protected Q_SLOTS:
+    void checkMessageBox()
+    {
+        QDialog *msgbox = findMessageBox();
+        if (!msgbox) return;
+        QTest::qWaitForWindowExposed(msgbox);
+        QCOMPARE(msgbox->isVisible(), true);
+        messageBoxSeen = true;
+        msgbox->close();
+    }
+
 private:
+    bool messageBoxSeen;
+
     static QString fileViewToString(KFile::FileView fv)
     {
         switch (fv) {
@@ -228,6 +285,18 @@ private:
             }
         }
         Q_ASSERT(widgets.count() == 1);
+        return (widgets.count() == 1) ? widgets.first() : Q_NULLPTR;
+    }
+
+    static QDialog *findMessageBox()
+    {
+        QList<QDialog *> widgets;
+        foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+            QDialog *dlg = widget->findChild<QDialog *>();
+            if (dlg) {
+                widgets.append(dlg);
+            }
+        }
         return (widgets.count() == 1) ? widgets.first() : Q_NULLPTR;
     }
 };
