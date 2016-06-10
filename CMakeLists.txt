@@ -53,4 +53,4 @@ add_subdirectory(tests)
 
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
-message("** plasma-integration uses Noto Sans (https://www.google.com/get/noto/) and Oxygen Mono (http://download.kde.org/stable/plasma/5.4.0/oxygen-fonts-5.4.0.tar.xz) fonts, ensure these are installed for use at runtime")
+message("** plasma-integration uses Noto Sans (https://www.google.com/get/noto/) and Hack (http://sourcefoundry.org/hack/) fonts, ensure these are installed for use at runtime")
