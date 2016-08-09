@@ -52,5 +52,5 @@ add_subdirectory(autotests)
 add_subdirectory(tests)
 
 
-feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
+feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 message("** plasma-integration uses Noto Sans (https://www.google.com/get/noto/) and Hack (http://sourcefoundry.org/hack/) fonts, ensure these are installed for use at runtime")
