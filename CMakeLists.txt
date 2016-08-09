@@ -51,6 +51,17 @@ add_subdirectory(src)
 add_subdirectory(autotests)
 add_subdirectory(tests)
 
+find_package(FontNotoSans)
+set_package_properties(FontNotoSans PROPERTIES
+    PURPOSE "Default sans-serif font -- this is not detected automatically, pass -DCMAKE_DISABLE_FIND_PACKAGE_FontNotoSans=true to mark it ignored."
+    URL "https://www.google.com/get/noto/"
+    TYPE RUNTIME
+)
+find_package(FontHack)
+set_package_properties(FontHack PROPERTIES
+    PURPOSE "Default monospace font -- this is not detected automatically, pass -DCMAKE_DISABLE_FIND_PACKAGE_FontHack=true to mark it ignored."
+    URL "http://sourcefoundry.org/hack/"
+    TYPE RUNTIME
+)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
-message("** plasma-integration uses Noto Sans (https://www.google.com/get/noto/) and Hack (http://sourcefoundry.org/hack/) fonts, ensure these are installed for use at runtime")
