@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 
 project(PlasmaIntegration)
-set(PROJECT_VERSION "5.7.3")
+set(PROJECT_VERSION "5.7.4")
 set(PROJECT_VERSION_MAJOR 5)
 
 include(FeatureSummary)
