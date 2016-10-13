@@ -23,6 +23,8 @@
 
 #include <QObject>
 
+class QWindow;
+
 class X11Integration : public QObject
 {
     Q_OBJECT
@@ -34,7 +36,7 @@ public:
     bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    
+    void installColorScheme(QWindow *w);
 };
 
 #endif

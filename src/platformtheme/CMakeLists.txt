@@ -43,6 +43,7 @@ target_link_libraries(KDEPlasmaPlatformTheme
         KF5::Notifications
         KF5::WindowSystem
         KF5::WaylandClient
+        XCB::XCB
 )
 
 if(HAVE_X11)

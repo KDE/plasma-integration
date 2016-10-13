@@ -38,6 +38,14 @@ find_package(KF5WidgetsAddons ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5WindowSystem ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5Wayland 5.5 CONFIG REQUIRED)
 
+find_package(XCB COMPONENTS XCB)
+set_package_properties(XCB PROPERTIES
+    DESCRIPTION "X protocol C-language Binding"
+    URL "http://xcb.freedesktop.org"
+    TYPE REQUIRED
+    PURPOSE "Required to pass style properties to native Windows on X11 Platform"
+)
+
 find_package(Breeze ${PROJECT_VERSION} CONFIG)
 set_package_properties(Breeze PROPERTIES
                        TYPE REQUIRED

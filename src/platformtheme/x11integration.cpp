@@ -22,8 +22,14 @@
 
 #include <QCoreApplication>
 #include <QX11Info>
+#include <QPlatformSurfaceEvent>
+#include <QGuiApplication>
 #include <QWindow>
 #include <NETWM>
+
+#include <xcb/xcb.h>
+
+static const char s_schemePropertyName[] = "KDE_COLOR_SCHEME_PATH";
 
 X11Integration::X11Integration()
     : QObject()
@@ -48,6 +54,46 @@ bool X11Integration::eventFilter(QObject *watched, QEvent *event)
         info.setWindowType(NET::DNDIcon);
         // TODO: does this flash the xcb connection?
     }
+    if (event->type() == QEvent::PlatformSurface) {
+        if (QWindow *w = qobject_cast<QWindow*>(watched)) {
+            QPlatformSurfaceEvent *pe = static_cast<QPlatformSurfaceEvent*>(event);
+            if (pe->surfaceEventType() == QPlatformSurfaceEvent::SurfaceCreated && qApp->property(s_schemePropertyName).isValid()) {
+                installColorScheme(w);
+            }
+        }
+    }
+    if (event->type() == QEvent::ApplicationPaletteChange) {
+        const auto topLevelWindows = QGuiApplication::topLevelWindows();
+        for (QWindow *w : topLevelWindows) {
+            installColorScheme(w);
+        }
+    }
     return false;
 }
 
+void X11Integration::installColorScheme(QWindow *w)
+{
+    if (!w->isTopLevel()) {
+        return;
+    }
+    static xcb_atom_t atom = XCB_ATOM_NONE;
+    xcb_connection_t *c = QX11Info::connection();
+    if (atom == XCB_ATOM_NONE) {
+        const QByteArray name = QByteArrayLiteral("_KDE_NET_WM_COLOR_SCHEME");
+        const xcb_intern_atom_cookie_t cookie = xcb_intern_atom(c, false, name.length(), name.constData());
+        QScopedPointer<xcb_intern_atom_reply_t, QScopedPointerPodDeleter> reply(xcb_intern_atom_reply(c, cookie, Q_NULLPTR));
+        if (!reply.isNull()) {
+            atom = reply->atom;
+        } else {
+            // no point in continuing, we don't have the atom
+            return;
+        }
+    }
+    const QString path = qApp->property(s_schemePropertyName).toString();
+    if (path.isEmpty()) {
+        xcb_delete_property(c, w->winId(), atom);
+    } else {
+        xcb_change_property(c, XCB_PROP_MODE_REPLACE, w->winId(), atom, XCB_ATOM_STRING,
+                            8, path.size(), qPrintable(path));
+    }
+}
