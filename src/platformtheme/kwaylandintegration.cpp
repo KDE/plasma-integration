@@ -19,8 +19,9 @@
  */
 #include "kwaylandintegration.h"
 
-#include <QCoreApplication>
+#include <QGuiApplication>
 #include <QPlatformSurfaceEvent>
+#include <qpa/qplatformnativeinterface.h>
 
 #include <KWayland/Client/connection_thread.h>
 #include <KWayland/Client/registry.h>
@@ -28,6 +29,8 @@
 #include <KWayland/Client/server_decoration.h>
 
 using namespace KWayland::Client;
+
+static const QByteArray s_schemePropertyName = QByteArrayLiteral("KDE_COLOR_SCHEME_PATH");
 
 KWaylandIntegration::KWaylandIntegration()
     : QObject()
@@ -73,6 +76,11 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
         if (auto e = dynamic_cast<QPlatformSurfaceEvent*>(event)) {
             switch (e->surfaceEventType()) {
             case QPlatformSurfaceEvent::SurfaceCreated: {
+                // set colorscheme hint
+                if (qApp->property(s_schemePropertyName.constData()).isValid()) {
+                    installColorScheme(w);
+                }
+                // create deco
                 Surface *s = Surface::fromWindow(w);
                 if (!s) {
                     return false;
@@ -105,5 +113,20 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
             }
         }
     }
+    if (event->type() == QEvent::ApplicationPaletteChange) {
+        const auto topLevelWindows = QGuiApplication::topLevelWindows();
+        for (QWindow *w : topLevelWindows) {
+            installColorScheme(w);
+        }
+    }
     return false;
+}
+
+void KWaylandIntegration::installColorScheme(QWindow *w)
+{
+    if (QPlatformNativeInterface *native = qApp->platformNativeInterface()) {
+        if (QPlatformWindow *pw = w->handle()) {
+            native->setWindowProperty(pw, QString::fromUtf8(s_schemePropertyName), qApp->property(s_schemePropertyName.constData()));
+        }
+    }
 }

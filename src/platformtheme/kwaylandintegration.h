@@ -22,6 +22,8 @@
 
 #include <QObject>
 
+class QWindow;
+
 namespace KWayland
 {
 namespace Client
@@ -41,6 +43,7 @@ public:
     bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    void installColorScheme(QWindow *w);
     KWayland::Client::ServerSideDecorationManager *m_decoration;
 };
 
