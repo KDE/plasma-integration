@@ -37,6 +37,7 @@ public:
 
 private:
     void installColorScheme(QWindow *w);
+    void installDesktopFileName(QWindow *w);
 };
 
 #endif

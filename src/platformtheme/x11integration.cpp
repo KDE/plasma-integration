@@ -57,8 +57,11 @@ bool X11Integration::eventFilter(QObject *watched, QEvent *event)
     if (event->type() == QEvent::PlatformSurface) {
         if (QWindow *w = qobject_cast<QWindow*>(watched)) {
             QPlatformSurfaceEvent *pe = static_cast<QPlatformSurfaceEvent*>(event);
-            if (pe->surfaceEventType() == QPlatformSurfaceEvent::SurfaceCreated && qApp->property(s_schemePropertyName).isValid()) {
-                installColorScheme(w);
+            if (pe->surfaceEventType() == QPlatformSurfaceEvent::SurfaceCreated) {
+                if (qApp->property(s_schemePropertyName).isValid()) {
+                    installColorScheme(w);
+                }
+                installDesktopFileName(w);
             }
         }
     }
@@ -96,4 +99,18 @@ void X11Integration::installColorScheme(QWindow *w)
         xcb_change_property(c, XCB_PROP_MODE_REPLACE, w->winId(), atom, XCB_ATOM_STRING,
                             8, path.size(), qPrintable(path));
     }
+}
+
+void X11Integration::installDesktopFileName(QWindow *w)
+{
+    if (!w->isTopLevel()) {
+        return;
+    }
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
+    if (QGuiApplication::desktopFileName().isEmpty()) {
+        return;
+    }
+    NETWinInfo info(QX11Info::connection(), w->winId(), QX11Info::appRootWindow(), NET::Properties(), NET::Properties2());
+    info.setDesktopFileName(QGuiApplication::desktopFileName().toUtf8().constData());
+#endif
 }
