@@ -77,6 +77,24 @@ private Q_SLOTS:
         QCOMPARE(dialog.directory().absolutePath(), QDir::rootPath());
     }
 
+    void testSelectUrl()
+    {
+        QTemporaryFile tempFile(QDir::tempPath()+"/kfiledialogtest_XXXXXX");
+        tempFile.setAutoRemove(true);
+        tempFile.open();
+        QString tempName = tempFile.fileName();
+        QUrl url = QUrl::fromLocalFile(tempName);
+        int idx = tempName.lastIndexOf('/');
+        QUrl directoryUrl = QUrl::fromLocalFile(tempName.left(idx+1));
+
+        QFileDialog dialog;
+        dialog.selectUrl(url);
+        dialog.show();
+
+        // check if dialog was set to base directory url of the passed file url
+        QCOMPARE(dialog.directoryUrl(), directoryUrl);
+    }
+
     void testViewMode()
     {
         // Open a file dialog, and change view mode to tree
