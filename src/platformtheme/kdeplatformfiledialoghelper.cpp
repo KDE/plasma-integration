@@ -361,6 +361,13 @@ QUrl KDEPlatformFileDialogHelper::directory() const
 void KDEPlatformFileDialogHelper::selectFile(const QUrl &filename)
 {
     m_dialog->selectFile(filename);
+
+    // Qt 5 at least <= 5.8.0 does not derive the directory from the passed url
+    // and set the initialDirectory option accordingly, also not for known schemes
+    // like file://, so we have to do it ourselves
+    QSharedPointer<QFileDialogOptions> opt(new QFileDialogOptions(*options()));
+    opt->setInitialDirectory(m_dialog->directory());
+    setOptions(opt);
 }
 
 void KDEPlatformFileDialogHelper::setDirectory(const QUrl &directory)
