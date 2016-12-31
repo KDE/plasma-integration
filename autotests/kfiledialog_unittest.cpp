@@ -95,6 +95,29 @@ private Q_SLOTS:
         QCOMPARE(dialog.directoryUrl(), directoryUrl);
     }
 
+    void testGetSaveFileUrl()
+    {
+        QObject lambdaGuard;
+        QTemporaryFile tempFile(QDir::tempPath()+"/kfiledialogtest_XXXXXX");
+        tempFile.open();
+        const QString tempName = tempFile.fileName();
+        const QUrl url = QUrl::fromLocalFile(tempName);
+
+        // Need to use a lambda and not just QTest::qWaitForWindowExposed();
+        // because with the static getSaveFileUrl we do not have access
+        // to the QFileDialog object, so instead we hook to a signal
+        KFileWidget::OperationMode saveFileOperationMode = KFileWidget::Other;
+        connect(qApp, &QGuiApplication::focusWindowChanged, &lambdaGuard, [&saveFileOperationMode] {
+            KFileWidget *fileWidget = findFileWidget();
+            saveFileOperationMode = fileWidget->operationMode();
+            qApp->activeWindow()->close();
+        });
+
+        QFileDialog::getSaveFileUrl(0, QString(), url);
+
+        QCOMPARE(saveFileOperationMode, KFileWidget::Saving);
+    }
+
     void testViewMode()
     {
         // Open a file dialog, and change view mode to tree
