@@ -298,8 +298,9 @@ private Q_SLOTS:
         qDebug() << "4";
 
         messageBoxSeen = false;
+        checkMessageBoxRun = false;
         qDebug() << "4.1";
-        QTimer::singleShot(500, this, SLOT(checkMessageBox()));
+        QTimer::singleShot(5000, this, SLOT(checkMessageBox()));
         qDebug() << "4.2";
         fw->slotOk();
         
@@ -307,6 +308,7 @@ private Q_SLOTS:
 
         fw->slotCancel();
         qDebug() << "5.1";
+        QTRY_VERIFY(checkMessageBoxRun);
         QVERIFY(messageBoxSeen == messageBoxExpected);
         
         qDebug() << "6";
@@ -315,6 +317,7 @@ private Q_SLOTS:
 protected Q_SLOTS:
     void checkMessageBox()
     {
+        checkMessageBoxRun = true;
         qDebug() << "A";
         QDialog *msgbox = findMessageBox();
         qDebug() << "B";
@@ -332,6 +335,7 @@ protected Q_SLOTS:
 
 private:
     bool messageBoxSeen;
+    bool checkMessageBoxRun;
 
     static QString fileViewToString(KFile::FileView fv)
     {
