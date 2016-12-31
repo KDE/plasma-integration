@@ -257,43 +257,77 @@ private Q_SLOTS:
     {
         QFETCH(bool, qtOverwriteOption);
         QFETCH(bool, messageBoxExpected);
-
+        
+        qDebug() << "1";
         QTemporaryFile tempFile(QDir::tempPath()+"/kfiledialogtest_XXXXXX");
+        qDebug() << "1.1";
         tempFile.setAutoRemove(true);
+        qDebug() << "1.2";
         tempFile.open();
+        qDebug() << "1.3";
         QString tempName = tempFile.fileName();
+        qDebug() << "1.4";
         tempFile.close();
+        qDebug() << "1.5";
         int idx = tempName.lastIndexOf('/');
+        
+        qDebug() << "2";
 
         QFileDialog dialog;
+        qDebug() << "2.1";
         dialog.setAcceptMode(QFileDialog::AcceptSave);
+        qDebug() << "2.2";
         if (qtOverwriteOption) dialog.setOption(QFileDialog::DontConfirmOverwrite);
+        qDebug() << "2.3";
         dialog.setDirectory(tempName.left(idx+1));
+        qDebug() << "2.4";
         dialog.selectFile(tempName.mid(idx+1));
+        qDebug() << "2.5";
         dialog.open();
+        
+        qDebug() << "3";
 
         KFileWidget *fw = findFileWidget();
+        qDebug() << "3.1";
         QVERIFY(fw);
+        qDebug() << "3.2";
         QTest::qWaitForWindowExposed(fw->window());
+        qDebug() << "3.3";
         QCOMPARE(fw->isVisible(), true);
+        
+        qDebug() << "4";
 
         messageBoxSeen = false;
+        qDebug() << "4.1";
         QTimer::singleShot(500, this, SLOT(checkMessageBox()));
+        qDebug() << "4.2";
         fw->slotOk();
+        
+        qDebug() << "5";
 
         fw->slotCancel();
+        qDebug() << "5.1";
         QVERIFY(messageBoxSeen == messageBoxExpected);
+        
+        qDebug() << "6";
     }
 
 protected Q_SLOTS:
     void checkMessageBox()
     {
+        qDebug() << "A";
         QDialog *msgbox = findMessageBox();
+        qDebug() << "B";
         if (!msgbox) return;
+        qDebug() << "C";
         QTest::qWaitForWindowExposed(msgbox);
+        qDebug() << "D";
         QCOMPARE(msgbox->isVisible(), true);
+        qDebug() << "E";
         messageBoxSeen = true;
+        qDebug() << "F";
         msgbox->close();
+        qDebug() << "G";
     }
 
 private:
