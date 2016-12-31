@@ -40,6 +40,11 @@ private Q_SLOTS:
         qputenv("KDE_FORK_SLAVES", "yes");
     }
 
+    void init()
+    {
+        qDebug() << QDateTime::currentDateTime() << "INIT";
+    }
+
     void cleanupTestCase()
     {
     }
