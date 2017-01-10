@@ -27,9 +27,12 @@
 #include <QWindow>
 #include <NETWM>
 
+#include <KWindowEffects>
+
 #include <xcb/xcb.h>
 
 static const char s_schemePropertyName[] = "KDE_COLOR_SCHEME_PATH";
+static const QByteArray s_blurBehindPropertyName = QByteArrayLiteral("ENABLE_BLUR_BEHIND_HINT");
 
 X11Integration::X11Integration()
     : QObject()
@@ -60,6 +63,10 @@ bool X11Integration::eventFilter(QObject *watched, QEvent *event)
             if (pe->surfaceEventType() == QPlatformSurfaceEvent::SurfaceCreated) {
                 if (qApp->property(s_schemePropertyName).isValid()) {
                     installColorScheme(w);
+                }
+                const auto blurBehindProperty = w->property(s_blurBehindPropertyName.constData());
+                if (blurBehindProperty.isValid()) {
+                    KWindowEffects::enableBlurBehind(w->winId(), blurBehindProperty.toBool());
                 }
                 installDesktopFileName(w);
             }
