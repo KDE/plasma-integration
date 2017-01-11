@@ -20,6 +20,8 @@
  *  Boston, MA 02110-1301, USA.
  */
 
+#include <config-platformtheme.h>
+
 #include "kdeplatformtheme.h"
 #include "kfontsettingsdata.h"
 #include "khintssettings.h"
@@ -28,32 +30,62 @@
 #include "kwaylandintegration.h"
 #include "x11integration.h"
 
-#include <QCoreApplication>
-#include <QGuiApplication>
+#include <QApplication>
 #include <QFont>
+#include <QMainWindow>
+#include <QMenuBar>
+#include <QKeyEvent>
 #include <QPalette>
 #include <QString>
 #include <QStringList>
+#include <QTimer>
 #include <QVariant>
-#include <QDebug>
-#include <QX11Info>
 
 #include <kiconengine.h>
 #include <kiconloader.h>
 #include <kstandardshortcut.h>
 #include <KStandardGuiItem>
 #include <KLocalizedString>
+#include <KWindowSystem>
+
+#include "qdbusmenubar_p.h"
+
+static const QByteArray s_x11AppMenuServiceNamePropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_SERVICE_NAME");
+static const QByteArray s_x11AppMenuObjectPathPropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_OBJECT_PATH");
+
+static const QByteArray s_waylandAppMenuServiceNamePropertyName = QByteArrayLiteral("KDE_APPMENU_SERVICE_NAME");
+static const QByteArray s_waylandAppMenuObjectPathPropertyName = QByteArrayLiteral("KDE_APPMENU_OBJECT_PATH");
+
+static bool checkDBusGlobalMenuAvailable()
+{
+    QDBusConnection connection = QDBusConnection::sessionBus();
+    QString registrarService = QStringLiteral("com.canonical.AppMenu.Registrar");
+    return connection.interface()->isServiceRegistered(registrarService);
+}
+
+static bool isDBusGlobalMenuAvailable()
+{
+    static bool dbusGlobalMenuAvailable = checkDBusGlobalMenuAvailable();
+    return dbusGlobalMenuAvailable;
+}
 
 KdePlatformTheme::KdePlatformTheme()
 {
     loadSettings();
-    if (QGuiApplication::platformName().startsWith(QLatin1String("wayland"))) {
+
+    if (KWindowSystem::isPlatformWayland()) {
         m_kwaylandIntegration.reset(new KWaylandIntegration());
         m_kwaylandIntegration->init();
-    } else if (QX11Info::isPlatformX11()) {
+    }
+
+#if HAVE_X11
+    if (KWindowSystem::isPlatformX11()) {
         m_x11Integration.reset(new X11Integration());
         m_x11Integration->init();
     }
+#endif
+
+    QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar, false);
 }
 
 KdePlatformTheme::~KdePlatformTheme()
@@ -288,3 +320,45 @@ QPlatformSystemTrayIcon *KdePlatformTheme::createPlatformSystemTrayIcon() const
 {
     return new KDEPlatformSystemTrayIcon;
 }
+
+QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
+{
+    if (isDBusGlobalMenuAvailable()) {
+        auto *menu = new QDBusMenuBar();
+
+        QObject::connect(menu, &QDBusMenuBar::windowChanged, menu, [this, menu](QWindow *newWindow, QWindow *oldWindow) {
+            const QString &serviceName = QDBusConnection::sessionBus().baseService();
+            const QString &objectPath = menu->objectPath();
+
+            if (m_x11Integration) {
+                if (oldWindow) {
+                    m_x11Integration->setWindowProperty(oldWindow, s_x11AppMenuServiceNamePropertyName, {});
+                    m_x11Integration->setWindowProperty(oldWindow, s_x11AppMenuObjectPathPropertyName, {});
+                }
+
+                if (newWindow) {
+                    m_x11Integration->setWindowProperty(newWindow, s_x11AppMenuServiceNamePropertyName, serviceName.toUtf8());
+                    m_x11Integration->setWindowProperty(newWindow, s_x11AppMenuObjectPathPropertyName, objectPath.toUtf8());
+                }
+            }
+
+            if (m_kwaylandIntegration) {
+                if (oldWindow) {
+                    m_kwaylandIntegration->setWindowProperty(oldWindow, s_waylandAppMenuServiceNamePropertyName, {});
+                    m_kwaylandIntegration->setWindowProperty(oldWindow, s_waylandAppMenuObjectPathPropertyName, {});
+                }
+
+                if (newWindow) {
+                    m_kwaylandIntegration->setWindowProperty(newWindow, s_waylandAppMenuServiceNamePropertyName, serviceName.toUtf8());
+                    m_kwaylandIntegration->setWindowProperty(newWindow, s_waylandAppMenuObjectPathPropertyName, objectPath.toUtf8());
+                }
+            }
+        });
+
+        return menu;
+    }
+
+    return nullptr;
+}
+
+#include "kdeplatformtheme.moc"

@@ -6,12 +6,25 @@ set_package_properties(X11 PROPERTIES DESCRIPTION "Required for updating the Cur
 set(HAVE_X11 ${X11_FOUND})
 if(HAVE_X11)
   find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
+
+  find_package(XCB COMPONENTS XCB)
+  set_package_properties(XCB PROPERTIES DESCRIPTION "Required for exposing the global menu on X11"
+                         TYPE REQUIRED
+                        )
 endif()
 
 configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-platformtheme.h )
 
+# qdbusmenubar uses them
+remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS)
+
+
+include_directories(${Qt5Core_PRIVATE_INCLUDE_DIRS})
+include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
+
 set(platformtheme_SRCS
     kdeplatformtheme.cpp
+    qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
     kfontsettingsdata.cpp
     khintssettings.cpp
     kdeplatformfiledialoghelper.cpp
@@ -24,9 +37,7 @@ set(platformtheme_SRCS
     main.cpp
 )
 
-include_directories(
-    ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
-)
+
 add_library(KDEPlasmaPlatformTheme MODULE ${platformtheme_SRCS})
 
 target_link_libraries(KDEPlasmaPlatformTheme
@@ -44,10 +55,12 @@ target_link_libraries(KDEPlasmaPlatformTheme
         KF5::WindowSystem
         KF5::WaylandClient
         XCB::XCB
+        ${QT5PLATFORMSUPPORT_LIBS}
+
 )
 
 if(HAVE_X11)
-  target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt5::X11Extras ${X11_Xcursor_LIB})
+  target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt5::X11Extras ${X11_Xcursor_LIB} ${XCB_XCB_LIBRARY})
 endif()
 
 install(TARGETS KDEPlasmaPlatformTheme DESTINATION ${KDE_INSTALL_QTPLUGINDIR}/platformthemes)

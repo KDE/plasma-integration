@@ -121,3 +121,30 @@ void X11Integration::installDesktopFileName(QWindow *w)
     info.setDesktopFileName(QGuiApplication::desktopFileName().toUtf8().constData());
 #endif
 }
+
+void X11Integration::setWindowProperty(QWindow *window, const QByteArray &name, const QByteArray &value)
+{
+    auto *c = QX11Info::connection();
+
+    xcb_atom_t atom;
+    auto it = m_atoms.find(name);
+    if (it == m_atoms.end()) {
+        const xcb_intern_atom_cookie_t cookie = xcb_intern_atom(c, false, name.length(), name.constData());
+        QScopedPointer<xcb_intern_atom_reply_t, QScopedPointerPodDeleter> reply(xcb_intern_atom_reply(c, cookie, Q_NULLPTR));
+        if (!reply.isNull()) {
+            atom = reply->atom;
+            m_atoms[name] = atom;
+        } else {
+            return;
+        }
+    } else {
+        atom = *it;
+    }
+
+    if (value.isEmpty()) {
+        xcb_delete_property(c, window->winId(), atom);
+    } else {
+        xcb_change_property(c, XCB_PROP_MODE_REPLACE, window->winId(), atom, XCB_ATOM_STRING,
+                            8, value.length(), value.constData());
+    }
+}

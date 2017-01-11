@@ -9,8 +9,7 @@ find_package(ECM 5.17.0  NO_MODULE)
 set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://projects.kde.org/projects/kdesupport/extra-cmake-modules")
 feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
-
-set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
 
 
 include(GenerateExportHeader)
@@ -50,6 +49,24 @@ find_package(Breeze ${PROJECT_VERSION} CONFIG)
 set_package_properties(Breeze PROPERTIES
                        TYPE REQUIRED
                        PURPOSE "For setting the default QStyle name")
+
+# dependencies for QPA plugin
+if(Qt5Core_VERSION VERSION_LESS "5.8.0")
+    find_package(Qt5PlatformSupport REQUIRED)
+else()
+    find_package(Qt5ThemeSupport REQUIRED)
+endif()
+
+message("DAVE ${Qt5Core_VERSION}")
+if(Qt5Core_VERSION VERSION_LESS "5.8.0")
+    add_definitions(-DQ_FONTCONFIGDATABASE)
+    set(QT5PLATFORMSUPPORT_LIBS Qt5PlatformSupport::Qt5PlatformSupport)
+else()
+    set(QT5PLATFORMSUPPORT_LIBS
+        Qt5ThemeSupport::Qt5ThemeSupport
+)
+endif()
+
 
 add_definitions(-DTRANSLATION_DOMAIN=\"plasmaintegration5\")
 if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")

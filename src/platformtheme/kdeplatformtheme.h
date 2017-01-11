@@ -32,6 +32,9 @@ class KFontSettingsData;
 class KWaylandIntegration;
 class X11Integration;
 class QIconEngine;
+class QWindow;
+
+class AltKeyEventListener;
 
 class KdePlatformTheme : public QPlatformTheme
 {
@@ -52,13 +55,18 @@ public:
 
     QPlatformSystemTrayIcon *createPlatformSystemTrayIcon() const Q_DECL_OVERRIDE;
 
+    QPlatformMenuBar *createPlatformMenuBar() const Q_DECL_OVERRIDE;
+
 private:
     void loadSettings();
+
+    static void setWindowProperty(QWindow *window, const QByteArray &name, const QByteArray &value);
 
     KHintsSettings *m_hints;
     KFontSettingsData *m_fontsData;
     QScopedPointer<KWaylandIntegration> m_kwaylandIntegration;
     QScopedPointer<X11Integration> m_x11Integration;
+
 };
 
 #endif // KDEPLATFORMTHEME_H

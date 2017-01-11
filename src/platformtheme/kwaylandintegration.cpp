@@ -23,6 +23,8 @@
 #include <QPlatformSurfaceEvent>
 #include <qpa/qplatformnativeinterface.h>
 
+#include <qpa/qplatformnativeinterface.h>
+
 #include <KWayland/Client/connection_thread.h>
 #include <KWayland/Client/registry.h>
 #include <KWayland/Client/surface.h>
@@ -133,6 +135,15 @@ void KWaylandIntegration::installColorScheme(QWindow *w)
     if (QPlatformNativeInterface *native = qApp->platformNativeInterface()) {
         if (QPlatformWindow *pw = w->handle()) {
             native->setWindowProperty(pw, QString::fromUtf8(s_schemePropertyName), qApp->property(s_schemePropertyName.constData()));
+        }
+    }
+}
+
+void KWaylandIntegration::setWindowProperty(QWindow *window, const QByteArray &name, const QByteArray &value)
+{
+    if (QPlatformNativeInterface *nativeInterface = qApp->platformNativeInterface()) {
+        if (QPlatformWindow *platformWindow = window->handle()) {
+            nativeInterface->setWindowProperty(platformWindow, QString::fromUtf8(name), QString::fromUtf8(value));
         }
     }
 }

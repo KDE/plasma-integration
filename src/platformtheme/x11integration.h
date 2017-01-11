@@ -22,6 +22,8 @@
 #define X11INTEGRATION_H
 
 #include <QObject>
+#include <QHash>
+#include <xcb/xcb.h>
 
 class QWindow;
 
@@ -33,11 +35,14 @@ public:
     virtual ~X11Integration();
     void init();
 
+    void setWindowProperty(QWindow *window, const QByteArray &name, const QByteArray &value);
+
     bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 private:
     void installColorScheme(QWindow *w);
     void installDesktopFileName(QWindow *w);
+    QHash<QByteArray, xcb_atom_t> m_atoms;
 };
 
 #endif
