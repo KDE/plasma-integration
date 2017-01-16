@@ -57,7 +57,6 @@ else()
     find_package(Qt5ThemeSupport REQUIRED)
 endif()
 
-message("DAVE ${Qt5Core_VERSION}")
 if(Qt5Core_VERSION VERSION_LESS "5.8.0")
     add_definitions(-DQ_FONTCONFIGDATABASE)
     set(QT5PLATFORMSUPPORT_LIBS Qt5PlatformSupport::Qt5PlatformSupport)
