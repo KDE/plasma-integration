@@ -21,6 +21,7 @@
 #include <QTest>
 #include <QTimer>
 #include <QDir>
+#include <QTemporaryDir>
 #include <QTemporaryFile>
 #include <QFileDialog>
 #include <KFileWidget>
@@ -83,7 +84,7 @@ private Q_SLOTS:
 
     void testSelectUrl()
     {
-        QTemporaryFile tempFile(QDir::tempPath()+"/kfiledialogtest_XXXXXX");
+        QTemporaryFile tempFile(m_tempDir.path()+"/kfiledialogtest_XXXXXX");
         tempFile.setAutoRemove(true);
         tempFile.open();
         QString tempName = tempFile.fileName();
@@ -102,7 +103,7 @@ private Q_SLOTS:
     void testGetSaveFileUrl()
     {
         QObject lambdaGuard;
-        QTemporaryFile tempFile(QDir::tempPath()+"/kfiledialogtest_XXXXXX");
+        QTemporaryFile tempFile(m_tempDir.path()+"/kfiledialogtest_XXXXXX");
         tempFile.open();
         const QString tempName = tempFile.fileName();
         const QUrl url = QUrl::fromLocalFile(tempName);
@@ -262,7 +263,7 @@ private Q_SLOTS:
         QFETCH(bool, qtOverwriteOption);
         QFETCH(bool, messageBoxExpected);
         
-        QTemporaryFile tempFile(QDir::tempPath()+"/kfiledialogtest_XXXXXX");
+        QTemporaryFile tempFile(m_tempDir.path()+"/kfiledialogtest_XXXXXX");
         tempFile.setAutoRemove(true);
         tempFile.open();
         QString tempName = tempFile.fileName();
@@ -312,6 +313,7 @@ private Q_SLOTS:
     }
 
 private:
+    QTemporaryDir m_tempDir;
 
     static QString fileViewToString(KFile::FileView fv)
     {
