@@ -301,46 +301,36 @@ private Q_SLOTS:
         QCOMPARE(fw->isVisible(), true);
         
         qDebug() << QDateTime::currentDateTime() << "4";
+        bool timerRun = false;
 
-        messageBoxSeen = false;
-        checkMessageBoxRun = false;
         qDebug() << QDateTime::currentDateTime() << "4.1";
-        QTimer::singleShot(3500, this, SLOT(checkMessageBox()));
+        QTimer::singleShot(3500, this, [&] {
+            qDebug() << QDateTime::currentDateTime() << "A";
+            timerRun = true;
+            QDialog *msgbox = findMessageBox();
+            qDebug() << QDateTime::currentDateTime() << "B";
+            if (msgbox)
+            {
+                qDebug() << QDateTime::currentDateTime() << "C";
+                QTest::qWaitForWindowExposed(msgbox);
+                qDebug() << QDateTime::currentDateTime() << "D";
+                QCOMPARE(msgbox->isVisible(), true);
+                qDebug() << QDateTime::currentDateTime() << "E";
+                msgbox->close();
+                qDebug() << QDateTime::currentDateTime() << "G";
+                QVERIFY(messageBoxExpected);
+            } else {
+                qDebug() << QDateTime::currentDateTime() << "H";
+                QVERIFY(!messageBoxExpected);
+            }
+        });
         qDebug() << QDateTime::currentDateTime() << "4.2";
         fw->slotOk();
         
-        qDebug() << QDateTime::currentDateTime() << "5";
-
-        fw->slotCancel();
-        qDebug() << QDateTime::currentDateTime() << "5.1";
-        QTRY_VERIFY(checkMessageBoxRun);
-        QVERIFY(messageBoxSeen == messageBoxExpected);
-        
-        qDebug() << QDateTime::currentDateTime() << "6";
-    }
-
-protected Q_SLOTS:
-    void checkMessageBox()
-    {
-        checkMessageBoxRun = true;
-        qDebug() << QDateTime::currentDateTime() << "A";
-        QDialog *msgbox = findMessageBox();
-        qDebug() << QDateTime::currentDateTime() << "B";
-        if (!msgbox) return;
-        qDebug() << QDateTime::currentDateTime() << "C";
-        QTest::qWaitForWindowExposed(msgbox);
-        qDebug() << QDateTime::currentDateTime() << "D";
-        QCOMPARE(msgbox->isVisible(), true);
-        qDebug() << QDateTime::currentDateTime() << "E";
-        messageBoxSeen = true;
-        qDebug() << QDateTime::currentDateTime() << "F";
-        msgbox->close();
-        qDebug() << QDateTime::currentDateTime() << "G";
+        QTRY_VERIFY(timerRun);
     }
 
 private:
-    bool messageBoxSeen;
-    bool checkMessageBoxRun;
 
     static QString fileViewToString(KFile::FileView fv)
     {
