@@ -40,6 +40,8 @@
 #include <QStringList>
 #include <QTimer>
 #include <QVariant>
+#include <QDBusConnection>
+#include <QDebug>
 
 #include <kiconengine.h>
 #include <kiconloader.h>
