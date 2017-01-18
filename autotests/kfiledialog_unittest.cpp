@@ -21,6 +21,7 @@
 #include <QTest>
 #include <QTimer>
 #include <QDir>
+#include <QTemporaryDir>
 #include <QTemporaryFile>
 #include <QFileDialog>
 #include <KFileWidget>
@@ -83,7 +84,7 @@ private Q_SLOTS:
 
     void testSelectUrl()
     {
-        QTemporaryFile tempFile(QDir::tempPath()+"/kfiledialogtest_XXXXXX");
+        QTemporaryFile tempFile(m_tempDir.path()+"/kfiledialogtest_XXXXXX");
         tempFile.setAutoRemove(true);
         tempFile.open();
         QString tempName = tempFile.fileName();
@@ -102,7 +103,7 @@ private Q_SLOTS:
     void testGetSaveFileUrl()
     {
         QObject lambdaGuard;
-        QTemporaryFile tempFile(QDir::tempPath()+"/kfiledialogtest_XXXXXX");
+        QTemporaryFile tempFile(m_tempDir.path()+"/kfiledialogtest_XXXXXX");
         tempFile.open();
         const QString tempName = tempFile.fileName();
         const QUrl url = QUrl::fromLocalFile(tempName);
@@ -262,7 +263,7 @@ private Q_SLOTS:
         QFETCH(bool, qtOverwriteOption);
         QFETCH(bool, messageBoxExpected);
         
-        QTemporaryFile tempFile(QDir::tempPath()+"/kfiledialogtest_XXXXXX");
+        QTemporaryFile tempFile(m_tempDir.path()+"/kfiledialogtest_XXXXXX");
         tempFile.setAutoRemove(true);
         tempFile.open();
         QString tempName = tempFile.fileName();
@@ -281,31 +282,28 @@ private Q_SLOTS:
         QTest::qWaitForWindowExposed(fw->window());
         QCOMPARE(fw->isVisible(), true);
         
-        messageBoxSeen = false;
-        checkMessageBoxRun = false;
-        QTimer::singleShot(3500, this, SLOT(checkMessageBox()));
+        bool timerRun = false;
+
+        QTimer::singleShot(3500, this, [&] {
+            timerRun = true;
+            QDialog *msgbox = findMessageBox();
+            if (msgbox)
+            {
+                QTest::qWaitForWindowExposed(msgbox);
+                QCOMPARE(msgbox->isVisible(), true);
+                msgbox->close();
+                QVERIFY(messageBoxExpected);
+            } else {
+                QVERIFY(!messageBoxExpected);
+            }
+        });
         fw->slotOk();
         
-        fw->slotCancel();
-        QTRY_VERIFY(checkMessageBoxRun);
-        QVERIFY(messageBoxSeen == messageBoxExpected);
-    }
-
-protected Q_SLOTS:
-    void checkMessageBox()
-    {
-        checkMessageBoxRun = true;
-        QDialog *msgbox = findMessageBox();
-        if (!msgbox) return;
-        QTest::qWaitForWindowExposed(msgbox);
-        QCOMPARE(msgbox->isVisible(), true);
-        messageBoxSeen = true;
-        msgbox->close();
+        QTRY_VERIFY(timerRun);
     }
 
 private:
-    bool messageBoxSeen;
-    bool checkMessageBoxRun;
+    QTemporaryDir m_tempDir;
 
     static QString fileViewToString(KFile::FileView fv)
     {
