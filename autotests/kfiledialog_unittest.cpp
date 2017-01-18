@@ -282,31 +282,21 @@ private Q_SLOTS:
         QTest::qWaitForWindowExposed(fw->window());
         QCOMPARE(fw->isVisible(), true);
         
-        qDebug() << QDateTime::currentDateTime() << "4";
         bool timerRun = false;
 
-        qDebug() << QDateTime::currentDateTime() << "4.1";
         QTimer::singleShot(3500, this, [&] {
-            qDebug() << QDateTime::currentDateTime() << "A";
             timerRun = true;
             QDialog *msgbox = findMessageBox();
-            qDebug() << QDateTime::currentDateTime() << "B";
             if (msgbox)
             {
-                qDebug() << QDateTime::currentDateTime() << "C";
                 QTest::qWaitForWindowExposed(msgbox);
-                qDebug() << QDateTime::currentDateTime() << "D";
                 QCOMPARE(msgbox->isVisible(), true);
-                qDebug() << QDateTime::currentDateTime() << "E";
                 msgbox->close();
-                qDebug() << QDateTime::currentDateTime() << "G";
                 QVERIFY(messageBoxExpected);
             } else {
-                qDebug() << QDateTime::currentDateTime() << "H";
                 QVERIFY(!messageBoxExpected);
             }
         });
-        qDebug() << QDateTime::currentDateTime() << "4.2";
         fw->slotOk();
         
         QTRY_VERIFY(timerRun);
