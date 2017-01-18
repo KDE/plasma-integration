@@ -41,6 +41,7 @@
 #include <QTimer>
 #include <QVariant>
 #include <QDBusConnection>
+#include <QDBusConnectionInterface>
 #include <QDebug>
 
 #include <kiconengine.h>
