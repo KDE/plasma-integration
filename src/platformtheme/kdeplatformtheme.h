@@ -55,7 +55,7 @@ public:
 
     QPlatformSystemTrayIcon *createPlatformSystemTrayIcon() const Q_DECL_OVERRIDE;
 
-#ifdef QT_VERSION > QT_VERSION_CHECK(5.7.0)
+#if QT_VERSION > QT_VERSION_CHECK(5,7,0)
     QPlatformMenuBar *createPlatformMenuBar() const Q_DECL_OVERRIDE;
 #endif
 
