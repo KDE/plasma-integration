@@ -42,7 +42,6 @@ private Q_SLOTS:
 
     void init()
     {
-        qDebug() << QDateTime::currentDateTime() << "INIT";
     }
 
     void cleanupTestCase()
@@ -263,41 +262,23 @@ private Q_SLOTS:
         QFETCH(bool, qtOverwriteOption);
         QFETCH(bool, messageBoxExpected);
         
-        qDebug() << QDateTime::currentDateTime() << "1";
         QTemporaryFile tempFile(QDir::tempPath()+"/kfiledialogtest_XXXXXX");
-        qDebug() << QDateTime::currentDateTime() << "1.1";
         tempFile.setAutoRemove(true);
-        qDebug() << QDateTime::currentDateTime() << "1.2";
         tempFile.open();
-        qDebug() << QDateTime::currentDateTime() << "1.3";
         QString tempName = tempFile.fileName();
-        qDebug() << QDateTime::currentDateTime() << "1.4";
         tempFile.close();
-        qDebug() << QDateTime::currentDateTime() << "1.5";
         int idx = tempName.lastIndexOf('/');
         
-        qDebug() << QDateTime::currentDateTime() << "2";
-
         QFileDialog dialog;
-        qDebug() << QDateTime::currentDateTime() << "2.1";
         dialog.setAcceptMode(QFileDialog::AcceptSave);
-        qDebug() << QDateTime::currentDateTime() << "2.2";
         if (qtOverwriteOption) dialog.setOption(QFileDialog::DontConfirmOverwrite);
-        qDebug() << QDateTime::currentDateTime() << "2.3";
         dialog.setDirectory(tempName.left(idx+1));
-        qDebug() << QDateTime::currentDateTime() << "2.4";
         dialog.selectFile(tempName.mid(idx+1));
-        qDebug() << QDateTime::currentDateTime() << "2.5";
         dialog.open();
         
-        qDebug() << QDateTime::currentDateTime() << "3";
-
         KFileWidget *fw = findFileWidget();
-        qDebug() << QDateTime::currentDateTime() << "3.1";
         QVERIFY(fw);
-        qDebug() << QDateTime::currentDateTime() << "3.2";
         QTest::qWaitForWindowExposed(fw->window());
-        qDebug() << QDateTime::currentDateTime() << "3.3";
         QCOMPARE(fw->isVisible(), true);
         
         qDebug() << QDateTime::currentDateTime() << "4";

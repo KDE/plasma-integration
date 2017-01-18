@@ -40,6 +40,9 @@
 #include <QStringList>
 #include <QTimer>
 #include <QVariant>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+#include <QDebug>
 
 #include <kiconengine.h>
 #include <kiconloader.h>
@@ -48,7 +51,9 @@
 #include <KLocalizedString>
 #include <KWindowSystem>
 
+#if QT_VERSION > QT_VERSION_CHECK(5,7,0)
 #include "qdbusmenubar_p.h"
+#endif
 
 static const QByteArray s_x11AppMenuServiceNamePropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_SERVICE_NAME");
 static const QByteArray s_x11AppMenuObjectPathPropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_OBJECT_PATH");
@@ -321,6 +326,7 @@ QPlatformSystemTrayIcon *KdePlatformTheme::createPlatformSystemTrayIcon() const
     return new KDEPlatformSystemTrayIcon;
 }
 
+#if QT_VERSION > QT_VERSION_CHECK(5,7,0)
 QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
 {
     if (isDBusGlobalMenuAvailable()) {
@@ -360,5 +366,6 @@ QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
 
     return nullptr;
 }
+#endif
 
 #include "kdeplatformtheme.moc"

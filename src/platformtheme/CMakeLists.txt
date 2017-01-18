@@ -24,7 +24,6 @@ include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 
 set(platformtheme_SRCS
     kdeplatformtheme.cpp
-    qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
     kfontsettingsdata.cpp
     khintssettings.cpp
     kdeplatformfiledialoghelper.cpp
@@ -37,6 +36,12 @@ set(platformtheme_SRCS
     main.cpp
 )
 
+if(Qt5Core_VERSION VERSION_EQUAL "5.7.0" OR Qt5Core_VERSION VERSION_GREATER "5.7.0")
+set(platformtheme_SRCS
+    qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
+    ${platformtheme_SRCS}
+)
+endif()
 
 add_library(KDEPlasmaPlatformTheme MODULE ${platformtheme_SRCS})
 
