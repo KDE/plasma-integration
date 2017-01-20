@@ -51,7 +51,7 @@
 #include <KLocalizedString>
 #include <KWindowSystem>
 
-#if QT_VERSION > QT_VERSION_CHECK(5,7,0)
+#if QT_VERSION >= QT_VERSION_CHECK(5,7,0)
 #include "qdbusmenubar_p.h"
 #endif
 
@@ -326,7 +326,7 @@ QPlatformSystemTrayIcon *KdePlatformTheme::createPlatformSystemTrayIcon() const
     return new KDEPlatformSystemTrayIcon;
 }
 
-#if QT_VERSION > QT_VERSION_CHECK(5,7,0)
+#if QT_VERSION >= QT_VERSION_CHECK(5,7,0)
 QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
 {
     if (isDBusGlobalMenuAvailable()) {
