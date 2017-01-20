@@ -370,7 +370,9 @@ void KDEPlatformFileDialogHelper::selectFile(const QUrl &filename)
 
 void KDEPlatformFileDialogHelper::setDirectory(const QUrl &directory)
 {
-    m_dialog->setDirectory(directory);
+    if (!directory.isEmpty()) {
+        m_dialog->setDirectory(directory);
+    }
 }
 
 void KDEPlatformFileDialogHelper::selectNameFilter(const QString &filter)
