@@ -46,9 +46,9 @@ set(platformThemeSRCS
 )
 
 if(Qt5Core_VERSION VERSION_EQUAL "5.7.0" OR Qt5Core_VERSION VERSION_GREATER "5.7.0")
-set(platformtheme_SRCS
-    qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
-    ${platformtheme_SRCS}
+set(platformThemeSRCS
+    ../src/platformtheme/qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
+    ${platformThemeSRCS}
 )
 endif()
 
