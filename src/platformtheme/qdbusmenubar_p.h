@@ -92,6 +92,8 @@ public:
 Q_SIGNALS:
     void windowChanged(QWindow *newWindow, QWindow *oldWindow);
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 private:
     QDBusPlatformMenu *m_menu;
     QDBusMenuAdaptor *m_menuAdaptor;

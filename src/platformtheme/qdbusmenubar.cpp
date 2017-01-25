@@ -39,6 +39,10 @@
 
 #include "qdbusmenubar_p.h"
 
+#if QT_VERSION == QT_VERSION_CHECK(5,7,0)
+#include <QApplication>
+#include <QMenuBar>
+ #endif
 
 QT_BEGIN_NAMESPACE
 
@@ -58,6 +62,44 @@ QDBusMenuBar::QDBusMenuBar()
             m_menuAdaptor, &QDBusMenuAdaptor::ItemsPropertiesUpdated);
     connect(m_menu, &QDBusPlatformMenu::updated,
             m_menuAdaptor, &QDBusMenuAdaptor::LayoutUpdated);
+    /*Qt 5.7.0 contains a nasty bug
+    *
+    * QMenuBar::setVisible() only checks isNativeMenuBar on OS X
+    * leading to the menu always being visible.
+    * Initial creation of the menubar does work properly however.
+    *
+    * This patch finds QMenuBars and blocks show events
+    *
+    * This is fixed in 5.7.1
+    */
+
+    #if QT_VERSION == QT_VERSION_CHECK(5,7,0)
+    if (!QApplication::instance()) {
+        return;
+    }
+    //Platform menu bars are created from within QMenuBar therefore we know it exists when
+    //this method is run. By putting it in here, we don't need any invasive event filtering that affects non menubar users
+    for (QWidget *widget: QApplication::allWidgets()) {
+        if (auto menubar = qobject_cast<QMenuBar*>(widget)) {
+            menubar->installEventFilter(this);
+        }
+    }
+    #endif
+}
+
+bool QDBusMenuBar::eventFilter(QObject *watched, QEvent *event) {
+//see ctor
+#if QT_VERSION == QT_VERSION_CHECK(5,7,0)
+    if (event->type() == QEvent::ShowToParent) {
+        if (auto menubar = qobject_cast<QMenuBar*>(watched)) {
+            if (menubar->platformMenuBar() == this) {
+                menubar->hide();
+            }
+            return true;
+        }
+    }
+#endif
+    return QPlatformMenuBar::eventFilter(watched, event);
 }
 
 QDBusMenuBar::~QDBusMenuBar()
