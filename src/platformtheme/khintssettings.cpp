@@ -231,7 +231,12 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         //QApplication::setPalette and QGuiApplication::setPalette are different functions
         //and non virtual. Call the correct one
         if (qobject_cast<QApplication *>(QCoreApplication::instance())) {
-            QApplication::setPalette(*m_palettes[QPlatformTheme::SystemPalette]);
+            QPalette palette = *m_palettes[QPlatformTheme::SystemPalette];
+            QApplication::setPalette(palette);
+            // QTBUG QGuiApplication::paletteChanged() signal is only emitted by QGuiApplication
+            // so things like SystemPalette QtQuick item that use it won't notice a palette
+            // change when a QApplication which causes e.g. QML System Settings modules to not update
+            emit qApp->paletteChanged(palette);
         } else if (qobject_cast<QGuiApplication *>(QCoreApplication::instance())) {
             QGuiApplication::setPalette(*m_palettes[QPlatformTheme::SystemPalette]);
         }
