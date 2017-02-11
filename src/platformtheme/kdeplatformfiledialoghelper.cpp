@@ -126,7 +126,7 @@ void KDEPlatformFileDialog::selectFile(const QUrl &filename)
 {
     QUrl dirUrl = filename.adjusted(QUrl::RemoveFilename);
     m_fileWidget->setUrl(dirUrl);
-    m_fileWidget->setSelection(filename.fileName());
+    m_fileWidget->setSelection(filename.toString());
 }
 
 void KDEPlatformFileDialog::setViewMode(QFileDialogOptions::ViewMode view)
