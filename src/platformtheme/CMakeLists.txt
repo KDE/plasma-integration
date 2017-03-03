@@ -8,9 +8,7 @@ if(HAVE_X11)
   find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
 
   find_package(XCB COMPONENTS XCB)
-  set_package_properties(XCB PROPERTIES DESCRIPTION "Required for exposing the global menu on X11"
-                         TYPE REQUIRED
-                        )
+  set_package_properties(XCB PROPERTIES TYPE REQUIRED)
 endif()
 
 configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-platformtheme.h )

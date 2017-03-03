@@ -257,7 +257,7 @@ QList<QKeySequence> KdePlatformTheme::keyBindings(QKeySequence::StandardKey key)
 
 bool KdePlatformTheme::usePlatformNativeDialog(QPlatformTheme::DialogType type) const
 {
-    return type == QPlatformTheme::FileDialog;
+    return type == QPlatformTheme::FileDialog && qobject_cast<QApplication*>(QCoreApplication::instance());
 }
 
 QString KdePlatformTheme::standardButtonText(int button) const

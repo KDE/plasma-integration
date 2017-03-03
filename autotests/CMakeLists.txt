@@ -83,6 +83,8 @@ frameworkintegration_tests(
 )
 
 if(Qt5Qml_FOUND)
+    add_test(NAME qmltests COMMAND qmltestrunner WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
     frameworkintegration_tests(kfiledialogqml_unittest)
     target_link_libraries(kfiledialogqml_unittest Qt5::Qml)
 endif()
