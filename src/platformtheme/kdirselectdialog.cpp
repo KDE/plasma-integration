@@ -559,6 +559,11 @@ void KDirSelectDialog::setDirectory(const QUrl &directory)
     setCurrentUrl(directory);
 }
 
+QString KDirSelectDialog::selectedMimeTypeFilter()
+{
+    return QString();
+}
+
 QString KDirSelectDialog::selectedNameFilter()
 {
     return QString();
@@ -567,6 +572,11 @@ QString KDirSelectDialog::selectedNameFilter()
 void KDirSelectDialog::selectFile(const QUrl &filename)
 {
     Q_UNUSED(filename)
+}
+
+void KDirSelectDialog::selectMimeTypeFilter(const QString &filter)
+{
+    Q_UNUSED(filter)
 }
 
 void KDirSelectDialog::selectNameFilter(const QString &filter)

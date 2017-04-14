@@ -31,6 +31,7 @@
 #include <KSharedConfig>
 #include <KWindowConfig>
 #include <KProtocolInfo>
+#include <QMimeDatabase>
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
 #include <QPushButton>
@@ -176,9 +177,33 @@ void KDEPlatformFileDialog::setCustomLabel(QFileDialogOptions::DialogLabel label
     }
 }
 
+QString KDEPlatformFileDialog::selectedMimeTypeFilter()
+{
+    if (m_fileWidget->filterWidget()->isMimeFilter()) {
+        const auto mimeTypeFromFilter = QMimeDatabase().mimeTypeForName(m_fileWidget->filterWidget()->currentFilter());
+        // If one does not call selectMimeTypeFilter(), KFileFilterCombo::currentFilter() returns invalid mimeTypes,
+        // such as "application/json application/zip".
+        if (mimeTypeFromFilter.isValid()) {
+            return mimeTypeFromFilter.name();
+        }
+    }
+
+    if (selectedFiles().isEmpty()) {
+        return QString();
+    }
+
+    // Works for both KFile::File and KFile::Files modes.
+    return QMimeDatabase().mimeTypeForUrl(selectedFiles().at(0)).name();
+}
+
 QString KDEPlatformFileDialog::selectedNameFilter()
 {
     return m_fileWidget->filterWidget()->currentFilter();
+}
+
+void KDEPlatformFileDialog::selectMimeTypeFilter(const QString &filter)
+{
+    m_fileWidget->filterWidget()->setCurrentFilter(filter);
 }
 
 void KDEPlatformFileDialog::selectNameFilter(const QString &filter)
@@ -347,6 +372,18 @@ QList<QUrl> KDEPlatformFileDialogHelper::selectedFiles() const
 {
     return m_dialog->selectedFiles();
 }
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
+QString KDEPlatformFileDialogHelper::selectedMimeTypeFilter() const
+{
+    return m_dialog->selectedMimeTypeFilter();
+}
+
+void KDEPlatformFileDialogHelper::selectMimeTypeFilter(const QString &filter)
+{
+    m_dialog->selectMimeTypeFilter(filter);
+}
+#endif
 
 QString KDEPlatformFileDialogHelper::selectedNameFilter() const
 {

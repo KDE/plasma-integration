@@ -75,6 +75,45 @@ private Q_SLOTS:
         QCOMPARE(dialog.selectedNameFilter(), selectNameFilter);
     }
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
+    void testSelectedMimeTypeFilter_data()
+    {
+        QTest::addColumn<QStringList>("mimeTypeFilters");
+        QTest::addColumn<QString>("targetMimeTypeFilter");
+
+        const auto headerMime = QStringLiteral("text/x-chdr");
+        const auto jsonMime = QStringLiteral("application/json");
+        const auto zipMime = QStringLiteral("application/zip");
+
+        QTest::newRow("single mime filter (C header file)")
+                << QStringList {headerMime}
+                << headerMime;
+
+        QTest::newRow("single mime filter (JSON file)")
+                << QStringList {jsonMime}
+                << jsonMime;
+
+        QTest::newRow("multiple mime filters")
+                << QStringList {jsonMime, zipMime}
+                << jsonMime;
+    }
+
+    void testSelectedMimeTypeFilter()
+    {
+        QFileDialog dialog;
+
+        QFETCH(QStringList, mimeTypeFilters);
+        dialog.setMimeTypeFilters(mimeTypeFilters);
+        dialog.show();
+
+        QFETCH(QString, targetMimeTypeFilter);
+        dialog.selectMimeTypeFilter(targetMimeTypeFilter);
+
+        QCOMPARE(dialog.selectedMimeTypeFilter(), targetMimeTypeFilter);
+    }
+#endif
+
+
     void testSetDirectory()
     {
         QFileDialog dialog;

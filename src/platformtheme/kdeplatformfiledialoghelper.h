@@ -34,12 +34,14 @@ public:
 
     explicit KDEPlatformFileDialog();
     QUrl directory() Q_DECL_OVERRIDE;
+    void selectMimeTypeFilter(const QString &filter) Q_DECL_OVERRIDE;
     void selectNameFilter(const QString &filter) Q_DECL_OVERRIDE;
     void setDirectory(const QUrl &directory) Q_DECL_OVERRIDE;
     void selectFile(const QUrl &filename) Q_DECL_OVERRIDE;
     void setViewMode(QFileDialogOptions::ViewMode view);
     void setFileMode(QFileDialogOptions::FileMode mode);
     void setCustomLabel(QFileDialogOptions::DialogLabel label, const QString & text);
+    QString selectedMimeTypeFilter() Q_DECL_OVERRIDE;
     QString selectedNameFilter() Q_DECL_OVERRIDE;
     QList<QUrl> selectedFiles() Q_DECL_OVERRIDE;
 
@@ -59,6 +61,10 @@ public:
     bool defaultNameFilterDisables() const Q_DECL_OVERRIDE;
     QUrl directory() const Q_DECL_OVERRIDE;
     QList<QUrl> selectedFiles() const Q_DECL_OVERRIDE;
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
+    QString selectedMimeTypeFilter() const Q_DECL_OVERRIDE;
+    void selectMimeTypeFilter(const QString &filter) Q_DECL_OVERRIDE;
+#endif
     QString selectedNameFilter() const Q_DECL_OVERRIDE;
     void selectNameFilter(const QString &filter) Q_DECL_OVERRIDE;
     void selectFile(const QUrl &filename) Q_DECL_OVERRIDE;

@@ -98,9 +98,11 @@ public:
     QUrl startDir() const;
 
     QUrl directory() Q_DECL_OVERRIDE;
+    void selectMimeTypeFilter(const QString &filter) Q_DECL_OVERRIDE;
     void selectNameFilter(const QString &filter) Q_DECL_OVERRIDE;
     void setDirectory(const QUrl &directory) Q_DECL_OVERRIDE;
     void selectFile(const QUrl &filename) Q_DECL_OVERRIDE;
+    QString selectedMimeTypeFilter() Q_DECL_OVERRIDE;
     QString selectedNameFilter() Q_DECL_OVERRIDE;
     QList<QUrl> selectedFiles() Q_DECL_OVERRIDE;
 

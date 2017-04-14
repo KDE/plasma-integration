@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("nativeDialog")), QStringLiteral("Use the platform native dialog: 'on' or 'off'"), QStringLiteral("option"), QStringLiteral("on")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("fileMode")), QStringLiteral("File dialog fileMode: 'AnyFile' or 'ExistingFile' or 'Directory' or 'ExistingFiles'"), QStringLiteral("type")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("nameFilter")), QStringLiteral("Dialog nameFilter, e. g. 'cppfiles (*.cpp *.h *.hpp)', can be specified multiple times"), QStringLiteral("nameFilter"), QStringLiteral("Everything (*)")));
-    // add option mimeTypeFilter later
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("mimeTypeFilter")), QStringLiteral("Dialog mimeTypeFilter, e. g. 'application/json', can be specified multiple times"), QStringLiteral("mimeTypeFilter")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectNameFilter")), QStringLiteral("Initially selected nameFilter"), QStringLiteral("selectNameFilter")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectFile")), QStringLiteral("Initially selected file"), QStringLiteral("filename")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectDirectory")), QStringLiteral("Initially selected directory"), QStringLiteral("dirname")));
@@ -80,6 +80,11 @@ int main(int argc, char **argv)
         dialog.setNameFilters(nameFilterList);
     }
 
+    const auto mimeFilterList = parser.values(QStringLiteral("mimeTypeFilter"));
+    if (!mimeFilterList.isEmpty()) {
+        dialog.setMimeTypeFilters(mimeFilterList);
+    }
+
     QString selectNameFilter = parser.value(QStringLiteral("selectNameFilter"));
     if (!selectNameFilter.isEmpty()) {
         dialog.selectNameFilter(selectNameFilter);
@@ -107,7 +112,12 @@ int main(int argc, char **argv)
     if (dialog.result() == QDialog::Accepted) {
         qDebug() << "selected files" << dialog.selectedFiles();
         qDebug() << "selected urls" << dialog.selectedUrls();
-        qDebug() << "selected name nameFilter" << dialog.selectedNameFilter();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
+        qDebug() << "selected mime type filter" << dialog.selectedMimeTypeFilter();
+#endif
     }
+
+    qDebug() << "mime type filter(s):" << dialog.mimeTypeFilters();
+
     return ret;
 }
