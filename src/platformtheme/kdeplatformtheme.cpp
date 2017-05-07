@@ -50,6 +50,7 @@
 #include <KStandardGuiItem>
 #include <KLocalizedString>
 #include <KWindowSystem>
+#include <KIO/Global>
 
 #if QT_VERSION >= QT_VERSION_CHECK(5,7,0)
 #include "qdbusmenubar_p.h"
@@ -108,6 +109,22 @@ QVariant KdePlatformTheme::themeHint(QPlatformTheme::ThemeHint hintType) const
         return QPlatformTheme::themeHint(hintType);
     }
 }
+
+QIcon KdePlatformTheme::fileIcon(const QFileInfo &fileInfo, QPlatformTheme::IconOptions iconOptions) const
+{
+    if (iconOptions.testFlag(DontUseCustomDirectoryIcons) && fileInfo.isDir()) {
+        return QIcon::fromTheme(QLatin1String("inode-directory"));
+    }
+
+    return QIcon::fromTheme(KIO::iconNameForUrl(QUrl::fromLocalFile(fileInfo.absoluteFilePath())));
+}
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 8, 0)
+QPixmap KdePlatformTheme::fileIconPixmap(const QFileInfo &fileInfo, const QSizeF &size, QPlatformTheme::IconOptions iconOptions) const
+{
+    return fileIcon(fileInfo, iconOptions).pixmap(size.toSize(), QIcon::Normal);
+}
+#endif
 
 const QPalette *KdePlatformTheme::palette(Palette type) const
 {

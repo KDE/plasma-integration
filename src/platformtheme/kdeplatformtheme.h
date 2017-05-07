@@ -43,6 +43,16 @@ public:
     ~KdePlatformTheme();
 
     QVariant themeHint(ThemeHint hint) const Q_DECL_OVERRIDE;
+#if QT_VERSION >= QT_VERSION_CHECK(5, 8, 0)
+    QIcon fileIcon(const QFileInfo &fileInfo,
+                           QPlatformTheme::IconOptions iconOptions) const override;
+#else
+    QPixmap fileIconPixmap(const QFileInfo &fileInfo, const QSizeF &size,
+                                   QPlatformTheme::IconOptions iconOptions) const override;
+    // this will be the implementation
+    QIcon fileIcon(const QFileInfo &fileInfo,
+                           QPlatformTheme::IconOptions iconOptions) const;
+#endif
     const QPalette *palette(Palette type = SystemPalette) const Q_DECL_OVERRIDE;
     const QFont *font(Font type) const Q_DECL_OVERRIDE;
     QIconEngine *createIconEngine(const QString &iconName) const Q_DECL_OVERRIDE;
