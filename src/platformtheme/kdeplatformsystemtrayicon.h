@@ -33,20 +33,20 @@ class SystemTrayMenu : public QPlatformMenu
     Q_OBJECT
 public:
     SystemTrayMenu();
-    ~SystemTrayMenu() Q_DECL_OVERRIDE;
-    void insertMenuItem(QPlatformMenuItem *menuItem, QPlatformMenuItem *before) Q_DECL_OVERRIDE;
-    QPlatformMenuItem *menuItemAt(int position) const Q_DECL_OVERRIDE;
-    QPlatformMenuItem *menuItemForTag(quintptr tag) const Q_DECL_OVERRIDE;
-    void removeMenuItem(QPlatformMenuItem *menuItem) Q_DECL_OVERRIDE;
-    void setEnabled(bool enabled) Q_DECL_OVERRIDE;
-    void setIcon(const QIcon &icon) Q_DECL_OVERRIDE;
-    void setTag(quintptr tag) Q_DECL_OVERRIDE;
-    void setText(const QString &text) Q_DECL_OVERRIDE;
-    void setVisible(bool visible) Q_DECL_OVERRIDE;
-    void syncMenuItem(QPlatformMenuItem *menuItem) Q_DECL_OVERRIDE;
-    void syncSeparatorsCollapsible(bool enable) Q_DECL_OVERRIDE;
-    quintptr tag() const Q_DECL_OVERRIDE;
-    QPlatformMenuItem *createMenuItem() const Q_DECL_OVERRIDE;
+    ~SystemTrayMenu() override;
+    void insertMenuItem(QPlatformMenuItem *menuItem, QPlatformMenuItem *before) override;
+    QPlatformMenuItem *menuItemAt(int position) const override;
+    QPlatformMenuItem *menuItemForTag(quintptr tag) const override;
+    void removeMenuItem(QPlatformMenuItem *menuItem) override;
+    void setEnabled(bool enabled) override;
+    void setIcon(const QIcon &icon) override;
+    void setTag(quintptr tag) override;
+    void setText(const QString &text) override;
+    void setVisible(bool visible) override;
+    void syncMenuItem(QPlatformMenuItem *menuItem) override;
+    void syncSeparatorsCollapsible(bool enable) override;
+    quintptr tag() const override;
+    QPlatformMenuItem *createMenuItem() const override;
 
     QMenu *menu() const;
 
@@ -61,21 +61,21 @@ class SystemTrayMenuItem : public QPlatformMenuItem
     Q_OBJECT
 public:
     SystemTrayMenuItem();
-    ~SystemTrayMenuItem() Q_DECL_OVERRIDE;
-    void setCheckable(bool checkable) Q_DECL_OVERRIDE;
-    void setChecked(bool isChecked) Q_DECL_OVERRIDE;
-    void setEnabled(bool enabled) Q_DECL_OVERRIDE;
-    void setFont(const QFont &font) Q_DECL_OVERRIDE;
-    void setIcon(const QIcon &icon) Q_DECL_OVERRIDE;
-    void setIsSeparator(bool isSeparator) Q_DECL_OVERRIDE;
-    void setMenu(QPlatformMenu *menu) Q_DECL_OVERRIDE;
-    void setRole(MenuRole role) Q_DECL_OVERRIDE;
-    void setShortcut(const QKeySequence &shortcut) Q_DECL_OVERRIDE;
-    void setTag(quintptr tag) Q_DECL_OVERRIDE;
-    void setText(const QString &text) Q_DECL_OVERRIDE;
-    void setVisible(bool isVisible) Q_DECL_OVERRIDE;
-    quintptr tag() const Q_DECL_OVERRIDE;
-    void setIconSize(int size) Q_DECL_OVERRIDE;
+    ~SystemTrayMenuItem() override;
+    void setCheckable(bool checkable) override;
+    void setChecked(bool isChecked) override;
+    void setEnabled(bool enabled) override;
+    void setFont(const QFont &font) override;
+    void setIcon(const QIcon &icon) override;
+    void setIsSeparator(bool isSeparator) override;
+    void setMenu(QPlatformMenu *menu) override;
+    void setRole(MenuRole role) override;
+    void setShortcut(const QKeySequence &shortcut) override;
+    void setTag(quintptr tag) override;
+    void setText(const QString &text) override;
+    void setVisible(bool isVisible) override;
+    quintptr tag() const override;
+    void setIconSize(int size) override;
 
     QAction *action() const;
 
@@ -88,21 +88,21 @@ class KDEPlatformSystemTrayIcon : public QPlatformSystemTrayIcon
 {
 public:
     KDEPlatformSystemTrayIcon();
-    ~KDEPlatformSystemTrayIcon() Q_DECL_OVERRIDE;
+    ~KDEPlatformSystemTrayIcon() override;
 
-    void init() Q_DECL_OVERRIDE;
-    void cleanup() Q_DECL_OVERRIDE;
-    void updateIcon(const QIcon &icon) Q_DECL_OVERRIDE;
-    void updateToolTip(const QString &tooltip) Q_DECL_OVERRIDE;
-    void updateMenu(QPlatformMenu *menu) Q_DECL_OVERRIDE;
-    QRect geometry() const Q_DECL_OVERRIDE;
+    void init() override;
+    void cleanup() override;
+    void updateIcon(const QIcon &icon) override;
+    void updateToolTip(const QString &tooltip) override;
+    void updateMenu(QPlatformMenu *menu) override;
+    QRect geometry() const override;
     void showMessage(const QString &title, const QString &msg,
-                     const QIcon &icon, MessageIcon iconType, int secs) Q_DECL_OVERRIDE;
+                     const QIcon &icon, MessageIcon iconType, int secs) override;
 
-    bool isSystemTrayAvailable() const Q_DECL_OVERRIDE;
-    bool supportsMessages() const Q_DECL_OVERRIDE;
+    bool isSystemTrayAvailable() const override;
+    bool supportsMessages() const override;
 
-    QPlatformMenu *createMenu() const Q_DECL_OVERRIDE;
+    QPlatformMenu *createMenu() const override;
 
 private:
     KStatusNotifierItem *m_sni;

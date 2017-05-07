@@ -80,7 +80,7 @@ public:
 
     }
 
-    bool eventFilter(QObject *, QEvent *e) Q_DECL_OVERRIDE
+    bool eventFilter(QObject *, QEvent *e) override
     {
         if (e->type() == m_type) {
             gotEvent = true;

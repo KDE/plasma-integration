@@ -60,7 +60,7 @@ class KFontSettingsData_UnitTest : public QWidget
 {
     Q_OBJECT
 public:
-    bool event(QEvent *e) Q_DECL_OVERRIDE
+    bool event(QEvent *e) override
     {
         if (e->type() == QEvent::ApplicationFontChange) {
             m_appChangedFont = true;

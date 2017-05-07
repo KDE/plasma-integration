@@ -97,14 +97,14 @@ public:
      */
     QUrl startDir() const;
 
-    QUrl directory() Q_DECL_OVERRIDE;
-    void selectMimeTypeFilter(const QString &filter) Q_DECL_OVERRIDE;
-    void selectNameFilter(const QString &filter) Q_DECL_OVERRIDE;
-    void setDirectory(const QUrl &directory) Q_DECL_OVERRIDE;
-    void selectFile(const QUrl &filename) Q_DECL_OVERRIDE;
-    QString selectedMimeTypeFilter() Q_DECL_OVERRIDE;
-    QString selectedNameFilter() Q_DECL_OVERRIDE;
-    QList<QUrl> selectedFiles() Q_DECL_OVERRIDE;
+    QUrl directory() override;
+    void selectMimeTypeFilter(const QString &filter) override;
+    void selectNameFilter(const QString &filter) override;
+    void setDirectory(const QUrl &directory) override;
+    void selectFile(const QUrl &filename) override;
+    QString selectedMimeTypeFilter() override;
+    QString selectedNameFilter() override;
+    QList<QUrl> selectedFiles() override;
 
 public Q_SLOTS:
     /**
@@ -113,12 +113,12 @@ public Q_SLOTS:
     void setCurrentUrl(const QUrl &url);
 
 protected:
-    void accept() Q_DECL_OVERRIDE;
+    void accept() override;
 
     /**
      * Reimplemented for saving the dialog geometry.
      */
-    void hideEvent(QHideEvent *event) Q_DECL_OVERRIDE;
+    void hideEvent(QHideEvent *event) override;
 
 private:
     class Private;

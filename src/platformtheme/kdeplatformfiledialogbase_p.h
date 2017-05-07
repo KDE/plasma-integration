@@ -55,7 +55,7 @@ Q_SIGNALS:
     void filterSelected(const QString &filter);
 
 protected:
-    void closeEvent(QCloseEvent *e) Q_DECL_OVERRIDE;
+    void closeEvent(QCloseEvent *e) override;
     QDialogButtonBox *m_buttons;
     QTimer m_timer;
 };

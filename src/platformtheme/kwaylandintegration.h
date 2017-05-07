@@ -42,7 +42,7 @@ public:
 
     void setWindowProperty(QWindow *window, const QByteArray &name, const QByteArray &value);
 
-    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
     void shellSurfaceCreated(QWindow *w);

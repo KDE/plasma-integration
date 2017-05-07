@@ -33,17 +33,17 @@ public:
     friend class KDEPlatformFileDialogHelper;
 
     explicit KDEPlatformFileDialog();
-    QUrl directory() Q_DECL_OVERRIDE;
-    void selectMimeTypeFilter(const QString &filter) Q_DECL_OVERRIDE;
-    void selectNameFilter(const QString &filter) Q_DECL_OVERRIDE;
-    void setDirectory(const QUrl &directory) Q_DECL_OVERRIDE;
-    void selectFile(const QUrl &filename) Q_DECL_OVERRIDE;
+    QUrl directory() override;
+    void selectMimeTypeFilter(const QString &filter) override;
+    void selectNameFilter(const QString &filter) override;
+    void setDirectory(const QUrl &directory) override;
+    void selectFile(const QUrl &filename) override;
     void setViewMode(QFileDialogOptions::ViewMode view);
     void setFileMode(QFileDialogOptions::FileMode mode);
     void setCustomLabel(QFileDialogOptions::DialogLabel label, const QString & text);
-    QString selectedMimeTypeFilter() Q_DECL_OVERRIDE;
-    QString selectedNameFilter() Q_DECL_OVERRIDE;
-    QList<QUrl> selectedFiles() Q_DECL_OVERRIDE;
+    QString selectedMimeTypeFilter() override;
+    QString selectedNameFilter() override;
+    QList<QUrl> selectedFiles() override;
 
 protected:
     KFileWidget *m_fileWidget;
@@ -58,23 +58,23 @@ public:
 
     void initializeDialog();
 
-    bool defaultNameFilterDisables() const Q_DECL_OVERRIDE;
-    QUrl directory() const Q_DECL_OVERRIDE;
-    QList<QUrl> selectedFiles() const Q_DECL_OVERRIDE;
+    bool defaultNameFilterDisables() const override;
+    QUrl directory() const override;
+    QList<QUrl> selectedFiles() const override;
 #if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
-    QString selectedMimeTypeFilter() const Q_DECL_OVERRIDE;
-    void selectMimeTypeFilter(const QString &filter) Q_DECL_OVERRIDE;
+    QString selectedMimeTypeFilter() const override;
+    void selectMimeTypeFilter(const QString &filter) override;
 #endif
-    QString selectedNameFilter() const Q_DECL_OVERRIDE;
-    void selectNameFilter(const QString &filter) Q_DECL_OVERRIDE;
-    void selectFile(const QUrl &filename) Q_DECL_OVERRIDE;
-    void setFilter() Q_DECL_OVERRIDE;
-    void setDirectory(const QUrl &directory) Q_DECL_OVERRIDE;
-    bool isSupportedUrl(const QUrl& url) const Q_DECL_OVERRIDE;
+    QString selectedNameFilter() const override;
+    void selectNameFilter(const QString &filter) override;
+    void selectFile(const QUrl &filename) override;
+    void setFilter() override;
+    void setDirectory(const QUrl &directory) override;
+    bool isSupportedUrl(const QUrl& url) const override;
 
-    void exec() Q_DECL_OVERRIDE;
-    void hide() Q_DECL_OVERRIDE;
-    bool show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent) Q_DECL_OVERRIDE;
+    void exec() override;
+    void hide() override;
+    bool show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent) override;
 
 private Q_SLOTS:
     void saveSize();
