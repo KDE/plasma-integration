@@ -127,7 +127,7 @@ void KDEPlatformFileDialog::selectFile(const QUrl &filename)
 {
     QUrl dirUrl = filename.adjusted(QUrl::RemoveFilename);
     m_fileWidget->setUrl(dirUrl);
-    m_fileWidget->setSelection(filename.toString());
+    m_fileWidget->setSelectedUrl(filename);
 }
 
 void KDEPlatformFileDialog::setViewMode(QFileDialogOptions::ViewMode view)
@@ -224,7 +224,7 @@ void KDEPlatformFileDialog::setDirectory(const QUrl &directory)
             if (!entry.isDir()) {
                 // this is probably a file remove the file part
                 m_fileWidget->setUrl(directory.adjusted(QUrl::RemoveFilename));
-                m_fileWidget->setSelection(directory.fileName());
+                m_fileWidget->setSelectedUrl(directory);
             }
             else {
                 m_fileWidget->setUrl(directory);
