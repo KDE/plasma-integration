@@ -71,8 +71,8 @@ KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
         mLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("plasma/look-and-feel/") + defaultLookAndFeelPackage + QStringLiteral("/contents/defaults")));
     }
 
-
-    m_hints[QPlatformTheme::CursorFlashTime] = qBound(200, cg.readEntry("CursorBlinkRate", 1000), 2000);
+    const auto cursorBlinkRate = cg.readEntry("CursorBlinkRate", 1000);
+    m_hints[QPlatformTheme::CursorFlashTime] = cursorBlinkRate > 0 ? qBound(200, cursorBlinkRate, 2000) : 0; // 0 => no blinking
     m_hints[QPlatformTheme::MouseDoubleClickInterval] = cg.readEntry("DoubleClickInterval", 400);
     m_hints[QPlatformTheme::StartDragDistance] = cg.readEntry("StartDragDist", 10);
     m_hints[QPlatformTheme::StartDragTime] = cg.readEntry("StartDragTime", 500);
