@@ -71,63 +71,69 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
 {
     if (!m_decoration) {
         return false;
-    }
-    if (event->type() == QEvent::PlatformSurface) {
+    } else if (event->type() == QEvent::Expose) {
+        auto ee = static_cast<QExposeEvent*>(event);
+        if (ee->region().isNull()) {
+            return false;
+        }
         QWindow *w = qobject_cast<QWindow*>(watched);
         if (!w || w->parent()) {
             return false;
         }
-        if (auto e = dynamic_cast<QPlatformSurfaceEvent*>(event)) {
-            switch (e->surfaceEventType()) {
-            case QPlatformSurfaceEvent::SurfaceCreated: {
-                // set colorscheme hint
-                if (qApp->property(s_schemePropertyName.constData()).isValid()) {
-                    installColorScheme(w);
-                }
-                const auto blurBehindProperty = w->property(s_blurBehindPropertyName.constData());
-                if (blurBehindProperty.isValid()) {
-                    KWindowEffects::enableBlurBehind(w->winId(), blurBehindProperty.toBool());
-                }
-                // create deco
-                Surface *s = Surface::fromWindow(w);
-                if (!s) {
-                    return false;
-                }
-                auto deco = m_decoration->create(s, w);
-                connect(deco, &ServerSideDecoration::modeChanged, w,
-                    [deco, w] {
-                        const auto flags = w->flags();
-                        const auto ourMode = (flags.testFlag(Qt::FramelessWindowHint) || flags.testFlag(Qt::Popup) || flags.testFlag(Qt::ToolTip)) ? ServerSideDecoration::Mode::None : ServerSideDecoration::Mode::Server;
-                        if (deco->mode() != ourMode) {
-                            deco->requestMode(ourMode);
-                        }
-                    }
-                );
-                const auto flags = w->flags();
-                const auto ourMode = (flags.testFlag(Qt::FramelessWindowHint) || flags.testFlag(Qt::Popup) || flags.testFlag(Qt::ToolTip)) ? ServerSideDecoration::Mode::None : ServerSideDecoration::Mode::Server;
-                if (deco->defaultMode() != ourMode) {
-                    deco->requestMode(ourMode);
-                }
-                w->setProperty("org.kde.plasma.integration.waylandserverdecoration", QVariant::fromValue(deco));
-                break;
-            }
-            case QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed: {
-                delete w->property("org.kde.plasma.integration.waylandserverdecoration").value<ServerSideDecoration*>();
-                break;
-            }
-            default:
-                // nothing
-                break;
-            }
+        shellSurfaceCreated(w);
+    } else if (event->type() == QEvent::Hide) {
+        QWindow *w = qobject_cast<QWindow*>(watched);
+        if (!w || w->parent()) {
+            return false;
         }
-    }
-    if (event->type() == QEvent::ApplicationPaletteChange) {
+        shellSurfaceDestroyed(w);
+    } else if (event->type() == QEvent::ApplicationPaletteChange) {
         const auto topLevelWindows = QGuiApplication::topLevelWindows();
         for (QWindow *w : topLevelWindows) {
             installColorScheme(w);
         }
     }
+
     return false;
+}
+
+void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
+{
+    // set colorscheme hint
+    if (qApp->property(s_schemePropertyName.constData()).isValid()) {
+        installColorScheme(w);
+    }
+    const auto blurBehindProperty = w->property(s_blurBehindPropertyName.constData());
+    if (blurBehindProperty.isValid()) {
+        KWindowEffects::enableBlurBehind(w->winId(), blurBehindProperty.toBool());
+    }
+    // create deco
+    Surface *s = Surface::fromWindow(w);
+    if (!s) {
+        return;
+    }
+    auto deco = m_decoration->create(s, w);
+    connect(deco, &ServerSideDecoration::modeChanged, w,
+        [deco, w] {
+            const auto flags = w->flags();
+            const auto ourMode = (flags.testFlag(Qt::FramelessWindowHint) || flags.testFlag(Qt::Popup) || flags.testFlag(Qt::ToolTip)) ? ServerSideDecoration::Mode::None : ServerSideDecoration::Mode::Server;
+            if (deco->mode() != ourMode) {
+                deco->requestMode(ourMode);
+            }
+        }
+    );
+    const auto flags = w->flags();
+    const auto ourMode = (flags.testFlag(Qt::FramelessWindowHint) || flags.testFlag(Qt::Popup) || flags.testFlag(Qt::ToolTip)) ? ServerSideDecoration::Mode::None : ServerSideDecoration::Mode::Server;
+    if (deco->defaultMode() != ourMode) {
+        deco->requestMode(ourMode);
+    }
+    w->setProperty("org.kde.plasma.integration.waylandserverdecoration", QVariant::fromValue(deco));
+}
+
+void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
+{
+    delete w->property("org.kde.plasma.integration.waylandserverdecoration").value<ServerSideDecoration*>();
+    w->setProperty("org.kde.plasma.integration.waylandserverdecoration", 0);
 }
 
 void KWaylandIntegration::installColorScheme(QWindow *w)
@@ -147,3 +153,5 @@ void KWaylandIntegration::setWindowProperty(QWindow *window, const QByteArray &n
         }
     }
 }
+
+#include "kwaylandintegration.moc"

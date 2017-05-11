@@ -45,6 +45,9 @@ public:
     bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    void shellSurfaceCreated(QWindow *w);
+    void shellSurfaceDestroyed(QWindow *w);
+
     void installColorScheme(QWindow *w);
     KWayland::Client::ServerSideDecorationManager *m_decoration;
 };
