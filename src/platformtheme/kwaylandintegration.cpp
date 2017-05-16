@@ -80,7 +80,9 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
         if (!w || w->parent()) {
             return false;
         }
-        shellSurfaceCreated(w);
+        if(w->property("org.kde.plasma.integration.waylandserverdecoration").isNull()) {
+            shellSurfaceCreated(w);
+        }
     } else if (event->type() == QEvent::Hide) {
         QWindow *w = qobject_cast<QWindow*>(watched);
         if (!w || w->parent()) {
@@ -133,7 +135,7 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
 void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
 {
     delete w->property("org.kde.plasma.integration.waylandserverdecoration").value<ServerSideDecoration*>();
-    w->setProperty("org.kde.plasma.integration.waylandserverdecoration", 0);
+    w->setProperty("org.kde.plasma.integration.waylandserverdecoration", QVariant());
 }
 
 void KWaylandIntegration::installColorScheme(QWindow *w)
