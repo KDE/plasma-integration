@@ -104,11 +104,11 @@ private Q_SLOTS:
 
         QFETCH(QStringList, mimeTypeFilters);
         dialog.setMimeTypeFilters(mimeTypeFilters);
-        dialog.show();
 
         QFETCH(QString, targetMimeTypeFilter);
         dialog.selectMimeTypeFilter(targetMimeTypeFilter);
 
+        dialog.show();
         QCOMPARE(dialog.selectedMimeTypeFilter(), targetMimeTypeFilter);
     }
 
