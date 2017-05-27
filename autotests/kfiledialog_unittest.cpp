@@ -111,6 +111,16 @@ private Q_SLOTS:
 
         QCOMPARE(dialog.selectedMimeTypeFilter(), targetMimeTypeFilter);
     }
+
+    void testFallbackOnFirstFilterInSaveMode()
+    {
+        QFileDialog dialog;
+        dialog.setAcceptMode(QFileDialog::AcceptSave);
+        dialog.setMimeTypeFilters({QStringLiteral("application/json"), QStringLiteral("application/zip")});
+        dialog.show();
+        QCOMPARE(dialog.selectedMimeTypeFilter(), QStringLiteral("application/json"));
+    }
+
 #endif
 
 

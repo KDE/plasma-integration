@@ -298,7 +298,16 @@ void KDEPlatformFileDialogHelper::initializeDialog()
         const QStringList mimeFilters = options()->mimeTypeFilters();
         const QStringList nameFilters = options()->nameFilters();
         if (!mimeFilters.isEmpty()) {
-            dialog->m_fileWidget->setMimeFilter(mimeFilters);
+            QString defaultMimeFilter;
+            if (options()->acceptMode() == QFileDialogOptions::AcceptSave) {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
+                defaultMimeFilter = options()->initiallySelectedMimeTypeFilter();
+#endif
+                if (defaultMimeFilter.isEmpty()) {
+                    defaultMimeFilter = mimeFilters.at(0);
+                }
+            }
+            dialog->m_fileWidget->setMimeFilter(mimeFilters, defaultMimeFilter);
 
             if ( mimeFilters.contains( QStringLiteral("inode/directory") ) )
                 dialog->m_fileWidget->setMode( dialog->m_fileWidget->mode() | KFile::Directory );
