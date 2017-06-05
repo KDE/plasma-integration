@@ -37,6 +37,7 @@ int main(int argc, char **argv)
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("nameFilter")), QStringLiteral("Dialog nameFilter, e. g. 'cppfiles (*.cpp *.h *.hpp)', can be specified multiple times"), QStringLiteral("nameFilter"), QStringLiteral("Everything (*)")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("mimeTypeFilter")), QStringLiteral("Dialog mimeTypeFilter, e. g. 'application/json', can be specified multiple times"), QStringLiteral("mimeTypeFilter")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectNameFilter")), QStringLiteral("Initially selected nameFilter"), QStringLiteral("selectNameFilter")));
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectMimeTypeFilter")), QStringLiteral("Initially selected mimeTypeFilter"), QStringLiteral("selectMimeTypeFilter")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectFile")), QStringLiteral("Initially selected file"), QStringLiteral("filename")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectDirectory")), QStringLiteral("Initially selected directory"), QStringLiteral("dirname")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("modal")), QStringLiteral("Test modal dialog"), QStringLiteral("modality"), QStringLiteral("on")));
@@ -86,8 +87,11 @@ int main(int argc, char **argv)
     }
 
     QString selectNameFilter = parser.value(QStringLiteral("selectNameFilter"));
+    QString selectMimeTypeFilter = parser.value(QStringLiteral("selectMimeTypeFilter"));
     if (!selectNameFilter.isEmpty()) {
         dialog.selectNameFilter(selectNameFilter);
+    } else if (!selectMimeTypeFilter.isEmpty()) {
+        dialog.selectMimeTypeFilter(selectMimeTypeFilter);
     }
 
     if (parser.value(QStringLiteral("confirmOverwrite")) == QStringLiteral("off")) {
