@@ -77,7 +77,7 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
             return false;
         }
         QWindow *w = qobject_cast<QWindow*>(watched);
-        if (!w || w->parent()) {
+        if (!w || w->parent() || !w->isVisible()) {
             return false;
         }
         if(w->property("org.kde.plasma.integration.waylandserverdecoration").isNull()) {
