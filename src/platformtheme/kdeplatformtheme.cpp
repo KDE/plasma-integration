@@ -64,6 +64,10 @@ static const QByteArray s_waylandAppMenuObjectPathPropertyName = QByteArrayLiter
 
 static bool checkDBusGlobalMenuAvailable()
 {
+    if (qEnvironmentVariableIsSet("KDE_NO_GLOBAL_MENU")) {
+        return false;
+    }
+
     QDBusConnection connection = QDBusConnection::sessionBus();
     QString registrarService = QStringLiteral("com.canonical.AppMenu.Registrar");
     return connection.interface()->isServiceRegistered(registrarService);
