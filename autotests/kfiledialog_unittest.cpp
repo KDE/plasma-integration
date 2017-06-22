@@ -56,6 +56,24 @@ private Q_SLOTS:
         QStringList nameFilterList = QStringList() << QStringLiteral("c (*.cpp)") << QStringLiteral("h (*.h)");
         dialog.setNameFilters(nameFilterList);
         QCOMPARE(dialog.nameFilters(), nameFilterList);
+
+        dialog.show();
+        KFileWidget *fw = findFileWidget();
+        QVERIFY(fw);
+        QCOMPARE(fw->currentFilter(), QStringLiteral("*.cpp"));
+    }
+
+    void testSetNameFilterNoParenthesis()
+    {
+        QFileDialog dialog;
+
+        QStringList nameFilterList = QStringList() << QStringLiteral("*.cpp") << QStringLiteral("*.h");
+        dialog.setNameFilters(nameFilterList);
+        QCOMPARE(dialog.nameFilters(), nameFilterList);
+        dialog.show();
+        KFileWidget *fw = findFileWidget();
+        QVERIFY(fw);
+        QCOMPARE(fw->currentFilter(), QStringLiteral("*.cpp"));
     }
 
     void testSelectNameFilter()
