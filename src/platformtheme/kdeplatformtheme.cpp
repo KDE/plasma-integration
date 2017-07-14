@@ -155,7 +155,6 @@ const QFont *KdePlatformTheme::font(Font type) const
     case TipLabelFont:
     case StatusBarFont:
     case PushButtonFont:
-    case ToolButtonFont:
     case ItemViewFont:
     case ListViewFont:
     case HeaderViewFont:
@@ -172,6 +171,8 @@ const QFont *KdePlatformTheme::font(Font type) const
         fdtype = KFontSettingsData::SmallestReadableFont; break;
     case FixedFont:
         fdtype = KFontSettingsData::FixedFont; break;
+    case ToolButtonFont:
+        fdtype = KFontSettingsData::ToolbarFont; break;
     default:
         fdtype = KFontSettingsData::GeneralFont; break;
     }
