@@ -32,6 +32,7 @@ struct KFontData {
     int Size;
     int Weight;
     QFont::StyleHint StyleHint;
+    const char *StyleName;
 };
 
 class KFontSettingsData : public QObject

@@ -53,13 +53,13 @@ static const char GeneralId[] =      "General";
 static const char DefaultFont[] =    "Noto Sans";
 
 static const KFontData DefaultFontData[KFontSettingsData::FontTypesCount] = {
-    { GeneralId, "font",                 DefaultFont,  10, -1, QFont::SansSerif },
-    { GeneralId, "fixed",                "Hack",  9, -1, QFont::Monospace },
-    { GeneralId, "toolBarFont",          DefaultFont,  9, -1, QFont::SansSerif },
-    { GeneralId, "menuFont",             DefaultFont,  10, -1, QFont::SansSerif },
-    { "WM",      "activeFont",           DefaultFont,  10, -1, QFont::SansSerif },
-    { GeneralId, "taskbarFont",          DefaultFont,  10, -1, QFont::SansSerif },
-    { GeneralId, "smallestReadableFont", DefaultFont,  8, -1, QFont::SansSerif }
+    { GeneralId, "font",                 DefaultFont,  10, -1, QFont::SansSerif, "Regular" },
+    { GeneralId, "fixed",                "Hack",  9, -1, QFont::Monospace, "Regular" },
+    { GeneralId, "toolBarFont",          DefaultFont,  9, -1, QFont::SansSerif, "Regular" },
+    { GeneralId, "menuFont",             DefaultFont,  10, -1, QFont::SansSerif, "Regular" },
+    { "WM",      "activeFont",           DefaultFont,  10, -1, QFont::SansSerif, "Regular" },
+    { GeneralId, "taskbarFont",          DefaultFont,  10, -1, QFont::SansSerif, "Regular" },
+    { GeneralId, "smallestReadableFont", DefaultFont,  8, -1, QFont::SansSerif, "Regular" }
 };
 
 QFont *KFontSettingsData::font(FontTypes fontType)
@@ -70,6 +70,7 @@ QFont *KFontSettingsData::font(FontTypes fontType)
         const KFontData &fontData = DefaultFontData[fontType];
         cachedFont = new QFont(QLatin1String(fontData.FontName), fontData.Size, fontData.Weight);
         cachedFont->setStyleHint(fontData.StyleHint);
+        cachedFont->setStyleName(QLatin1String(fontData.StyleName));
 
         const KConfigGroup configGroup(mKdeGlobals, fontData.ConfigGroupKey);
         QString fontInfo = configGroup.readEntry(fontData.ConfigKey, QString());
