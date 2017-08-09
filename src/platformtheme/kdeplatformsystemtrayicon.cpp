@@ -275,7 +275,7 @@ void KDEPlatformSystemTrayIcon::init()
         });
         connect(m_sni, &KStatusNotifierItem::secondaryActivateRequested, [this](const QPoint &pos) {
             Q_UNUSED(pos)
-            emit activated(QPlatformSystemTrayIcon::Context);
+            emit activated(QPlatformSystemTrayIcon::MiddleClick);
         });
     }
 }
