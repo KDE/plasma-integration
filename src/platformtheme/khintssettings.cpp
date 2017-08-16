@@ -120,8 +120,7 @@ KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
         QApplication::setWheelScrollLines(cg.readEntry("WheelScrollLines", 3));
     }
 
-    bool showIcons = cg.readEntry("ShowIconsInMenuItems", !QApplication::testAttribute(Qt::AA_DontShowIconsInMenus));
-    QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, !showIcons);
+    updateShowIconsInMenuItems(cg);
 
     QMetaObject::invokeMethod(this, "delayedDBusConnects", Qt::QueuedConnection);
     QMetaObject::invokeMethod(this, "setupIconLoader", Qt::QueuedConnection);
@@ -250,6 +249,8 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         } else if (category == SETTINGS_STYLE) {
             m_hints[QPlatformTheme::DialogButtonBoxButtonsHaveIcons] = cg.readEntry("ShowIconsOnPushButtons", true);
             m_hints[QPlatformTheme::UiEffects] = cg.readEntry("GraphicEffectsLevel", 0) != 0 ? QPlatformTheme::GeneralUiEffect : 0;
+
+            updateShowIconsInMenuItems(cg);
         }
         break;
     }
@@ -341,8 +342,7 @@ void KHintsSettings::updateQtSettings(KConfigGroup &cg)
 
     m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = cg.readEntry("SingleClick", true);
 
-    bool showIcons = cg.readEntry("ShowIconsInMenuItems", !QApplication::testAttribute(Qt::AA_DontShowIconsInMenus));
-    QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, !showIcons);
+    updateShowIconsInMenuItems(cg);
 
     int wheelScrollLines = cg.readEntry("WheelScrollLines", 3);
     m_hints[QPlatformTheme::WheelScrollLines] = wheelScrollLines;
@@ -350,6 +350,12 @@ void KHintsSettings::updateQtSettings(KConfigGroup &cg)
     if (app) {
         QApplication::setWheelScrollLines(cg.readEntry("WheelScrollLines", 3));
     }
+}
+
+void KHintsSettings::updateShowIconsInMenuItems(KConfigGroup &cg)
+{
+    bool showIcons = cg.readEntry("ShowIconsInMenuItems", true);
+    QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, !showIcons);
 }
 
 Qt::ToolButtonStyle KHintsSettings::toolButtonStyle(const KConfigGroup &cg) const
