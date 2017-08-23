@@ -24,8 +24,7 @@ include(KDECMakeSettings)
 set(REQUIRED_QT_VERSION 5.5.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Widgets DBus X11Extras)
 
-set(KF5_VERSION "5.18.0") # handled by release scripts
-set(KF5_DEP_VERSION "5.17.0") # handled by release scripts
+set(KF5_DEP_VERSION "5.33.0")
 
 find_package(KF5Config ${KF5_DEP_VERSION} REQUIRED)
 find_package(KF5ConfigWidgets ${KF5_DEP_VERSION} REQUIRED)
