@@ -26,15 +26,10 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Widgets DBus X11Extras)
 
 set(KF5_DEP_VERSION "5.33.0")
 
-find_package(KF5Config ${KF5_DEP_VERSION} REQUIRED)
-find_package(KF5ConfigWidgets ${KF5_DEP_VERSION} REQUIRED)
-find_package(KF5I18n ${KF5_DEP_VERSION} REQUIRED)
-find_package(KF5IconThemes ${KF5_DEP_VERSION} REQUIRED)
-find_package(KF5KIO ${KF5_DEP_VERSION} REQUIRED)
-find_package(KF5Notifications ${KF5_DEP_VERSION} REQUIRED)
-find_package(KF5WidgetsAddons ${KF5_DEP_VERSION} REQUIRED)
-find_package(KF5WindowSystem ${KF5_DEP_VERSION} REQUIRED)
-find_package(KF5Wayland 5.5 CONFIG REQUIRED)
+find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS
+                Config ConfigWidgets I18n IconThemes KIO Notifications Wayland
+                WidgetsAddons WindowSystem
+)
 
 find_package(XCB COMPONENTS XCB)
 set_package_properties(XCB PROPERTIES
