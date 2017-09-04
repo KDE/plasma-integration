@@ -34,6 +34,7 @@
 #include <QGuiApplication>
 #include <QDialogButtonBox>
 #include <QScreen>
+#include <QStandardPaths>
 
 #include <QDBusConnection>
 #include <QDBusInterface>
@@ -167,22 +168,12 @@ QStringList KHintsSettings::xdgIconThemePaths() const
 {
     QStringList paths;
 
+    // make sure we have ~/.local/share/icons in paths if it exists
+    paths << QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("icons"), QStandardPaths::LocateDirectory);
+
     const QFileInfo homeIconDir(QDir::homePath() + QStringLiteral("/.icons"));
     if (homeIconDir.isDir()) {
         paths << homeIconDir.absoluteFilePath();
-    }
-
-    QString xdgDirString = QFile::decodeName(qgetenv("XDG_DATA_DIRS"));
-
-    if (xdgDirString.isEmpty()) {
-        xdgDirString = QStringLiteral("/usr/local/share:/usr/share");
-    }
-
-    foreach (const QString &xdgDir, xdgDirString.split(QLatin1Char(':'))) {
-        const QFileInfo xdgIconsDir(xdgDir + QStringLiteral("/icons"));
-        if (xdgIconsDir.isDir()) {
-            paths << xdgIconsDir.absoluteFilePath();
-        }
     }
 
     return paths;
