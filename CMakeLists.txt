@@ -22,13 +22,13 @@ include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 
 set(REQUIRED_QT_VERSION 5.5.0)
-find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Widgets DBus X11Extras)
+find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Widgets DBus X11Extras Qml Quick)
 
 set(KF5_DEP_VERSION "5.33.0")
 
 find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS
                 Config ConfigWidgets I18n IconThemes KIO Notifications Wayland
-                WidgetsAddons WindowSystem
+                WidgetsAddons WindowSystem Kirigami2
 )
 
 find_package(XCB COMPONENTS XCB)
