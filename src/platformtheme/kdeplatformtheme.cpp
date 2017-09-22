@@ -96,6 +96,7 @@ KdePlatformTheme::KdePlatformTheme()
 #endif
 
     QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar, false);
+    setQtQuickControlsTheme();
 }
 
 KdePlatformTheme::~KdePlatformTheme()
@@ -389,5 +390,19 @@ QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
     return nullptr;
 }
 #endif
+
+//force QtQuickControls2 to use the desktop theme as default
+void KdePlatformTheme::setQtQuickControlsTheme()
+{
+    //if the user has explicitly set something else, don't meddle
+    if (qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_STYLE")) {
+        return;
+    }
+    //if the user is running only a QGuiApplication. Abort as this style is all about QWidgets and we know setting this will make it crash
+    if (!qobject_cast<QApplication*>(qApp)) {
+        return;
+    }
+    qputenv("QT_QUICK_CONTROLS_STYLE", "org.kde.desktop");
+}
 
 #include "kdeplatformtheme.moc"
