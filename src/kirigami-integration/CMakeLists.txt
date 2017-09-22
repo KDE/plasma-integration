@@ -1,14 +1,14 @@
 
 
-set(plasmadesktopintegration_SRCS
+set(org.kde.desktop_SRCS
     plasmadesktoptheme.cpp
     plasmadesktopthemefactory.cpp
 )
 
 
-add_library(plasmadesktopintegration MODULE ${plasmadesktopintegration_SRCS})
+add_library(org.kde.desktop MODULE ${org.kde.desktop_SRCS})
 
-target_link_libraries(plasmadesktopintegration
+target_link_libraries(org.kde.desktop
     PUBLIC
         Qt5::Core
         KF5::Kirigami2
@@ -19,5 +19,5 @@ target_link_libraries(plasmadesktopintegration
         KF5::IconThemes
 )
 
-install(TARGETS plasmadesktopintegration DESTINATION ${KDE_INSTALL_PLUGINDIR}/kf5/kirigami)
+install(TARGETS org.kde.desktop DESTINATION ${KDE_INSTALL_PLUGINDIR}/kf5/kirigami)
 
