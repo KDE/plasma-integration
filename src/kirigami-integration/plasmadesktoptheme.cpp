@@ -99,19 +99,43 @@ void PlasmaDesktopTheme::syncColors()
         set = KColorScheme::ColorSet::Window;
     }
 
-    KColorScheme scheme(QPalette::Active, set);
+    const KColorScheme selectionScheme(QPalette::Active, KColorScheme::ColorSet::Selection);
+    const KColorScheme scheme(QPalette::Active, set);
     setTextColor(scheme.foreground(KColorScheme::NormalText).color());
     setBackgroundColor(scheme.background(KColorScheme::NormalBackground).color());
+    setDisabledTextColor(scheme.foreground(KColorScheme::InactiveText).color());
+
+    setHighlightColor(selectionScheme.background(KColorScheme::NormalBackground).color());
+    setHighlightedTextColor(selectionScheme.foreground(KColorScheme::NormalText).color());
+
+    setLinkColor(scheme.foreground(KColorScheme::LinkText).color());
+    setVisitedLinkColor(scheme.foreground(KColorScheme::VisitedText).color());
+
+    //legacy stuff
+    const KColorScheme buttonScheme(QPalette::Active, KColorScheme::ColorSet::Button);
+    m_buttonTextColor = buttonScheme.foreground(KColorScheme::NormalText).color();
+    m_buttonBackgroundColor = buttonScheme.background(KColorScheme::NormalBackground).color();
+    m_buttonHoverColor = buttonScheme.decoration(KColorScheme::HoverColor).color();
+    m_buttonFocusColor = buttonScheme.decoration(KColorScheme::FocusColor).color();
+
+    const KColorScheme viewScheme(QPalette::Active, KColorScheme::ColorSet::View);
+    m_viewTextColor = viewScheme.foreground(KColorScheme::NormalText).color();
+    m_viewBackgroundColor = viewScheme.background(KColorScheme::NormalBackground).color();
+    m_viewHoverColor = viewScheme.decoration(KColorScheme::HoverColor).color();
+    m_viewFocusColor = viewScheme.decoration(KColorScheme::FocusColor).color();
+
     emit colorsChanged();
 }
 
 QColor PlasmaDesktopTheme::buttonTextColor() const
 {
+    qWarning()<<"WARNING: buttonTextColor is deprecated, use textColor with colorSet: Theme.Button instead";
     return m_buttonTextColor;
 }
 
 QColor PlasmaDesktopTheme::buttonBackgroundColor() const
 {
+    qWarning()<<"WARNING: buttonBackgroundColor is deprecated, use backgroundColor with colorSet: Theme.Button instead";
     return m_buttonBackgroundColor;
 }
 
