@@ -71,6 +71,7 @@ public:
 
 private:
     void loadSettings();
+    void setQtQuickControlsTheme();
 
     static void setWindowProperty(QWindow *window, const QByteArray &name, const QByteArray &value);
 
