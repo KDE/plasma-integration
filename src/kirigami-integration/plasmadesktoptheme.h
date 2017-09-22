@@ -26,15 +26,11 @@
 #include <QColor>
 #include <QPointer>
 
-class PlasmaTheme;
+class PlasmaDesktopTheme;
 
-class PlasmaTheme : public PlatformTheme
+class PlasmaDesktopTheme : public Kirigami::PlatformTheme
 {
     Q_OBJECT
-
-    Q_PLUGIN_METADATA(IID "org.kde.kirigami.PlatformTheme" FILE "kirigamiplasmaintegration.json")
-
-    Q_INTERFACES(PlatformTheme)
 
     // colors
     Q_PROPERTY(QColor buttonTextColor READ buttonTextColor NOTIFY colorsChanged)
@@ -51,8 +47,8 @@ class PlasmaTheme : public PlatformTheme
     Q_PROPERTY(QStringList keys READ keys CONSTANT)
 
 public:
-    explicit PlasmaTheme(QObject *parent = 0);
-    ~PlasmaTheme();
+    explicit PlasmaDesktopTheme(QObject *parent = 0);
+    ~PlasmaDesktopTheme();
 
     void syncColors();
 

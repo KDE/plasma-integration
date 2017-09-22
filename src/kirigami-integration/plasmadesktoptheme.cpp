@@ -17,7 +17,7 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include "kirigamiplasmatheme.h"
+#include "plasmadesktoptheme.h"
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QGuiApplication>
@@ -29,22 +29,22 @@
 #include <KColorScheme>
 
 
-PlasmaTheme::PlasmaTheme(QObject *parent)
+PlasmaDesktopTheme::PlasmaDesktopTheme(QObject *parent)
     : PlatformTheme(parent)
 {
     //TODO: correct?
     connect(qApp, &QGuiApplication::fontDatabaseChanged, this, [this]() {setDefaultFont(qApp->font());});
 
-    connect(this, &PlasmaTheme::colorSetChanged,
-            this, &PlasmaTheme::syncColors);
+    connect(this, &PlasmaDesktopTheme::colorSetChanged,
+            this, &PlasmaDesktopTheme::syncColors);
     syncColors();
 }
 
-PlasmaTheme::~PlasmaTheme()
+PlasmaDesktopTheme::~PlasmaDesktopTheme()
 {
 }
 
-QStringList PlasmaTheme::keys() const
+QStringList PlasmaDesktopTheme::keys() const
 {
     QStringList props;
     for (int i = metaObject()->propertyOffset(); i < metaObject()->propertyCount(); ++i) {
@@ -56,7 +56,7 @@ QStringList PlasmaTheme::keys() const
     return props;
 }
 
-void PlasmaTheme::syncColors()
+void PlasmaDesktopTheme::syncColors()
 {
     KColorScheme::ColorSet set;
 qWarning()<<parent()<<colorSet();
@@ -80,45 +80,45 @@ qWarning()<<parent()<<colorSet();
     emit colorsChanged();
 }
 
-QColor PlasmaTheme::buttonTextColor() const
+QColor PlasmaDesktopTheme::buttonTextColor() const
 {
     return m_buttonTextColor;
 }
 
-QColor PlasmaTheme::buttonBackgroundColor() const
+QColor PlasmaDesktopTheme::buttonBackgroundColor() const
 {
     return m_buttonBackgroundColor;
 }
 
-QColor PlasmaTheme::buttonHoverColor() const
+QColor PlasmaDesktopTheme::buttonHoverColor() const
 {
     return m_buttonHoverColor;
 }
 
-QColor PlasmaTheme::buttonFocusColor() const
+QColor PlasmaDesktopTheme::buttonFocusColor() const
 {
     return m_buttonFocusColor;
 }
 
 
-QColor PlasmaTheme::viewTextColor() const
+QColor PlasmaDesktopTheme::viewTextColor() const
 {
     return m_viewTextColor;
 }
 
-QColor PlasmaTheme::viewBackgroundColor() const
+QColor PlasmaDesktopTheme::viewBackgroundColor() const
 {
     return m_viewBackgroundColor;
 }
 
-QColor PlasmaTheme::viewHoverColor() const
+QColor PlasmaDesktopTheme::viewHoverColor() const
 {
     return m_viewHoverColor;
 }
 
-QColor PlasmaTheme::viewFocusColor() const
+QColor PlasmaDesktopTheme::viewFocusColor() const
 {
     return m_viewFocusColor;
 }
 
-#include "moc_kirigamiplasmatheme.cpp"
+#include "moc_plasmadesktoptheme.cpp"

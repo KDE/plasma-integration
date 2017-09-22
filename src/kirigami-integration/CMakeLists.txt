@@ -1,7 +1,8 @@
 
 
 set(kirigamiplasmaintegration_SRCS
-    kirigamiplasmatheme.cpp
+    plasmadesktoptheme.cpp
+    plasmadesktopthemefactory.cpp
 )
 
 
