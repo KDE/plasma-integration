@@ -50,6 +50,8 @@ public:
     explicit PlasmaDesktopTheme(QObject *parent = 0);
     ~PlasmaDesktopTheme();
 
+    Q_INVOKABLE QIcon iconFromTheme(const QString &name) Q_DECL_OVERRIDE;
+
     void syncColors();
 
     QColor buttonTextColor() const;

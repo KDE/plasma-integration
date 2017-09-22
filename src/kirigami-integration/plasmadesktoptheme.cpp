@@ -25,6 +25,7 @@
 #include <QDebug>
 #include <QQuickWindow>
 #include <QTimer>
+#include <KIconLoader>
 
 #include <KColorScheme>
 
@@ -44,6 +45,29 @@ PlasmaDesktopTheme::~PlasmaDesktopTheme()
 {
 }
 
+QIcon PlasmaDesktopTheme::iconFromTheme(const QString &name)
+{
+    KColorScheme::ColorSet set;
+
+    switch (colorSet()) {
+    case PlatformTheme::Button:
+        set = KColorScheme::ColorSet::Button;
+        break;
+    case PlatformTheme::View:
+        set = KColorScheme::ColorSet::View;
+        break;
+    case PlatformTheme::Complementary:
+        set = KColorScheme::ColorSet::Complementary;
+        break;
+    case PlatformTheme::Window:
+    default:
+        set = KColorScheme::ColorSet::Window;
+    }
+    KIconLoader::global()->setColorSet(set);
+
+    return KDE::icon(name, KIconLoader::global());
+}
+
 QStringList PlasmaDesktopTheme::keys() const
 {
     QStringList props;
@@ -59,7 +83,7 @@ QStringList PlasmaDesktopTheme::keys() const
 void PlasmaDesktopTheme::syncColors()
 {
     KColorScheme::ColorSet set;
-qWarning()<<parent()<<colorSet();
+
     switch (colorSet()) {
     case PlatformTheme::Button:
         set = KColorScheme::ColorSet::Button;
@@ -74,6 +98,7 @@ qWarning()<<parent()<<colorSet();
     default:
         set = KColorScheme::ColorSet::Window;
     }
+
     KColorScheme scheme(QPalette::Active, set);
     setTextColor(scheme.foreground(KColorScheme::NormalText).color());
     setBackgroundColor(scheme.background(KColorScheme::NormalBackground).color());
