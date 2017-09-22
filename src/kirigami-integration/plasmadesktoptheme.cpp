@@ -111,6 +111,8 @@ void PlasmaDesktopTheme::syncColors()
     setLinkColor(scheme.foreground(KColorScheme::LinkText).color());
     setVisitedLinkColor(scheme.foreground(KColorScheme::VisitedText).color());
 
+    setPalette(KColorScheme::createApplicationPalette(KSharedConfigPtr()));
+
     //legacy stuff
     const KColorScheme buttonScheme(QPalette::Active, KColorScheme::ColorSet::Button);
     m_buttonTextColor = buttonScheme.foreground(KColorScheme::NormalText).color();
