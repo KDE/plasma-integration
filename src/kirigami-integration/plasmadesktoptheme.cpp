@@ -141,32 +141,38 @@ QColor PlasmaDesktopTheme::buttonBackgroundColor() const
 
 QColor PlasmaDesktopTheme::buttonHoverColor() const
 {
+    qWarning()<<"WARNING: buttonHoverColor is deprecated, use backgroundColor with colorSet: Theme.Button instead";
     return m_buttonHoverColor;
 }
 
 QColor PlasmaDesktopTheme::buttonFocusColor() const
 {
+    qWarning()<<"WARNING: buttonFocusColor is deprecated, use backgroundColor with colorSet: Theme.Button instead";
     return m_buttonFocusColor;
 }
 
 
 QColor PlasmaDesktopTheme::viewTextColor() const
 {
+    qWarning()<<"WARNING: viewTextColor is deprecated, use backgroundColor with colorSet: Theme.View instead";
     return m_viewTextColor;
 }
 
 QColor PlasmaDesktopTheme::viewBackgroundColor() const
 {
+    qWarning()<<"WARNING: viewBackgroundColor is deprecated, use backgroundColor with colorSet: Theme.View instead";
     return m_viewBackgroundColor;
 }
 
 QColor PlasmaDesktopTheme::viewHoverColor() const
 {
+    qWarning()<<"WARNING: viewHoverColor is deprecated, use backgroundColor with colorSet: Theme.View instead";
     return m_viewHoverColor;
 }
 
 QColor PlasmaDesktopTheme::viewFocusColor() const
 {
+    qWarning()<<"WARNING: viewFocusColor is deprecated, use backgroundColor with colorSet: Theme.View instead";
     return m_viewFocusColor;
 }
 
