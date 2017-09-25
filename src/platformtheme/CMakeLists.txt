@@ -47,6 +47,7 @@ target_link_libraries(KDEPlasmaPlatformTheme
     PRIVATE
         Qt5::DBus
         Qt5::X11Extras
+        Qt5::QuickControls2
         KF5::ConfigWidgets
         KF5::ConfigCore
         KF5::IconThemes
