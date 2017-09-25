@@ -43,6 +43,7 @@
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <QDebug>
+#include <QtQuickControls2/QQuickStyle>
 
 #include <kiconengine.h>
 #include <kiconloader.h>
@@ -394,15 +395,19 @@ QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
 //force QtQuickControls2 to use the desktop theme as default
 void KdePlatformTheme::setQtQuickControlsTheme()
 {
-    //if the user has explicitly set something else, don't meddle
-    if (qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_STYLE")) {
-        return;
-    }
-    //if the user is running only a QGuiApplication. Abort as this style is all about QWidgets and we know setting this will make it crash
+    //if the user is running only a QGuiApplication, explicitely unset the QQC1 desktop style and abort
+    //as this style is all about QWidgets and we know setting this will make it crash
     if (!qobject_cast<QApplication*>(qApp)) {
+        if (qgetenv("QT_QUICK_CONTROLS_1_STYLE").right(7) == "Desktop") {
+            qunsetenv("QT_QUICK_CONTROLS_1_STYLE");
+        }
         return;
     }
-    qputenv("QT_QUICK_CONTROLS_STYLE", "org.kde.desktop");
+    //if the user has explicitly set something else, don't meddle
+    if (!QQuickStyle::name().isEmpty()) {
+        return;
+    }
+    QQuickStyle::setStyle(QLatin1String("org.kde.desktop"));
 }
 
 #include "kdeplatformtheme.moc"
