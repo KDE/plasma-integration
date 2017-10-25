@@ -123,6 +123,10 @@ KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
 
     updateShowIconsInMenuItems(cg);
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    m_hints[QPlatformTheme::ShowShortcutsInContextMenus] = true;
+#endif
+
     QMetaObject::invokeMethod(this, "delayedDBusConnects", Qt::QueuedConnection);
     QMetaObject::invokeMethod(this, "setupIconLoader", Qt::QueuedConnection);
 
