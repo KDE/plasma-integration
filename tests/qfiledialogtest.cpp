@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QFileDialog>
 #include <QCommandLineParser>
+#include <QMetaEnum>
 #include <QDebug>
 
 int main(int argc, char **argv)
@@ -41,6 +42,7 @@ int main(int argc, char **argv)
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectFile")), QStringLiteral("Initially selected file"), QStringLiteral("filename")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("selectDirectory")), QStringLiteral("Initially selected directory"), QStringLiteral("dirname")));
     parser.addOption(QCommandLineOption(QStringList(QStringLiteral("modal")), QStringLiteral("Test modal dialog"), QStringLiteral("modality"), QStringLiteral("on")));
+    parser.addOption(QCommandLineOption(QStringList(QStringLiteral("options")), QStringLiteral("See QFileDialog::Options"), QStringLiteral("option")));
     parser.process(app);
 
     const QString staticFunction = parser.value(QStringLiteral("staticFunction"));
@@ -81,6 +83,17 @@ int main(int argc, char **argv)
         dialog.setNameFilters(nameFilterList);
     }
 
+    if (parser.isSet(QLatin1String("options"))) {
+        auto optStrings = parser.values(QLatin1String("options"));
+        QFileDialog::Options options = 0;
+        const auto mo = QFileDialog::staticMetaObject;
+        const auto enumerator = mo.indexOfEnumerator("Options");
+        for(const auto &optString: optStrings) {
+            options |= QFileDialog::Option(mo.enumerator(enumerator).keyToValue(optString.toLatin1().constData()));
+        }
+        dialog.setOptions(options);
+    }
+
     const auto mimeFilterList = parser.values(QStringLiteral("mimeTypeFilter"));
     if (!mimeFilterList.isEmpty()) {
         dialog.setMimeTypeFilters(mimeFilterList);
@@ -102,7 +115,7 @@ int main(int argc, char **argv)
         dialog.setOption(QFileDialog::DontUseNativeDialog, true);
     }
 
-    dialog.setDirectory(parser.value(QStringLiteral("selectDirectory")));
+    dialog.setDirectoryUrl(QUrl::fromUserInput(parser.value(QStringLiteral("selectDirectory")), {}, QUrl::AssumeLocalFile));
     dialog.selectFile(parser.value(QStringLiteral("selectFile")));
 
     int ret;
