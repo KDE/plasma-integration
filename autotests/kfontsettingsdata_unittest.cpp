@@ -54,7 +54,7 @@ static void prepareEnvironment()
 // Run prepareEnvironment before qApp is created! slightly incorrect, QFile::encodeName can be wrong then.
 // But we can't use Q_COREAPP_STARTUP_FUNCTION because the platform theme ends up being created
 // first, with the wrong environment.
-Q_CONSTRUCTOR_FUNCTION(prepareEnvironment);
+Q_CONSTRUCTOR_FUNCTION(prepareEnvironment)
 
 class KFontSettingsData_UnitTest : public QWidget
 {
