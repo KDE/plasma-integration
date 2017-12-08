@@ -60,9 +60,6 @@
 static const QByteArray s_x11AppMenuServiceNamePropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_SERVICE_NAME");
 static const QByteArray s_x11AppMenuObjectPathPropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_OBJECT_PATH");
 
-static const QByteArray s_waylandAppMenuServiceNamePropertyName = QByteArrayLiteral("KDE_APPMENU_SERVICE_NAME");
-static const QByteArray s_waylandAppMenuObjectPathPropertyName = QByteArrayLiteral("KDE_APPMENU_OBJECT_PATH");
-
 static bool checkDBusGlobalMenuAvailable()
 {
     if (qEnvironmentVariableIsSet("KDE_NO_GLOBAL_MENU")) {
@@ -374,13 +371,11 @@ QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
 
             if (m_kwaylandIntegration) {
                 if (oldWindow) {
-                    m_kwaylandIntegration->setWindowProperty(oldWindow, s_waylandAppMenuServiceNamePropertyName, {});
-                    m_kwaylandIntegration->setWindowProperty(oldWindow, s_waylandAppMenuObjectPathPropertyName, {});
+                    m_kwaylandIntegration->setAppMenu(QString(), QString());
                 }
 
                 if (newWindow) {
-                    m_kwaylandIntegration->setWindowProperty(newWindow, s_waylandAppMenuServiceNamePropertyName, serviceName.toUtf8());
-                    m_kwaylandIntegration->setWindowProperty(newWindow, s_waylandAppMenuObjectPathPropertyName, objectPath.toUtf8());
+                    m_kwaylandIntegration->setAppMenu(serviceName, objectPath);
                 }
             }
         });

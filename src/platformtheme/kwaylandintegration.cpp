@@ -29,6 +29,7 @@
 #include <KWayland/Client/registry.h>
 #include <KWayland/Client/surface.h>
 #include <KWayland/Client/server_decoration.h>
+#include <KWayland/Client/appmenu.h>
 #include <KWindowEffects>
 
 using namespace KWayland::Client;
@@ -59,6 +60,11 @@ void KWaylandIntegration::init()
                 m_decoration = registry->createServerSideDecorationManager(interface.name, interface.version, this);
                 qputenv("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1");
                 QCoreApplication::instance()->installEventFilter(this);
+
+            }
+            const auto menuInterface = registry->interface(Registry::Interface::AppMenu);
+            if (menuInterface.name != 0) {
+                m_appMenuManager = registry->createAppMenuManager(menuInterface.name, menuInterface.version, this);
             }
         }
     );
@@ -130,12 +136,21 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
         deco->requestMode(ourMode);
     }
     w->setProperty("org.kde.plasma.integration.waylandserverdecoration", QVariant::fromValue(deco));
+
+    if (m_appMenuManager) {
+        auto menu = m_appMenuManager->create(s, w);
+        w->setProperty("org.kde.plasma.integration.appmenu", QVariant::fromValue(menu));
+        menu->setAddress(m_appMenuServiceName, m_appMenuObjectPath);
+    }
 }
 
 void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
 {
     delete w->property("org.kde.plasma.integration.waylandserverdecoration").value<ServerSideDecoration*>();
     w->setProperty("org.kde.plasma.integration.waylandserverdecoration", QVariant());
+
+    delete w->property("org.kde.plasma.integration.appmenu").value<AppMenu*>();
+    w->setProperty("org.kde.plasma.integration.appmenu", QVariant());
 }
 
 void KWaylandIntegration::installColorScheme(QWindow *w)
@@ -153,6 +168,16 @@ void KWaylandIntegration::setWindowProperty(QWindow *window, const QByteArray &n
         if (QPlatformWindow *platformWindow = window->handle()) {
             nativeInterface->setWindowProperty(platformWindow, QString::fromUtf8(name), QString::fromUtf8(value));
         }
+    }
+}
+
+void KWaylandIntegration::setAppMenu(const QString &serviceName, const QString &objectPath)
+{
+    m_appMenuServiceName = serviceName;
+    m_appMenuObjectPath = objectPath;
+    auto menu = property("org.kde.plasma.integration.appmenu").value<AppMenu*>();
+    if (menu) {
+        menu->setAddress(serviceName, objectPath);
     }
 }
 
