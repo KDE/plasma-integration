@@ -75,7 +75,6 @@ private Q_SLOTS:
         QCOMPARE(dialog.selectedNameFilter(), selectNameFilter);
     }
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
     void testSelectedMimeTypeFilter_data()
     {
         QTest::addColumn<QStringList>("mimeTypeFilters");
@@ -120,9 +119,6 @@ private Q_SLOTS:
         dialog.show();
         QCOMPARE(dialog.selectedMimeTypeFilter(), QStringLiteral("application/json"));
     }
-
-#endif
-
 
     void testSetDirectory()
     {

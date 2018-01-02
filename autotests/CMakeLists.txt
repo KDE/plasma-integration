@@ -33,6 +33,7 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
 endmacro()
 
 set(platformThemeSRCS
+  ../src/platformtheme/qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
   ../src/platformtheme/kdeplatformtheme.cpp
   ../src/platformtheme/kfontsettingsdata.cpp
   ../src/platformtheme/khintssettings.cpp
@@ -44,13 +45,6 @@ set(platformThemeSRCS
   ../src/platformtheme/kwaylandintegration.cpp
   ../src/platformtheme/x11integration.cpp
 )
-
-if(Qt5Core_VERSION VERSION_EQUAL "5.7.0" OR Qt5Core_VERSION VERSION_GREATER "5.7.0")
-set(platformThemeSRCS
-    ../src/platformtheme/qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
-    ${platformThemeSRCS}
-)
-endif()
 
 frameworkintegration_tests(
   kdeplatformtheme_unittest

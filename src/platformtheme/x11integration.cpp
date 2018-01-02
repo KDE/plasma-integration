@@ -113,13 +113,12 @@ void X11Integration::installDesktopFileName(QWindow *w)
     if (!w->isTopLevel()) {
         return;
     }
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
+
     if (QGuiApplication::desktopFileName().isEmpty()) {
         return;
     }
     NETWinInfo info(QX11Info::connection(), w->winId(), QX11Info::appRootWindow(), NET::Properties(), NET::Properties2());
     info.setDesktopFileName(QGuiApplication::desktopFileName().toUtf8().constData());
-#endif
 }
 
 void X11Integration::setWindowProperty(QWindow *window, const QByteArray &name, const QByteArray &value)

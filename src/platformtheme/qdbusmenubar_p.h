@@ -55,19 +55,10 @@
 #include <QtCore/QString>
 #include <QtGui/QWindow>
 
-
-#if (QT_VERSION < QT_VERSION_CHECK(5, 8, 0))
-#include <QtPlatformSupport/private/qdbusplatformmenu_p.h>
-#include <QtPlatformSupport/private/qdbusmenuadaptor_p.h>
-#include <QtPlatformSupport/private/qdbusmenuconnection_p.h>
-#include <QtPlatformSupport/private/qdbusmenuregistrarproxy_p.h>
-#else
 #include <QtThemeSupport/private/qdbusplatformmenu_p.h>
 #include <QtThemeSupport/private/qdbusmenuadaptor_p.h>
 #include <QtThemeSupport/private/qdbusmenuconnection_p.h>
 #include <QtThemeSupport/private/qdbusmenuregistrarproxy_p.h>
-#endif
-
 
 QT_BEGIN_NAMESPACE
 

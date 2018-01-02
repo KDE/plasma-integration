@@ -53,9 +53,7 @@
 #include <KWindowSystem>
 #include <KIO/Global>
 
-#if QT_VERSION >= QT_VERSION_CHECK(5,7,0)
 #include "qdbusmenubar_p.h"
-#endif
 
 static const QByteArray s_x11AppMenuServiceNamePropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_SERVICE_NAME");
 static const QByteArray s_x11AppMenuObjectPathPropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_OBJECT_PATH");
@@ -121,13 +119,6 @@ QIcon KdePlatformTheme::fileIcon(const QFileInfo &fileInfo, QPlatformTheme::Icon
 
     return QIcon::fromTheme(KIO::iconNameForUrl(QUrl::fromLocalFile(fileInfo.absoluteFilePath())));
 }
-
-#if QT_VERSION < QT_VERSION_CHECK(5, 8, 0)
-QPixmap KdePlatformTheme::fileIconPixmap(const QFileInfo &fileInfo, const QSizeF &size, QPlatformTheme::IconOptions iconOptions) const
-{
-    return fileIcon(fileInfo, iconOptions).pixmap(size.toSize(), QIcon::Normal);
-}
-#endif
 
 const QPalette *KdePlatformTheme::palette(Palette type) const
 {
@@ -347,7 +338,6 @@ QPlatformSystemTrayIcon *KdePlatformTheme::createPlatformSystemTrayIcon() const
     return new KDEPlatformSystemTrayIcon;
 }
 
-#if QT_VERSION >= QT_VERSION_CHECK(5,7,0)
 QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
 {
     if (isDBusGlobalMenuAvailable()) {
@@ -385,7 +375,6 @@ QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
 
     return nullptr;
 }
-#endif
 
 //force QtQuickControls2 to use the desktop theme as default
 void KdePlatformTheme::setQtQuickControlsTheme()

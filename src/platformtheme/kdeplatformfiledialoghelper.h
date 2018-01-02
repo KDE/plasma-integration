@@ -61,10 +61,8 @@ public:
     bool defaultNameFilterDisables() const override;
     QUrl directory() const override;
     QList<QUrl> selectedFiles() const override;
-#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
     QString selectedMimeTypeFilter() const override;
     void selectMimeTypeFilter(const QString &filter) override;
-#endif
     QString selectedNameFilter() const override;
     void selectNameFilter(const QString &filter) override;
     void selectFile(const QUrl &filename) override;

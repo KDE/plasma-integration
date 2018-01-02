@@ -129,9 +129,7 @@ int main(int argc, char **argv)
     if (dialog.result() == QDialog::Accepted) {
         qDebug() << "selected files" << dialog.selectedFiles();
         qDebug() << "selected urls" << dialog.selectedUrls();
-#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
         qDebug() << "selected mime type filter" << dialog.selectedMimeTypeFilter();
-#endif
     }
 
     qDebug() << "mime type filter(s):" << dialog.mimeTypeFilters();

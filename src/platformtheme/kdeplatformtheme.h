@@ -43,16 +43,9 @@ public:
     ~KdePlatformTheme();
 
     QVariant themeHint(ThemeHint hint) const override;
-#if QT_VERSION >= QT_VERSION_CHECK(5, 8, 0)
     QIcon fileIcon(const QFileInfo &fileInfo,
                            QPlatformTheme::IconOptions iconOptions) const override;
-#else
-    QPixmap fileIconPixmap(const QFileInfo &fileInfo, const QSizeF &size,
-                                   QPlatformTheme::IconOptions iconOptions) const override;
-    // this will be the implementation
-    QIcon fileIcon(const QFileInfo &fileInfo,
-                           QPlatformTheme::IconOptions iconOptions) const;
-#endif
+
     const QPalette *palette(Palette type = SystemPalette) const override;
     const QFont *font(Font type) const override;
     QIconEngine *createIconEngine(const QString &iconName) const override;
@@ -65,9 +58,7 @@ public:
 
     QPlatformSystemTrayIcon *createPlatformSystemTrayIcon() const override;
 
-#if QT_VERSION >= QT_VERSION_CHECK(5,7,0)
     QPlatformMenuBar *createPlatformMenuBar() const override;
-#endif
 
 private:
     void loadSettings();

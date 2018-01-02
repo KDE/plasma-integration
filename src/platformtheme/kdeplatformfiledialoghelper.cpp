@@ -300,9 +300,7 @@ void KDEPlatformFileDialogHelper::initializeDialog()
         if (!mimeFilters.isEmpty()) {
             QString defaultMimeFilter;
             if (options()->acceptMode() == QFileDialogOptions::AcceptSave) {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
                 defaultMimeFilter = options()->initiallySelectedMimeTypeFilter();
-#endif
                 if (defaultMimeFilter.isEmpty()) {
                     defaultMimeFilter = mimeFilters.at(0);
                 }
@@ -315,17 +313,11 @@ void KDEPlatformFileDialogHelper::initializeDialog()
             dialog->m_fileWidget->setFilter(qt2KdeFilter(nameFilters));
         }
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
         if (!options()->initiallySelectedMimeTypeFilter().isEmpty()) {
             selectMimeTypeFilter(options()->initiallySelectedMimeTypeFilter());
         } else if (!options()->initiallySelectedNameFilter().isEmpty()) {
             selectNameFilter(options()->initiallySelectedNameFilter());
         }
-#else
-        if (!options()->initiallySelectedNameFilter().isEmpty()) {
-            selectNameFilter(options()->initiallySelectedNameFilter());
-        }
-#endif
 
         // overwrite option
         if (options()->testOption(QFileDialogOptions::FileDialogOption::DontConfirmOverwrite)) {
@@ -390,7 +382,6 @@ QList<QUrl> KDEPlatformFileDialogHelper::selectedFiles() const
     return m_dialog->selectedFiles();
 }
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
 QString KDEPlatformFileDialogHelper::selectedMimeTypeFilter() const
 {
     return m_dialog->selectedMimeTypeFilter();
@@ -400,7 +391,6 @@ void KDEPlatformFileDialogHelper::selectMimeTypeFilter(const QString &filter)
 {
     m_dialog->selectMimeTypeFilter(filter);
 }
-#endif
 
 QString KDEPlatformFileDialogHelper::selectedNameFilter() const
 {

@@ -21,7 +21,7 @@ include(KDEInstallDirs)
 include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 
-set(REQUIRED_QT_VERSION 5.5.0)
+set(REQUIRED_QT_VERSION 5.9.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Widgets DBus X11Extras QuickControls2)
 
 set(KF5_DEP_VERSION "5.33.0")
@@ -45,21 +45,8 @@ set_package_properties(Breeze PROPERTIES
                        PURPOSE "For setting the default QStyle name")
 
 # dependencies for QPA plugin
-if(Qt5Core_VERSION VERSION_LESS "5.8.0")
-    find_package(Qt5PlatformSupport REQUIRED)
-else()
-    find_package(Qt5ThemeSupport REQUIRED)
-endif()
-
-if(Qt5Core_VERSION VERSION_LESS "5.8.0")
-    add_definitions(-DQ_FONTCONFIGDATABASE)
-    set(QT5PLATFORMSUPPORT_LIBS Qt5PlatformSupport::Qt5PlatformSupport)
-else()
-    set(QT5PLATFORMSUPPORT_LIBS
-        Qt5ThemeSupport::Qt5ThemeSupport
-)
-endif()
-
+find_package(Qt5ThemeSupport REQUIRED)
+set(QT5PLATFORMSUPPORT_LIBS Qt5ThemeSupport::Qt5ThemeSupport)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"plasmaintegration5\")
 if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")

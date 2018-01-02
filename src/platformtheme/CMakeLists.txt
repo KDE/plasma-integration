@@ -21,6 +21,7 @@ include_directories(${Qt5Core_PRIVATE_INCLUDE_DIRS})
 include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 
 set(platformtheme_SRCS
+    qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
     kdeplatformtheme.cpp
     kfontsettingsdata.cpp
     khintssettings.cpp
@@ -33,13 +34,6 @@ set(platformtheme_SRCS
     x11integration.cpp
     main.cpp
 )
-
-if(Qt5Core_VERSION VERSION_EQUAL "5.7.0" OR Qt5Core_VERSION VERSION_GREATER "5.7.0")
-set(platformtheme_SRCS
-    qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
-    ${platformtheme_SRCS}
-)
-endif()
 
 add_library(KDEPlasmaPlatformTheme MODULE ${platformtheme_SRCS})
 
