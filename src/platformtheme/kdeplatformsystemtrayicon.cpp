@@ -47,6 +47,11 @@ QPlatformMenuItem *SystemTrayMenu::createMenuItem() const
     return new SystemTrayMenuItem();
 }
 
+QPlatformMenu *SystemTrayMenu::createSubMenu() const
+{
+    return new SystemTrayMenu();
+}
+
 void SystemTrayMenu::insertMenuItem(QPlatformMenuItem *menuItem, QPlatformMenuItem *before)
 {
     if (SystemTrayMenuItem *ours = qobject_cast<SystemTrayMenuItem*>(menuItem)) {

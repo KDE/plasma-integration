@@ -47,6 +47,7 @@ public:
     void syncSeparatorsCollapsible(bool enable) override;
     quintptr tag() const override;
     QPlatformMenuItem *createMenuItem() const override;
+    QPlatformMenu *createSubMenu() const override;
 
     QMenu *menu() const;
 
