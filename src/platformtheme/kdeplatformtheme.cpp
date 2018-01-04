@@ -361,11 +361,11 @@ QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
 
             if (m_kwaylandIntegration) {
                 if (oldWindow) {
-                    m_kwaylandIntegration->setAppMenu(QString(), QString());
+                    m_kwaylandIntegration->setAppMenu(oldWindow, QString(), QString());
                 }
 
                 if (newWindow) {
-                    m_kwaylandIntegration->setAppMenu(serviceName, objectPath);
+                    m_kwaylandIntegration->setAppMenu(newWindow, serviceName, objectPath);
                 }
             }
         });

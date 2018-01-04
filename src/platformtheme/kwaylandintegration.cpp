@@ -140,7 +140,7 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
     if (m_appMenuManager) {
         auto menu = m_appMenuManager->create(s, w);
         w->setProperty("org.kde.plasma.integration.appmenu", QVariant::fromValue(menu));
-        menu->setAddress(m_appMenuServiceName, m_appMenuObjectPath);
+        menu->setAddress(m_windowInfo[w].appMenuServiceName, m_windowInfo[w].appMenuObjectPath);
     }
 }
 
@@ -171,11 +171,16 @@ void KWaylandIntegration::setWindowProperty(QWindow *window, const QByteArray &n
     }
 }
 
-void KWaylandIntegration::setAppMenu(const QString &serviceName, const QString &objectPath)
+void KWaylandIntegration::setAppMenu(QWindow *window, const QString &serviceName, const QString &objectPath)
 {
-    m_appMenuServiceName = serviceName;
-    m_appMenuObjectPath = objectPath;
-    auto menu = property("org.kde.plasma.integration.appmenu").value<AppMenu*>();
+    if (!m_windowInfo.contains(window)) { //effectively makes this connect unique
+        connect(window, &QObject::destroyed, this, [=]() {
+            m_windowInfo.remove(window);
+        });
+    }
+    m_windowInfo[window].appMenuServiceName = serviceName;
+    m_windowInfo[window].appMenuObjectPath = objectPath;
+    auto menu = window->property("org.kde.plasma.integration.appmenu").value<AppMenu*>();
     if (menu) {
         menu->setAddress(serviceName, objectPath);
     }

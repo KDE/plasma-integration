@@ -21,6 +21,7 @@
 #define KWAYLANDINTEGRATION_H
 
 #include <QObject>
+#include <QHash>
 
 class QWindow;
 
@@ -42,7 +43,7 @@ public:
     void init();
 
     void setWindowProperty(QWindow *window, const QByteArray &name, const QByteArray &value);
-    void setAppMenu(const QString &serviceName, const QString &objectPath);
+    void setAppMenu(QWindow *window, const QString &serviceName, const QString &objectPath);
 
     bool eventFilter(QObject *watched, QEvent *event) override;
 
@@ -54,8 +55,11 @@ private:
     KWayland::Client::ServerSideDecorationManager *m_decoration = nullptr;
     KWayland::Client::AppMenuManager *m_appMenuManager = nullptr;
 
-    QString m_appMenuServiceName;
-    QString m_appMenuObjectPath;
+    struct WindowInfo {
+        QString appMenuServiceName;
+        QString appMenuObjectPath;
+    };
+    QHash<QWindow*, WindowInfo> m_windowInfo;
 };
 
 #endif
