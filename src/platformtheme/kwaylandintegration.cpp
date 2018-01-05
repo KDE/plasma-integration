@@ -162,15 +162,6 @@ void KWaylandIntegration::installColorScheme(QWindow *w)
     }
 }
 
-void KWaylandIntegration::setWindowProperty(QWindow *window, const QByteArray &name, const QByteArray &value)
-{
-    if (QPlatformNativeInterface *nativeInterface = qApp->platformNativeInterface()) {
-        if (QPlatformWindow *platformWindow = window->handle()) {
-            nativeInterface->setWindowProperty(platformWindow, QString::fromUtf8(name), QString::fromUtf8(value));
-        }
-    }
-}
-
 void KWaylandIntegration::setAppMenu(QWindow *window, const QString &serviceName, const QString &objectPath)
 {
     if (!m_windowInfo.contains(window)) { //effectively makes this connect unique

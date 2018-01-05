@@ -42,7 +42,6 @@ public:
     virtual ~KWaylandIntegration();
     void init();
 
-    void setWindowProperty(QWindow *window, const QByteArray &name, const QByteArray &value);
     void setAppMenu(QWindow *window, const QString &serviceName, const QString &objectPath);
 
     bool eventFilter(QObject *watched, QEvent *event) override;
