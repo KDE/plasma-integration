@@ -29,6 +29,7 @@
 #include <KWayland/Client/registry.h>
 #include <KWayland/Client/surface.h>
 #include <KWayland/Client/server_decoration.h>
+#include <KWayland/Client/server_decoration_palette.h>
 #include <KWayland/Client/appmenu.h>
 #include <KWindowEffects>
 
@@ -51,25 +52,25 @@ void KWaylandIntegration::init()
     if (!connection) {
         return;
     }
-    Registry *registry = new Registry(this);
-    registry->create(connection);
-    QObject::connect(registry, &Registry::interfacesAnnounced, this,
-        [registry, this] {
-            const auto interface = registry->interface(Registry::Interface::ServerSideDecorationManager);
+    m_registry = new Registry(this);
+    m_registry->create(connection);
+    QObject::connect(m_registry, &Registry::interfacesAnnounced, this,
+        [this] {
+            const auto interface = m_registry->interface(Registry::Interface::ServerSideDecorationManager);
             if (interface.name != 0) {
-                m_decoration = registry->createServerSideDecorationManager(interface.name, interface.version, this);
+                m_decoration = m_registry->createServerSideDecorationManager(interface.name, interface.version, this);
                 qputenv("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1");
                 QCoreApplication::instance()->installEventFilter(this);
 
             }
-            const auto menuInterface = registry->interface(Registry::Interface::AppMenu);
+            const auto menuInterface = m_registry->interface(Registry::Interface::AppMenu);
             if (menuInterface.name != 0) {
-                m_appMenuManager = registry->createAppMenuManager(menuInterface.name, menuInterface.version, this);
+                m_appMenuManager = m_registry->createAppMenuManager(menuInterface.name, menuInterface.version, this);
             }
         }
     );
 
-    registry->setup();
+    m_registry->setup();
     connection->roundtrip();
 }
 
@@ -151,14 +152,32 @@ void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
 
     delete w->property("org.kde.plasma.integration.appmenu").value<AppMenu*>();
     w->setProperty("org.kde.plasma.integration.appmenu", QVariant());
+
+    delete w->property("org.kde.plasma.integration.palette").value<ServerSideDecorationPalette*>();
+    w->setProperty("org.kde.plasma.integration.palette", QVariant());
 }
 
 void KWaylandIntegration::installColorScheme(QWindow *w)
 {
-    if (QPlatformNativeInterface *native = qApp->platformNativeInterface()) {
-        if (QPlatformWindow *pw = w->handle()) {
-            native->setWindowProperty(pw, QString::fromUtf8(s_schemePropertyName), qApp->property(s_schemePropertyName.constData()));
+    if (!m_paletteManager) {
+        const auto paletteManagerInterface = m_registry->interface(Registry::Interface::ServerSideDecorationPalette);
+        if (paletteManagerInterface.name == 0) {
+            return;
+        } else {
+            m_paletteManager = m_registry->createServerSideDecorationPaletteManager(paletteManagerInterface.name, paletteManagerInterface.version, this);
         }
+    }
+    auto palette = w->property("org.kde.plasma.integration.palette").value<ServerSideDecorationPalette*>();
+    if (!palette) {
+        Surface *s = Surface::fromWindow(w);
+        if (!s) {
+            return;
+        }
+        palette = m_paletteManager->create(s, w);
+        w->setProperty("org.kde.plasma.integration.palette", QVariant::fromValue(palette));
+    }
+    if (palette) {
+        palette->setPalette(qApp->property(s_schemePropertyName.constData()).toString());
     }
 }
 

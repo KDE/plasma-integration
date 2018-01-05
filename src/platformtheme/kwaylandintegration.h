@@ -30,7 +30,9 @@ namespace KWayland
 namespace Client
 {
 class ServerSideDecorationManager;
+class ServerSideDecorationPaletteManager;
 class AppMenuManager;
+class Registry;
 }
 }
 
@@ -43,6 +45,7 @@ public:
     void init();
 
     void setAppMenu(QWindow *window, const QString &serviceName, const QString &objectPath);
+    void setPalette(QWindow *window, const QString &paletteName);
 
     bool eventFilter(QObject *watched, QEvent *event) override;
 
@@ -53,6 +56,8 @@ private:
     void installColorScheme(QWindow *w);
     KWayland::Client::ServerSideDecorationManager *m_decoration = nullptr;
     KWayland::Client::AppMenuManager *m_appMenuManager = nullptr;
+    KWayland::Client::ServerSideDecorationPaletteManager *m_paletteManager = nullptr;
+    KWayland::Client::Registry* m_registry = nullptr;
 
     struct WindowInfo {
         QString appMenuServiceName;
