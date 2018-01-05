@@ -26,6 +26,12 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QTimer>
+#include <KColorSchemeManager>
+#include <KActionMenu>
+#include <QComboBox>
+#include <QToolButton>
+#include <QDebug>
+
 
 class ATestWindow: public QWidget
 {
@@ -50,8 +56,17 @@ ATestWindow::ATestWindow()
         QTimer::singleShot(1000, this, [this](){this->show();});
     });
 
+    QComboBox *colorCombo = new QComboBox();
+    KColorSchemeManager *schemes = new KColorSchemeManager(this);
+    colorCombo->setModel(schemes->model());
+
+    connect(colorCombo, QOverload<int>::of(&QComboBox::activated), schemes, [=](int row) {
+        schemes->activateScheme(colorCombo->model()->index(row, 0));
+    });
+
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(mBtn);
+    layout->addWidget(colorCombo);
     setLayout(layout);
 }
 

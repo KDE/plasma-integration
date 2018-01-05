@@ -28,7 +28,7 @@ set(KF5_DEP_VERSION "5.33.0")
 
 find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS
                 Config ConfigWidgets I18n IconThemes KIO Notifications Wayland
-                WidgetsAddons WindowSystem
+                WidgetsAddons WindowSystem ConfigWidgets
 )
 
 find_package(XCB COMPONENTS XCB)
