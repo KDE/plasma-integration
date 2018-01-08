@@ -247,6 +247,21 @@ void SystemTrayMenuItem::setIconSize(int size)
     Q_UNUSED(size);
 }
 
+void SystemTrayMenuItem::setHasExclusiveGroup(bool hasExclusiveGroup)
+{
+    if (hasExclusiveGroup) {
+        if (!m_action->actionGroup()) {
+            m_action->setActionGroup(new QActionGroup(m_action));
+        }
+    } else {
+        QActionGroup *actionGroup = m_action->actionGroup();
+        if (actionGroup) {
+            m_action->setActionGroup(nullptr);
+            delete actionGroup;
+        }
+    }
+}
+
 quintptr SystemTrayMenuItem::tag() const
 {
     return m_tag;

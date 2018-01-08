@@ -77,6 +77,7 @@ public:
     void setVisible(bool isVisible) override;
     quintptr tag() const override;
     void setIconSize(int size) override;
+    void setHasExclusiveGroup(bool hasExclusiveGroup) override;
 
     QAction *action() const;
 
