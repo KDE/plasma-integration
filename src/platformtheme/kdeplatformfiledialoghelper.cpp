@@ -31,15 +31,15 @@
 #include <KSharedConfig>
 #include <KWindowConfig>
 #include <KProtocolInfo>
+#include <kio_version.h>
+#include <KIO/StatJob>
+#include <KJobWidgets>
+
 #include <QMimeDatabase>
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QWindow>
-
-#include <KIO/StatJob>
-#include <KJobWidgets>
-
 #include <QTextStream>
 
 namespace
@@ -325,6 +325,10 @@ void KDEPlatformFileDialogHelper::initializeDialog()
          } else if (options()->acceptMode() == QFileDialogOptions::AcceptSave) {
              dialog->m_fileWidget->setConfirmOverwrite(true);
         }
+
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 43, 0)
+        dialog->m_fileWidget->setSupportedSchemes(options()->supportedSchemes());
+#endif
     }
 }
 
