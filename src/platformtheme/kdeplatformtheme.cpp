@@ -379,7 +379,7 @@ QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
 //force QtQuickControls2 to use the desktop theme as default
 void KdePlatformTheme::setQtQuickControlsTheme()
 {
-    //if the user is running only a QGuiApplication, explicitely unset the QQC1 desktop style and abort
+    //if the user is running only a QGuiApplication, explicitly unset the QQC1 desktop style and abort
     //as this style is all about QWidgets and we know setting this will make it crash
     if (!qobject_cast<QApplication*>(qApp)) {
         if (qgetenv("QT_QUICK_CONTROLS_1_STYLE").right(7) == "Desktop") {
