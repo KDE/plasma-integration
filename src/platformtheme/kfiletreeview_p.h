@@ -37,7 +37,7 @@ public:
     /**
      * Creates a new file tree view.
      */
-    KFileTreeView(QWidget *parent = nullptr);
+    explicit KFileTreeView(QWidget *parent = nullptr);
 
     /**
      * Destroys the file tree view.
