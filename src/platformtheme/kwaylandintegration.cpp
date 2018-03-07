@@ -23,8 +23,6 @@
 #include <QPlatformSurfaceEvent>
 #include <qpa/qplatformnativeinterface.h>
 
-#include <qpa/qplatformnativeinterface.h>
-
 #include <KWayland/Client/connection_thread.h>
 #include <KWayland/Client/registry.h>
 #include <KWayland/Client/surface.h>
