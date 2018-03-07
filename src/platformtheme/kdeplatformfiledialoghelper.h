@@ -54,7 +54,7 @@ class KDEPlatformFileDialogHelper : public QPlatformFileDialogHelper
     Q_OBJECT
 public:
     KDEPlatformFileDialogHelper();
-    virtual ~KDEPlatformFileDialogHelper();
+    ~KDEPlatformFileDialogHelper() override;
 
     void initializeDialog();
 

@@ -32,7 +32,7 @@ class X11Integration : public QObject
     Q_OBJECT
 public:
     explicit X11Integration();
-    virtual ~X11Integration();
+    ~X11Integration() override;
     void init();
 
     void setWindowProperty(QWindow *window, const QByteArray &name, const QByteArray &value);

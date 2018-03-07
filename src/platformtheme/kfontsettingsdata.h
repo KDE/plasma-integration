@@ -53,7 +53,7 @@ public:
 
 public:
     KFontSettingsData();
-    ~KFontSettingsData();
+    ~KFontSettingsData() override;
 
 public Q_SLOTS:
     void dropFontSettingsCache();

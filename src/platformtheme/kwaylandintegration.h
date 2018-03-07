@@ -41,7 +41,7 @@ class KWaylandIntegration : public QObject
     Q_OBJECT
 public:
     explicit KWaylandIntegration();
-    virtual ~KWaylandIntegration();
+    ~KWaylandIntegration() override;
     void init();
 
     void setAppMenu(QWindow *window, const QString &serviceName, const QString &objectPath);

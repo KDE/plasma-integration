@@ -42,7 +42,7 @@ public:
     /**
      * Destroys the file tree view.
      */
-    ~KFileTreeView();
+    ~KFileTreeView() override;
 
     /**
      * Returns the current url.

@@ -40,7 +40,7 @@ class KdePlatformTheme : public QPlatformTheme
 {
 public:
     KdePlatformTheme();
-    ~KdePlatformTheme();
+    ~KdePlatformTheme() override;
 
     QVariant themeHint(ThemeHint hint) const override;
     QIcon fileIcon(const QFileInfo &fileInfo,

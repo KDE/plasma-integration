@@ -68,7 +68,7 @@ class QDBusMenuBar : public QPlatformMenuBar
 
 public:
     QDBusMenuBar();
-    virtual ~QDBusMenuBar();
+    ~QDBusMenuBar() override;
 
     void insertMenu(QPlatformMenu *menu, QPlatformMenu *before) override;
     void removeMenu(QPlatformMenu *menu) override;

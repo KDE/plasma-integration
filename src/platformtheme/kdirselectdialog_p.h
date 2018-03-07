@@ -50,7 +50,7 @@ public:
     /**
      * Destroys the directory selection dialog.
      */
-    ~KDirSelectDialog();
+    ~KDirSelectDialog() override;
 
     /**
      * Returns the currently selected URL, or an empty one if no item is selected.
