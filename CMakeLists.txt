@@ -7,21 +7,14 @@ set(PROJECT_VERSION_MAJOR 5)
 set(QT_MIN_VERSION "5.9.0")
 set(KF5_MIN_VERSION "5.42.0")
 
-include(FeatureSummary)
 find_package(ECM ${KF5_MIN_VERSION}  REQUIRED NO_MODULE)
-set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://projects.kde.org/projects/kdesupport/extra-cmake-modules")
-
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
 
-
-include(GenerateExportHeader)
-include(ECMPackageConfigHelpers)
-include(ECMSetupVersion)
-include(ECMGenerateHeaders)
-
 include(KDEInstallDirs)
-include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
+include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
+include(FeatureSummary)
+include(GenerateExportHeader)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Widgets DBus X11Extras QuickControls2)
 
