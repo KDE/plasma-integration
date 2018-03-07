@@ -393,5 +393,3 @@ void KdePlatformTheme::setQtQuickControlsTheme()
     }
     QQuickStyle::setStyle(QLatin1String("org.kde.desktop"));
 }
-
-#include "kdeplatformtheme.moc"

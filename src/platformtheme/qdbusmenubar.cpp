@@ -187,6 +187,4 @@ void QDBusMenuBar::unregisterMenuBar()
         connection.unregisterObject(m_objectPath);
 }
 
-#include "qdbusmenubar.moc"
-
 QT_END_NAMESPACE

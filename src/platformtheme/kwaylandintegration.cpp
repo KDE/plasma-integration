@@ -195,5 +195,3 @@ void KWaylandIntegration::setAppMenu(QWindow *window, const QString &serviceName
         menu->setAddress(serviceName, objectPath);
     }
 }
-
-#include "kwaylandintegration.moc"
