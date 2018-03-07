@@ -67,7 +67,7 @@ public:
         : m_parent(parent),
           m_localOnly(localOnly),
           m_comboLocked(false),
-          m_urlCombo(0)
+          m_urlCombo(nullptr)
     {
     }
 
@@ -268,8 +268,7 @@ void KDirSelectDialog::Private::slotDelete()
 
 void KDirSelectDialog::Private::slotProperties()
 {
-    KPropertiesDialog *dialog = 0;
-    dialog = new KPropertiesDialog(m_treeView->selectedUrl(), this->m_parent);
+    KPropertiesDialog *dialog = new KPropertiesDialog(m_treeView->selectedUrl(), this->m_parent);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->show();
 }

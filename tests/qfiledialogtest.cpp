@@ -51,7 +51,7 @@ int main(int argc, char **argv)
         qDebug() << dir;
         return 0;
     } else if (staticFunction == QLatin1String("getOpenFileUrl")) {
-        qDebug() << QFileDialog::getOpenFileUrl(Q_NULLPTR, QStringLiteral("getOpenFileUrl test"), QUrl::fromLocalFile(QDir::homePath()));
+        qDebug() << QFileDialog::getOpenFileUrl(nullptr, QStringLiteral("getOpenFileUrl test"), QUrl::fromLocalFile(QDir::homePath()));
         return 0;
     }
 
@@ -85,7 +85,7 @@ int main(int argc, char **argv)
 
     if (parser.isSet(QLatin1String("options"))) {
         auto optStrings = parser.values(QLatin1String("options"));
-        QFileDialog::Options options = 0;
+        QFileDialog::Options options = {};
         const auto mo = QFileDialog::staticMetaObject;
         const auto enumerator = mo.indexOfEnumerator("Options");
         for(const auto &optString: optStrings) {

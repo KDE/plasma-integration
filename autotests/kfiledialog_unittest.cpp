@@ -163,7 +163,7 @@ private Q_SLOTS:
             qApp->activeWindow()->close();
         });
 
-        QFileDialog::getSaveFileUrl(0, QString(), url);
+        QFileDialog::getSaveFileUrl(nullptr, QString(), url);
 
         QCOMPARE(saveFileOperationMode, KFileWidget::Saving);
     }
@@ -377,7 +377,7 @@ private:
             }
         }
         Q_ASSERT(widgets.count() == 1);
-        return (widgets.count() == 1) ? widgets.first() : Q_NULLPTR;
+        return (widgets.count() == 1) ? widgets.first() : nullptr;
     }
 
     static QDialog *findMessageBox()
@@ -389,7 +389,7 @@ private:
                 widgets.append(dlg);
             }
         }
-        return (widgets.count() == 1) ? widgets.first() : Q_NULLPTR;
+        return (widgets.count() == 1) ? widgets.first() : nullptr;
     }
 };
 

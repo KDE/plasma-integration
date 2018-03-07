@@ -82,7 +82,7 @@ QPlatformMenuItem *SystemTrayMenu::menuItemAt(int position) const
     if (position < m_items.size()) {
         return m_items.at(position);
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 QPlatformMenuItem *SystemTrayMenu::menuItemForTag(quintptr tag) const
@@ -93,7 +93,7 @@ QPlatformMenuItem *SystemTrayMenu::menuItemForTag(quintptr tag) const
     if (it != m_items.constEnd()) {
         return *it;
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 void SystemTrayMenu::removeMenuItem(QPlatformMenuItem *menuItem)
@@ -274,7 +274,7 @@ QAction *SystemTrayMenuItem::action() const
 
 KDEPlatformSystemTrayIcon::KDEPlatformSystemTrayIcon()
     : QPlatformSystemTrayIcon()
-    , m_sni(Q_NULLPTR)
+    , m_sni(nullptr)
 {
 }
 
@@ -303,7 +303,7 @@ void KDEPlatformSystemTrayIcon::init()
 void KDEPlatformSystemTrayIcon::cleanup()
 {
     delete m_sni;
-    m_sni = Q_NULLPTR;
+    m_sni = nullptr;
 }
 
 void KDEPlatformSystemTrayIcon::updateIcon(const QIcon &icon)

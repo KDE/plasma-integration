@@ -88,7 +88,7 @@ private:
             }
         }
         Q_ASSERT(widgets.count() == 1);
-        return (widgets.count() == 1) ? widgets.first() : Q_NULLPTR;
+        return (widgets.count() == 1) ? widgets.first() : nullptr;
     }
 
     QQmlEngine *m_engine = nullptr;

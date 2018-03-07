@@ -31,13 +31,13 @@
 #include <kconfiggroup.h>
 
 KFontSettingsData::KFontSettingsData()
-    : QObject(0),
+    : QObject(nullptr),
     mKdeGlobals(KSharedConfig::openConfig())
 {
     QMetaObject::invokeMethod(this, "delayedDBusConnects", Qt::QueuedConnection);
 
     for (int i = 0; i < FontTypesCount; ++i) {
-        mFonts[i] = 0;
+        mFonts[i] = nullptr;
     }
 }
 
@@ -92,10 +92,10 @@ void KFontSettingsData::dropFontSettingsCache()
     mKdeGlobals->reparseConfiguration();
     for (int i = 0; i < FontTypesCount; ++i) {
         delete mFonts[i];
-        mFonts[i] = 0;
+        mFonts[i] = nullptr;
     }
 
-    QWindowSystemInterface::handleThemeChange(0);
+    QWindowSystemInterface::handleThemeChange(nullptr);
 
     if (qobject_cast<QApplication *>(QCoreApplication::instance())) {
         QApplication::setFont(*font(KFontSettingsData::GeneralFont));

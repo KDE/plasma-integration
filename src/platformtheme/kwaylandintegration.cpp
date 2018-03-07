@@ -40,7 +40,7 @@ static const QByteArray s_blurBehindPropertyName = QByteArrayLiteral("ENABLE_BLU
 
 KWaylandIntegration::KWaylandIntegration()
     : QObject()
-    , m_decoration(Q_NULLPTR)
+    , m_decoration(nullptr)
 {
 }
 

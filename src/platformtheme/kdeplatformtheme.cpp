@@ -329,7 +329,7 @@ QPlatformDialogHelper *KdePlatformTheme::createPlatformDialogHelper(QPlatformThe
     case QPlatformTheme::ColorDialog:
     case QPlatformTheme::MessageDialog:
     default:
-        return 0;
+        return nullptr;
     }
 }
 
