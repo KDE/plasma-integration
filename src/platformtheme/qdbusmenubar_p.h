@@ -51,9 +51,9 @@
 // We mean it.
 //
 
-#include <QtCore/QHash>
-#include <QtCore/QString>
-#include <QtGui/QWindow>
+#include <QHash>
+#include <QString>
+#include <QWindow>
 
 #include <QtThemeSupport/private/qdbusplatformmenu_p.h>
 #include <QtThemeSupport/private/qdbusmenuadaptor_p.h>
