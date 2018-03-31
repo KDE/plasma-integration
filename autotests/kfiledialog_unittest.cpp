@@ -347,6 +347,37 @@ private Q_SLOTS:
         QTRY_VERIFY(timerRun);
     }
 
+    void testRememberLastDirectory()
+    {
+        const QUrl dir = QUrl::fromLocalFile(QDir::tempPath()).adjusted(QUrl::StripTrailingSlash);
+        // Open and navigate
+        {
+            QFileDialog dialog;
+            dialog.open();
+
+            KFileWidget *fw = findFileWidget();
+            QVERIFY(fw);
+            // real show() is delayed to next event.
+            QVERIFY(QTest::qWaitForWindowExposed(fw->window()));
+            QCOMPARE(fw->isVisible(), true);
+            fw->setUrl(dir);
+            fw->slotCancel();
+        }
+        // Open another filedialog, check that the default directory is the one from above
+        {
+            QFileDialog dialog;
+            dialog.open();
+
+            KFileWidget *fw = findFileWidget();
+            QVERIFY(fw);
+            // real show() is delayed to next event.
+            QVERIFY(QTest::qWaitForWindowExposed(fw->window()));
+            QCOMPARE(fw->isVisible(), true);
+            QCOMPARE(dialog.directoryUrl().adjusted(QUrl::StripTrailingSlash), dir);
+            fw->slotCancel();
+        }
+    }
+
 private:
     QTemporaryDir m_tempDir;
 

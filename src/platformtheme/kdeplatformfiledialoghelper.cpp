@@ -110,6 +110,7 @@ KDEPlatformFileDialog::KDEPlatformFileDialog()
     connect(m_fileWidget, SIGNAL(accepted()), m_fileWidget, SLOT(accept()));
     connect(m_fileWidget, SIGNAL(accepted()), SLOT(accept()));
     connect(m_fileWidget->cancelButton(), SIGNAL(clicked(bool)), SLOT(reject()));
+    connect(m_fileWidget->dirOperator(), &KDirOperator::urlEntered, this, &KDEPlatformFileDialogBase::directoryEntered);
     layout()->addWidget(m_buttons);
 }
 
