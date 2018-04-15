@@ -106,6 +106,10 @@ KDEPlatformFileDialog::KDEPlatformFileDialog()
     m_buttons->addButton(m_fileWidget->okButton(), QDialogButtonBox::AcceptRole);
     m_buttons->addButton(m_fileWidget->cancelButton(), QDialogButtonBox::RejectRole);
     connect(m_buttons, SIGNAL(rejected()), m_fileWidget, SLOT(slotCancel()));
+    // Also call the cancel function when the dialog is closed via the escape key
+    // or titlebar close button to make sure we always save the view config
+    connect(this, &KDEPlatformFileDialog::rejected,
+            m_fileWidget, &KFileWidget::slotCancel);
     connect(m_fileWidget->okButton(), SIGNAL(clicked(bool)), m_fileWidget, SLOT(slotOk()));
     connect(m_fileWidget, SIGNAL(accepted()), m_fileWidget, SLOT(accept()));
     connect(m_fileWidget, SIGNAL(accepted()), SLOT(accept()));
