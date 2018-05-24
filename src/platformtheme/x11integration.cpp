@@ -60,15 +60,17 @@ bool X11Integration::eventFilter(QObject *watched, QEvent *event)
     if (event->type() == QEvent::PlatformSurface) {
         if (QWindow *w = qobject_cast<QWindow*>(watched)) {
             QPlatformSurfaceEvent *pe = static_cast<QPlatformSurfaceEvent*>(event);
-            if (pe->surfaceEventType() == QPlatformSurfaceEvent::SurfaceCreated) {
-                if (qApp->property(s_schemePropertyName).isValid()) {
-                    installColorScheme(w);
+            if (!w->flags().testFlag(Qt::ForeignWindow)) {
+                if (pe->surfaceEventType() == QPlatformSurfaceEvent::SurfaceCreated) {
+                    if (qApp->property(s_schemePropertyName).isValid()) {
+                        installColorScheme(w);
+                    }
+                    const auto blurBehindProperty = w->property(s_blurBehindPropertyName.constData());
+                    if (blurBehindProperty.isValid()) {
+                        KWindowEffects::enableBlurBehind(w->winId(), blurBehindProperty.toBool());
+                    }
+                    installDesktopFileName(w);
                 }
-                const auto blurBehindProperty = w->property(s_blurBehindPropertyName.constData());
-                if (blurBehindProperty.isValid()) {
-                    KWindowEffects::enableBlurBehind(w->winId(), blurBehindProperty.toBool());
-                }
-                installDesktopFileName(w);
             }
         }
     }
