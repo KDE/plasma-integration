@@ -122,15 +122,20 @@ void QDBusMenuBar::syncMenu(QPlatformMenu *menu)
 
 void QDBusMenuBar::handleReparent(QWindow *newParentWindow)
 {
-    if (newParentWindow && newParentWindow != m_window) {
-        QWindow *oldWindow = m_window;
-
-        unregisterMenuBar();
-        m_window = newParentWindow;
-        registerMenuBar();
-
-        emit windowChanged(newParentWindow, oldWindow);
+    if (newParentWindow == m_window) {
+        return;
     }
+
+    QWindow *oldWindow = m_window;
+
+    unregisterMenuBar();
+    m_window = newParentWindow;
+
+    if (newParentWindow) {
+        registerMenuBar();
+    }
+
+    emit windowChanged(newParentWindow, oldWindow);
 }
 
 QPlatformMenu *QDBusMenuBar::menuForTag(quintptr tag) const
