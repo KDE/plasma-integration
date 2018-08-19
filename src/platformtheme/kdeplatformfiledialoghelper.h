@@ -80,6 +80,9 @@ private Q_SLOTS:
 private:
     void restoreSize();
     KDEPlatformFileDialogBase *m_dialog;
+    bool m_directorySet = false;
+    bool m_fileSelected = false;
+    bool m_dialogInitialized = false;
 };
 
 #endif // KDEPLATFORMFILEDIALOGHELPER_H

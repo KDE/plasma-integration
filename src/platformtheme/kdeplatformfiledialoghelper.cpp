@@ -270,6 +270,7 @@ KDEPlatformFileDialogHelper::~KDEPlatformFileDialogHelper()
 
 void KDEPlatformFileDialogHelper::initializeDialog()
 {
+    m_dialogInitialized = true;
     if (options()->testOption(QFileDialogOptions::ShowDirsOnly)) {
         m_dialog->deleteLater();
         m_dialog = new KDirSelectDialog(options()->initialDirectory());
@@ -286,7 +287,9 @@ void KDEPlatformFileDialogHelper::initializeDialog()
         } else {
             dialog->setWindowTitle(options()->windowTitle());
         }
-        setDirectory(options()->initialDirectory());
+        if (!m_directorySet) {
+            setDirectory(options()->initialDirectory());
+        }
         //dialog->setViewMode(options()->viewMode()); // don't override our options, fixes remembering the chosen view mode and sizes!
         dialog->setFileMode(options()->fileMode());
 
@@ -412,13 +415,21 @@ QUrl KDEPlatformFileDialogHelper::directory() const
 
 void KDEPlatformFileDialogHelper::selectFile(const QUrl &filename)
 {
+    // This is called once by QFileDialogPrivate::init -> QFileDialog::selectUrl -> QFileDialogPrivate::selectFile_sys
+    // and then again by selectFile in the QFileDialog constructor, with a wrong value for remote URLs, until the Qt 5.11.2 fix.
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 0)
+    if (m_fileSelected && !m_dialogInitialized)
+        return;
+#endif
     m_dialog->selectFile(filename);
+    m_fileSelected = true;
 }
 
 void KDEPlatformFileDialogHelper::setDirectory(const QUrl &directory)
 {
     if (!directory.isEmpty()) {
         m_dialog->setDirectory(directory);
+        m_directorySet = true;
     }
 }
 
