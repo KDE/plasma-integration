@@ -31,7 +31,7 @@ set_package_properties(XCB PROPERTIES
     PURPOSE "Required to pass style properties to native Windows on X11 Platform"
 )
 
-find_package(Breeze ${PROJECT_VERSION} CONFIG)
+find_package(Breeze 5 CONFIG)
 set_package_properties(Breeze PROPERTIES
                        TYPE REQUIRED
                        PURPOSE "For setting the default QStyle name")
