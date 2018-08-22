@@ -417,7 +417,7 @@ QUrl KDEPlatformFileDialogHelper::directory() const
 void KDEPlatformFileDialogHelper::selectFile(const QUrl &filename)
 {
     // This is called once by QFileDialogPrivate::init -> QFileDialog::selectUrl -> QFileDialogPrivate::selectFile_sys
-    // and then again by selectFile in the QFileDialog constructor, with a wrong value for remote URLs, until the Qt 5.11.2 fix.
+    // and then again by selectFile in the QFileDialog constructor, with a wrong value for remote URLs, until the Qt 5.12.0 fix.
 #if QT_VERSION < QT_VERSION_CHECK(5, 12, 0)
     if (m_fileSelected && !m_dialogInitialized)
         return;
