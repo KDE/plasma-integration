@@ -70,11 +70,11 @@ find_path(Qt5ThemeSupport_INCLUDE_DIR
     NAMES
         QtThemeSupport/private/qgenericunixthemes_p.h
     PATH_SUFFIXES
-        QtThemeSupport/${Qt5Widgets_VERSION}/
+        QtThemeSupport/${Qt5Core_VERSION}/
 )
 
 if (Qt5ThemeSupport_INCLUDE_DIR)
-	set(Qt5ThemeSupport_VERSION ${Qt5Widgets_VERSION})
+	set(Qt5ThemeSupport_VERSION ${Qt5Core_VERSION})
 else()
 	# Use pkg-config to get the directories and then use these values
 	# in the FIND_PATH() and FIND_LIBRARY() calls
