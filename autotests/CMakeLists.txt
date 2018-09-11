@@ -13,8 +13,6 @@ if(NOT Qt5Qml_FOUND)
     message(STATUS "Qt5Qml not found, QML autotests will not be built.")
 endif()
 
-include_directories( ${Qt5Gui_PRIVATE_INCLUDE_DIRS} ${Qt5PlatformSupport_PRIVATE_INCLUDE_DIRS} ${CMAKE_BINARY_DIR}/src/platformtheme )
-
 set(CONFIGFILE "${CMAKE_CURRENT_SOURCE_DIR}/kdeplatformtheme_kdeglobals")
 set(CHANGED_CONFIGFILE "${CMAKE_CURRENT_SOURCE_DIR}/kdeplatformtheme_changed_kdeglobals")
 configure_file(kdeplatformtheme_config.h.in ${CMAKE_CURRENT_BINARY_DIR}/kdeplatformtheme_config.h)
@@ -29,7 +27,8 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
     add_test(NAME frameworkintegration-${_testname} COMMAND ${_testname})
     ecm_mark_as_test(${_testname})
     ecm_mark_nongui_executable(${_testname})
-    target_link_libraries(${_testname} Qt5::Test Qt5::DBus Qt5::X11Extras Qt5::QuickControls2 ${QT5PLATFORMSUPPORT_LIBS} KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::KIOFileWidgets KF5::I18n KF5::Notifications KF5::WindowSystem KF5::WaylandClient XCB::XCB)
+    target_include_directories(${_testname} PRIVATE ${CMAKE_BINARY_DIR}/src/platformtheme)
+    target_link_libraries(${_testname} Qt5::GuiPrivate Qt5::Test Qt5::DBus Qt5::X11Extras Qt5::QuickControls2 ${QT5PLATFORMSUPPORT_LIBS} KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::KIOFileWidgets KF5::I18n KF5::Notifications KF5::WindowSystem KF5::WaylandClient XCB::XCB)
 endmacro()
 
 set(platformThemeSRCS
