@@ -17,9 +17,6 @@ configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-p
 remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS)
 
 
-include_directories(${Qt5Core_PRIVATE_INCLUDE_DIRS})
-include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
-
 set(platformtheme_SRCS
     qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
     kdeplatformtheme.cpp
@@ -39,6 +36,7 @@ add_library(KDEPlasmaPlatformTheme MODULE ${platformtheme_SRCS})
 
 target_link_libraries(KDEPlasmaPlatformTheme
     PRIVATE
+        Qt5::GuiPrivate
         Qt5::DBus
         Qt5::X11Extras
         Qt5::QuickControls2
