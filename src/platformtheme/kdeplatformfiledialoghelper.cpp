@@ -334,9 +334,7 @@ void KDEPlatformFileDialogHelper::initializeDialog()
              dialog->m_fileWidget->setConfirmOverwrite(true);
         }
 
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 43, 0)
         dialog->m_fileWidget->setSupportedSchemes(options()->supportedSchemes());
-#endif
     }
 }
 
