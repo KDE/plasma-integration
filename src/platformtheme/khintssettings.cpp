@@ -84,13 +84,14 @@ static inline bool checkUsePortalSupport()
 KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
     : QObject(nullptr)
     , mKdeGlobals(kdeglobals)
+    , mUsePortal(checkUsePortalSupport())
 {
     if (!mKdeGlobals) {
         mKdeGlobals = KSharedConfig::openConfig();
     }
     KConfigGroup cg(mKdeGlobals, "KDE");
 
-    if (checkUsePortalSupport()) {
+    if (mUsePortal) {
         QDBusMessage message = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.portal.Desktop"),
                                                               QStringLiteral("/org/freedesktop/portal/desktop"),
                                                               QStringLiteral("org.freedesktop.portal.Settings"),
@@ -208,12 +209,13 @@ QVariant KHintsSettings::readConfigValue(const QString &group, const QString &ke
 
 QVariant KHintsSettings::readConfigValue(const KConfigGroup &cg, const QString &key, const QVariant &defaultValue)
 {
-    if (checkUsePortalSupport()) {
+    if (mUsePortal) {
         const QString settingName = QStringLiteral("org.kde.kdeglobals.%1").arg(cg.name());
-        if (mKdeGlobalsPortal.contains(settingName)) {
-            QVariantMap groupSetting = mKdeGlobalsPortal.value(settingName);
-            if (groupSetting.contains(key)) {
-                return groupSetting.value(key);
+        auto groupIt = mKdeGlobalsPortal.constFind(key);
+        if (groupIt != mKdeGlobalsPortal.constEnd()) {
+            auto valueIt = groupIt.value().constFind(key);
+            if (valueIt != groupIt.value().constEnd()) {
+                return valueIt.value();
             }
         }
     }
@@ -422,17 +424,17 @@ void KHintsSettings::loadPalettes()
     qDeleteAll(m_palettes);
     m_palettes.clear();
 
-    if (checkUsePortalSupport() && mKdeGlobalsPortal.contains(QStringLiteral("org.kde.kdeglobals.Colors:View"))) {
+    if (mUsePortal && mKdeGlobalsPortal.contains(QStringLiteral("org.kde.kdeglobals.Colors:View"))) {
         // Construct a temporary KConfig file containing color setting so we can create a KColorScheme from it
         QTemporaryFile file;
         file.open();
 
         KSharedConfigPtr tempConfig = KSharedConfig::openConfig(file.fileName(), KConfig::SimpleConfig);
-        for (const QString &group : mKdeGlobalsPortal.keys()) {
-            if (group.startsWith(QStringLiteral("org.kde.kdeglobals.Colors:"))) {
-                KConfigGroup tempGroup(tempConfig, group.right(group.length() - QStringLiteral("org.kde.kdeglobals.").length()));
-                for (const QString &key : mKdeGlobalsPortal.value(group).keys()) {
-                    tempGroup.writeEntry(key, mKdeGlobalsPortal.value(group).value(key));
+        for (auto groupIt = mKdeGlobalsPortal.constBegin(); groupIt != mKdeGlobalsPortal.constEnd(); ++groupIt) {
+            if (groupIt.key().startsWith(QStringLiteral("org.kde.kdeglobals.Colors:"))) {
+                KConfigGroup tempGroup(tempConfig, groupIt.key().right(groupIt.key().length() - QStringLiteral("org.kde.kdeglobals.").length()));
+                for (auto valueIt = groupIt.value().constBegin(); valueIt != groupIt.value().constEnd(); ++valueIt) {
+                    tempGroup.writeEntry(valueIt.key(), valueIt.value());
                 }
             }
         }

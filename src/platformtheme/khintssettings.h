@@ -87,6 +87,7 @@ private:
     KSharedConfigPtr mDefaultLnfConfig;
     KSharedConfigPtr mLnfConfig;
     QMap<QString, QVariantMap> mKdeGlobalsPortal;
+    bool mUsePortal;
 };
 
 #endif //KHINTS_SETTINGS_H
