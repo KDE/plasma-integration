@@ -73,6 +73,7 @@ private Q_SLOTS:
 
 private:
     QVariant readConfigValue(const QString &group, const QString &key, const QVariant &defaultValue);
+    QVariant readConfigValue(const KConfigGroup &cg, const QString &key, const QVariant &defaultValue);
     void loadPalettes();
     void iconChanged(int group);
     void updateQtSettings(KConfigGroup &cg);
@@ -85,6 +86,7 @@ private:
     KSharedConfigPtr mKdeGlobals;
     KSharedConfigPtr mDefaultLnfConfig;
     KSharedConfigPtr mLnfConfig;
+    QMap<QString, QVariantMap> mKdeGlobalsPortal;
 };
 
 #endif //KHINTS_SETTINGS_H

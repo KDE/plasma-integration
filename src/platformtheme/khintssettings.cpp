@@ -35,7 +35,9 @@
 #include <QDialogButtonBox>
 #include <QScreen>
 #include <QStandardPaths>
+#include <QTemporaryFile>
 
+#include <QDBusArgument>
 #include <QDBusConnection>
 #include <QDBusInterface>
 
@@ -56,6 +58,29 @@
 
 static const QString defaultLookAndFeelPackage = QStringLiteral("org.kde.breeze.desktop");
 
+const QDBusArgument &operator>>(const QDBusArgument &argument, QMap<QString, QVariantMap> &map)
+{
+    argument.beginMap();
+    map.clear();
+
+    while (!argument.atEnd()) {
+        QString key;
+        QVariantMap value;
+        argument.beginMapEntry();
+        argument >> key >> value;
+        argument.endMapEntry();
+        map.insert(key, value);
+    }
+
+    argument.endMap();
+    return argument;
+}
+
+static inline bool checkUsePortalSupport()
+{
+    return !QStandardPaths::locate(QStandardPaths::RuntimeLocation, QStringLiteral("flatpak-info")).isEmpty() || qEnvironmentVariableIsSet("SNAP");
+}
+
 KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
     : QObject(nullptr)
     , mKdeGlobals(kdeglobals)
@@ -65,26 +90,41 @@ KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
     }
     KConfigGroup cg(mKdeGlobals, "KDE");
 
+    if (checkUsePortalSupport()) {
+        QDBusMessage message = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.portal.Desktop"),
+                                                              QStringLiteral("/org/freedesktop/portal/desktop"),
+                                                              QStringLiteral("org.freedesktop.portal.Settings"),
+                                                              QStringLiteral("ReadAll"));
+        message << QStringList{QStringLiteral("org.kde.kdeglobals.*")};
+
+        // FIXME: async?
+        QDBusMessage resultMessage = QDBusConnection::sessionBus().call(message);
+        if (resultMessage.type() == QDBusMessage::ReplyMessage) {
+           QDBusArgument dbusArgument = resultMessage.arguments().at(0).value<QDBusArgument>();
+           dbusArgument >> mKdeGlobalsPortal;
+        }
+    }
+
     // try to extract the proper defaults file from a lookandfeel package
-    const QString looknfeel = cg.readEntry("LookAndFeelPackage", defaultLookAndFeelPackage);
+    const QString looknfeel = readConfigValue(cg, QStringLiteral("LookAndFeelPackage"), defaultLookAndFeelPackage).toString();
     mDefaultLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("plasma/look-and-feel/") + looknfeel + QStringLiteral("/contents/defaults")));
     if (looknfeel != defaultLookAndFeelPackage) {
         mLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("plasma/look-and-feel/") + defaultLookAndFeelPackage + QStringLiteral("/contents/defaults")));
     }
 
-    const auto cursorBlinkRate = cg.readEntry("CursorBlinkRate", 1000);
+    const auto cursorBlinkRate = readConfigValue(cg, QStringLiteral("CursorBlinkRate"), 1000).toInt();
     m_hints[QPlatformTheme::CursorFlashTime] = cursorBlinkRate > 0 ? qBound(200, cursorBlinkRate, 2000) : 0; // 0 => no blinking
-    m_hints[QPlatformTheme::MouseDoubleClickInterval] = cg.readEntry("DoubleClickInterval", 400);
-    m_hints[QPlatformTheme::StartDragDistance] = cg.readEntry("StartDragDist", 10);
-    m_hints[QPlatformTheme::StartDragTime] = cg.readEntry("StartDragTime", 500);
+    m_hints[QPlatformTheme::MouseDoubleClickInterval] = readConfigValue(cg, QStringLiteral("DoubleClickInterval"), 400);
+    m_hints[QPlatformTheme::StartDragDistance] = readConfigValue(cg, QStringLiteral("StartDragDist"), 10);
+    m_hints[QPlatformTheme::StartDragTime] = readConfigValue(cg, QStringLiteral("StartDragTime"), 500);
 
     KConfigGroup cgToolbar(mKdeGlobals, "Toolbar style");
     m_hints[QPlatformTheme::ToolButtonStyle] = toolButtonStyle(cgToolbar);
 
     KConfigGroup cgToolbarIcon(mKdeGlobals, "MainToolbarIcons");
-    m_hints[QPlatformTheme::ToolBarIconSize] = cgToolbarIcon.readEntry("Size", 22);
+    m_hints[QPlatformTheme::ToolBarIconSize] = readConfigValue(cgToolbarIcon, QStringLiteral("Size"), 22);
 
-    m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = cg.readEntry("SingleClick", true);
+    m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = readConfigValue(cg, QStringLiteral("SingleClick"), true);
 
     m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue(QStringLiteral("Icons"), QStringLiteral("Theme"), QStringLiteral("breeze"));
 
@@ -97,7 +137,7 @@ KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
         QStringLiteral("fusion"),
         QStringLiteral("windows")
     };
-    const QString configuredStyle = cg.readEntry("widgetStyle", QString());
+    const QString configuredStyle = readConfigValue(cg, QStringLiteral("widgetStyle"), QString()).toString();
     if (!configuredStyle.isEmpty()) {
         styleNames.removeOne(configuredStyle);
         styleNames.prepend(configuredStyle);
@@ -110,15 +150,15 @@ KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
     m_hints[QPlatformTheme::StyleNames] = styleNames;
 
     m_hints[QPlatformTheme::DialogButtonBoxLayout] = QDialogButtonBox::KdeLayout;
-    m_hints[QPlatformTheme::DialogButtonBoxButtonsHaveIcons] = cg.readEntry("ShowIconsOnPushButtons", true);
+    m_hints[QPlatformTheme::DialogButtonBoxButtonsHaveIcons] = readConfigValue(cg, QStringLiteral("ShowIconsOnPushButtons"), true);
     m_hints[QPlatformTheme::UseFullScreenForPopupMenu] = true;
     m_hints[QPlatformTheme::KeyboardScheme] = QPlatformTheme::KdeKeyboardScheme;
-    m_hints[QPlatformTheme::UiEffects] = cg.readEntry("GraphicEffectsLevel", 0) != 0 ? QPlatformTheme::GeneralUiEffect : 0;
+    m_hints[QPlatformTheme::UiEffects] = readConfigValue(cg, QStringLiteral("GraphicEffectsLevel"), 0) != 0 ? QPlatformTheme::GeneralUiEffect : 0;
     m_hints[QPlatformTheme::IconPixmapSizes] = QVariant::fromValue(QList<int>() << 512 << 256 << 128 << 64 << 32 << 22 << 16 << 8);
 
-    m_hints[QPlatformTheme::WheelScrollLines] = cg.readEntry("WheelScrollLines", 3);
+    m_hints[QPlatformTheme::WheelScrollLines] = readConfigValue(cg, QStringLiteral("WheelScrollLines"), 3);
     if (qobject_cast<QApplication *>(QCoreApplication::instance())) {
-        QApplication::setWheelScrollLines(cg.readEntry("WheelScrollLines", 3));
+        QApplication::setWheelScrollLines(readConfigValue(cg, QStringLiteral("WheelScrollLines"), 3).toInt());
     }
 
     updateShowIconsInMenuItems(cg);
@@ -139,7 +179,7 @@ KHintsSettings::~KHintsSettings()
 QVariant KHintsSettings::readConfigValue(const QString &group, const QString &key, const QVariant &defaultValue)
 {
     KConfigGroup userCg(mKdeGlobals, group);
-    QVariant value = userCg.readEntry(key, QString());
+    QVariant value = readConfigValue(userCg, key, QString());
 
     if (!value.isNull()) {
         return value;
@@ -160,10 +200,25 @@ QVariant KHintsSettings::readConfigValue(const QString &group, const QString &ke
     KConfigGroup lnfCg(mDefaultLnfConfig, "kdeglobals");
     lnfCg = KConfigGroup(&lnfCg, group);
     if (lnfCg.isValid()) {
-        return  lnfCg.readEntry(key, defaultValue);
+        return lnfCg.readEntry(key, defaultValue);
     }
 
     return defaultValue;
+}
+
+QVariant KHintsSettings::readConfigValue(const KConfigGroup &cg, const QString &key, const QVariant &defaultValue)
+{
+    if (checkUsePortalSupport()) {
+        const QString settingName = QStringLiteral("org.kde.kdeglobals.%1").arg(cg.name());
+        if (mKdeGlobalsPortal.contains(settingName)) {
+            QVariantMap groupSetting = mKdeGlobalsPortal.value(settingName);
+            if (groupSetting.contains(key)) {
+                return groupSetting.value(key);
+            }
+        }
+    }
+
+    return cg.readEntry(key, defaultValue);
 }
 
 QStringList KHintsSettings::xdgIconThemePaths() const
@@ -347,7 +402,7 @@ void KHintsSettings::updateQtSettings(KConfigGroup &cg)
 
 void KHintsSettings::updateShowIconsInMenuItems(KConfigGroup &cg)
 {
-    bool showIcons = cg.readEntry("ShowIconsInMenuItems", true);
+    bool showIcons = readConfigValue(cg, QStringLiteral("ShowIconsInMenuItems"), true).toBool();
     QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, !showIcons);
 }
 
@@ -367,12 +422,26 @@ void KHintsSettings::loadPalettes()
     qDeleteAll(m_palettes);
     m_palettes.clear();
 
-    if (mKdeGlobals->hasGroup("Colors:View")) {
+    if (checkUsePortalSupport() && mKdeGlobalsPortal.contains(QStringLiteral("org.kde.kdeglobals.Colors:View"))) {
+        // Construct a temporary KConfig file containing color setting so we can create a KColorScheme from it
+        QTemporaryFile file;
+        file.open();
+
+        KSharedConfigPtr tempConfig = KSharedConfig::openConfig(file.fileName(), KConfig::SimpleConfig);
+        for (const QString &group : mKdeGlobalsPortal.keys()) {
+            if (group.startsWith(QStringLiteral("org.kde.kdeglobals.Colors:"))) {
+                KConfigGroup tempGroup(tempConfig, group.right(group.length() - QStringLiteral("org.kde.kdeglobals.").length()));
+                for (const QString &key : mKdeGlobalsPortal.value(group).keys()) {
+                    tempGroup.writeEntry(key, mKdeGlobalsPortal.value(group).value(key));
+                }
+            }
+        }
+        m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(tempConfig));
+    } else if (mKdeGlobals->hasGroup("Colors:View")) {
         m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(mKdeGlobals));
     } else {
-
         KConfigGroup cg(mKdeGlobals, "KDE");
-        const QString looknfeel = cg.readEntry("LookAndFeelPackage", defaultLookAndFeelPackage);
+        const QString looknfeel = readConfigValue(cg, QStringLiteral("LookAndFeelPackage"), defaultLookAndFeelPackage).toString();
         QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("plasma/look-and-feel/") + looknfeel + QStringLiteral("/contents/colors"));
         if (!path.isEmpty()) {
             m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(path)));
