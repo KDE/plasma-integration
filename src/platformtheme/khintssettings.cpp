@@ -92,18 +92,7 @@ KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
     KConfigGroup cg(mKdeGlobals, "KDE");
 
     if (mUsePortal) {
-        QDBusMessage message = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.portal.Desktop"),
-                                                              QStringLiteral("/org/freedesktop/portal/desktop"),
-                                                              QStringLiteral("org.freedesktop.portal.Settings"),
-                                                              QStringLiteral("ReadAll"));
-        message << QStringList{QStringLiteral("org.kde.kdeglobals.*")};
-
-        // FIXME: async?
-        QDBusMessage resultMessage = QDBusConnection::sessionBus().call(message);
-        if (resultMessage.type() == QDBusMessage::ReplyMessage) {
-           QDBusArgument dbusArgument = resultMessage.arguments().at(0).value<QDBusArgument>();
-           dbusArgument >> mKdeGlobalsPortal;
-        }
+        updatePortalSetting();
     }
 
     // try to extract the proper defaults file from a lookandfeel package
@@ -211,7 +200,7 @@ QVariant KHintsSettings::readConfigValue(const KConfigGroup &cg, const QString &
 {
     if (mUsePortal) {
         const QString settingName = QStringLiteral("org.kde.kdeglobals.%1").arg(cg.name());
-        auto groupIt = mKdeGlobalsPortal.constFind(key);
+        auto groupIt = mKdeGlobalsPortal.constFind(settingName);
         if (groupIt != mKdeGlobalsPortal.constEnd()) {
             auto valueIt = groupIt.value().constFind(key);
             if (valueIt != groupIt.value().constEnd()) {
@@ -244,6 +233,10 @@ void KHintsSettings::delayedDBusConnects()
                                           QStringLiteral("styleChanged"), this, SLOT(toolbarStyleChanged()));
     QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/KGlobalSettings"), QStringLiteral("org.kde.KGlobalSettings"),
                                           QStringLiteral("notifyChange"), this, SLOT(slotNotifyChange(int,int)));
+    if (mUsePortal) {
+        QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/org/freedesktop/portal/desktop"), QStringLiteral("org.freedesktop.portal.Settings"),
+                                              QStringLiteral("SettingChanged"), this, SLOT(slotPortalSettingChanged(QString,QString,QDBusVariant)));
+    }
 }
 
 void KHintsSettings::setupIconLoader()
@@ -320,13 +313,15 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
             return;
         }
 
-        const QString theme = cg.readEntry("widgetStyle", QString());
+        const QString theme = readConfigValue(cg, QStringLiteral("widgetStyle"), QString()).toString();
         if (theme.isEmpty()) {
             return;
         }
 
+        qWarning() << "Theme: " << theme;
+
         QStringList styleNames;
-        styleNames << cg.readEntry("widgetStyle", QString())
+        styleNames << theme
                 << QStringLiteral(BREEZE_STYLE_NAME)
                 << QStringLiteral("oxygen")
                 << QStringLiteral("fusion")
@@ -346,12 +341,40 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
     }
 }
 
+void KHintsSettings::slotPortalSettingChanged(const QString &group, const QString &key, const QDBusVariant &value)
+{
+    if (group == QStringLiteral("org.kde.kdeglobals.General")) {
+        if (key == QStringLiteral("ColorScheme")) {
+            // For colors obtain complete configuration again
+            updatePortalSetting();
+            slotNotifyChange(PaletteChanged, 0);
+        }
+    } else if (group == QStringLiteral("org.kde.kdeglobals.KDE")) {
+        if (key == QStringLiteral("widgetStyle")) {
+            mKdeGlobalsPortal[group][key] = value.variant().toString();
+            slotNotifyChange(StyleChanged, 0);
+        }
+    } else if (group == QStringLiteral("org.kde.kdeglobals.Icons")) {
+        if (key == QStringLiteral("Theme")) {
+            mKdeGlobalsPortal[group][key] = value.variant().toString();
+            // Change icons for each group
+            for (int i = 0; i <= 5; ++i) {
+                iconChanged(i);
+            }
+        }
+    } else if (group == QStringLiteral("org.kde.kdeglobals.Toolbar style")) {
+        if (key == QStringLiteral("ToolButtonStyle")) {
+            mKdeGlobalsPortal[group][key] = value.variant().toString();
+            toolbarStyleChanged();
+        }
+    }
+}
+
 void KHintsSettings::iconChanged(int group)
 {
     KIconLoader::Group iconGroup = (KIconLoader::Group) group;
     if (iconGroup != KIconLoader::MainToolbar) {
         m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue(QStringLiteral("Icons"), QStringLiteral("Theme"), QStringLiteral("breeze"));
-
         return;
     }
 
@@ -408,9 +431,9 @@ void KHintsSettings::updateShowIconsInMenuItems(KConfigGroup &cg)
     QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, !showIcons);
 }
 
-Qt::ToolButtonStyle KHintsSettings::toolButtonStyle(const KConfigGroup &cg) const
+Qt::ToolButtonStyle KHintsSettings::toolButtonStyle(const KConfigGroup &cg)
 {
-    const QString buttonStyle = cg.readEntry("ToolButtonStyle", "TextBesideIcon").toLower();
+    const QString buttonStyle = readConfigValue(cg, QStringLiteral("ToolButtonStyle"), QStringLiteral("TextBesideIcon")).toString().toLower();
     return buttonStyle == QLatin1String("textbesideicon") ? Qt::ToolButtonTextBesideIcon
            : buttonStyle == QLatin1String("icontextright") ? Qt::ToolButtonTextBesideIcon
            : buttonStyle == QLatin1String("textundericon") ? Qt::ToolButtonTextUnderIcon
@@ -487,4 +510,22 @@ void KHintsSettings::updateCursorTheme()
         XcursorSetDefaultSize(QX11Info::display(), size);
     }
 #endif
+}
+
+void KHintsSettings::updatePortalSetting()
+{
+    mKdeGlobalsPortal.clear();
+
+    QDBusMessage message = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.portal.Desktop"),
+                                                          QStringLiteral("/org/freedesktop/portal/desktop"),
+                                                          QStringLiteral("org.freedesktop.portal.Settings"),
+                                                          QStringLiteral("ReadAll"));
+    message << QStringList{QStringLiteral("org.kde.kdeglobals.*")};
+
+    // FIXME: async?
+    QDBusMessage resultMessage = QDBusConnection::sessionBus().call(message);
+    if (resultMessage.type() == QDBusMessage::ReplyMessage) {
+        QDBusArgument dbusArgument = resultMessage.arguments().at(0).value<QDBusArgument>();
+        dbusArgument >> mKdeGlobalsPortal;
+    }
 }
