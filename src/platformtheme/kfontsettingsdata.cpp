@@ -117,6 +117,22 @@ void KFontSettingsData::delayedDBusConnects()
 {
     QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/KDEPlatformTheme"), QStringLiteral("org.kde.KDEPlatformTheme"),
                                           QStringLiteral("refreshFonts"), this, SLOT(dropFontSettingsCache()));
+
+    if (mUsePortal) {
+        QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/org/freedesktop/portal/desktop"), QStringLiteral("org.freedesktop.portal.Settings"),
+                                              QStringLiteral("SettingChanged"), this, SLOT(slotPortalSettingChanged(QString,QString,QDBusVariant)));
+    }
+}
+
+void KFontSettingsData::slotPortalSettingChanged(const QString &group, const QString &key, const QDBusVariant &value)
+{
+    Q_UNUSED(value);
+
+    if (group == QStringLiteral("org.kde.kdeglobals.General")) {
+        if (key == QStringLiteral("font")) {
+           dropFontSettingsCache();
+        }
+    }
 }
 
 QString KFontSettingsData::readConfigValue(const QString &group, const QString &key, const QString &defaultValue)
