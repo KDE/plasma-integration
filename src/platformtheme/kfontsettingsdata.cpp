@@ -128,10 +128,8 @@ void KFontSettingsData::slotPortalSettingChanged(const QString &group, const QSt
 {
     Q_UNUSED(value);
 
-    if (group == QStringLiteral("org.kde.kdeglobals.General")) {
-        if (key == QStringLiteral("font")) {
-           dropFontSettingsCache();
-        }
+    if (group == QStringLiteral("org.kde.kdeglobals.General") && key == QStringLiteral("font")) {
+        dropFontSettingsCache();
     }
 }
 

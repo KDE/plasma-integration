@@ -341,30 +341,22 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
 
 void KHintsSettings::slotPortalSettingChanged(const QString &group, const QString &key, const QDBusVariant &value)
 {
-    if (group == QStringLiteral("org.kde.kdeglobals.General")) {
-        if (key == QStringLiteral("ColorScheme")) {
-            // For colors obtain complete configuration again
-            updatePortalSetting();
-            slotNotifyChange(PaletteChanged, 0);
+    if (group == QStringLiteral("org.kde.kdeglobals.General") && key == QStringLiteral("ColorScheme")) {
+        // For colors obtain complete configuration again
+        updatePortalSetting();
+        slotNotifyChange(PaletteChanged, 0);
+    } else if (group == QStringLiteral("org.kde.kdeglobals.KDE") && key == QStringLiteral("widgetStyle")) {
+        mKdeGlobalsPortal[group][key] = value.variant().toString();
+        slotNotifyChange(StyleChanged, 0);
+    } else if (group == QStringLiteral("org.kde.kdeglobals.Icons") && key == QStringLiteral("Theme")) {
+        mKdeGlobalsPortal[group][key] = value.variant().toString();
+        // Change icons for each group
+        for (int i = 0; i <= 5; ++i) {
+            iconChanged(i);
         }
-    } else if (group == QStringLiteral("org.kde.kdeglobals.KDE")) {
-        if (key == QStringLiteral("widgetStyle")) {
-            mKdeGlobalsPortal[group][key] = value.variant().toString();
-            slotNotifyChange(StyleChanged, 0);
-        }
-    } else if (group == QStringLiteral("org.kde.kdeglobals.Icons")) {
-        if (key == QStringLiteral("Theme")) {
-            mKdeGlobalsPortal[group][key] = value.variant().toString();
-            // Change icons for each group
-            for (int i = 0; i <= 5; ++i) {
-                iconChanged(i);
-            }
-        }
-    } else if (group == QStringLiteral("org.kde.kdeglobals.Toolbar style")) {
-        if (key == QStringLiteral("ToolButtonStyle")) {
-            mKdeGlobalsPortal[group][key] = value.variant().toString();
-            toolbarStyleChanged();
-        }
+    } else if (group == QStringLiteral("org.kde.kdeglobals.Toolbar style") && key == QStringLiteral("ToolButtonStyle")) {
+        mKdeGlobalsPortal[group][key] = value.variant().toString();
+        toolbarStyleChanged();
     }
 }
 
