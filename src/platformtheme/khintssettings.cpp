@@ -318,8 +318,6 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
             return;
         }
 
-        qWarning() << "Theme: " << theme;
-
         QStringList styleNames;
         styleNames << theme
                 << QStringLiteral(BREEZE_STYLE_NAME)
