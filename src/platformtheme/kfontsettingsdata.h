@@ -21,6 +21,7 @@
 #ifndef KFONTSETTINGSDATA_H
 #define KFONTSETTINGSDATA_H
 
+#include <QDBusVariant>
 #include <QObject>
 #include <QFont>
 #include <ksharedconfig.h>
@@ -60,11 +61,15 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void delayedDBusConnects();
+    void slotPortalSettingChanged(const QString &group, const QString &key, const QDBusVariant &value);
 
 public: // access, is not const due to caching
     QFont *font(FontTypes fontType);
 
 private:
+    QString readConfigValue(const QString &group, const QString &key, const QString &defaultValue = QString()) const;
+
+    bool mUsePortal;
     QFont *mFonts[FontTypesCount];
     KSharedConfigPtr mKdeGlobals;
 };

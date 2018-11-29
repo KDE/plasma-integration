@@ -21,6 +21,7 @@
 #ifndef KHINTS_SETTINGS_H
 #define KHINTS_SETTINGS_H
 
+#include <QDBusVariant>
 #include <QObject>
 #include <QVariant>
 
@@ -70,21 +71,26 @@ private Q_SLOTS:
     void setupIconLoader();
     void toolbarStyleChanged();
     void slotNotifyChange(int type, int arg);
+    void slotPortalSettingChanged(const QString &group, const QString &key, const QDBusVariant &value);
 
 private:
     QVariant readConfigValue(const QString &group, const QString &key, const QVariant &defaultValue);
+    QVariant readConfigValue(const KConfigGroup &cg, const QString &key, const QVariant &defaultValue) const;
     void loadPalettes();
     void iconChanged(int group);
     void updateQtSettings(KConfigGroup &cg);
     void updateShowIconsInMenuItems(KConfigGroup &cg);
-    Qt::ToolButtonStyle toolButtonStyle(const KConfigGroup &cg) const;
+    Qt::ToolButtonStyle toolButtonStyle(const KConfigGroup &cg);
     void updateCursorTheme();
+    void updatePortalSetting();
 
     QHash<QPlatformTheme::Palette, QPalette *> m_palettes;
     QHash<QPlatformTheme::ThemeHint, QVariant> m_hints;
     KSharedConfigPtr mKdeGlobals;
     KSharedConfigPtr mDefaultLnfConfig;
     KSharedConfigPtr mLnfConfig;
+    QMap<QString, QVariantMap> mKdeGlobalsPortal;
+    bool mUsePortal;
 };
 
 #endif //KHINTS_SETTINGS_H
