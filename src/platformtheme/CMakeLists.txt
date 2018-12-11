@@ -59,6 +59,7 @@ if(HAVE_X11)
   target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt5::X11Extras ${X11_Xcursor_LIB} ${XCB_XCB_LIBRARY})
 endif()
 
+set_target_properties(KDEPlasmaPlatformTheme PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/platformthemes/")
 install(TARGETS KDEPlasmaPlatformTheme DESTINATION ${KDE_INSTALL_QTPLUGINDIR}/platformthemes)
 
 install(FILES fonts_global_toolbar.upd fonts_global.upd fonts_akregator.upd fonts_kate.upd DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR})
