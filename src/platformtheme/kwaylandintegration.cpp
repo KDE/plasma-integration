@@ -20,6 +20,8 @@
 #include "kwaylandintegration.h"
 
 #include <QGuiApplication>
+#include <QLibraryInfo>
+#include <QVersionNumber>
 #include <QPlatformSurfaceEvent>
 #include <qpa/qplatformnativeinterface.h>
 
@@ -85,7 +87,7 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
         if (!w || w->parent() || !w->isVisible()) {
             return false;
         }
-        if(w->property("org.kde.plasma.integration.waylandserverdecoration").isNull()) {
+        if (w->property("org.kde.plasma.integration.shellSurfaceCreated").isNull()) {
             shellSurfaceCreated(w);
         }
     } else if (event->type() == QEvent::Hide) {
@@ -119,22 +121,28 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
     if (!s) {
         return;
     }
-    auto deco = m_decoration->create(s, w);
-    connect(deco, &ServerSideDecoration::modeChanged, w,
-        [deco, w] {
-            const auto flags = w->flags();
-            const auto ourMode = (flags.testFlag(Qt::FramelessWindowHint) || flags.testFlag(Qt::Popup) || flags.testFlag(Qt::ToolTip)) ? ServerSideDecoration::Mode::None : ServerSideDecoration::Mode::Server;
-            if (deco->mode() != ourMode) {
-                deco->requestMode(ourMode);
+
+    w->setProperty("org.kde.plasma.integration.shellSurfaceCreated", true);
+
+    if (QLibraryInfo::version() >= QVersionNumber(5, 12, 0))
+    {
+        auto deco = m_decoration->create(s, w);
+        connect(deco, &ServerSideDecoration::modeChanged, w,
+            [deco, w] {
+                const auto flags = w->flags();
+                const auto ourMode = (flags.testFlag(Qt::FramelessWindowHint) || flags.testFlag(Qt::Popup) || flags.testFlag(Qt::ToolTip)) ? ServerSideDecoration::Mode::None : ServerSideDecoration::Mode::Server;
+                if (deco->mode() != ourMode) {
+                    deco->requestMode(ourMode);
+                }
             }
+        );
+        const auto flags = w->flags();
+        const auto ourMode = (flags.testFlag(Qt::FramelessWindowHint) || flags.testFlag(Qt::Popup) || flags.testFlag(Qt::ToolTip)) ? ServerSideDecoration::Mode::None : ServerSideDecoration::Mode::Server;
+        if (deco->defaultMode() != ourMode) {
+            deco->requestMode(ourMode);
         }
-    );
-    const auto flags = w->flags();
-    const auto ourMode = (flags.testFlag(Qt::FramelessWindowHint) || flags.testFlag(Qt::Popup) || flags.testFlag(Qt::ToolTip)) ? ServerSideDecoration::Mode::None : ServerSideDecoration::Mode::Server;
-    if (deco->defaultMode() != ourMode) {
-        deco->requestMode(ourMode);
+        w->setProperty("org.kde.plasma.integration.waylandserverdecoration", QVariant::fromValue(deco));
     }
-    w->setProperty("org.kde.plasma.integration.waylandserverdecoration", QVariant::fromValue(deco));
 
     if (m_appMenuManager) {
         auto menu = m_appMenuManager->create(s, w);
@@ -145,6 +153,8 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
 
 void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
 {
+    w->setProperty("org.kde.plasma.integration.shellSurfaceCreated", QVariant());
+
     delete w->property("org.kde.plasma.integration.waylandserverdecoration").value<ServerSideDecoration*>();
     w->setProperty("org.kde.plasma.integration.waylandserverdecoration", QVariant());
 
