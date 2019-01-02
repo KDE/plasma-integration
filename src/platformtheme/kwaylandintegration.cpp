@@ -124,7 +124,7 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
 
     w->setProperty("org.kde.plasma.integration.shellSurfaceCreated", true);
 
-    if (QLibraryInfo::version() >= QVersionNumber(5, 12, 0))
+    if (QLibraryInfo::version() < QVersionNumber(5, 12, 0))
     {
         auto deco = m_decoration->create(s, w);
         connect(deco, &ServerSideDecoration::modeChanged, w,
