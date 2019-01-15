@@ -97,9 +97,9 @@ KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
 
     // try to extract the proper defaults file from a lookandfeel package
     const QString looknfeel = readConfigValue(cg, QStringLiteral("LookAndFeelPackage"), defaultLookAndFeelPackage).toString();
-    mDefaultLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("plasma/look-and-feel/") + looknfeel + QStringLiteral("/contents/defaults")));
+    mDefaultLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("plasma/look-and-feel/") + defaultLookAndFeelPackage + QStringLiteral("/contents/defaults")));
     if (looknfeel != defaultLookAndFeelPackage) {
-        mLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("plasma/look-and-feel/") + defaultLookAndFeelPackage + QStringLiteral("/contents/defaults")));
+        mLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("plasma/look-and-feel/") + looknfeel + QStringLiteral("/contents/defaults")));
     }
 
     const auto cursorBlinkRate = readConfigValue(cg, QStringLiteral("CursorBlinkRate"), 1000).toInt();
