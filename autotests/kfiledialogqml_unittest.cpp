@@ -31,7 +31,6 @@ class KFileDialogQml_UnitTest : public QObject
 private Q_SLOTS:
     void initTestCase()
     {
-        qputenv("KDE_FORK_SLAVES", "yes");
         m_engine = new QQmlEngine;
     }
 
