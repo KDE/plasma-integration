@@ -54,7 +54,6 @@ private:
     void shellSurfaceDestroyed(QWindow *w);
 
     void installColorScheme(QWindow *w);
-    KWayland::Client::ServerSideDecorationManager *m_decoration = nullptr;
     KWayland::Client::AppMenuManager *m_appMenuManager = nullptr;
     KWayland::Client::ServerSideDecorationPaletteManager *m_paletteManager = nullptr;
     KWayland::Client::Registry* m_registry = nullptr;
