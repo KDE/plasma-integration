@@ -301,7 +301,7 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     topLayout->addWidget(m_buttons);
 
     QHBoxLayout *hlay = new QHBoxLayout(page);
-    hlay->setMargin(0);
+    hlay->setContentsMargins(0, 0, 0, 0);
     QVBoxLayout *mainLayout = new QVBoxLayout();
     d->m_actions = new KActionCollection(this);
     d->m_actions->addAssociatedWidget(this);
