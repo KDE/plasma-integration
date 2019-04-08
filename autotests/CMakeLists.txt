@@ -45,6 +45,8 @@ set(platformThemeSRCS
   ../src/platformtheme/x11integration.cpp
 )
 
+qt5_add_dbus_interface(platformThemeSRCS ../src/platformtheme/org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
+
 frameworkintegration_tests(
   kdeplatformtheme_unittest
   ${platformThemeSRCS}

@@ -26,6 +26,8 @@
 #include <QApplication>
 #include <QDBusInterface>
 
+#include "statusnotifierwatcher_interface.h"
+
 SystemTrayMenu::SystemTrayMenu()
     : QPlatformMenu()
     , m_tag(0)
@@ -361,9 +363,11 @@ void KDEPlatformSystemTrayIcon::showMessage(const QString &title, const QString 
 
 bool KDEPlatformSystemTrayIcon::isSystemTrayAvailable() const
 {
-    QDBusInterface systrayHost(QStringLiteral("org.kde.StatusNotifierWatcher"), QStringLiteral("/StatusNotifierWatcher"), QStringLiteral("org.kde.StatusNotifierWatcher"));
+    org::kde::StatusNotifierWatcher systrayHost(QStringLiteral("org.kde.StatusNotifierWatcher"),
+                                                QStringLiteral("/StatusNotifierWatcher"),
+                                                QDBusConnection::sessionBus());
     if (systrayHost.isValid()) {
-        return systrayHost.property("IsStatusNotifierHostRegistered").toBool();
+        return systrayHost.isStatusNotifierHostRegistered();
     }
 
     return false;

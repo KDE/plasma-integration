@@ -32,6 +32,8 @@ set(platformtheme_SRCS
     main.cpp
 )
 
+qt5_add_dbus_interface(platformtheme_SRCS org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
+
 add_library(KDEPlasmaPlatformTheme MODULE ${platformtheme_SRCS})
 
 target_link_libraries(KDEPlasmaPlatformTheme
