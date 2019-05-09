@@ -116,11 +116,17 @@ void X11Integration::installDesktopFileName(QWindow *w)
         return;
     }
 
-    if (QGuiApplication::desktopFileName().isEmpty()) {
+    QString desktopFileName = QGuiApplication::desktopFileName();
+    if (desktopFileName.isEmpty()) {
         return;
     }
+    // handle apps which set the desktopFileName property with filename suffix,
+    // due to unclear API dox (https://bugreports.qt.io/browse/QTBUG-75521)
+    if (desktopFileName.endsWith(QLatin1String(".desktop"))) {
+        desktopFileName.chop(8);
+    }
     NETWinInfo info(QX11Info::connection(), w->winId(), QX11Info::appRootWindow(), NET::Properties(), NET::Properties2());
-    info.setDesktopFileName(QGuiApplication::desktopFileName().toUtf8().constData());
+    info.setDesktopFileName(desktopFileName.toUtf8().constData());
 }
 
 void X11Integration::setWindowProperty(QWindow *window, const QByteArray &name, const QByteArray &value)
