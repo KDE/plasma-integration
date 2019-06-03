@@ -29,7 +29,6 @@ namespace KWayland
 {
 namespace Client
 {
-class ServerSideDecorationManager;
 class ServerSideDecorationPaletteManager;
 class AppMenuManager;
 class Registry;

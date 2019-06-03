@@ -34,7 +34,6 @@ class X11Integration;
 class QIconEngine;
 class QWindow;
 
-class AltKeyEventListener;
 
 class KdePlatformTheme : public QPlatformTheme
 {

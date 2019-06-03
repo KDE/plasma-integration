@@ -25,7 +25,6 @@
 #include "kdeplatformfiledialogbase_p.h"
 
 class KFileWidget;
-class QDialogButtonBox;
 class KDEPlatformFileDialog : public KDEPlatformFileDialogBase
 {
     Q_OBJECT

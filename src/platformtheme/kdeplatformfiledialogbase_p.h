@@ -25,7 +25,6 @@
 #include <QUrl>
 #include <QTimer>
 
-class KFileWidget;
 class QDialogButtonBox;
 class KDEPlatformFileDialogBase : public QDialog
 {
