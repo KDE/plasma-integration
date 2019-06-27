@@ -568,6 +568,11 @@ QString KDirSelectDialog::selectedNameFilter()
     return QString();
 }
 
+QString KDirSelectDialog::currentFilterText()
+{
+    return QString();
+}
+
 void KDirSelectDialog::selectFile(const QUrl &filename)
 {
     Q_UNUSED(filename)

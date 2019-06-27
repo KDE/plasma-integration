@@ -74,6 +74,23 @@ private Q_SLOTS:
         QCOMPARE(dialog.selectedNameFilter(), selectNameFilter);
     }
 
+    void testSelectNameFilterMultipleMatching()
+    {
+        QFileDialog dialog;
+
+        QStringList nameFilterList = QStringList() << QStringLiteral("c (*.cpp)") << QStringLiteral("h1 (*.h)") << QStringLiteral("h2 (*.h)");
+        dialog.setNameFilters(nameFilterList);
+        QCOMPARE(dialog.nameFilters(), nameFilterList);
+
+        QString selectNameFilter(QStringLiteral("h2 (*.h)"));
+        dialog.selectNameFilter(selectNameFilter);
+        QEXPECT_FAIL("", "Does currently not work. Works, once the dialog gets shown, though.", Continue);
+        QCOMPARE(dialog.selectedNameFilter(), selectNameFilter);
+
+        dialog.show();
+        QCOMPARE(dialog.selectedNameFilter(), selectNameFilter);
+    }
+
     void testSelectedMimeTypeFilter_data()
     {
         QTest::addColumn<QStringList>("mimeTypeFilters");
