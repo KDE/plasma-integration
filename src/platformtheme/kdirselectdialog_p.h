@@ -104,6 +104,7 @@ public:
     void selectFile(const QUrl &filename) override;
     QString selectedMimeTypeFilter() override;
     QString selectedNameFilter() override;
+    QString currentFilterText() override;
     QList<QUrl> selectedFiles() override;
 
 public Q_SLOTS:

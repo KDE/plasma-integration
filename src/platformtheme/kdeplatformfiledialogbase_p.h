@@ -40,6 +40,7 @@ public:
     virtual void selectFile(const QUrl &filename) = 0;
     virtual QString selectedMimeTypeFilter() = 0;
     virtual QString selectedNameFilter() = 0;
+    virtual QString currentFilterText() = 0;
     virtual QList<QUrl> selectedFiles() = 0;
 
     void delayedShow();
