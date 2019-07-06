@@ -290,6 +290,7 @@ void KDEPlatformSystemTrayIcon::init()
         m_sni = new KStatusNotifierItem();
         m_sni->setStandardActionsEnabled(false);
         m_sni->setTitle(QApplication::applicationDisplayName());
+        m_sni->setStatus(KStatusNotifierItem::Active);
         connect(m_sni, &KStatusNotifierItem::activateRequested, [this](bool active, const QPoint &pos) {
             Q_UNUSED(active)
             Q_UNUSED(pos)
