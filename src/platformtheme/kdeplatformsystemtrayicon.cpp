@@ -24,7 +24,6 @@
 #include <QMenu>
 #include <QRect>
 #include <QApplication>
-#include <QDBusInterface>
 
 #include "statusnotifierwatcher_interface.h"
 

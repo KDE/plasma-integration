@@ -24,7 +24,6 @@
 #include <qpa/qplatformtheme.h>
 
 #include <QHash>
-#include <QObject>
 #include <QKeySequence>
 
 class KHintsSettings;

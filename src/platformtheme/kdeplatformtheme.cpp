@@ -32,13 +32,8 @@
 
 #include <QApplication>
 #include <QFont>
-#include <QMainWindow>
-#include <QMenuBar>
-#include <QKeyEvent>
 #include <QPalette>
 #include <QString>
-#include <QStringList>
-#include <QTimer>
 #include <QVariant>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>

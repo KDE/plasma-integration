@@ -27,10 +27,7 @@
 #include <QVBoxLayout>
 #include <QTimer>
 #include <KColorSchemeManager>
-#include <KActionMenu>
 #include <QComboBox>
-#include <QToolButton>
-#include <QDebug>
 
 
 class ATestWindow: public QWidget

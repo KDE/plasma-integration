@@ -19,10 +19,8 @@
  */
 #include "kwaylandintegration.h"
 
+#include <QExposeEvent>
 #include <QGuiApplication>
-#include <QLibraryInfo>
-#include <QVersionNumber>
-#include <QPlatformSurfaceEvent>
 #include <qpa/qplatformnativeinterface.h>
 
 #include <KWayland/Client/connection_thread.h>

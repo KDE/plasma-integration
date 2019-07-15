@@ -27,7 +27,6 @@
 #include <kfilewidget.h>
 #include <klocalizedstring.h>
 #include <kdiroperator.h>
-#include <KUrlComboBox>
 #include <KSharedConfig>
 #include <KWindowConfig>
 #include <KProtocolInfo>

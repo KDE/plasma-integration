@@ -32,7 +32,6 @@
 #include <QFile>
 #include <QString>
 #include <QPalette>
-#include <QDebug>
 #include <QMimeData>
 #include <QIconEngine>
 #include <QToolButton>
@@ -41,7 +40,6 @@
 #include <QStandardPaths>
 
 #include <QDBusConnection>
-#include <QDBusInterface>
 #include <QDBusMessage>
 #include <QTimer>
 #include <QX11Info>

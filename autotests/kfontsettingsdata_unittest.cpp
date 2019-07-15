@@ -21,20 +21,15 @@
 #include "kdeplatformtheme_config.h"
 #include "../src/platformtheme/kfontsettingsdata.h"
 
-#include <Qt>
 #include <QTest>
 #include <QDir>
 #include <QFile>
 #include <QString>
-#include <QPalette>
-#include <QIconEngine>
 #include <QApplication>
-#include <QDialogButtonBox>
 
 #include <QDBusMessage>
 #include <QDBusConnection>
 
-#include <QDebug>
 
 static void prepareEnvironment()
 {
