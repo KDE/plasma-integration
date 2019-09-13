@@ -85,7 +85,7 @@ bool X11Integration::eventFilter(QObject *watched, QEvent *event)
 
 void X11Integration::installColorScheme(QWindow *w)
 {
-    if (!w->isTopLevel()) {
+    if (!w->isTopLevel() || !w->handle() /* e.g. WebEngine's QQuickWindow */) {
         return;
     }
     static xcb_atom_t atom = XCB_ATOM_NONE;
