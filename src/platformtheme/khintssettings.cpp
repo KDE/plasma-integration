@@ -313,17 +313,17 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
             return;
         }
 
-        const QString theme = readConfigValue(cg, QStringLiteral("widgetStyle"), QString()).toString();
-        if (theme.isEmpty()) {
-            return;
-        }
+        // HOTFIX here. Hardcoded default value is duplicated and may be inconsistent with the one actually defined in kcm_style kcfg
+        const QString theme = readConfigValue(cg, QStringLiteral("widgetStyle"), QStringLiteral(BREEZE_STYLE_NAME)).toString();
 
         QStringList styleNames;
-        styleNames << theme
-                << QStringLiteral(BREEZE_STYLE_NAME)
-                << QStringLiteral("oxygen")
-                << QStringLiteral("fusion")
-                << QStringLiteral("windows");
+        if (theme != QStringLiteral(BREEZE_STYLE_NAME)) {
+            styleNames << theme;
+        }
+        styleNames << QStringLiteral(BREEZE_STYLE_NAME)
+                   << QStringLiteral("oxygen")
+                   << QStringLiteral("fusion")
+                   << QStringLiteral("windows");
         const QString lnfStyle = readConfigValue(QStringLiteral("KDE"), QStringLiteral("widgetStyle"), QString()).toString();
         if (!lnfStyle.isEmpty() && !styleNames.contains(lnfStyle)) {
             styleNames.prepend(lnfStyle);
