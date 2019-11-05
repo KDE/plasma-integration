@@ -29,11 +29,11 @@
 
 SystemTrayMenu::SystemTrayMenu()
     : QPlatformMenu()
+    , m_enabled(true)
+    , m_visible(true)
+    , m_separatorsCollapsible(true)
     , m_tag(0)
-    , m_menu(new QMenu())
 {
-    connect(m_menu.data(), &QMenu::aboutToShow, this, &QPlatformMenu::aboutToShow);
-    connect(m_menu.data(), &QMenu::aboutToHide, this, &QPlatformMenu::aboutToHide);
 }
 
 SystemTrayMenu::~SystemTrayMenu()
@@ -109,18 +109,18 @@ void SystemTrayMenu::removeMenuItem(QPlatformMenuItem *menuItem)
 
 void SystemTrayMenu::setEnabled(bool enabled)
 {
-    if (!m_menu) {
-        return;
+    m_enabled = enabled;
+    if (m_menu) {
+        m_menu->setEnabled(enabled);
     }
-    m_menu->setEnabled(enabled);
 }
 
 void SystemTrayMenu::setIcon(const QIcon &icon)
 {
-    if (!m_menu) {
-        return;
+    m_icon = icon;
+    if (m_menu) {
+        m_menu->setIcon(icon);
     }
-    m_menu->setIcon(icon);
 }
 
 void SystemTrayMenu::setTag(quintptr tag)
@@ -130,18 +130,18 @@ void SystemTrayMenu::setTag(quintptr tag)
 
 void SystemTrayMenu::setText(const QString &text)
 {
-    if (!m_menu) {
-        return;
+    m_text = text;
+    if (m_menu) {
+        m_menu->setTitle(text);
     }
-    m_menu->setTitle(text);
 }
 
 void SystemTrayMenu::setVisible(bool visible)
 {
-    if (!m_menu) {
-        return;
+    m_visible = visible;
+    if (m_menu) {
+        m_menu->setVisible(visible);
     }
-    m_menu->setVisible(visible);
 }
 
 void SystemTrayMenu::syncMenuItem(QPlatformMenuItem *menuItem)
@@ -152,10 +152,10 @@ void SystemTrayMenu::syncMenuItem(QPlatformMenuItem *menuItem)
 
 void SystemTrayMenu::syncSeparatorsCollapsible(bool enable)
 {
-    if (!m_menu) {
-        return;
+    m_separatorsCollapsible = enable;
+    if (m_menu) {
+        m_menu->setSeparatorsCollapsible(enable);
     }
-    m_menu->setSeparatorsCollapsible(enable);
 }
 
 quintptr SystemTrayMenu::tag() const
@@ -163,9 +163,28 @@ quintptr SystemTrayMenu::tag() const
     return m_tag;
 }
 
-QMenu *SystemTrayMenu::menu() const
+QMenu *SystemTrayMenu::menu()
 {
-    return m_menu.data();
+    if (!m_menu) {
+        createMenu();
+    }
+    return m_menu;
+}
+
+void SystemTrayMenu::createMenu()
+{
+    m_menu = new QMenu();
+    connect(m_menu, &QMenu::aboutToShow, this, &QPlatformMenu::aboutToShow);
+    connect(m_menu, &QMenu::aboutToHide, this, &QPlatformMenu::aboutToHide);
+
+    m_menu->setEnabled(m_enabled);
+    m_menu->setIcon(m_icon);
+    m_menu->setTitle(m_text);
+    m_menu->setVisible(m_visible);
+    m_menu->setSeparatorsCollapsible(m_separatorsCollapsible);
+    for (auto item : m_items) {
+        m_menu->addAction(item->action());
+    }
 }
 
 SystemTrayMenuItem::SystemTrayMenuItem()
@@ -245,7 +264,7 @@ void SystemTrayMenuItem::setVisible(bool isVisible)
 
 void SystemTrayMenuItem::setIconSize(int size)
 {
-    Q_UNUSED(size);
+    Q_UNUSED(size)
 }
 
 void SystemTrayMenuItem::setHasExclusiveGroup(bool hasExclusiveGroup)

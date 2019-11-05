@@ -31,6 +31,9 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
     target_link_libraries(${_testname} Qt5::GuiPrivate Qt5::Test Qt5::DBus Qt5::X11Extras Qt5::QuickControls2 ${QT5PLATFORMSUPPORT_LIBS} KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::KIOFileWidgets KF5::I18n KF5::Notifications KF5::WindowSystem KF5::WaylandClient XCB::XCB)
 endmacro()
 
+set(dbus_interface)
+qt5_add_dbus_interface(dbus_interface ../src/platformtheme/org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
+
 set(platformThemeSRCS
   ../src/platformtheme/qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
   ../src/platformtheme/kdeplatformtheme.cpp
@@ -43,9 +46,8 @@ set(platformThemeSRCS
   ../src/platformtheme/kfiletreeview.cpp
   ../src/platformtheme/kwaylandintegration.cpp
   ../src/platformtheme/x11integration.cpp
+  ${dbus_interface}
 )
-
-qt5_add_dbus_interface(platformThemeSRCS ../src/platformtheme/org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
 
 frameworkintegration_tests(
   kdeplatformtheme_unittest
@@ -63,6 +65,12 @@ frameworkintegration_tests(
 
 frameworkintegration_tests(
   ksni_unittest
+)
+
+frameworkintegration_tests(
+  kdeplatformsystemtrayicon_unittest
+  ../src/platformtheme/kdeplatformsystemtrayicon.cpp
+  ${dbus_interface}
 )
 
 frameworkintegration_tests(

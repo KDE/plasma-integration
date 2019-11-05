@@ -49,9 +49,16 @@ public:
     QPlatformMenuItem *createMenuItem() const override;
     QPlatformMenu *createSubMenu() const override;
 
-    QMenu *menu() const;
+    QMenu *menu();
 
 private:
+    void createMenu();
+
+    QString m_text;
+    QIcon m_icon;
+    bool m_enabled;
+    bool m_visible;
+    bool m_separatorsCollapsible;
     quintptr m_tag;
     QPointer<QMenu> m_menu;
     QList<SystemTrayMenuItem*> m_items;
