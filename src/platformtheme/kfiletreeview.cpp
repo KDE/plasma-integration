@@ -192,7 +192,7 @@ void KFileTreeView::contextMenuEvent(QContextMenuEvent *event)
     QMenu menu;
     KToggleAction *showHiddenAction = new KToggleAction(i18n("Show Hidden Folders"), &menu);
     showHiddenAction->setChecked(d->mSourceModel->dirLister()->showingDotFiles());
-    connect(showHiddenAction, SIGNAL(toggled(bool)), this, SLOT(setShowHiddenFiles(bool)));
+    connect(showHiddenAction, &QAction::toggled, this, &KFileTreeView::setShowHiddenFiles);
 
     menu.addAction(showHiddenAction);
     menu.exec(event->globalPos());
