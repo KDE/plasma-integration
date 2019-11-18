@@ -22,6 +22,7 @@
 
 #include <qpa/qplatformmenu.h>
 #include <qpa/qplatformsystemtrayicon.h>
+#include <QVariant>
 
 class KStatusNotifierItem;
 class SystemTrayMenuItem;
@@ -56,9 +57,9 @@ private:
 
     QString m_text;
     QIcon m_icon;
-    bool m_enabled;
-    bool m_visible;
-    bool m_separatorsCollapsible;
+    QVariant m_enabled;
+    QVariant m_visible;
+    QVariant m_separatorsCollapsible;
     quintptr m_tag;
     QPointer<QMenu> m_menu;
     QList<SystemTrayMenuItem*> m_items;

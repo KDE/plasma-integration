@@ -29,9 +29,9 @@
 
 SystemTrayMenu::SystemTrayMenu()
     : QPlatformMenu()
-    , m_enabled(true)
-    , m_visible(true)
-    , m_separatorsCollapsible(true)
+    , m_enabled(QVariant::Bool)
+    , m_visible(QVariant::Bool)
+    , m_separatorsCollapsible(QVariant::Bool)
     , m_tag(0)
 {
 }
@@ -177,11 +177,21 @@ void SystemTrayMenu::createMenu()
     connect(m_menu, &QMenu::aboutToShow, this, &QPlatformMenu::aboutToShow);
     connect(m_menu, &QMenu::aboutToHide, this, &QPlatformMenu::aboutToHide);
 
-    m_menu->setEnabled(m_enabled);
-    m_menu->setIcon(m_icon);
-    m_menu->setTitle(m_text);
-    m_menu->setVisible(m_visible);
-    m_menu->setSeparatorsCollapsible(m_separatorsCollapsible);
+    if (!m_icon.isNull()) {
+        m_menu->setIcon(m_icon);
+    }
+    if (m_menu->title() != m_text) {
+        m_menu->setTitle(m_text);
+    }
+    if (!m_enabled.isNull()) {
+        m_menu->setEnabled(m_enabled.toBool());
+    }
+    if (!m_visible.isNull()) {
+        m_menu->setVisible(m_visible.toBool());
+    }
+    if (!m_separatorsCollapsible.isNull()) {
+        m_menu->setSeparatorsCollapsible(m_separatorsCollapsible.toBool());
+    }
     for (auto item : m_items) {
         m_menu->addAction(item->action());
     }
