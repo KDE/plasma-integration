@@ -115,7 +115,7 @@ set(Qt5PlatformSupport_VERSION_STRING ${Qt5PlatformSupport_VERSION})
 
 include(FeatureSummary)
 set_package_properties(Qt5PlatformSupport PROPERTIES
-    URL "http://www.qt.io"
+    URL "https://www.qt.io"
     DESCRIPTION "Qt PlatformSupport module."
 )
 

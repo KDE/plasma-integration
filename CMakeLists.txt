@@ -28,7 +28,7 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 find_package(XCB COMPONENTS XCB)
 set_package_properties(XCB PROPERTIES
     DESCRIPTION "X protocol C-language Binding"
-    URL "http://xcb.freedesktop.org"
+    URL "https://xcb.freedesktop.org"
     TYPE REQUIRED
     PURPOSE "Required to pass style properties to native Windows on X11 Platform"
 )
@@ -63,7 +63,7 @@ set_package_properties(FontNotoSans PROPERTIES
 find_package(FontHack)
 set_package_properties(FontHack PROPERTIES
     PURPOSE "Default monospace font -- this is not detected automatically, pass -DCMAKE_DISABLE_FIND_PACKAGE_FontHack=true to mark it ignored."
-    URL "http://sourcefoundry.org/hack/"
+    URL "https://sourcefoundry.org/hack/"
     TYPE RUNTIME
 )
 

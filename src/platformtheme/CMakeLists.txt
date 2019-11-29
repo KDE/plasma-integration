@@ -1,6 +1,6 @@
 find_package(X11)
 set_package_properties(X11 PROPERTIES DESCRIPTION "Required for updating the Cursor theme on X11"
-                        URL "http://www.x.org"
+                        URL "https://www.x.org"
                         TYPE REQUIRED
                         )
 set(HAVE_X11 ${X11_FOUND})
