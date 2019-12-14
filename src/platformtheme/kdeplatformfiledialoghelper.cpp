@@ -370,6 +370,10 @@ void KDEPlatformFileDialogHelper::restoreSize()
 {
     m_dialog->winId(); // ensure there's a window created
     KSharedConfig::Ptr conf = KSharedConfig::openConfig();
+
+    // see the note below
+    m_dialog->windowHandle()->resize(m_dialog->sizeHint());
+
     KWindowConfig::restoreWindowSize(m_dialog->windowHandle(), conf->group("FileDialogSize"));
     // NOTICE: QWindow::setGeometry() does NOT impact the backing QWidget geometry even if the platform
     // window was created -> QTBUG-40584. We therefore copy the size here.
