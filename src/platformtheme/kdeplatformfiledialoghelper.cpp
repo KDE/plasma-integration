@@ -231,7 +231,7 @@ void KDEPlatformFileDialog::setDirectory(const QUrl &directory)
         KJobWidgets::setWindow(job, this);
         if (job->exec()) {
             KIO::UDSEntry entry = job->statResult();
-            if (entry.isDir()) {
+            if (!entry.isDir()) {
                 // this is probably a file remove the file part
                 m_fileWidget->setUrl(directory.adjusted(QUrl::RemoveFilename));
                 m_fileWidget->setSelectedUrl(directory);
