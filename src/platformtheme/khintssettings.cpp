@@ -481,16 +481,7 @@ void KHintsSettings::updateCursorTheme()
     KConfig config(QStringLiteral("kcminputrc"));
     KConfigGroup g(&config, "Mouse");
 
-    int size      = g.readEntry("cursorSize", -1);
-
-    // Default cursor size is 16 points
-    if (size == -1) {
-        if (QScreen *s = QGuiApplication::primaryScreen()) {
-            size = s->logicalDotsPerInchY() * 16 / 72;
-        } else {
-            size = 0;
-        }
-    }
+    int size      = g.readEntry("cursorSize", 24);
 
 #if HAVE_X11
     if (QX11Info::isPlatformX11()) {
