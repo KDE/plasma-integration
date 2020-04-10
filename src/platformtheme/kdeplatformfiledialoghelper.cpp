@@ -339,7 +339,8 @@ void KDEPlatformFileDialogHelper::initializeDialog()
              dialog->m_fileWidget->setConfirmOverwrite(true);
         }
 
-        dialog->m_fileWidget->setSupportedSchemes(options()->supportedSchemes());
+        QStringList schemes = options()->supportedSchemes();
+        dialog->m_fileWidget->setSupportedSchemes(schemes);
     }
 }
 
