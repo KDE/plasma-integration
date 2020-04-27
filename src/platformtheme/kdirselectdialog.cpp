@@ -55,6 +55,7 @@
 #include <kurlpixmapprovider.h>
 #include <kfilewidget.h>
 #include <KFileUtils>
+#include <KStandardShortcut>
 
 #include "kfiletreeview_p.h"
 #include <kfileplacesview.h>
@@ -368,7 +369,7 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
 
     d->showHiddenFoldersAction = new KToggleAction(i18nc("@option:check", "Show Hidden Folders"), this);
     d->m_actions->addAction(d->showHiddenFoldersAction->objectName(), d->showHiddenFoldersAction);
-    d->showHiddenFoldersAction->setShortcut(Qt::Key_F8);
+    d->showHiddenFoldersAction->setShortcuts(KStandardShortcut::showHideHiddenFiles());
     connect(d->showHiddenFoldersAction, &QAction::triggered, d->m_treeView, &KFileTreeView::setShowHiddenFiles);
     d->m_contextMenu->addAction(d->showHiddenFoldersAction);
     d->m_contextMenu->addSeparator();
