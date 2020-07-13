@@ -347,16 +347,11 @@ void KDEPlatformFileDialogHelper::initializeDialog()
 void KDEPlatformFileDialogHelper::exec()
 {
     restoreSize();
-    // KDEPlatformFileDialog::show() will always be called during QFileDialog::exec()
-    // discard the delayed show() it and use exec() and it will call show() for us.
-    // We can't hide and show it here because of https://bugreports.qt.io/browse/QTBUG-48248
-    m_dialog->discardDelayedShow();
     m_dialog->exec();
 }
 
 void KDEPlatformFileDialogHelper::hide()
 {
-    m_dialog->discardDelayedShow();
     m_dialog->hide();
 }
 
@@ -389,12 +384,17 @@ bool KDEPlatformFileDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowMo
     m_dialog->setWindowModality(windowModality);
     restoreSize();
     m_dialog->windowHandle()->setTransientParent(parent);
-    // Use a delayed show here to delay show() after the internal Qt invisible QDialog.
-    // The delayed call shouldn't matter, because for other "real" native QPlatformDialog
-    // implementation like Mac and Windows, the native dialog is not necessarily
-    // show up immediately.
-    m_dialog->delayedShow();
+    m_dialog->show();
     return true;
+}
+
+QVariant KDEPlatformFileDialogHelper::styleHint(StyleHint hint) const
+{
+    if (hint == DialogIsQtWindow) {
+        return true;
+    }
+
+    return QPlatformDialogHelper::styleHint(hint);
 }
 
 QList<QUrl> KDEPlatformFileDialogHelper::selectedFiles() const

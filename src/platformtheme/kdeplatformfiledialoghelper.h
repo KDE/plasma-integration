@@ -74,6 +74,8 @@ public:
     void hide() override;
     bool show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent) override;
 
+    QVariant styleHint(StyleHint hint) const override;
+
 private Q_SLOTS:
     void saveSize();
 

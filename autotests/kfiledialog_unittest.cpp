@@ -203,8 +203,6 @@ private Q_SLOTS:
 
             KFileWidget *fw = findFileWidget();
             QVERIFY(fw);
-            // real show() is delayed to next event.
-            QVERIFY(QTest::qWaitForWindowExposed(fw->window()));
             KDirOperator *op = fw->dirOperator();
             QCOMPARE(fileViewToString(op->viewMode()), fileViewToString(KFile::Tree));
             fw->setViewMode(KFile::Simple);
@@ -233,8 +231,6 @@ private Q_SLOTS:
 
             KFileWidget *fw = findFileWidget();
             QVERIFY(fw);
-            // real show() is delayed to next event.
-            QVERIFY(QTest::qWaitForWindowExposed(fw->window()));
             QCOMPARE(fw->isVisible(), true);
             fw->slotCancel();
         }
@@ -248,8 +244,6 @@ private Q_SLOTS:
 
             KFileWidget *fw = findFileWidget();
             QVERIFY(fw);
-            // real show() is delayed to next event.
-            QVERIFY(QTest::qWaitForWindowExposed(fw->window()));
             QCOMPARE(fw->isVisible(), true);
             fw->slotCancel();
         }
@@ -264,8 +258,6 @@ private Q_SLOTS:
 
             KFileWidget *fw = findFileWidget();
             QVERIFY(fw);
-            // real show() is delayed to next event.
-            QVERIFY(QTest::qWaitForWindowExposed(fw->window()));
             QCOMPARE(fw->isVisible(), true);
             fw->slotCancel();
         }
@@ -279,8 +271,6 @@ private Q_SLOTS:
 
             KFileWidget *fw = findFileWidget();
             QVERIFY(fw);
-            // real show() is delayed to next event.
-            QVERIFY(QTest::qWaitForWindowExposed(fw->window()));
             QCOMPARE(fw->isVisible(), true);
             fw->slotCancel();
         }
@@ -373,8 +363,6 @@ private Q_SLOTS:
 
             KFileWidget *fw = findFileWidget();
             QVERIFY(fw);
-            // real show() is delayed to next event.
-            QVERIFY(QTest::qWaitForWindowExposed(fw->window()));
             QCOMPARE(fw->isVisible(), true);
             fw->setUrl(dir);
             fw->slotCancel();
@@ -386,8 +374,6 @@ private Q_SLOTS:
 
             KFileWidget *fw = findFileWidget();
             QVERIFY(fw);
-            // real show() is delayed to next event.
-            QVERIFY(QTest::qWaitForWindowExposed(fw->window()));
             QCOMPARE(fw->isVisible(), true);
             QCOMPARE(dialog.directoryUrl().adjusted(QUrl::StripTrailingSlash), dir);
             fw->slotCancel();
