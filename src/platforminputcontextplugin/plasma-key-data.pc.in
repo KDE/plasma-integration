@@ -1,0 +1,8 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+includedir=${prefix}/include
+
+Name: PlasmaKeyData
+Description: Plasma's key data used for key-holding behaviour
+Version: 1.0
+Cflags: -I${includedir}/PlasmaKeyData
+Libs:
