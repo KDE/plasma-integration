@@ -19,6 +19,8 @@
  *  Boston, MA 02110-1301, USA.
  */
 
+#include "annotatingjob.h"
+
 #include "kdeplatformfiledialoghelper.h"
 #include "kdeplatformfiledialogbase_p.h"
 #include "kdirselectdialog_p.h"
@@ -112,6 +114,12 @@ KDEPlatformFileDialog::KDEPlatformFileDialog()
             m_fileWidget, &KFileWidget::slotCancel);
     connect(m_fileWidget->okButton(), &QAbstractButton::clicked, m_fileWidget, &KFileWidget::slotOk);
     connect(m_fileWidget, &KFileWidget::accepted, m_fileWidget, &KFileWidget::accept);
+    connect(this, &QDialog::accepted, [=]() {
+        if (m_trackSave) {
+            auto job = new AnnotatingJob(m_fileWidget->selectedUrls());
+            job->start();
+        }
+    });
     connect(m_fileWidget, &KFileWidget::accepted, this, &QDialog::accept);
     connect(m_fileWidget->cancelButton(), &QAbstractButton::clicked, this, &QDialog::reject);
     connect(m_fileWidget->dirOperator(), &KDirOperator::urlEntered, this, &KDEPlatformFileDialogBase::directoryEntered);
@@ -337,6 +345,10 @@ void KDEPlatformFileDialogHelper::initializeDialog()
             dialog->m_fileWidget->setConfirmOverwrite(false);
          } else if (options()->acceptMode() == QFileDialogOptions::AcceptSave) {
              dialog->m_fileWidget->setConfirmOverwrite(true);
+        }
+
+        if (options()->acceptMode() == QFileDialogOptions::AcceptSave) {
+            dialog->m_trackSave = true;
         }
 
         QStringList schemes = options()->supportedSchemes();

@@ -47,6 +47,7 @@ public:
 
 protected:
     KFileWidget *m_fileWidget;
+    bool m_trackSave = false;
 };
 
 class KDEPlatformFileDialogHelper : public QPlatformFileDialogHelper

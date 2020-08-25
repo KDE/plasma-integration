@@ -18,6 +18,7 @@ remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS)
 
 
 set(platformtheme_SRCS
+    annotatingjob.cpp
     qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
     kdeplatformtheme.cpp
     kfontsettingsdata.cpp
@@ -38,10 +39,12 @@ add_library(KDEPlasmaPlatformTheme MODULE ${platformtheme_SRCS})
 
 target_link_libraries(KDEPlasmaPlatformTheme
     PRIVATE
+        Qt5::Concurrent
         Qt5::GuiPrivate
         Qt5::DBus
         Qt5::X11Extras
         Qt5::QuickControls2
+        KF5::CoreAddons
         KF5::ConfigWidgets
         KF5::ConfigCore
         KF5::IconThemes

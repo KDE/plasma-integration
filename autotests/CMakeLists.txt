@@ -35,6 +35,7 @@ set(dbus_interface)
 qt5_add_dbus_interface(dbus_interface ../src/platformtheme/org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
 
 set(platformThemeSRCS
+  ../src/platformtheme/annotatingjob.cpp
   ../src/platformtheme/qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
   ../src/platformtheme/kdeplatformtheme.cpp
   ../src/platformtheme/kfontsettingsdata.cpp
