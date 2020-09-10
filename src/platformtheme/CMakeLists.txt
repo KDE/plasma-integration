@@ -30,6 +30,7 @@ set(platformtheme_SRCS
     kwaylandintegration.cpp
     x11integration.cpp
     main.cpp
+    qxdgdesktopportalfiledialog.cpp
 )
 
 qt5_add_dbus_interface(platformtheme_SRCS org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
@@ -54,7 +55,6 @@ target_link_libraries(KDEPlasmaPlatformTheme
         KF5::WaylandClient
         XCB::XCB
         ${QT5PLATFORMSUPPORT_LIBS}
-
 )
 
 if(HAVE_X11)

@@ -64,6 +64,8 @@ private:
 
     static void setWindowProperty(QWindow *window, const QByteArray &name, const QByteArray &value);
 
+    static bool useXdgDesktopPortal();
+
     KHintsSettings *m_hints;
     KFontSettingsData *m_fontsData;
     QScopedPointer<KWaylandIntegration> m_kwaylandIntegration;
