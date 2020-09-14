@@ -404,7 +404,7 @@ void KHintsSettings::updateQtSettings(KConfigGroup &cg)
     int startDragDistance = cg.readEntry("StartDragDist", 10);
     m_hints[QPlatformTheme::StartDragDistance] = startDragDistance;
 
-    int startDragTime = cg.readEntry("StartDragTime", 10);
+    int startDragTime = cg.readEntry("StartDragTime", 500);
     m_hints[QPlatformTheme::StartDragTime] = startDragTime;
 
     m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = cg.readEntry("SingleClick", true);
