@@ -257,6 +257,8 @@ QList<QKeySequence> KdePlatformTheme::keyBindings(QKeySequence::StandardKey key)
         return KStandardShortcut::shortcut(KStandardShortcut::TabNext);
     case QKeySequence::PreviousChild:
         return KStandardShortcut::shortcut(KStandardShortcut::TabPrev);
+    case QKeySequence::Delete:
+        return KStandardShortcut::shortcut(KStandardShortcut::MoveToTrash);
     default:
         return QPlatformTheme::keyBindings(key);
     }
