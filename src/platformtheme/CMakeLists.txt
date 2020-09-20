@@ -29,8 +29,10 @@ set(platformtheme_SRCS
     kdirselectdialog.cpp
     kwaylandintegration.cpp
     x11integration.cpp
+    colordialog.cpp
     main.cpp
     qxdgdesktopportalfiledialog.cpp
+    qml/org.kde.plasma.integration.qml.qrc
 )
 
 qt5_add_dbus_interface(platformtheme_SRCS org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
@@ -42,6 +44,7 @@ target_link_libraries(KDEPlasmaPlatformTheme
         Qt::GuiPrivate
         Qt::DBus
         Qt::X11Extras
+        Qt::QuickWidgets
         Qt::QuickControls2
         KF5::ConfigWidgets
         KF5::ConfigCore

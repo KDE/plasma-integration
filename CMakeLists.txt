@@ -17,7 +17,7 @@ include(FeatureSummary)
 include(GenerateExportHeader)
 include(KDEClangFormat)
 
-find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Widgets DBus X11Extras QuickControls2)
+find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Widgets DBus X11Extras QuickWidgets QuickControls2)
 find_package(Qt5Gui ${QT_MIN_VERSION} CONFIG REQUIRED Private)
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS

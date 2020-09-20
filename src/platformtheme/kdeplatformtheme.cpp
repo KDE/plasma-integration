@@ -50,6 +50,7 @@
 
 #include "qdbusmenubar_p.h"
 #include "qxdgdesktopportalfiledialog_p.h"
+#include "colordialog.h"
 
 static const QByteArray s_x11AppMenuServiceNamePropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_SERVICE_NAME");
 static const QByteArray s_x11AppMenuObjectPathPropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_OBJECT_PATH");
@@ -267,7 +268,12 @@ QList<QKeySequence> KdePlatformTheme::keyBindings(QKeySequence::StandardKey key)
 
 bool KdePlatformTheme::usePlatformNativeDialog(QPlatformTheme::DialogType type) const
 {
-    return type == QPlatformTheme::FileDialog && qobject_cast<QApplication*>(QCoreApplication::instance());
+    if (type == QPlatformTheme::FileDialog && qobject_cast<QApplication*>(QCoreApplication::instance())) {
+        return true;
+    } else if (type == QPlatformTheme::ColorDialog) {
+        return true;
+    }
+    return false;
 }
 
 QString KdePlatformTheme::standardButtonText(int button) const
@@ -328,6 +334,7 @@ QPlatformDialogHelper *KdePlatformTheme::createPlatformDialogHelper(QPlatformThe
         return new KDEPlatformFileDialogHelper;
     case QPlatformTheme::FontDialog:
     case QPlatformTheme::ColorDialog:
+        return new ColorDialogHelper;
     case QPlatformTheme::MessageDialog:
     default:
         return nullptr;
