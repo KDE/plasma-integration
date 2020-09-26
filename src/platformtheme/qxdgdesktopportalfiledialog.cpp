@@ -109,6 +109,7 @@ public:
     WId winId = 0;
     bool modal = false;
     bool multipleFiles = false;
+    bool selectDirectory = false;
     bool saveFile = false;
     QString acceptLabel;
     QString directory;
@@ -145,6 +146,10 @@ void QXdgDesktopPortalFileDialog::initializeDialog()
     if (options()->fileMode() == QFileDialogOptions::ExistingFiles)
         d->multipleFiles = true;
 
+    if (options()->fileMode() == QFileDialogOptions::Directory || options()->fileMode() == QFileDialogOptions::DirectoryOnly) {
+        d->selectDirectory = true;
+    }
+
     if (options()->isLabelExplicitlySet(QFileDialogOptions::Accept))
         d->acceptLabel = options()->labelText(QFileDialogOptions::Accept);
 
@@ -179,6 +184,7 @@ void QXdgDesktopPortalFileDialog::openPortal()
 
     options.insert(QLatin1String("modal"), d->modal);
     options.insert(QLatin1String("multiple"), d->multipleFiles);
+    options.insert(QLatin1String("directory"), d->selectDirectory);
 
     if (d->saveFile) {
         if (!d->directory.isEmpty())
