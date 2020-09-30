@@ -136,14 +136,13 @@ void KDirSelectDialog::Private::slotMkdir()
         name = KFileUtils::suggestName(m_parent->url(), name);
     }
 
-    QString directory = KIO::encodeFileName(QInputDialog::getText(m_parent, i18nc("@title:window", "New Folder"),
-                                            i18nc("@label:textbox", "Create new folder in:\n%1",  where),
-                                            QLineEdit::Normal, name, &ok));
+    const QString directory = QInputDialog::getText(m_parent, i18nc("@title:window", "New Folder"),
+                                                    i18nc("@label:textbox", "Create new folder in:\n%1", where),
+                                                    QLineEdit::Normal, name, &ok);
     if (!ok) {
         return;
     }
 
-    bool selectDirectory = true;
     bool writeOk = false;
     bool exists = false;
     QUrl folderurl(m_parent->url());
@@ -159,7 +158,7 @@ void KDirSelectDialog::Private::slotMkdir()
         folderurl.setPath(folderurl.path() + QLatin1Char('/') + *it);
         KIO::StatJob *job = KIO::stat(folderurl);
         KJobWidgets::setWindow(job, m_parent);
-        job->setDetails(0); //We only want to know if it exists, 0 == that.
+        job->setDetails(KIO::StatNoDetails);  // We only want to know if it exists
         job->setSide(KIO::StatJob::DestinationSide);
         exists = job->exec();
         if (!exists) {
@@ -172,12 +171,20 @@ void KDirSelectDialog::Private::slotMkdir()
     if (exists) { // url was already existent
         QString which = folderurl.toDisplayString(QUrl::PreferLocalFile);
         KMessageBox::sorry(m_parent, i18n("A file or folder named %1 already exists.", which));
-        selectDirectory = false;
-    } else if (!writeOk) {
-        KMessageBox::sorry(m_parent, i18n("You do not have permission to create that folder."));
-    } else if (selectDirectory) {
+        // Select the existing dir (if a file with that name exists, it won't be selected since
+        // we only show dirs here, this is cheaper than checking if the existing item is a file
+        // or folder).
         m_parent->setCurrentUrl(folderurl);
+        return;
     }
+
+    if (!writeOk) {
+        KMessageBox::sorry(m_parent, i18n("You do not have permission to create that folder."));
+        return;
+    }
+
+    // Select the newly created dir
+    m_parent->setCurrentUrl(folderurl);
 }
 
 void KDirSelectDialog::Private::slotCurrentChanged()
