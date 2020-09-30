@@ -29,7 +29,6 @@ class QAbstractItemView;
 /**
  * A pretty dialog for a KDirSelect control for selecting directories.
  * @author Michael Jarrett <michaelj@corel.com>
- * @deprecated since 5.0, use QFileDialog::getExistingDirectoryUrl instead.
  */
 class KDirSelectDialog : public KDEPlatformFileDialogBase
 {
