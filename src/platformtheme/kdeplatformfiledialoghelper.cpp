@@ -40,7 +40,6 @@
 #include <QPushButton>
 #include <QWindow>
 #include <QTextStream>
-
 namespace
 {
 
@@ -279,9 +278,18 @@ void KDEPlatformFileDialogHelper::initializeDialog()
     m_dialogInitialized = true;
     if (options()->testOption(QFileDialogOptions::ShowDirsOnly)) {
         m_dialog->deleteLater();
-        m_dialog = new KDirSelectDialog(options()->initialDirectory());
-        connect(m_dialog, &QDialog::accepted, this, &QPlatformDialogHelper::accept);
-        connect(m_dialog, &QDialog::rejected, this, &QPlatformDialogHelper::reject);
+        KDirSelectDialog *dialog = new KDirSelectDialog(options()->initialDirectory());
+        m_dialog = dialog;
+        connect(dialog, &QDialog::accepted, this, &QPlatformDialogHelper::accept);
+        connect(dialog, &QDialog::rejected, this, &QPlatformDialogHelper::reject);
+        if (options()->isLabelExplicitlySet(QFileDialogOptions::Accept)) { // OK button
+            dialog->setOkButtonText(options()->labelText(QFileDialogOptions::Accept));
+        } else if (options()->isLabelExplicitlySet(QFileDialogOptions::Reject)) { // Cancel button
+            dialog->setCancelButtonText(options()->labelText(QFileDialogOptions::Reject));
+        } else if (options()->isLabelExplicitlySet(QFileDialogOptions::LookIn)) { // Location label
+            //Not implemented yet.
+        }
+
         if (!options()->windowTitle().isEmpty())
             m_dialog->setWindowTitle(options()->windowTitle());
     } else {

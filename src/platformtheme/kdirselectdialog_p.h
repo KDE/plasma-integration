@@ -106,6 +106,8 @@ public:
     QString currentFilterText() override;
     QList<QUrl> selectedFiles() override;
 
+    void setOkButtonText(const QString &text);
+    void setCancelButtonText(const QString &text);
 public Q_SLOTS:
     /**
      * Sets the current @p url in the dialog.

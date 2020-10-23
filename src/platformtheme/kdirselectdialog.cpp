@@ -564,6 +564,16 @@ QList<QUrl> KDirSelectDialog::selectedFiles()
     return QList<QUrl>() << url();
 }
 
+void KDirSelectDialog::setOkButtonText(const QString &text)
+{
+    m_buttons->button(QDialogButtonBox::Ok)->setText(text);
+}
+
+void KDirSelectDialog::setCancelButtonText(const QString &text)
+{
+    m_buttons->button(QDialogButtonBox::Cancel)->setText(text);
+}
+
 void KDirSelectDialog::setDirectory(const QUrl &directory)
 {
     setCurrentUrl(directory);
