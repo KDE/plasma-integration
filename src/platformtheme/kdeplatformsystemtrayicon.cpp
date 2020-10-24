@@ -321,11 +321,11 @@ void KDEPlatformSystemTrayIcon::init()
         connect(m_sni, &KStatusNotifierItem::activateRequested, [this](bool active, const QPoint &pos) {
             Q_UNUSED(active)
             Q_UNUSED(pos)
-            emit activated(QPlatformSystemTrayIcon::Trigger);
+            Q_EMIT activated(QPlatformSystemTrayIcon::Trigger);
         });
         connect(m_sni, &KStatusNotifierItem::secondaryActivateRequested, [this](const QPoint &pos) {
             Q_UNUSED(pos)
-            emit activated(QPlatformSystemTrayIcon::MiddleClick);
+            Q_EMIT activated(QPlatformSystemTrayIcon::MiddleClick);
         });
     }
 }

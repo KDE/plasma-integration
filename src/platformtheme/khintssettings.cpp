@@ -282,7 +282,7 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
             // QTBUG QGuiApplication::paletteChanged() signal is only emitted by QGuiApplication
             // so things like SystemPalette QtQuick item that use it won't notice a palette
             // change when a QApplication which causes e.g. QML System Settings modules to not update
-            emit qApp->paletteChanged(palette);
+            Q_EMIT qApp->paletteChanged(palette);
         } else if (qobject_cast<QGuiApplication *>(QCoreApplication::instance())) {
             QGuiApplication::setPalette(*m_palettes[QPlatformTheme::SystemPalette]);
         }

@@ -135,7 +135,7 @@ void QDBusMenuBar::handleReparent(QWindow *newParentWindow)
         registerMenuBar();
     }
 
-    emit windowChanged(newParentWindow, oldWindow);
+    Q_EMIT windowChanged(newParentWindow, oldWindow);
 }
 
 QPlatformMenu *QDBusMenuBar::menuForTag(quintptr tag) const
