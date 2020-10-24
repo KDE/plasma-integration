@@ -68,8 +68,7 @@ public:
     Private(bool localOnly, KDirSelectDialog *parent)
         : m_parent(parent),
           m_localOnly(localOnly),
-          m_comboLocked(false),
-          m_urlCombo(nullptr)
+          m_comboLocked(false)
     {
     }
 
@@ -87,21 +86,21 @@ public:
     void slotDelete();
     void slotProperties();
 
-    KDirSelectDialog *m_parent;
+    KDirSelectDialog *const m_parent;
     bool m_localOnly : 1;
     bool m_comboLocked : 1;
     QUrl m_rootUrl;
     QUrl m_startDir;
-    KFileTreeView *m_treeView;
-    QMenu *m_contextMenu;
-    KActionCollection *m_actions;
-    KFilePlacesView *m_placesView;
-    KHistoryComboBox *m_urlCombo;
+    KFileTreeView *m_treeView = nullptr;
+    QMenu *m_contextMenu = nullptr;
+    KActionCollection *m_actions = nullptr;
+    KFilePlacesView *m_placesView = nullptr;
+    KHistoryComboBox *m_urlCombo = nullptr;
     QString m_recentDirClass;
     QUrl m_startURL;
-    QAction *moveToTrash;
-    QAction *deleteAction;
-    QAction *showHiddenFoldersAction;
+    QAction *moveToTrash = nullptr;
+    QAction *deleteAction = nullptr;
+    QAction *showHiddenFoldersAction = nullptr;
 };
 
 void KDirSelectDialog::Private::readConfig(const KSharedConfig::Ptr &config, const QString &group)

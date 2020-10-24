@@ -304,7 +304,6 @@ QAction *SystemTrayMenuItem::action() const
 
 KDEPlatformSystemTrayIcon::KDEPlatformSystemTrayIcon()
     : QPlatformSystemTrayIcon()
-    , m_sni(nullptr)
 {
 }
 

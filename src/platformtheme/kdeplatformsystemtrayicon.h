@@ -115,7 +115,7 @@ public:
     QPlatformMenu *createMenu() const override;
 
 private:
-    KStatusNotifierItem *m_sni;
+    KStatusNotifierItem *m_sni = nullptr;
 };
 
 #endif

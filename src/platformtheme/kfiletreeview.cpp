@@ -47,9 +47,9 @@ public:
     void _k_currentChanged(const QModelIndex &, const QModelIndex &);
     void _k_expanded(const QModelIndex &);
 
-    KFileTreeView *q;
-    KDirModel *mSourceModel;
-    KDirSortFilterProxyModel *mProxyModel;
+    KFileTreeView *const q;
+    KDirModel *mSourceModel = nullptr;
+    KDirSortFilterProxyModel *mProxyModel = nullptr;
 };
 
 QUrl KFileTreeView::Private::urlForProxyIndex(const QModelIndex &index) const
