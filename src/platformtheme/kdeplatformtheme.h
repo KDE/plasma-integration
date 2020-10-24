@@ -66,8 +66,8 @@ private:
 
     static bool useXdgDesktopPortal();
 
-    KHintsSettings *m_hints;
-    KFontSettingsData *m_fontsData;
+    KHintsSettings *m_hints = nullptr;
+    KFontSettingsData *m_fontsData = nullptr;
     QScopedPointer<KWaylandIntegration> m_kwaylandIntegration;
     QScopedPointer<X11Integration> m_x11Integration;
 

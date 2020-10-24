@@ -84,8 +84,8 @@ Q_SIGNALS:
     void windowChanged(QWindow *newWindow, QWindow *oldWindow);
 
 private:
-    QDBusPlatformMenu *m_menu;
-    QDBusMenuAdaptor *m_menuAdaptor;
+    QDBusPlatformMenu *m_menu = nullptr;
+    QDBusMenuAdaptor *m_menuAdaptor = nullptr;
     QHash<quintptr, QDBusPlatformMenuItem *> m_menuItems;
     QPointer<QWindow> m_window;
     QString m_objectPath;

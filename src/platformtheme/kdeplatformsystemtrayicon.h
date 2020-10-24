@@ -91,7 +91,7 @@ public:
 
 private:
     quintptr m_tag;
-    QAction *m_action;
+    QAction *m_action = nullptr;
 };
 
 class KDEPlatformSystemTrayIcon : public QPlatformSystemTrayIcon
