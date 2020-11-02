@@ -143,7 +143,11 @@ KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
     m_hints[QPlatformTheme::DialogButtonBoxButtonsHaveIcons] = readConfigValue(cg, QStringLiteral("ShowIconsOnPushButtons"), true);
     m_hints[QPlatformTheme::UseFullScreenForPopupMenu] = true;
     m_hints[QPlatformTheme::KeyboardScheme] = QPlatformTheme::KdeKeyboardScheme;
-    m_hints[QPlatformTheme::UiEffects] = readConfigValue(cg, QStringLiteral("GraphicEffectsLevel"), 0) != 0 ? QPlatformTheme::GeneralUiEffect : 0;
+
+    int uiEffectsFlags = readConfigValue(cg, QStringLiteral("GraphicEffectsLevel"), 0) != 0 ? QPlatformTheme::GeneralUiEffect : 0;
+    uiEffectsFlags |= QPlatformTheme::HoverEffect;
+    m_hints[QPlatformTheme::UiEffects] = uiEffectsFlags;
+
     m_hints[QPlatformTheme::IconPixmapSizes] = QVariant::fromValue(QList<int>() << 512 << 256 << 128 << 64 << 32 << 22 << 16 << 8);
 
     m_hints[QPlatformTheme::WheelScrollLines] = readConfigValue(cg, QStringLiteral("WheelScrollLines"), 3);
