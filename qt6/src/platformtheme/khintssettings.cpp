@@ -88,7 +88,7 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
 
     m_hints[QPlatformTheme::ToolBarIconSize] = KIconLoader::global()->currentSize(KIconLoader::MainToolbar);
 
-    m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = readConfigValue(cg, QStringLiteral("SingleClick"), true);
+    m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = readConfigValue(cg, QStringLiteral("SingleClick"), false);
 
     m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue(QStringLiteral("Icons"), QStringLiteral("Theme"), QStringLiteral("breeze"));
 
@@ -367,7 +367,7 @@ void KHintsSettings::updateQtSettings(KConfigGroup &cg)
     int startDragTime = cg.readEntry("StartDragTime", 500);
     m_hints[QPlatformTheme::StartDragTime] = startDragTime;
 
-    m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = cg.readEntry("SingleClick", true);
+    m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = cg.readEntry("SingleClick", false);
 
     updateShowIconsInMenuItems(cg);
 
