@@ -349,7 +349,7 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     QAction *newFolder = new QAction(i18nc("@action:inmenu", "New Folder..."), this);
     d->m_actions->addAction(newFolder->objectName(), newFolder);
     newFolder->setIcon(QIcon::fromTheme(QStringLiteral("folder-new")));
-    newFolder->setShortcut(Qt::Key_F10);
+    newFolder->setShortcuts(KStandardShortcut::createFolder());
     connect(newFolder, SIGNAL(triggered(bool)), this, SLOT(slotNewFolder()));
     d->m_contextMenu->addAction(newFolder);
 
