@@ -28,7 +28,7 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
     ecm_mark_as_test(${_testname})
     ecm_mark_nongui_executable(${_testname})
     target_include_directories(${_testname} PRIVATE ${CMAKE_BINARY_DIR}/src/platformtheme)
-    target_link_libraries(${_testname} Qt::GuiPrivate Qt::Test Qt::DBus Qt::X11Extras Qt::QuickControls2 ${QT5PLATFORMSUPPORT_LIBS} KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::KIOFileWidgets KF5::I18n KF5::Notifications KF5::WindowSystem KF5::WaylandClient XCB::XCB)
+    target_link_libraries(${_testname} Qt::GuiPrivate Qt::Test Qt::DBus Qt::X11Extras Qt::QuickWidgets Qt::QuickControls2 ${QT5PLATFORMSUPPORT_LIBS} KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::KIOFileWidgets KF5::I18n KF5::Notifications KF5::WindowSystem KF5::WaylandClient XCB::XCB)
 endmacro()
 
 set(dbus_interface)
@@ -46,6 +46,8 @@ set(platformThemeSRCS
   ../src/platformtheme/kfiletreeview.cpp
   ../src/platformtheme/kwaylandintegration.cpp
   ../src/platformtheme/x11integration.cpp
+  ../src/platformtheme/colordialog.cpp
+  ../src/platformtheme/qml/org.kde.plasma.integration.qml.qrc
   ../src/platformtheme/qxdgdesktopportalfiledialog.cpp
   ${dbus_interface}
 )

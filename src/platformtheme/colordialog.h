@@ -26,12 +26,21 @@
 #include <QPointer>
 #include <qpa/qplatformdialoghelper.h>
 
+class ColorDialog : public QDialog
+{
+    Q_OBJECT
+
+    QPointer<QQuickWidget> view;
+
+public:
+    explicit ColorDialog();
+};
+
 class ColorDialogHelper : public QPlatformColorDialogHelper
 {
     Q_OBJECT
 
-    QPointer<QDialog> dialog;
-    QPointer<QQuickWidget> view;
+    QPointer<ColorDialog> dialog;
 
 public:
     ColorDialogHelper();

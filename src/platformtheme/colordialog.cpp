@@ -20,16 +20,40 @@
 
 #include <QQmlApplicationEngine>
 #include <QStackedLayout>
+#include <QPushButton>
 #include "colordialog.h"
 
-ColorDialogHelper::ColorDialogHelper() : QPlatformColorDialogHelper(), view(nullptr)
+ColorDialog::ColorDialog() : QDialog()
+{
+    setLayout(new QVBoxLayout);
+
+    view = new QQuickWidget(this);
+    const QUrl dialogURL(QStringLiteral("qrc:/org/kde/plasma/integration/ColorDialog.qml"));
+    QObject::connect(
+        view, &QQuickWidget::statusChanged,
+        [=](QQuickWidget::Status status) {
+            if (status == QQuickWidget::Error) {
+                qDebug() << view->errors();
+                qFatal("Failed to load color dialog.");
+            }
+        }
+    );
+    view->setSource(dialogURL);
+    view->setResizeMode(QQuickWidget::SizeRootObjectToView);
+
+    layout()->addWidget(view);
+    layout()->addWidget(new QPushButton(QStringLiteral("yate")));
+    layout()->addWidget(new QPushButton(QStringLiteral("yeet")));
+}
+
+ColorDialogHelper::ColorDialogHelper() : QPlatformColorDialogHelper()
 {
 
 }
 
 ColorDialogHelper::~ColorDialogHelper()
 {
-    delete view;
+
 }
 
 void ColorDialogHelper::exec()
@@ -39,32 +63,18 @@ void ColorDialogHelper::exec()
 
 bool ColorDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowModality modality, QWindow *parentWindow)
 {
-    if (view.isNull()) {
-        dialog = new QDialog;
-        view = new QQuickWidget;
-        const QUrl dialogURL(QStringLiteral("qrc:/org/kde/plasma/integration/ColorDialog.qml"));
-        QObject::connect(
-            view, &QQuickWidget::statusChanged,
-            [=](QQuickWidget::Status status) {
-                if (status == QQuickWidget::Error) {
-                    qDebug() << view->errors();
-                    qFatal("Failed to load color dialog.");
-                }
-            }
-        );
-        view->setSource(dialogURL);
-        view->setResizeMode(QQuickWidget::SizeRootObjectToView);
-        dialog->setWindowFlags(windowFlags);
+    if (dialog.isNull()) {
+        dialog = new ColorDialog;
         dialog->setMinimumSize(QSize(400, 500));
-        dialog->setMaximumSize(QSize(400, 500));
-        auto box = new QStackedLayout(dialog.data());
-        box->addWidget(view);
-        box->setContentsMargins(0, 0, 0, 0);
-        dialog->setLayout(box);
     }
-    dialog->show();
+
+    dialog->setWindowModality(modality);
+    dialog->setWindowFlags(windowFlags);
+
+    dialog->winId();
     dialog->windowHandle()->setTransientParent(parentWindow);
-    dialog->windowHandle()->setModality(modality);
+
+    dialog->show();
     return true;
 }
 

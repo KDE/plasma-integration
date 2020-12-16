@@ -15,6 +15,7 @@ ColumnLayout {
         Layout.fillHeight: true
 
         PencilBox {}
+        PencilBox {}
     }
     ToolBar {
         Layout.fillWidth: true
