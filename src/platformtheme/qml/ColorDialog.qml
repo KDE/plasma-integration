@@ -8,6 +8,9 @@ ColumnLayout {
 
     property color currentColor: "cyan"
 
+    width: 400
+    height: 500
+
     spacing: 0
 
     Kirigami.SwipeNavigator {
@@ -15,7 +18,8 @@ ColumnLayout {
         Layout.fillHeight: true
 
         PencilBox {}
-        PencilBox {}
+        HSV {}
+        RGB {}
     }
     ToolBar {
         Layout.fillWidth: true

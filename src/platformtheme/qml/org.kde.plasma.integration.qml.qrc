@@ -4,5 +4,9 @@
         <file>ColorCell.qml</file>
         <file>Pencil.qml</file>
         <file>PencilBox.qml</file>
+        <file>HSV.qml</file>
+        <file>RGB.qml</file>
+        <file>DraggyThingy.qml</file>
+        <file>Slidy.qml</file>
     </qresource>
 </RCC>

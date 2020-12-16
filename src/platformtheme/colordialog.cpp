@@ -25,7 +25,7 @@
 
 ColorDialog::ColorDialog() : QDialog()
 {
-    setLayout(new QVBoxLayout);
+    setLayout(new QStackedLayout);
 
     view = new QQuickWidget(this);
     const QUrl dialogURL(QStringLiteral("qrc:/org/kde/plasma/integration/ColorDialog.qml"));
@@ -42,8 +42,10 @@ ColorDialog::ColorDialog() : QDialog()
     view->setResizeMode(QQuickWidget::SizeRootObjectToView);
 
     layout()->addWidget(view);
-    layout()->addWidget(new QPushButton(QStringLiteral("yate")));
-    layout()->addWidget(new QPushButton(QStringLiteral("yeet")));
+    layout()->setContentsMargins(0, 0, 0, 0);
+
+    setMinimumSize(400, 500);
+    setBaseSize(400, 500);
 }
 
 ColorDialogHelper::ColorDialogHelper() : QPlatformColorDialogHelper()
@@ -65,7 +67,7 @@ bool ColorDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowModality mod
 {
     if (dialog.isNull()) {
         dialog = new ColorDialog;
-        dialog->setMinimumSize(QSize(400, 500));
+        dialog->setMinimumSize(QSize(500, 400));
     }
 
     dialog->setWindowModality(modality);

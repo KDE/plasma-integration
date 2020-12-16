@@ -5,12 +5,14 @@ import org.kde.kirigami 2.12 as Kirigami
 import QtGraphicalEffects 1.12
 
 ColumnLayout {
+    property int pencilWidth: 22
+
 	component PencilTip : Canvas {
 		id: tip
         property int nibHeight: 10
         property int trueHeight: 25
 		implicitHeight: trueHeight + 10
-		implicitWidth: 20
+		implicitWidth: pencil.pencilWidth
 		property color color
 		onPaint: {
             var painty = getContext("2d")
@@ -39,14 +41,14 @@ ColumnLayout {
             painty.clip()
 
             painty.fillStyle = color
-            painty.fillRect(0, 0, trueWidth, nibHeight)
+            painty.fillRect(0, 0, implicitWidth, nibHeight)
 
             painty.fillStyle = tipGradient
-            painty.fillRect(0, 0, trueWidth, nibHeight)
+            painty.fillRect(0, 0, implicitWidth, nibHeight)
 		}
 	}
 	component PencilShaft : Rectangle {
-		implicitWidth: 20
+		implicitWidth: pencil.pencilWidth
 
         Rectangle {
             height: parent.width
@@ -57,7 +59,7 @@ ColumnLayout {
             }
             rotation: 90
             transformOrigin: Item.TopLeft
-            transform: Translate { x: 20 }
+            transform: Translate { x: pencil.pencilWidth }
             y: parent.height
 
             gradient: Gradient {
