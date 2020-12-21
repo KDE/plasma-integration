@@ -471,7 +471,7 @@ void KHintsSettings::loadPalettes()
             return;
         }
 
-        const QString scheme = readConfigValue(QStringLiteral("General"), QStringLiteral("ColorScheme"), QStringLiteral("Breeze")).toString();
+        const QString scheme = readConfigValue(QStringLiteral("General"), QStringLiteral("ColorScheme"), QStringLiteral("BreezeLight")).toString();
         path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("color-schemes/") + scheme + QStringLiteral(".colors"));
 
         if (!path.isEmpty()) {
