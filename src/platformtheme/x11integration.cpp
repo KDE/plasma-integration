@@ -62,6 +62,27 @@ bool X11Integration::eventFilter(QObject *watched, QEvent *event)
             QPlatformSurfaceEvent *pe = static_cast<QPlatformSurfaceEvent*>(event);
             if (!w->flags().testFlag(Qt::ForeignWindow)) {
                 if (pe->surfaceEventType() == QPlatformSurfaceEvent::SurfaceCreated) {
+                    auto flags = w->flags();
+                    // A recent KWin change means it now follows WindowButtonHints on X11
+                    // Some KDE applications use QDialogs for their main window,
+                    // which means the KWin now surfaces those windows having the wrong hints.
+                    // To avoid clients changing, we adjust flags here.
+                    // This is documented as being only available on some platforms,
+                    // so altering is relatively safe.
+                    if (flags.testFlag(Qt::Dialog)) {
+                        if (!w->transientParent()) {
+                            flags.setFlag(Qt::WindowMinimizeButtonHint, true);
+                        }
+
+                        // QWINDOWSIZE_MAX from qwindow_p.h
+                        const auto maxWindowSize = ((1<<24)-1);
+                        if (w->maximumSize() == QSize(maxWindowSize, maxWindowSize)) {
+                            flags.setFlag(Qt::WindowMaximizeButtonHint, true);
+                        }
+
+                        w->setFlags(flags);
+                    }
+
                     if (qApp->property(s_schemePropertyName).isValid()) {
                         installColorScheme(w);
                     }
