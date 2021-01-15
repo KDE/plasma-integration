@@ -47,7 +47,7 @@ static QList<TooltipData> dataForIndex(const QString &ch, bool upperCase)
     return ret;
 }
 
-PlasmaIMContext::PlasmaIMContext()
+PlasmaIMContext::PlasmaIMContext(OptionalContext ctx) : ctx(ctx)
 {
     connect(watcher.data(), &KConfigWatcher::configChanged, this, &PlasmaIMContext::configChangedHandler);
 }
@@ -60,7 +60,7 @@ PlasmaIMContext::~PlasmaIMContext()
     }
 }
 
-bool PlasmaIMContext::isValid() const
+bool PlasmaIMContext::isValidImpl() const
 {
     return true;
 }
@@ -76,7 +76,7 @@ void PlasmaIMContext::cleanUpState()
     preHoldText = QString();
 }
 
-void PlasmaIMContext::setFocusObject(QObject *object)
+void PlasmaIMContext::setFocusObjectImpl(QObject *object)
 {
     m_focusObject = object;
 }
@@ -142,7 +142,7 @@ void PlasmaIMContext::applyReplacement(const QString &data)
     }
 }
 
-bool PlasmaIMContext::filterEvent(const QEvent *event)
+bool PlasmaIMContext::filterEventImpl(const QEvent *event)
 {
     bool isAccent = keyboard.readEntry("KeyRepeat", "accent") == QLatin1String("accent");
     bool isNothing = keyboard.readEntry("KeyRepeat", "accent") == QLatin1String("nothing");

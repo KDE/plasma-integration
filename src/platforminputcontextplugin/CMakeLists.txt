@@ -8,6 +8,7 @@ remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 add_library(input_plugin MODULE
     main.cpp
     plasmaimcontext.cpp
+    loader.cpp
 )
 
 target_link_libraries(input_plugin

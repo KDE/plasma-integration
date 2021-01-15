@@ -18,34 +18,22 @@
  *  Boston, MA 02110-1301, USA.
  */
 
-#include <QObject>
-#include <QtPlugin>
-#include <qpa/qplatforminputcontextplugin_p.h>
+#ifndef LOADER_H
+#define LOADER_H
 
-#include "loader.h"
+// stdlib
+#include <optional>
 
-#include "plasmaimcontext.h"
+// qt
+#include <QSharedPointer>
+#include <qpa/qplatforminputcontext.h>
 
 QT_BEGIN_NAMESPACE
 
-class PlasmaIM : public QPlatformInputContextPlugin
-{
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID QPlatformInputContextFactoryInterface_iid FILE "plasmaim.json")
+using OptionalContext = std::optional<QSharedPointer<QPlatformInputContext>>;
 
-public:
-    QPlatformInputContext *create(const QString&, const QStringList&) Q_DECL_OVERRIDE;
-};
-
-QPlatformInputContext *PlasmaIM::create(const QString& system, const QStringList&)
-{
-    if (system == "plasmaim") {
-        return new PlasmaIMContext(chainloadContext());
-    }
-
-    return nullptr;
-}
+OptionalContext chainloadContext();
 
 QT_END_NAMESPACE
 
-#include "main.moc"
+#endif
