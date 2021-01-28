@@ -27,10 +27,13 @@
 #include <QStringBuilder>
 #include <QToolTip>
 
-// Widgets for the popup
+// Things used by the popup
+#include <KLocalizedString>
 #include <QGridLayout>
 #include <QLabel>
+#include <QProcess>
 #include <QPushButton>
+#include <qsizepolicy.h>
 
 #include "data/plasmakeydata.h"
 
@@ -104,6 +107,7 @@ void PlasmaIMContext::showPopup(const QList<TooltipData> &text)
     auto grid = new QGridLayout(popup.data());
     popup->setLayoutDirection(isRtl ? Qt::RightToLeft : Qt::LeftToRight);
     popup->setLayout(grid);
+    popup->setAttribute(Qt::WA_AlwaysShowToolTips);
     int col = 0;
     for (auto item : text) {
         auto label = new QLabel(item.character, popup.data());
@@ -122,6 +126,15 @@ void PlasmaIMContext::showPopup(const QList<TooltipData> &text)
 
         col++;
     }
+
+    auto button = new QPushButton();
+    button->setIcon(QIcon::fromTheme("settings-configure"));
+    button->setToolTip(i18n("Configure key held behaviour..."));
+    connect(button, &QPushButton::clicked, []{
+        QProcess::startDetached(QStringLiteral("systemsettings5"), {QStringLiteral("kcm_keyboard")});
+    });
+    button->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+    grid->addWidget(button, 0, col, 2, 1);
 
     connect(parentWin, &QWindow::activeChanged, this, &PlasmaIMContext::cleanUpState, Qt::UniqueConnection);
 
