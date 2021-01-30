@@ -1,5 +1,3 @@
-get_target_property(PLUGIN_DIR Qt::Gui IMPORTED_LOCATION_UNUSED)
-
 # keyholdmanager has a ton of definitions where
 # needing explicit qstringliteral would negatively affect
 # code readability
