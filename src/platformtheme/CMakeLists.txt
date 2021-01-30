@@ -39,10 +39,10 @@ add_library(KDEPlasmaPlatformTheme MODULE ${platformtheme_SRCS})
 
 target_link_libraries(KDEPlasmaPlatformTheme
     PRIVATE
-        Qt5::GuiPrivate
-        Qt5::DBus
-        Qt5::X11Extras
-        Qt5::QuickControls2
+        Qt::GuiPrivate
+        Qt::DBus
+        Qt::X11Extras
+        Qt::QuickControls2
         KF5::ConfigWidgets
         KF5::ConfigCore
         KF5::IconThemes
@@ -58,7 +58,7 @@ target_link_libraries(KDEPlasmaPlatformTheme
 )
 
 if(HAVE_X11)
-  target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt5::X11Extras ${X11_Xcursor_LIB} ${XCB_XCB_LIBRARY})
+  target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt::X11Extras ${X11_Xcursor_LIB} ${XCB_XCB_LIBRARY})
 endif()
 
 set_target_properties(KDEPlasmaPlatformTheme PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/platformthemes/")

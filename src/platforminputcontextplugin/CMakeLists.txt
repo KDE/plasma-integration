@@ -1,4 +1,4 @@
-get_target_property(PLUGIN_DIR Qt5::Gui IMPORTED_LOCATION_UNUSED)
+get_target_property(PLUGIN_DIR Qt::Gui IMPORTED_LOCATION_UNUSED)
 
 # keyholdmanager has a ton of definitions where
 # needing explicit qstringliteral would negatively affect
@@ -11,11 +11,11 @@ add_library(input_plugin MODULE
 )
 
 target_link_libraries(input_plugin
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Quick
-    Qt5::Widgets
-    Qt5::GuiPrivate
+    Qt::Core
+    Qt::Gui
+    Qt::Quick
+    Qt::Widgets
+    Qt::GuiPrivate
     KF5::ConfigCore
 )
 set_target_properties(input_plugin PROPERTIES OUTPUT_NAME plasmaimplatforminputcontextplugin)
