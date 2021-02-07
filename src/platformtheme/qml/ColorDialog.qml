@@ -14,12 +14,23 @@ ColumnLayout {
     spacing: 0
 
     Kirigami.SwipeNavigator {
+        id: sn
+
+        onCurrentIndexChanged: {
+            switch (currentIndex) {
+            case 0:
+                break
+            default:
+                this.pages[currentIndex].updateColours()
+            }
+        }
+
         Layout.fillWidth: true
         Layout.fillHeight: true
 
-        PencilBox {}
-        HSV {}
-        RGB {}
+        PencilBox { id: pencilBox }
+        HSV { id: hsv }
+        RGB { id: rgb }
     }
     ToolBar {
         Layout.fillWidth: true
@@ -29,6 +40,8 @@ ColumnLayout {
             anchors.fill: parent
             ColorCell {
                 color: root.currentColor
+
+                Layout.fillWidth: true
             }
         }
     }

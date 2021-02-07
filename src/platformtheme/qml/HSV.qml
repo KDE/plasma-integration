@@ -6,8 +6,11 @@ import org.kde.private.plasmaintegration 1.0 as PI
 import QtGraphicalEffects 1.12
 
 Kirigami.Page {
+    id: hsvPage
     title: "HSV"
     bottomPadding: 0
+
+    property bool updating: false
 
     PI.HSVCircle {
         id: canvas
@@ -25,14 +28,33 @@ Kirigami.Page {
         visible: false
     }
 
+    function updateColours() {
+        hsvPage.updating = true
+
+        slider.value = root.currentColor.hsvValue
+        const point = canvas.mapFromRGB(root.currentColor)
+        draggyThingy.x = point.x-draggyThingy.width/2
+        draggyThingy.y = point.y-draggyThingy.height/2
+
+        hsvPage.updating = false
+    }
+
+    function updateRoot() {
+        root.currentColor = canvas.mapToRGB(draggyThingy.x-width/2, draggyThingy.y-height/2)
+    }
+
     Connections {
-        target: root
-        function onCurrentColorChanged() {
-            draggyThingy.suppress = true
-            let point = canvas.mapFromRGB(root.currentColor)
-            draggyThingy.x = point.x
-            draggyThingy.y = point.y
-        }
+        enabled: !hsvPage.updating
+        target: draggyThingy
+
+        function onXChanged() { updateRoot() }
+        function onYChanged() { updateRoot() }
+    }
+    Connections {
+        enabled: !hsvPage.updating
+        target: slider
+
+        function onValueChanged() { updateRoot() }
     }
 
     ColumnLayout {
@@ -50,20 +72,7 @@ Kirigami.Page {
             }
             DraggyThingy {
                 id: draggyThingy
-                property bool suppress: false
-
-                onXChanged: {
-                    color = canvas.mapToRGB(x, y)
-                    if (!this.suppress) {
-                        root.currentColor = canvas.mapToRGB(x, y)
-                    }
-                }
-                onYChanged: {
-                    color = canvas.mapToRGB(x, y)
-                    if (!this.suppress) {
-                        root.currentColor = canvas.mapToRGB(x, y)
-                    }
-                }
+                color: "transparent"
 
                 DragHandler { margin: 11 }
             }
@@ -71,10 +80,6 @@ Kirigami.Page {
 
         Slidy {
             id: slider
-            onValueChanged: {
-                draggyThingy.color = canvas.mapToRGB(draggyThingy.x, draggyThingy.y)
-                root.currentColor = canvas.mapToRGB(draggyThingy.x, draggyThingy.y)
-            }
         }
     }
 }
