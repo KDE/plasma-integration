@@ -73,6 +73,7 @@ Kirigami.Page {
             "#2e3134",
             "#b6b9bd",
         ],
+        // Did I eat my drink? I thought milk was pink?
         [
             "#a20967",
             "#99002e",
