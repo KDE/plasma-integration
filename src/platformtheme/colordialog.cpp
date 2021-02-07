@@ -90,6 +90,15 @@ void ColorDialogHelper::setCurrentColor(const QColor& color)
 
 }
 
+QVariant ColorDialogHelper::styleHint(StyleHint hint) const
+{
+    if (hint == DialogIsQtWindow) {
+        return true;
+    }
+
+    return QPlatformDialogHelper::styleHint(hint);
+}
+
 QColor ColorDialogHelper::currentColor() const
 {
     return QColor();

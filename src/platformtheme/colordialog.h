@@ -50,6 +50,8 @@ public:
     void hide() override;
     void setCurrentColor(const QColor& color) override;
     QColor currentColor() const override;
+
+    QVariant styleHint(StyleHint hint) const override;
 };
 
 #endif
