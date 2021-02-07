@@ -25,6 +25,16 @@ Kirigami.Page {
         visible: false
     }
 
+    Connections {
+        target: root
+        function onCurrentColorChanged() {
+            draggyThingy.suppress = true
+            let point = canvas.mapFromRGB(root.currentColor)
+            draggyThingy.x = point.x
+            draggyThingy.y = point.y
+        }
+    }
+
     ColumnLayout {
         anchors.centerIn: parent
         spacing: Kirigami.Units.largeSpacing
@@ -40,14 +50,19 @@ Kirigami.Page {
             }
             DraggyThingy {
                 id: draggyThingy
+                property bool suppress: false
 
                 onXChanged: {
                     color = canvas.mapToRGB(x, y)
-                    root.currentColor = canvas.mapToRGB(x, y)
+                    if (!this.suppress) {
+                        root.currentColor = canvas.mapToRGB(x, y)
+                    }
                 }
                 onYChanged: {
                     color = canvas.mapToRGB(x, y)
-                    root.currentColor = canvas.mapToRGB(x, y)
+                    if (!this.suppress) {
+                        root.currentColor = canvas.mapToRGB(x, y)
+                    }
                 }
 
                 DragHandler { margin: 11 }

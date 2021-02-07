@@ -69,6 +69,7 @@ public:
     Q_SIGNAL void valueChanged();
     void paint(QPainter *painter) override;
     Q_INVOKABLE QColor mapToRGB(int x, int y) const;
+    Q_INVOKABLE QPointF mapFromRGB(const QColor& in) const;
 };
 
 #endif

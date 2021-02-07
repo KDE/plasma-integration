@@ -84,9 +84,4 @@ ColumnLayout {
         Layout.minimumHeight: pencil.shaftHeight
         Layout.fillHeight: true
     }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: PencilShaft
-    }
 }
