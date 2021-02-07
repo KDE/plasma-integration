@@ -20,13 +20,17 @@
 
 #include <QQmlApplicationEngine>
 #include <QStackedLayout>
+#include <QPainter>
 #include <QPushButton>
 #include <QQuickItem>
+#include <QtMath>
 #include "colordialog.h"
 
 ColorDialog::ColorDialog() : QDialog()
 {
     setLayout(new QStackedLayout);
+
+    qmlRegisterType<HSVCircle>("org.kde.private.plasmaintegration", 1, 0, "HSVCircle");
 
     view = new QQuickWidget(this);
     const QUrl dialogURL(QStringLiteral("qrc:/org/kde/plasma/integration/ColorDialog.qml"));
@@ -120,4 +124,41 @@ QVariant ColorDialogHelper::styleHint(StyleHint hint) const
 QColor ColorDialogHelper::currentColor() const
 {
     return dialog->view->rootObject()->property("currentColor").value<QColor>();
+}
+
+QColor HSVCircle::mapToRGB(int x, int y) const
+{
+    Q_ASSERT(width() == height());
+    const auto size = int(width());
+    const auto radius = size / 2;
+
+    const auto h = (qAtan2(x - radius, y - radius) + M_PI) / (2.0 * M_PI);
+    const auto s = qSqrt(qPow(x - radius, 2) + qPow(y - radius, 2)) / radius;
+    const auto v = value;
+
+    return QColor::fromHsvF(qBound(0.0, h, 1.0), qBound(0.0, s, 1.0), qBound(0.0, v, 1.0));
+}
+
+HSVCircle::HSVCircle(QQuickItem* parent) : QQuickPaintedItem(parent)
+{
+    connect(this, &HSVCircle::valueChanged, [this] {
+        update();
+    });
+}
+
+void HSVCircle::paint(QPainter *painter)
+{
+    Q_ASSERT(width() == height());
+    const auto size = int(width());
+
+    QRgb* pixels = new QRgb[size*size];
+
+    for (int x = 0; x < size; x++) {
+        for (int y = 0; y < size; y++) {
+            pixels[x+y*size] = mapToRGB(x, y).rgb();
+        }
+    }
+
+    painter->drawImage(0, 0, QImage((uchar*)pixels, width(), height(), QImage::Format_ARGB32));
+    delete[] pixels;
 }

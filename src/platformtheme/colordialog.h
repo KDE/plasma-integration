@@ -24,6 +24,7 @@
 #include <QDialog>
 #include <QQuickWidget>
 #include <QPointer>
+#include <QQuickPaintedItem>
 #include <qpa/qplatformdialoghelper.h>
 
 class ColorDialog : public QDialog
@@ -53,6 +54,21 @@ public:
     QColor currentColor() const override;
 
     QVariant styleHint(StyleHint hint) const override;
+};
+
+class HSVCircle : public QQuickPaintedItem
+{
+    Q_OBJECT
+
+    Q_PROPERTY(qreal value MEMBER value NOTIFY valueChanged)
+
+public:
+    HSVCircle(QQuickItem* parent = nullptr);
+
+    qreal value;
+    Q_SIGNAL void valueChanged();
+    void paint(QPainter *painter) override;
+    Q_INVOKABLE QColor mapToRGB(int x, int y) const;
 };
 
 #endif
