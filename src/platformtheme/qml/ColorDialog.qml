@@ -43,6 +43,11 @@ ColumnLayout {
 
                 Layout.fillWidth: true
             }
+
+            Button {
+                text: "Pick Colour From Screen"
+                onClicked: helper.pick()
+            }
         }
     }
 }

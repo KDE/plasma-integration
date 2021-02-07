@@ -19,11 +19,17 @@
  */
 
 #include <QQmlApplicationEngine>
+#include <QDBusMessage>
+#include <QDBusConnection>
+#include <QDBusPendingCall>
+#include <QDBusPendingReply>
 #include <QStackedLayout>
 #include <QPainter>
 #include <QPushButton>
 #include <QQuickItem>
 #include <QtMath>
+#include <QQmlContext>
+#include <QDBusArgument>
 #include "colordialog.h"
 
 ColorDialog::ColorDialog() : QDialog()
@@ -78,6 +84,7 @@ void ColorDialogHelper::prepareDialog()
     QObject::connect(dialog, &QDialog::finished, this, [=] {
         Q_EMIT colorSelected(currentColor());
     });
+    dialog->view->rootContext()->setContextProperty(QStringLiteral("helper"), this);
 
     connect(dialog->view.data(), SIGNAL(currentColorChanged(QColor)), this, SLOT(currentColorChanged(QColor)));
 }
@@ -101,6 +108,41 @@ bool ColorDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowModality mod
 void ColorDialogHelper::hide()
 {
     dialog->hide();
+}
+
+void ColorDialogHelper::pick()
+{
+    auto msg = QDBusMessage::createMethodCall(
+        QStringLiteral("org.kde.KWin"),
+        QStringLiteral("/ColorPicker"),
+        QStringLiteral("org.kde.kwin.ColorPicker"),
+        QStringLiteral("pick")
+    );
+
+    auto call = QDBusConnection::sessionBus().asyncCall(msg);
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
+    connect(watcher, &QDBusPendingCallWatcher::finished, this,
+        [this] (QDBusPendingCallWatcher *watcher) {
+            if (!watcher->isError()) {
+                unsigned int val;
+
+                // we need this tomfoolery because kwin replies with a '(u)' instead
+                // of an 'u'.
+                //
+                // more tomfoolery: non-const beginStructure() overload
+                // will cause a crash here. the 'arg' *must* be const.
+                const auto arg = watcher->reply().arguments()[0].value<QDBusArgument>();
+                arg.beginStructure();
+                arg >> val;
+                arg.endStructure();
+
+                setCurrentColor(QColor::fromRgba(val));
+            } else {
+                qWarning() << watcher->error();
+            }
+            watcher->deleteLater();
+        }
+    );
 }
 
 void ColorDialogHelper::setCurrentColor(const QColor& color)

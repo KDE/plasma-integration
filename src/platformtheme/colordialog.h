@@ -54,6 +54,8 @@ public:
     QColor currentColor() const override;
 
     QVariant styleHint(StyleHint hint) const override;
+
+    Q_INVOKABLE void pick();
 };
 
 class HSVCircle : public QQuickPaintedItem
