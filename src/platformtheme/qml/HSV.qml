@@ -40,7 +40,7 @@ Kirigami.Page {
     }
 
     function updateRoot() {
-        root.currentColor = canvas.mapToRGB(draggyThingy.x-width/2, draggyThingy.y-height/2)
+        root.currentColor = canvas.mapToRGB(draggyThingy.x-draggyThingy.width/2, draggyThingy.y-draggyThingy.height/2)
     }
 
     Connections {
