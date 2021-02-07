@@ -25,7 +25,12 @@
 #include <QQuickWidget>
 #include <QPointer>
 #include <QQuickPaintedItem>
+#include <QJsonArray>
+#include <KSharedConfig>
+#include <KConfigWatcher>
 #include <qpa/qplatformdialoghelper.h>
+
+class ColorDialogHelper;
 
 class ColorDialog : public QDialog
 {
@@ -34,7 +39,7 @@ class ColorDialog : public QDialog
 public:
 
     QPointer<QQuickWidget> view;
-    explicit ColorDialog();
+    explicit ColorDialog(ColorDialogHelper* parent);
 };
 
 class ColorDialogHelper : public QPlatformColorDialogHelper
@@ -43,6 +48,12 @@ class ColorDialogHelper : public QPlatformColorDialogHelper
 
     QPointer<ColorDialog> dialog;
     void prepareDialog();
+
+    QJsonArray _savedColors;
+    Q_PROPERTY(QJsonArray savedColors READ savedColors WRITE setSavedColors NOTIFY savedColorsChanged)
+
+    KSharedConfigPtr _savedColorsConfig;
+    QSharedPointer<KConfigWatcher> _watcher;
 
 public:
     ColorDialogHelper();
@@ -56,6 +67,12 @@ public:
     QVariant styleHint(StyleHint hint) const override;
 
     Q_INVOKABLE void pick();
+    Q_INVOKABLE void changed(QColor c) { Q_EMIT currentColorChanged(c); }
+
+    QJsonArray savedColors() const;
+    void setSavedColors(QJsonArray);
+
+    Q_SIGNAL void savedColorsChanged();
 };
 
 class HSVCircle : public QQuickPaintedItem

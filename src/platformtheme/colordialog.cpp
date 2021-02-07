@@ -31,16 +31,21 @@
 #include <QQmlContext>
 #include <QDBusArgument>
 #include <KLocalizedContext>
+#include <KSharedConfig>
+#include <QJsonDocument>
 #include "colordialog.h"
 
-ColorDialog::ColorDialog() : QDialog()
+ColorDialog::ColorDialog(ColorDialogHelper* parent) : QDialog()
 {
     setLayout(new QStackedLayout);
 
     qmlRegisterType<HSVCircle>("org.kde.private.plasmaintegration", 1, 0, "HSVCircle");
 
     view = new QQuickWidget(this);
+
     view->rootContext()->setContextObject(new KLocalizedContext(view.data()));
+    view->rootContext()->setContextProperty(QStringLiteral("helper"), parent);
+
     const QUrl dialogURL(QStringLiteral("qrc:/org/kde/plasma/integration/ColorDialog.qml"));
     QObject::connect(
         view, &QQuickWidget::statusChanged,
@@ -63,7 +68,18 @@ ColorDialog::ColorDialog() : QDialog()
 
 ColorDialogHelper::ColorDialogHelper() : QPlatformColorDialogHelper()
 {
-
+    _savedColorsConfig = KSharedConfig::openConfig(QStringLiteral("plasmacolorpicker"));
+    _watcher = KConfigWatcher::create(_savedColorsConfig);
+    auto setColors = [this] {
+        auto json = _savedColorsConfig->group("ColorPicker").readEntry("SavedColors", QStringLiteral("[]"));
+        _savedColors = QJsonDocument::fromJson(json.toLocal8Bit()).array();
+        Q_EMIT savedColorsChanged();
+    };
+    connect(_watcher.data(), &KConfigWatcher::configChanged, [=] {
+        _savedColorsConfig->reparseConfiguration();
+        setColors();
+    });
+    setColors();
 }
 
 ColorDialogHelper::~ColorDialogHelper()
@@ -80,13 +96,12 @@ void ColorDialogHelper::exec()
 
 void ColorDialogHelper::prepareDialog()
 {
-    dialog = new ColorDialog;
+    dialog = new ColorDialog(this);
     dialog->setMinimumSize(QSize(500, 400));
 
     QObject::connect(dialog, &QDialog::finished, this, [=] {
         Q_EMIT colorSelected(currentColor());
     });
-    dialog->view->rootContext()->setContextProperty(QStringLiteral("helper"), this);
 }
 
 bool ColorDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowModality modality, QWindow *parentWindow)
@@ -237,4 +252,21 @@ void HSVCircle::paint(QPainter *painter)
 
     painter->drawImage(0, 0, QImage((uchar*)pixels, width(), height(), QImage::Format_ARGB32));
     delete[] pixels;
+}
+
+QJsonArray ColorDialogHelper::savedColors() const
+{
+    return _savedColors;
+}
+
+void ColorDialogHelper::setSavedColors(QJsonArray obj)
+{
+    _savedColors = obj;
+    Q_EMIT savedColorsChanged();
+
+    QJsonDocument doc;
+    doc.setArray(obj);
+
+    _savedColorsConfig->group("ColorPicker").writeEntry("SavedColors", QString::fromLocal8Bit(doc.toJson()), KConfig::Notify);
+    _savedColorsConfig->sync();
 }

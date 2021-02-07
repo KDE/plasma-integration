@@ -8,5 +8,7 @@
         <file>RGB.qml</file>
         <file>DraggyThingy.qml</file>
         <file>Slidy.qml</file>
+        <file>Expandable.qml</file>
+        <file>circle.svg</file>
     </qresource>
 </RCC>
