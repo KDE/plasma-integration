@@ -8,7 +8,7 @@ import QtGraphicalEffects 1.12
 Kirigami.Page {
     id: rgbPage
 
-    title: "RGB"
+    title: i18ndc("plasma-integration-color-dialog", "@title", "RGB")
     bottomPadding: 0
 
     property bool updating: false
@@ -56,7 +56,7 @@ Kirigami.Page {
         property int sliderLength: Kirigami.Units.gridUnit*20
 
         Label {
-            text: "Red"
+            text: i18ndc("plasma-integration-color-dialog", "component of RGB; label for slider", "Red")
         }
 
         Slidy {
@@ -89,7 +89,7 @@ Kirigami.Page {
         }
 
         Label {
-            text: "Green"
+            text: i18ndc("plasma-integration-color-dialog", "component of RGB; label for slider", "Green")
         }
 
         Slidy {
@@ -122,7 +122,7 @@ Kirigami.Page {
         }
 
         Label {
-            text: "Blue"
+            text: i18ndc("plasma-integration-color-dialog", "component of RGB; label for slider", "Blue")
         }
 
         Slidy {

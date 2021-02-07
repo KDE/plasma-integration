@@ -7,7 +7,7 @@ import QtGraphicalEffects 1.12
 
 Kirigami.Page {
     id: hsvPage
-    title: "HSV"
+    title: i18ndc("plasma-integration-color-dialog", "@title", "HSV")
     bottomPadding: 0
 
     property bool updating: false

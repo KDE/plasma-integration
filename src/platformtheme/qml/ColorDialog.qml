@@ -45,7 +45,7 @@ ColumnLayout {
             }
 
             Button {
-                text: "Pick Colour From Screen"
+                text: i18nd("plasma-integration-color-dialog", "Pick Colour From Screen")
                 onClicked: helper.pick()
             }
         }

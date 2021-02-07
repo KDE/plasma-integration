@@ -30,6 +30,7 @@
 #include <QtMath>
 #include <QQmlContext>
 #include <QDBusArgument>
+#include <KLocalizedContext>
 #include "colordialog.h"
 
 ColorDialog::ColorDialog() : QDialog()
@@ -39,6 +40,7 @@ ColorDialog::ColorDialog() : QDialog()
     qmlRegisterType<HSVCircle>("org.kde.private.plasmaintegration", 1, 0, "HSVCircle");
 
     view = new QQuickWidget(this);
+    view->rootContext()->setContextObject(new KLocalizedContext(view.data()));
     const QUrl dialogURL(QStringLiteral("qrc:/org/kde/plasma/integration/ColorDialog.qml"));
     QObject::connect(
         view, &QQuickWidget::statusChanged,

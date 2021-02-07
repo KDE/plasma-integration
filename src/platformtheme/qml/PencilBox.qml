@@ -5,7 +5,7 @@ import org.kde.kirigami 2.13 as Kirigami
 import QtGraphicalEffects 1.12
 
 Kirigami.Page {
-    title: "Pencil Box"
+    title: i18ndc("plasma-integration-color-dialog", "@title", "Pencil Box")
     bottomPadding: 0
 
     property var colors: [
