@@ -30,9 +30,9 @@ class ColorDialog : public QDialog
 {
     Q_OBJECT
 
-    QPointer<QQuickWidget> view;
-
 public:
+
+    QPointer<QQuickWidget> view;
     explicit ColorDialog();
 };
 
@@ -41,6 +41,7 @@ class ColorDialogHelper : public QPlatformColorDialogHelper
     Q_OBJECT
 
     QPointer<ColorDialog> dialog;
+    void prepareDialog();
 
 public:
     ColorDialogHelper();

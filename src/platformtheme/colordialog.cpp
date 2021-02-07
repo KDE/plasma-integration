@@ -21,6 +21,7 @@
 #include <QQmlApplicationEngine>
 #include <QStackedLayout>
 #include <QPushButton>
+#include <QQuickItem>
 #include "colordialog.h"
 
 ColorDialog::ColorDialog() : QDialog()
@@ -61,13 +62,26 @@ ColorDialogHelper::~ColorDialogHelper()
 void ColorDialogHelper::exec()
 {
     dialog->exec();
+    Q_EMIT colorSelected(currentColor());
+    Q_EMIT accept();
+}
+
+void ColorDialogHelper::prepareDialog()
+{
+    dialog = new ColorDialog;
+    dialog->setMinimumSize(QSize(500, 400));
+
+    QObject::connect(dialog, &QDialog::finished, this, [=] {
+        Q_EMIT colorSelected(currentColor());
+    });
+
+    connect(dialog->view.data(), SIGNAL(currentColorChanged(QColor)), this, SLOT(currentColorChanged(QColor)));
 }
 
 bool ColorDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowModality modality, QWindow *parentWindow)
 {
     if (dialog.isNull()) {
-        dialog = new ColorDialog;
-        dialog->setMinimumSize(QSize(500, 400));
+        prepareDialog();
     }
 
     dialog->setWindowModality(modality);
@@ -87,7 +101,11 @@ void ColorDialogHelper::hide()
 
 void ColorDialogHelper::setCurrentColor(const QColor& color)
 {
+    if (dialog.isNull()) {
+        return;
+    }
 
+    dialog->view->rootObject()->setProperty("currentColor", color);
 }
 
 QVariant ColorDialogHelper::styleHint(StyleHint hint) const
@@ -101,5 +119,5 @@ QVariant ColorDialogHelper::styleHint(StyleHint hint) const
 
 QColor ColorDialogHelper::currentColor() const
 {
-    return QColor();
+    return dialog->view->rootObject()->property("currentColor").value<QColor>();
 }
