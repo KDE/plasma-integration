@@ -87,8 +87,6 @@ void ColorDialogHelper::prepareDialog()
         Q_EMIT colorSelected(currentColor());
     });
     dialog->view->rootContext()->setContextProperty(QStringLiteral("helper"), this);
-
-    connect(dialog->view.data(), SIGNAL(currentColorChanged(QColor)), this, SLOT(currentColorChanged(QColor)));
 }
 
 bool ColorDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowModality modality, QWindow *parentWindow)

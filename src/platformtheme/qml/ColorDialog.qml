@@ -7,6 +7,9 @@ ColumnLayout {
     id: root
 
     property color currentColor: "cyan"
+    onCurrentColorChanged: {
+        helper.currentColorChanged(currentColor)
+    }
 
     width: 400
     height: 500
