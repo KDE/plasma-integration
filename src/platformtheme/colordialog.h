@@ -91,4 +91,19 @@ public:
     Q_INVOKABLE QPointF mapFromRGB(const QColor& in) const;
 };
 
+class PencilTip : public QQuickPaintedItem
+{
+    Q_OBJECT
+
+    Q_PROPERTY(QColor color MEMBER color NOTIFY colorChanged)
+
+public:
+    PencilTip(QQuickItem* parent = nullptr);
+
+    void paint(QPainter *painter) override;
+
+    QColor color;
+    Q_SIGNAL void colorChanged();
+};
+
 #endif

@@ -33,6 +33,7 @@
 #include <KLocalizedContext>
 #include <KSharedConfig>
 #include <QJsonDocument>
+#include <QPainterPath>
 #include "colordialog.h"
 
 ColorDialog::ColorDialog(ColorDialogHelper* parent) : QDialog()
@@ -40,6 +41,7 @@ ColorDialog::ColorDialog(ColorDialogHelper* parent) : QDialog()
     setLayout(new QStackedLayout);
 
     qmlRegisterType<HSVCircle>("org.kde.private.plasmaintegration", 1, 0, "HSVCircle");
+    qmlRegisterType<PencilTip>("org.kde.private.plasmaintegration", 1, 0, "PencilTip");
 
     view = new QQuickWidget(this);
 
@@ -269,4 +271,46 @@ void ColorDialogHelper::setSavedColors(QJsonArray obj)
 
     _savedColorsConfig->group("ColorPicker").writeEntry("SavedColors", QString::fromLocal8Bit(doc.toJson()), KConfig::Notify);
     _savedColorsConfig->sync();
+}
+
+PencilTip::PencilTip(QQuickItem* parent) : QQuickPaintedItem(parent)
+{
+    connect(this, &PencilTip::colorChanged, [this] {
+        update();
+    });
+}
+
+void PencilTip::paint(QPainter *painter)
+{
+    painter->setPen(Qt::transparent);
+    painter->setRenderHint(QPainter::Antialiasing);
+
+    QLinearGradient grad(0, 0, width(), 0);
+    grad.setStops({
+        {  0.0/100.0, QColor("#9c725a")},
+        { 65.0/100.0, QColor("#F1C6A4")},
+        {100.0/100.0, QColor("#E2BF95")},
+    });
+
+    QLinearGradient tipGrad(0, 0, width(), 0);
+    tipGrad.setStops({
+        {  0.0/100.0, Qt::transparent},
+        { 45.0/100.0, QColor::fromRgbF(255, 255, 255, 0.3)},
+        {100.0/100.0, QColor::fromRgbF(0, 0, 0, 0.1)},
+    });
+
+    QPainterPath path;
+    path.moveTo(0, height());
+    path.lineTo(width()/2, 0);
+    path.lineTo(width(), height());
+    path.lineTo(0, height());
+
+    painter->setBrush(grad);
+    painter->drawPath(path);
+
+    const int tipHeight = 10;
+
+    painter->setClipPath(path);
+    painter->fillRect(0, 0, width(), tipHeight, color);
+    painter->fillRect(0, 0, width(), tipHeight, tipGrad);
 }
