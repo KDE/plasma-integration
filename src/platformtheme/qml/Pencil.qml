@@ -20,7 +20,6 @@
 
 import QtQuick 2.10
 import QtQuick.Layouts 1.10
-import QtQuick.Shapes 1.15
 import org.kde.kirigami 2.12 as Kirigami
 import QtGraphicalEffects 1.12
 
