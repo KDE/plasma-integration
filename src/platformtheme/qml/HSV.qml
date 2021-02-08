@@ -53,19 +53,19 @@ Kirigami.Page {
 
         slider.value = root.currentColor.hsvValue
         const point = canvas.mapFromRGB(root.currentColor)
-        draggyThingy.x = point.x-draggyThingy.width/2
-        draggyThingy.y = point.y-draggyThingy.height/2
+        colorHandle.x = point.x-colorHandle.width/2
+        colorHandle.y = point.y-colorHandle.height/2
 
         hsvPage.updating = false
     }
 
     function updateRoot() {
-        root.currentColor = canvas.mapToRGB(draggyThingy.x-draggyThingy.width/2, draggyThingy.y-draggyThingy.height/2)
+        root.currentColor = canvas.mapToRGB(colorHandle.x-colorHandle.width/2, colorHandle.y-colorHandle.height/2)
     }
 
     Connections {
         enabled: !hsvPage.updating
-        target: draggyThingy
+        target: colorHandle
 
         function onXChanged() { updateRoot() }
         function onYChanged() { updateRoot() }
@@ -90,8 +90,8 @@ Kirigami.Page {
                 height: canvas.size
                 radius: canvas.radius
             }
-            DraggyThingy {
-                id: draggyThingy
+            ColorHandle {
+                id: colorHandle
                 color: "transparent"
 
                 DragHandler { margin: 11 }

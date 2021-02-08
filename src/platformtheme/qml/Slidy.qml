@@ -37,7 +37,7 @@ Slider {
 
     implicitHeight: Kirigami.Units.gridUnit
 
-    handle: DraggyThingy {
+    handle: ColorHandle {
         x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
         y: slider.topPadding + slider.availableHeight / 2 - height / 2
     }
