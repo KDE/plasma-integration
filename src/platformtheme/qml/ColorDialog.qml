@@ -226,6 +226,17 @@ Item {
                                     level: 2
                                 }
                                 Item { Layout.fillWidth: true }
+                                ToolButton {
+                                    flat: true
+                                    icon.name: "edit-delete"
+
+                                    onClicked: {
+                                        let data = helper.savedColors || []
+                                        data.splice(index, 1)
+                                        helper.savedColors = data
+                                        colorsView.model = helper.savedColors
+                                    }
+                                }
                                 Rectangle {
                                     color: modelData.color
                                     radius: height / 2
