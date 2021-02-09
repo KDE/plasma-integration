@@ -28,6 +28,9 @@ Kirigami.Page {
     title: i18ndc("plasma-integration-color-dialog", "@title", "Pencil Box")
     bottomPadding: 0
 
+    // a hand-curated selection of colors.
+    // mostly yoinked from my (jan's) app, ikona.
+    // one of these is #3daee9, the plasma blue.
     property var colors: [
         [
             "#ff7cc5",
