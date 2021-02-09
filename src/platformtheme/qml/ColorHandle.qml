@@ -27,6 +27,8 @@ import QtGraphicalEffects 1.12
 Kirigami.ShadowedRectangle {
     width: 22
     height: 22
+    implicitWidth: 22
+    implicitHeight: 22
     color: "transparent"
     border.color: "white"
     border.width: 2

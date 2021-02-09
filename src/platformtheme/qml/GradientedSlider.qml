@@ -23,8 +23,9 @@ import QtQuick.Layouts 1.10
 import QtQuick.Controls 2.10
 import org.kde.kirigami 2.13 as Kirigami
 import QtGraphicalEffects 1.12
+import QtQuick.Templates 2.12 as T
 
-Slider {
+T.Slider {
     id: slider
 
     Layout.fillWidth: true
@@ -32,6 +33,9 @@ Slider {
     from: 0
     to: 1
     value: 1
+
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            implicitHandleWidth + leftPadding + rightPadding)
 
     property alias gradient: reccy.gradient
 

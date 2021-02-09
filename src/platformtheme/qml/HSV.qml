@@ -98,7 +98,7 @@ Kirigami.Page {
             }
         }
 
-        Slidy {
+        GradientedSlider {
             id: slider
         }
     }

@@ -79,7 +79,7 @@ Kirigami.Page {
             text: i18ndc("plasma-integration-color-dialog", "component of RGB; label for slider", "Red")
         }
 
-        Slidy {
+        GradientedSlider {
             id: slider
 
             Layout.preferredWidth: rgbCol.sliderLength
@@ -112,7 +112,7 @@ Kirigami.Page {
             text: i18ndc("plasma-integration-color-dialog", "component of RGB; label for slider", "Green")
         }
 
-        Slidy {
+        GradientedSlider {
             id: sliderTwo
 
             Layout.preferredWidth: rgbCol.sliderLength
@@ -145,7 +145,7 @@ Kirigami.Page {
             text: i18ndc("plasma-integration-color-dialog", "component of RGB; label for slider", "Blue")
         }
 
-        Slidy {
+        GradientedSlider {
             id: sliderThree
 
             Layout.preferredWidth: rgbCol.sliderLength

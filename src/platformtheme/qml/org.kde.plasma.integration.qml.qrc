@@ -7,7 +7,7 @@
         <file>HSV.qml</file>
         <file>RGB.qml</file>
         <file>ColorHandle.qml</file>
-        <file>Slidy.qml</file>
+        <file>GradientedSlider.qml</file>
         <file>Expandable.qml</file>
         <file>circle.svg</file>
     </qresource>
