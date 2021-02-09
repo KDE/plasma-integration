@@ -50,6 +50,13 @@ Item {
                 }
             }
 
+            header: TextField {
+                text: String(root.currentColor)
+                readOnly: true
+
+                implicitWidth: contentWidth+(leftPadding*2)+(rightPadding*2)
+            }
+
             Layout.fillWidth: true
             Layout.fillHeight: true
 
