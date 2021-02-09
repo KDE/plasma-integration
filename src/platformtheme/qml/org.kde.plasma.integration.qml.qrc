@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/org/kde/plasma/integration">
         <file>ColorDialog.qml</file>
-        <file>ColorCell.qml</file>
         <file>Pencil.qml</file>
         <file>PencilBox.qml</file>
         <file>HSV.qml</file>

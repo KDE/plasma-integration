@@ -73,14 +73,18 @@ Item {
             RowLayout {
                 anchors.fill: parent
 
-                Item {
-                    Layout.preferredWidth: expanderHandle.implicitWidth
+                Button {
+                    opacity: 0
+                    text: i18nd("plasma-integration-color-dialog", "View Saved Colours")
+                    Accessible.ignored: true
                 }
 
-                ColorCell {
+                Rectangle {
                     color: root.currentColor
+                    radius: 4
 
                     Layout.fillWidth: true
+                    Layout.fillHeight: true
                 }
 
                 Button {
