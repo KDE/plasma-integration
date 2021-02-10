@@ -140,7 +140,7 @@ Kirigami.Page {
                         id: pencil
 
                         color: modelData
-                        shaftHeight: 80 + (row.parentIndex * 50)
+                        shaftHeight: Kirigami.Units.gridUnit*6 + (row.parentIndex * Kirigami.Units.gridUnit*3)
 
                         visible: false
                     }

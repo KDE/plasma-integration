@@ -25,14 +25,17 @@ import org.kde.kirigami 2.13 as Kirigami
 import QtGraphicalEffects 1.12
 
 Kirigami.ShadowedRectangle {
-    width: 22
-    height: 22
-    implicitWidth: 22
-    implicitHeight: 22
+    readonly property int size: Kirigami.Units.gridUnit * 1.2
+
+    width: size
+    height: size
+    implicitWidth: size
+    implicitHeight: size
+
     color: "transparent"
     border.color: "white"
     border.width: 2
-    radius: 11
+    radius: width / 2
 
     shadow {
         color: Qt.rgba(0,0,0,0.2)

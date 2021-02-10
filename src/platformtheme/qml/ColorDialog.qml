@@ -31,8 +31,8 @@ Item {
         helper.changed(currentColor)
     }
 
-    width: 400
-    height: 500
+    width: Kirigami.Units.gridUnit * 25
+    height: Kirigami.Units.gridUnit * 30
 
     ColumnLayout {
         anchors.fill: parent
@@ -117,11 +117,11 @@ Item {
         }
 
         Control {
-            topPadding: 20
-            leftPadding: 20
-            rightPadding: 20
-            bottomPadding: 20
-            padding: 20
+            topPadding: Kirigami.Units.gridUnit
+            leftPadding: Kirigami.Units.gridUnit
+            rightPadding: Kirigami.Units.gridUnit
+            bottomPadding: Kirigami.Units.gridUnit
+            padding: Kirigami.Units.gridUnit
             anchors.left: parent.left
             anchors.right: parent.right
 

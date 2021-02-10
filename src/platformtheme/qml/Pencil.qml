@@ -25,7 +25,7 @@ import org.kde.private.plasmaintegration 1.0 as PI
 import QtGraphicalEffects 1.12
 
 ColumnLayout {
-    property int pencilWidth: 22
+    property int pencilWidth: Kirigami.Units.gridUnit*1.2
 
     component PencilShaft : Rectangle {
         implicitWidth: pencil.pencilWidth
@@ -60,7 +60,7 @@ ColumnLayout {
 
     PI.PencilTip {
         implicitWidth: pencil.pencilWidth
-        implicitHeight: 25
+        implicitHeight: Math.round(Kirigami.Units.gridUnit * 1.2)
         color: pencil.color
     }
     PencilShaft {

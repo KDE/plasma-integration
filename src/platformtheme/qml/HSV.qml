@@ -37,7 +37,7 @@ Kirigami.Page {
 
         value: slider.value
 
-        readonly property int size: 300
+        readonly property int size: Kirigami.Units.gridUnit * 20
         readonly property int radius: size / 2
 
         anchors.centerIn: parent
@@ -94,7 +94,7 @@ Kirigami.Page {
                 id: colorHandle
                 color: "transparent"
 
-                DragHandler { margin: 11 }
+                DragHandler { margin: Kirigami.Units.largeSpacing }
             }
         }
 

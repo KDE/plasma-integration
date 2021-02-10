@@ -19,6 +19,7 @@
  */
 
 import QtQuick 2.7
+import org.kde.kirigami 2.12 as Kirigami
 
 Item {
     default property Item contentItem: null
@@ -37,7 +38,7 @@ Item {
 
     Behavior on implicitHeight {
         NumberAnimation {
-            duration: 250
+            duration: Kirigami.Units.longDuration
             easing.type: Easing.InOutQuart
         }
     }
