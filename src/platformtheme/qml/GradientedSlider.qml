@@ -36,7 +36,7 @@ T.Slider {
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitHandleWidth + leftPadding + rightPadding)
 
-    property alias gradient: reccy.gradient
+    property alias gradient: backgroundRectangle.gradient
 
     implicitHeight: Kirigami.Units.gridUnit
 
@@ -45,7 +45,7 @@ T.Slider {
         y: slider.topPadding + slider.availableHeight / 2 - height / 2
     }
     background: Rectangle {
-        id: reccy
+        id: backgroundRectangle
 
         radius: height
 

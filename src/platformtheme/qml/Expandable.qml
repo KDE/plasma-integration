@@ -22,9 +22,10 @@ import QtQuick 2.7
 import org.kde.kirigami 2.12 as Kirigami
 
 Item {
+    id: root
+
     default property Item contentItem: null
 
-    id: root
     property bool childVisible: false
     implicitHeight: childVisible ? contentItem.height : 0
     implicitWidth: contentItem.implicitWidth

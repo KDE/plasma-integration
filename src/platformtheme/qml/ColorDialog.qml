@@ -50,11 +50,25 @@ Item {
                 }
             }
 
-            header: TextField {
-                text: String(root.currentColor)
-                readOnly: true
-
-                implicitWidth: contentWidth+(leftPadding*2)+(rightPadding*2)
+            header: RowLayout {
+                Item { implicitWidth: Kirigami.Units.largeSpacing }
+                Label {
+                    text: String(root.currentColor)
+                }
+            }
+            footer: RowLayout {
+                spacing: Kirigami.Units.smallSpacing
+                ToolButton {
+                    icon.name: "edit-copy"
+                    onClicked: helper.copy()
+                    ToolTip { visible: parent.hovered; text: i18nd("plasma-integration-color-dialog", "Copy color to clipboard") }
+                }
+                ToolButton {
+                    icon.name: "edit-paste"
+                    onClicked: helper.paste()
+                    ToolTip { visible: parent.hovered; text: i18nd("plasma-integration-color-dialog", "Paste color from clipboard") }
+                }
+                Item { implicitWidth: Kirigami.Units.smallSpacing }
             }
 
             Layout.fillWidth: true

@@ -21,13 +21,13 @@
 #ifndef COLOR_DIALOG_H
 #define COLOR_DIALOG_H
 
+#include <KConfigWatcher>
+#include <KSharedConfig>
 #include <QDialog>
-#include <QQuickWidget>
+#include <QJsonArray>
 #include <QPointer>
 #include <QQuickPaintedItem>
-#include <QJsonArray>
-#include <KSharedConfig>
-#include <KConfigWatcher>
+#include <QQuickWidget>
 #include <qpa/qplatformdialoghelper.h>
 
 class ColorDialogHelper;
@@ -37,23 +37,22 @@ class ColorDialog : public QDialog
     Q_OBJECT
 
 public:
-
     QPointer<QQuickWidget> view;
-    explicit ColorDialog(ColorDialogHelper* parent);
+    explicit ColorDialog(ColorDialogHelper *parent);
 };
 
 class ColorDialogHelper : public QPlatformColorDialogHelper
 {
     Q_OBJECT
 
-    QPointer<ColorDialog> dialog;
+    QPointer<ColorDialog> m_dialog;
     void prepareDialog();
 
-    QJsonArray _savedColors;
+    QJsonArray m_savedColors;
     Q_PROPERTY(QJsonArray savedColors READ savedColors WRITE setSavedColors NOTIFY savedColorsChanged)
 
-    KSharedConfigPtr _savedColorsConfig;
-    QSharedPointer<KConfigWatcher> _watcher;
+    KSharedConfigPtr m_savedColorsConfig;
+    QSharedPointer<KConfigWatcher> m_watcher;
 
 public:
     ColorDialogHelper();
@@ -61,13 +60,18 @@ public:
     void exec() override;
     bool show(Qt::WindowFlags windowFlags, Qt::WindowModality modality, QWindow *parentWindow) override;
     void hide() override;
-    void setCurrentColor(const QColor& color) override;
+    void setCurrentColor(const QColor &color) override;
     QColor currentColor() const override;
 
     QVariant styleHint(StyleHint hint) const override;
 
     Q_INVOKABLE void pick();
-    Q_INVOKABLE void changed(QColor c) { Q_EMIT currentColorChanged(c); }
+    Q_INVOKABLE void changed(QColor c)
+    {
+        Q_EMIT currentColorChanged(c);
+    }
+    Q_INVOKABLE void copy();
+    Q_INVOKABLE bool paste();
 
     QJsonArray savedColors() const;
     void setSavedColors(QJsonArray);
@@ -82,13 +86,15 @@ class HSVCircle : public QQuickPaintedItem
     Q_PROPERTY(qreal value MEMBER value NOTIFY valueChanged)
 
 public:
-    HSVCircle(QQuickItem* parent = nullptr);
+    HSVCircle(QQuickItem *parent = nullptr);
+
+    void paint(QPainter *painter) override;
+
+    Q_INVOKABLE QColor mapToRGB(int x, int y) const;
+    Q_INVOKABLE QPointF mapFromRGB(const QColor &in) const;
 
     qreal value;
     Q_SIGNAL void valueChanged();
-    void paint(QPainter *painter) override;
-    Q_INVOKABLE QColor mapToRGB(int x, int y) const;
-    Q_INVOKABLE QPointF mapFromRGB(const QColor& in) const;
 };
 
 class PencilTip : public QQuickPaintedItem
@@ -98,7 +104,7 @@ class PencilTip : public QQuickPaintedItem
     Q_PROPERTY(QColor color MEMBER color NOTIFY colorChanged)
 
 public:
-    PencilTip(QQuickItem* parent = nullptr);
+    PencilTip(QQuickItem *parent = nullptr);
 
     void paint(QPainter *painter) override;
 

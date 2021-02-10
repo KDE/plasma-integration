@@ -135,14 +135,31 @@ Kirigami.Page {
                 delegate: Item {
                     implicitHeight: pencil.height
                     implicitWidth: pencil.width
+                    focus: true
+
+                    Layout.alignment: Qt.AlignBottom
 
                     Pencil {
                         id: pencil
 
                         color: modelData
                         shaftHeight: Kirigami.Units.gridUnit*6 + (row.parentIndex * Kirigami.Units.gridUnit*3)
+                        Behavior on shaftHeight {
+                            NumberAnimation { duration: Kirigami.Units.veryShortDuration/2; easing.type: Easing.InOutQuad }
+                        }
 
                         visible: false
+
+                        states: [
+                            State {
+                                when: mouseArea.pressed
+                                PropertyChanges { target: pencil; shaftHeight: Kirigami.Units.gridUnit*6.5 + (row.parentIndex * Kirigami.Units.gridUnit*3) }
+                            },
+                            State {
+                                when: mouseArea.containsMouse || pencil.parent.activeFocus
+                                PropertyChanges { target: pencil; shaftHeight: Kirigami.Units.gridUnit*7 + (row.parentIndex * Kirigami.Units.gridUnit*3) }
+                            }
+                        ]
                     }
 
                     DropShadow {
@@ -155,7 +172,11 @@ Kirigami.Page {
                         source: pencil
 
                         MouseArea {
+                            id: mouseArea
+
+                            cursorShape: Qt.PointingHandCursor
                             anchors.fill: parent
+                            hoverEnabled: true
                             onClicked: root.currentColor = modelData
                         }
                     }
