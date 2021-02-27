@@ -50,7 +50,7 @@
 
 #include "qdbusmenubar_p.h"
 #include "qxdgdesktopportalfiledialog_p.h"
-#include "colordialog.h"
+#include "kdeplatformcolordialog.h"
 
 static const QByteArray s_x11AppMenuServiceNamePropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_SERVICE_NAME");
 static const QByteArray s_x11AppMenuObjectPathPropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_OBJECT_PATH");

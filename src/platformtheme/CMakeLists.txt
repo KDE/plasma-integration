@@ -25,11 +25,11 @@ set(platformtheme_SRCS
     kdeplatformfiledialoghelper.cpp
     kdeplatformfiledialogbase.cpp
     kdeplatformsystemtrayicon.cpp
+    kdeplatformcolordialog.cpp
     kfiletreeview.cpp
     kdirselectdialog.cpp
     kwaylandintegration.cpp
     x11integration.cpp
-    colordialog.cpp
     main.cpp
     qxdgdesktopportalfiledialog.cpp
     qml/org.kde.plasma.integration.qml.qrc
