@@ -218,8 +218,8 @@ QPointF HSVCircle::mapFromRGB(const QColor &in) const
 
     for (int x = 0; x < size; x++) {
         for (int y = 0; y < size; y++) {
-            const auto kule = mapToRGB(x, y);
-            const auto h2 = kule.hueF(), s2 = kule.saturationF(), v2 = kule.valueF();
+            const auto color = mapToRGB(x, y);
+            const auto h2 = color.hueF(), s2 = color.saturationF(), v2 = color.valueF();
 
             const auto thisDist = qPow(qSin(h1) * s1 * v1 - qSin(h2) * s2 * v2, 2) + qPow(qCos(h1) * s1 * v1 - qCos(h2) * s2 * v2, 2) + qPow(v1 - v2, 2);
 
