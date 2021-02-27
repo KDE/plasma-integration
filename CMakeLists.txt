@@ -16,6 +16,7 @@ include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(FeatureSummary)
 include(GenerateExportHeader)
 include(KDEClangFormat)
+include(ECMQMLModules)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Widgets DBus X11Extras QuickWidgets QuickControls2)
 find_package(Qt5Gui ${QT_MIN_VERSION} CONFIG REQUIRED Private)

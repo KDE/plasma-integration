@@ -46,7 +46,7 @@ set(platformThemeSRCS
   ../src/platformtheme/kfiletreeview.cpp
   ../src/platformtheme/kwaylandintegration.cpp
   ../src/platformtheme/x11integration.cpp
-  ../src/platformtheme/colordialog.cpp
+  ../src/platformtheme/kdeplatformcolordialog.cpp
   ../src/platformtheme/qml/org.kde.plasma.integration.qml.qrc
   ../src/platformtheme/qxdgdesktopportalfiledialog.cpp
   ${dbus_interface}

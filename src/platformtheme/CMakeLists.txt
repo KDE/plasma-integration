@@ -16,6 +16,11 @@ configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-p
 # qdbusmenubar uses them
 remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS)
 
+ecm_find_qmlmodule(QtQuick 2.15)
+ecm_find_qmlmodule(QtQuick.Layouts 1.10)
+ecm_find_qmlmodule(QtQuick.Controls 2.10)
+ecm_find_qmlmodule(org.kde.kirigami 2.13)
+ecm_find_qmlmodule(QtGraphicalEffects 1.12)
 
 set(platformtheme_SRCS
     qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
