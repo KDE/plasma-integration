@@ -234,64 +234,50 @@ Item {
                     clip: true
 
                     delegate: Kirigami.AbstractCard {
-                        //TODO: kirigami.abstractcard has padding issues,
-                        // so we nest a plain control to bypass them
-                        leftPadding: 0
-                        rightPadding: 0
-                        topPadding: 0
-                        bottomPadding: 0
-                        contentItem: Control {
-                            leftPadding: Kirigami.Units.largeSpacing
-                            rightPadding: Kirigami.Units.largeSpacing
-                            topPadding: Kirigami.Units.largeSpacing
-                            bottomPadding: Kirigami.Units.largeSpacing
-                            contentItem: RowLayout {
-                                Kirigami.Heading {
-                                    text: modelData.name
-                                    level: 2
-                                }
-                                Item { Layout.fillWidth: true }
-                                ToolButton {
-                                    flat: true
-                                    icon.name: "edit-delete"
+                        leftPadding: Kirigami.Units.largeSpacing
+                        rightPadding: Kirigami.Units.largeSpacing
+                        topPadding: Kirigami.Units.largeSpacing
+                        bottomPadding: Kirigami.Units.largeSpacing
 
-                                    onClicked: {
-                                        let data = helper.savedColors || []
-                                        data.splice(index, 1)
-                                        helper.savedColors = data
-                                        colorsView.model = helper.savedColors
-                                    }
-                                }
-                                Rectangle {
-                                    color: modelData.color
-                                    radius: height / 2
+                        contentItem: RowLayout {
+                            Rectangle {
+                                color: modelData.color
+                                radius: height / 2
 
-                                    Layout.preferredWidth: height
-                                    Layout.fillHeight: true
+                                implicitHeight: deleteButton.implicitHeight
+                                implicitWidth: deleteButton.implicitHeight
+                                Layout.alignment: Qt.AlignVCenter
+                            }
+                            Kirigami.Heading {
+                                text: modelData.name
+                                level: 2
+                            }
+                            Item { Layout.fillWidth: true }
+                            ToolButton {
+                                id: deleteButton
+
+                                flat: true
+                                icon.name: "edit-delete"
+
+                                onClicked: {
+                                    let data = helper.savedColors || []
+                                    data.splice(index, 1)
+                                    helper.savedColors = data
+                                    colorsView.model = helper.savedColors
                                 }
                             }
                         }
+
                         onClicked: root.currentColor = modelData.color
                         width: parent.width
                     }
 
-                    ColumnLayout {
+                    Kirigami.PlaceholderMessage {
                         anchors.centerIn: parent
                         visible: colorsView.count == 0
 
-                        Kirigami.Heading {
-                            text: i18nd("plasma-integration-color-dialog", "No colors saved")
-                            level: 3
-
-                            horizontalAlignment: Text.AlignHCenter
-                            Layout.fillWidth: true
-                        }
-                        Label {
-                            text: i18nd("plasma-integration-color-dialog", "Save a color and it will show up here.")
-
-                            horizontalAlignment: Text.AlignHCenter
-                            Layout.fillWidth: true
-                        }
+                        title: i18nd("plasma-integration-color-dialog", "No colors saved")
+                        text: i18nd("plasma-integration-color-dialog", "Save a color and it will show up here.")
                     }
                 }
             }
