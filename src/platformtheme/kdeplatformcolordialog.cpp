@@ -202,35 +202,20 @@ HSVCircle::HSVCircle(QQuickItem *parent)
     });
 }
 
-// TODO: figure out fancy math stuff instead of brute force
-// h is just angle and s is just distance from center,
-// but i can't figure how to use that information to
-// do something useful
 QPointF HSVCircle::mapFromRGB(const QColor &in) const
 {
     Q_ASSERT(width() == height());
+
     const auto size = width();
+    const auto radius = size / 2;
 
-    const auto h1 = in.hueF(), s1 = in.saturationF(), v1 = in.valueF();
+    const auto h = in.hueF(), s = in.saturationF();
+    const auto d = s * radius;
+    const auto alpha = (h * 2 * M_PI) - M_PI;
+    const auto x = d * qSin(alpha) + radius;
+    const auto y = d * qCos(alpha) + radius;
 
-    qreal distance = 500.0;
-    QPointF closest;
-
-    for (int x = 0; x < size; x++) {
-        for (int y = 0; y < size; y++) {
-            const auto color = mapToRGB(x, y);
-            const auto h2 = color.hueF(), s2 = color.saturationF(), v2 = color.valueF();
-
-            const auto thisDist = qPow(qSin(h1) * s1 * v1 - qSin(h2) * s2 * v2, 2) + qPow(qCos(h1) * s1 * v1 - qCos(h2) * s2 * v2, 2) + qPow(v1 - v2, 2);
-
-            if (distance > thisDist) {
-                distance = thisDist;
-                closest = QPointF(x, y);
-            }
-        }
-    }
-
-    return closest;
+    return {x, y};
 }
 
 void HSVCircle::paint(QPainter *painter)
