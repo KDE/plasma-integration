@@ -39,6 +39,7 @@ Kirigami.Page {
 
         readonly property int size: Kirigami.Units.gridUnit * 20
         readonly property int radius: size / 2
+        readonly property int radiusSquared: radius ** 2
 
         anchors.centerIn: parent
 
@@ -90,11 +91,21 @@ Kirigami.Page {
                 height: canvas.size
                 radius: canvas.radius
             }
+            MouseArea {
+                anchors.fill: parent
+                onPositionChanged: (mouse) => {
+                    const distanceFromCenter = Math.pow(canvas.radius - mouseX, 2) + Math.pow(canvas.radius - mouseY, 2)
+                    if (distanceFromCenter > canvas.radiusSquared) {
+                        return
+                    }
+
+                    colorHandle.x = mouseX - (colorHandle.width/2)
+                    colorHandle.y = mouseY - (colorHandle.height/2)
+                }
+            }
             ColorHandle {
                 id: colorHandle
-                color: "transparent"
-
-                DragHandler { margin: Kirigami.Units.largeSpacing }
+                color: root.currentColor
             }
         }
 
