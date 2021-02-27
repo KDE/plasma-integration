@@ -211,17 +211,17 @@ QPointF HSVCircle::mapFromRGB(const QColor &in) const
     Q_ASSERT(width() == height());
     const auto size = width();
 
-    auto h1 = in.hueF(), s1 = in.saturationF(), v1 = in.valueF();
+    const auto h1 = in.hueF(), s1 = in.saturationF(), v1 = in.valueF();
 
     qreal distance = 500.0;
     QPointF closest;
 
     for (int x = 0; x < size; x++) {
         for (int y = 0; y < size; y++) {
-            auto kule = mapToRGB(x, y);
-            auto h2 = kule.hueF(), s2 = kule.saturationF(), v2 = kule.valueF();
+            const auto kule = mapToRGB(x, y);
+            const auto h2 = kule.hueF(), s2 = kule.saturationF(), v2 = kule.valueF();
 
-            auto thisDist = qPow(qSin(h1) * s1 * v1 - qSin(h2) * s2 * v2, 2) + qPow(qCos(h1) * s1 * v1 - qCos(h2) * s2 * v2, 2) + qPow(v1 - v2, 2);
+            const auto thisDist = qPow(qSin(h1) * s1 * v1 - qSin(h2) * s2 * v2, 2) + qPow(qCos(h1) * s1 * v1 - qCos(h2) * s2 * v2, 2) + qPow(v1 - v2, 2);
 
             if (distance > thisDist) {
                 distance = thisDist;
@@ -255,13 +255,12 @@ QJsonArray ColorDialogHelper::savedColors() const
     return m_savedColors;
 }
 
-void ColorDialogHelper::setSavedColors(QJsonArray obj)
+void ColorDialogHelper::setSavedColors(const QJsonArray &obj)
 {
     m_savedColors = obj;
     Q_EMIT savedColorsChanged();
 
-    QJsonDocument doc;
-    doc.setArray(obj);
+    QJsonDocument doc(obj);
 
     m_savedColorsConfig->group("ColorPicker").writeEntry("SavedColors", QString::fromLocal8Bit(doc.toJson()), KConfig::Notify);
     m_savedColorsConfig->sync();
@@ -271,7 +270,7 @@ void ColorDialogHelper::setSavedColors(QJsonArray obj)
 
 void ColorDialogHelper::copy()
 {
-    auto color = currentColor();
+    const auto color = currentColor();
 
     auto mimedata = new QMimeData;
     mimedata->setColorData(color);
@@ -282,13 +281,13 @@ void ColorDialogHelper::copy()
 
 bool ColorDialogHelper::paste()
 {
-    auto mimeData = qGuiClipboard->mimeData();
+    const auto mimeData = qGuiClipboard->mimeData();
     if (mimeData->hasColor()) {
         setCurrentColor(mimeData->colorData().value<QColor>());
         return true;
     }
 
-    auto text = qGuiClipboard->text();
+    const auto text = qGuiClipboard->text();
     const auto color = QColor(text);
 
     if (color.isValid()) {

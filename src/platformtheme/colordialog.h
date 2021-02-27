@@ -74,7 +74,7 @@ public:
     Q_INVOKABLE bool paste();
 
     QJsonArray savedColors() const;
-    void setSavedColors(QJsonArray);
+    void setSavedColors(const QJsonArray&);
 
     Q_SIGNAL void savedColorsChanged();
 };
