@@ -18,7 +18,7 @@
  *  Boston, MA 02110-1301, USA.
  */
 
-import QtQuick 2.10
+import QtQuick 2.15
 import QtQuick.Layouts 1.10
 import QtQuick.Controls 2.10
 import org.kde.kirigami 2.13 as Kirigami
@@ -58,6 +58,10 @@ Item {
             }
             footer: RowLayout {
                 spacing: Kirigami.Units.smallSpacing
+                Button {
+                    text: i18nd("plasma-integration-color-dialog", "Pick Colour From Screen")
+                    onClicked: helper.pick()
+                }
                 ToolButton {
                     icon.name: "edit-copy"
                     onClicked: helper.copy()
@@ -92,13 +96,45 @@ Item {
                     color: root.currentColor
                     radius: 4
 
-                    Layout.fillWidth: true
+                    Layout.preferredWidth: height
                     Layout.fillHeight: true
                 }
 
-                Button {
-                    text: i18nd("plasma-integration-color-dialog", "Pick Colour From Screen")
-                    onClicked: helper.pick()
+                Kirigami.Separator {
+                    Layout.fillHeight: true
+                }
+
+                ListView {
+                    orientation: ListView.Horizontal
+                    model: {
+                        const cp = helper.recentColors
+                        cp.reverse()
+                        return cp
+                    }
+                    spacing: Kirigami.Units.smallSpacing
+                    clip: true
+
+                    delegate: Rectangle {
+                        color: modelData
+                        radius: 4
+
+                        width: height
+                        anchors {
+                            top: parent.top
+                            bottom: parent.bottom
+                            margins: Kirigami.Units.smallSpacing
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+
+                            onClicked: root.currentColor = modelData
+                        }
+                    }
+
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
                 }
             }
         }

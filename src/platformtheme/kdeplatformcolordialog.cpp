@@ -77,8 +77,17 @@ ColorDialogHelper::ColorDialogHelper()
     auto setColors = [this] {
         auto json = m_savedColorsConfig->group("ColorPicker").readEntry("SavedColors", QStringLiteral("[]"));
         m_savedColors = QJsonDocument::fromJson(json.toLocal8Bit()).array();
+
+        json = m_savedColorsConfig->group("ColorPicker").readEntry("RecentColors", QStringLiteral("[]"));
+        m_recentColors = QJsonDocument::fromJson(json.toLocal8Bit()).array();
+
         Q_EMIT savedColorsChanged();
+        Q_EMIT recentColorsChanged();
     };
+    connect(this, &QPlatformColorDialogHelper::accept, [=] {
+        m_recentColors.append(currentColor().name());
+        setRecentColors(m_recentColors);
+    });
     connect(m_watcher.data(), &KConfigWatcher::configChanged, [=] {
         m_savedColorsConfig->reparseConfiguration();
         setColors();
@@ -93,6 +102,7 @@ ColorDialogHelper::~ColorDialogHelper()
 void ColorDialogHelper::exec()
 {
     m_dialog->exec();
+
     Q_EMIT colorSelected(currentColor());
     Q_EMIT accept();
 }
@@ -248,6 +258,27 @@ void ColorDialogHelper::setSavedColors(const QJsonArray &obj)
     QJsonDocument doc(obj);
 
     m_savedColorsConfig->group("ColorPicker").writeEntry("SavedColors", QString::fromLocal8Bit(doc.toJson()), KConfig::Notify);
+    m_savedColorsConfig->sync();
+}
+
+QJsonArray ColorDialogHelper::recentColors() const
+{
+    return m_recentColors;
+}
+
+void ColorDialogHelper::setRecentColors(const QJsonArray &obj)
+{
+    QJsonArray mut = obj;
+    while (mut.count() > 100) {
+        mut.removeLast();
+    }
+
+    m_recentColors = mut;
+    Q_EMIT savedColorsChanged();
+
+    QJsonDocument doc(mut);
+
+    m_savedColorsConfig->group("ColorPicker").writeEntry("RecentColors", QString::fromLocal8Bit(doc.toJson()), KConfig::Notify);
     m_savedColorsConfig->sync();
 }
 

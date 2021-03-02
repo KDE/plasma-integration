@@ -48,11 +48,7 @@ Kirigami.ScrollablePage {
         Button {
             id: addColourButton
 
-            text: i18nd("plasma-integration-color-dialog", "Save Color")
-            icon {
-                source: Qt.resolvedUrl("circle.svg")
-                color: root.currentColor
-            }
+            text: i18nd("plasma-integration-color-dialog", "Save Current Color")
 
             onClicked: state = "active"
 
@@ -114,7 +110,6 @@ Kirigami.ScrollablePage {
         Layout.fillWidth: true
         Layout.preferredHeight: root.height * 0.7
 
-        spacing: Kirigami.Units.largeSpacing
         clip: true
 
         delegate: Kirigami.BasicListItem {

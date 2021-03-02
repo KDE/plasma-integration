@@ -51,6 +51,9 @@ class ColorDialogHelper : public QPlatformColorDialogHelper
     QJsonArray m_savedColors;
     Q_PROPERTY(QJsonArray savedColors READ savedColors WRITE setSavedColors NOTIFY savedColorsChanged)
 
+    QJsonArray m_recentColors;
+    Q_PROPERTY(QJsonArray recentColors READ recentColors WRITE setRecentColors NOTIFY recentColorsChanged)
+
     KSharedConfigPtr m_savedColorsConfig;
     QSharedPointer<KConfigWatcher> m_watcher;
 
@@ -60,6 +63,7 @@ public:
     void exec() override;
     bool show(Qt::WindowFlags windowFlags, Qt::WindowModality modality, QWindow *parentWindow) override;
     void hide() override;
+
     void setCurrentColor(const QColor &color) override;
     QColor currentColor() const override;
 
@@ -77,6 +81,11 @@ public:
     void setSavedColors(const QJsonArray&);
 
     Q_SIGNAL void savedColorsChanged();
+
+    QJsonArray recentColors() const;
+    void setRecentColors(const QJsonArray&);
+
+    Q_SIGNAL void recentColorsChanged();
 };
 
 class HSVCircle : public QQuickPaintedItem
