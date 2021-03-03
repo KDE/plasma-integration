@@ -46,7 +46,7 @@ Item {
                 case 0:
                     break
                 default:
-                    this.pages[currentIndex].updateColours()
+                    this.pages[currentIndex].updateColors()
                 }
             }
 
@@ -90,7 +90,7 @@ Item {
                 ToolButton {
                     icon.name: "color-picker"
                     onClicked: helper.pick()
-                    ToolTip { visible: parent.hovered; text: i18nd("plasma-integration-color-dialog", "Pick Colour From Screen") }
+                    ToolTip { visible: parent.hovered; text: i18nd("plasma-integration-color-dialog", "Pick Color From Screen") }
                 }
                 Item { implicitWidth: Kirigami.Units.smallSpacing }
             }

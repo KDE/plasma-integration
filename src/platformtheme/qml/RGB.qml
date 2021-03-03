@@ -33,7 +33,7 @@ Kirigami.Page {
 
     property bool updating: false
 
-    function updateColours() {
+    function updateColors() {
         rgbPage.updating = true
 
         slider.value = root.currentColor.r

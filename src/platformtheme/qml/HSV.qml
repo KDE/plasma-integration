@@ -49,7 +49,7 @@ Kirigami.Page {
         visible: false
     }
 
-    function updateColours() {
+    function updateColors() {
         hsvPage.updating = true
 
         slider.value = root.currentColor.hsvValue

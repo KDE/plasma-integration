@@ -30,7 +30,7 @@ Kirigami.ScrollablePage {
     title: i18ndc("plasma-integration-color-dialog", "@title", "Saved Colors")
     bottomPadding: 0
 
-    function updateColours() {
+    function updateColors() {
 
     }
 
@@ -46,7 +46,7 @@ Kirigami.ScrollablePage {
             Layout.fillWidth: true
         }
         Button {
-            id: addColourButton
+            id: addColorButton
 
             text: i18nd("plasma-integration-color-dialog", "Save Current Color")
 
@@ -60,7 +60,7 @@ Kirigami.ScrollablePage {
                 State {
                     name: "active"
                     PropertyChanges {
-                        target: addColourButton
+                        target: addColorButton
                         visible: false
                     }
                     PropertyChanges {
@@ -85,7 +85,7 @@ Kirigami.ScrollablePage {
             visible: false
             enabled: nameField.text.trim() !== ""
             onClicked: {
-                addColourButton.state = "passive"
+                addColorButton.state = "passive"
                 let data = helper.savedColors || []
                 data.push({
                     color: String(root.currentColor),
