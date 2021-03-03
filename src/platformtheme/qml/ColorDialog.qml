@@ -55,13 +55,6 @@ Item {
                 Label {
                     text: String(root.currentColor)
                 }
-            }
-            footer: RowLayout {
-                spacing: Kirigami.Units.smallSpacing
-                Button {
-                    text: i18nd("plasma-integration-color-dialog", "Pick Colour From Screen")
-                    onClicked: helper.pick()
-                }
                 ToolButton {
                     icon.name: "edit-copy"
                     onClicked: helper.copy()
@@ -71,6 +64,14 @@ Item {
                     icon.name: "edit-paste"
                     onClicked: helper.paste()
                     ToolTip { visible: parent.hovered; text: i18nd("plasma-integration-color-dialog", "Paste color from clipboard") }
+                }
+            }
+            footer: RowLayout {
+                spacing: Kirigami.Units.smallSpacing
+                ToolButton {
+                    icon.name: "color-picker"
+                    onClicked: helper.pick()
+                    ToolTip { visible: parent.hovered; text: i18nd("plasma-integration-color-dialog", "Pick Colour From Screen") }
                 }
                 Item { implicitWidth: Kirigami.Units.smallSpacing }
             }
