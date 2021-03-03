@@ -52,8 +52,27 @@ Item {
 
             header: RowLayout {
                 Item { implicitWidth: Kirigami.Units.largeSpacing }
-                Label {
+                TextField {
+                    id: txtField
                     text: String(root.currentColor)
+
+                    implicitWidth: contentWidth+(leftPadding*2)+(rightPadding*2)
+                    validator: RegularExpressionValidator {
+                        regularExpression: /^#([0-9a-f]{6})$/i
+                    }
+                    property Connections conns: Connections {
+                        target: root
+                        function onCurrentColorChanged() {
+                            txtField.text = String(root.currentColor)
+                        }
+                    }
+                    onTextEdited: {
+                        if (this.acceptableInput) {
+                            conns.enabled = false
+                            root.currentColor = text
+                            conns.enabled = true
+                        }
+                    }
                 }
                 ToolButton {
                     icon.name: "edit-copy"
