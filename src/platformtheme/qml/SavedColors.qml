@@ -27,7 +27,7 @@ import QtGraphicalEffects 1.12
 
 Kirigami.ScrollablePage {
     id: savedPage
-    title: i18ndc("plasma-integration-color-dialog", "@title", "Saved Colors")
+    title: i18ndc("plasma-integration-color-dialog", "@title", "Favorite Colors")
     bottomPadding: 0
 
     function updateColors() {

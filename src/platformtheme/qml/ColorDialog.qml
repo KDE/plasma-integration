@@ -134,6 +134,12 @@ Item {
                     spacing: Kirigami.Units.smallSpacing
                     clip: true
 
+                    Kirigami.PlaceholderMessage {
+                        visible: parent.count === 0
+                        text: i18nd("plasma-integration-color-dialog", "No recently used colors")
+                        anchors.fill: parent
+                    }
+
                     delegate: Rectangle {
                         color: modelData
                         radius: 4
