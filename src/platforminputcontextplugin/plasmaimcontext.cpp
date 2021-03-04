@@ -142,6 +142,11 @@ void PlasmaIMContext::applyReplacement(const QString &data)
     }
 }
 
+inline bool between(int min, int val, int max) {
+    qDebug() << min << val << max << !(val < min || max < val);
+    return !(val < min || max < val);
+}
+
 bool PlasmaIMContext::filterEvent(const QEvent *event)
 {
     bool isAccent = keyboard.readEntry("KeyRepeat", "accent") == QLatin1String("accent");
@@ -159,7 +164,7 @@ bool PlasmaIMContext::filterEvent(const QEvent *event)
             if (ev->isAutoRepeat() && ev->text() == preHoldText)
                 return true;
 
-            if (ev->key() < 0x30 || 0x39 < ev->key()) {
+            if (!between(Qt::Key_0, ev->key(), Qt::Key_9) && !between(Qt::Key_F1, ev->key(), Qt::Key_F10)) {
                 cleanUpState();
                 return false;
             }
@@ -168,16 +173,23 @@ bool PlasmaIMContext::filterEvent(const QEvent *event)
             bool isUpper = str.isUpper();
             str = str.toLower();
 
-            int key = ev->key() - 0x30;
-            if (key == 0) {
-                key = 10;
+            int keyDataIndex;
+            if (ev->key() > Qt::Key_9) {
+                keyDataIndex = ev->key() - Qt::Key_F1;
+                keyDataIndex++;
+            } else {
+                keyDataIndex = ev->key() - Qt::Key_0;
+                if (keyDataIndex == 0) {
+                    keyDataIndex = 10;
+                }
             }
-            if (KeyData::KeyMappings[str].count() < key) {
+
+            if (KeyData::KeyMappings[str].count() < keyDataIndex) {
                 cleanUpState();
                 return false;
             }
 
-            auto data = KeyData::KeyMappings[str][key - 1];
+            auto data = KeyData::KeyMappings[str][keyDataIndex - 1];
             applyReplacement(isUpper ? data.toUpper() : data);
             isPreHold = false;
             preHoldText = QString();
