@@ -95,13 +95,10 @@ Kirigami.Page {
                 anchors.fill: parent
 
                 function posChanged(mouse) {
-                    const distanceFromCenter = Math.pow(canvas.radius - mouseX, 2) + Math.pow(canvas.radius - mouseY, 2)
-                    if (distanceFromCenter > canvas.radiusSquared) {
-                        return
-                    }
+                    const point = canvas.clampToCircle(mouseX, mouseY)
 
-                    colorHandle.x = mouseX - (colorHandle.width/2)
-                    colorHandle.y = mouseY - (colorHandle.height/2)
+                    colorHandle.x = point.x - (colorHandle.width/2)
+                    colorHandle.y = point.y - (colorHandle.height/2)
                 }
 
                 onPressed: mouse => posChanged(mouse)

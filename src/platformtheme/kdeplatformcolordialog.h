@@ -101,6 +101,7 @@ public:
 
     Q_INVOKABLE QColor mapToRGB(int x, int y) const;
     Q_INVOKABLE QPointF mapFromRGB(const QColor &in) const;
+    Q_INVOKABLE QPointF clampToCircle(int x, int y) const;
 
     qreal value;
     Q_SIGNAL void valueChanged();

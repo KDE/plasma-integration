@@ -204,6 +204,21 @@ QColor HSVCircle::mapToRGB(int x, int y) const
     return QColor::fromHsvF(qBound(0.0, h, 1.0), qBound(0.0, s, 1.0), qBound(0.0, v, 1.0));
 }
 
+QPointF HSVCircle::clampToCircle(int x, int y) const
+{
+    const auto size = int(width());
+    const auto radius = size / 2;
+
+    const auto h = (qAtan2(x - radius, y - radius) + M_PI) / (2.0 * M_PI);
+    const auto s = qBound(0.0, qSqrt(qPow(x - radius, 2) + qPow(y - radius, 2)) / radius, 1.0) * radius;
+
+    const auto alpha = (h * 2 * M_PI) - M_PI;
+    const auto xPrime = s * qSin(alpha) + radius;
+    const auto yPrime = s * qCos(alpha) + radius;
+
+    return {xPrime, yPrime};
+}
+
 HSVCircle::HSVCircle(QQuickItem *parent)
     : QQuickPaintedItem(parent)
 {
