@@ -93,7 +93,8 @@ Kirigami.Page {
             }
             MouseArea {
                 anchors.fill: parent
-                onPositionChanged: (mouse) => {
+
+                function posChanged(mouse) {
                     const distanceFromCenter = Math.pow(canvas.radius - mouseX, 2) + Math.pow(canvas.radius - mouseY, 2)
                     if (distanceFromCenter > canvas.radiusSquared) {
                         return
@@ -102,6 +103,9 @@ Kirigami.Page {
                     colorHandle.x = mouseX - (colorHandle.width/2)
                     colorHandle.y = mouseY - (colorHandle.height/2)
                 }
+
+                onPressed: mouse => posChanged(mouse)
+                onPositionChanged: mouse => posChanged(mouse)
             }
             ColorHandle {
                 id: colorHandle
