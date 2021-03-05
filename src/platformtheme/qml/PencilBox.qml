@@ -132,13 +132,15 @@ Kirigami.Page {
             Repeater {
                 model: modelData
 
-                delegate: Item {
-                    implicitHeight: pencil.height
-                    implicitWidth: pencil.width
+                delegate: Control {
+                    implicitHeight: implicitContentHeight
+                    implicitWidth: implicitContentWidth
+
+                    focusPolicy: Qt.TabFocus
 
                     Layout.alignment: Qt.AlignBottom
 
-                    Pencil {
+                    contentItem: Pencil {
                         id: pencil
 
                         color: modelData
@@ -155,7 +157,7 @@ Kirigami.Page {
                                 PropertyChanges { target: pencil; shaftHeight: Kirigami.Units.gridUnit*6.5 + (row.parentIndex * Kirigami.Units.gridUnit*3) }
                             },
                             State {
-                                when: mouseArea.containsMouse || pencil.parent.activeFocus
+                                when: mouseArea.containsMouse || pencil.parent.visualFocus
                                 PropertyChanges { target: pencil; shaftHeight: Kirigami.Units.gridUnit*7 + (row.parentIndex * Kirigami.Units.gridUnit*3) }
                             }
                         ]

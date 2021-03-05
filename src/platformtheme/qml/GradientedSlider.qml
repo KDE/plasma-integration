@@ -33,6 +33,8 @@ T.Slider {
     to: 1
     value: 1
 
+    focusPolicy: Qt.StrongFocus
+
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitHandleWidth + leftPadding + rightPadding)
 
@@ -43,6 +45,9 @@ T.Slider {
     handle: ColorHandle {
         x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
         y: slider.topPadding + slider.availableHeight / 2 - height / 2
+
+        border.color: slider.activeFocus ? Kirigami.Theme.focusColor : "white"
+        border.width: slider.activeFocus ? 5 : 2
     }
     background: Rectangle {
         id: backgroundRectangle
