@@ -135,7 +135,6 @@ Kirigami.Page {
                 delegate: Item {
                     implicitHeight: pencil.height
                     implicitWidth: pencil.width
-                    focus: true
 
                     Layout.alignment: Qt.AlignBottom
 
