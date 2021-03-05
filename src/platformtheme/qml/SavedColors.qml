@@ -39,10 +39,9 @@ Kirigami.ScrollablePage {
     }
 
     header: RowLayout {
-        // TODO: make this do something
-        // TODO: removing colors
-        // TODO: copy hex to clipboard
         Kirigami.SearchField {
+            id: searchField
+
             Layout.fillWidth: true
         }
         Button {
@@ -78,10 +77,12 @@ Kirigami.ScrollablePage {
             id: nameField
             placeholderText: i18nd("plasma-integration-color-dialog", "Name your color...")
             visible: false
+            onAccepted: submitButton.clicked()
+            Keys.onEscapePressed: addColorButton.state = "passive"
         }
         Button {
             id: submitButton
-            icon.name: "arrow-right"
+            icon.name: "document-save"
             visible: false
             enabled: nameField.text.trim() !== ""
             onClicked: {
@@ -97,15 +98,23 @@ Kirigami.ScrollablePage {
                     return 0;
                 })
                 helper.savedColors = data
-                colorsView.model = helper.savedColors
+                setupColorFilter()
             }
         }
         Layout.fillWidth: true
     }
 
+    function setupColorFilter() {
+        colorsView.model = Qt.binding(() => {
+            const query = searchField.text
+            return helper.savedColors.filter(item => item.name.includes(query))
+        })
+    }
+
     ListView {
         id: colorsView
-        model: helper.savedColors
+
+        Component.onCompleted: setupColorFilter()
 
         Layout.fillWidth: true
         Layout.preferredHeight: root.height * 0.7
