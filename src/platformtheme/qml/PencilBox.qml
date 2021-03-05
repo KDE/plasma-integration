@@ -176,6 +176,7 @@ Kirigami.Page {
 
                             cursorShape: Qt.PointingHandCursor
                             anchors.fill: parent
+                            anchors.margins: -(row.spacing/2)
                             hoverEnabled: true
                             onClicked: root.currentColor = modelData
                         }
