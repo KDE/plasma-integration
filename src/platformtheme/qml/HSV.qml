@@ -54,14 +54,14 @@ Kirigami.Page {
 
         slider.value = root.currentColor.hsvValue
         const point = canvas.mapFromRGB(root.currentColor)
-        colorHandle.x = point.x-colorHandle.width/2
-        colorHandle.y = point.y-colorHandle.height/2
+        colorHandle.x = point.x - colorHandle.width/2
+        colorHandle.y = point.y - colorHandle.height/2
 
         hsvPage.updating = false
     }
 
     function updateRoot() {
-        root.currentColor = canvas.mapToRGB(colorHandle.x-colorHandle.width/2, colorHandle.y-colorHandle.height/2)
+        root.currentColor = canvas.mapToRGB(colorHandle.x + colorHandle.width/2, colorHandle.y + colorHandle.height/2)
     }
 
     Connections {
