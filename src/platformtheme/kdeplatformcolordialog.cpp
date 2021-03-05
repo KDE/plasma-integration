@@ -97,6 +97,7 @@ ColorDialogHelper::ColorDialogHelper()
 
 ColorDialogHelper::~ColorDialogHelper()
 {
+    m_dialog->deleteLater();
 }
 
 void ColorDialogHelper::exec()
