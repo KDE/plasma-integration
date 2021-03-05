@@ -51,6 +51,8 @@ Item {
             }
 
             header: RowLayout {
+                spacing: Kirigami.Units.smallSpacing
+
                 Item { implicitWidth: Kirigami.Units.largeSpacing }
                 Rectangle {
                     color: root.currentColor
@@ -96,6 +98,7 @@ Item {
             }
             footer: RowLayout {
                 spacing: Kirigami.Units.smallSpacing
+
                 ToolButton {
                     icon.name: "color-picker"
                     onClicked: helper.pick()
