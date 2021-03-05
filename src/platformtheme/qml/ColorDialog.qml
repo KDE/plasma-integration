@@ -52,6 +52,15 @@ Item {
 
             header: RowLayout {
                 Item { implicitWidth: Kirigami.Units.largeSpacing }
+                Rectangle {
+                    color: root.currentColor
+                    radius: 4
+
+                    Layout.preferredWidth: height
+                    Layout.fillHeight: true
+                    Layout.topMargin: Kirigami.Units.smallSpacing
+                    Layout.bottomMargin: Kirigami.Units.smallSpacing
+                }
                 TextField {
                     id: txtField
                     text: String(root.currentColor)
@@ -111,18 +120,6 @@ Item {
 
             RowLayout {
                 anchors.fill: parent
-
-                Rectangle {
-                    color: root.currentColor
-                    radius: 4
-
-                    Layout.preferredWidth: height
-                    Layout.fillHeight: true
-                }
-
-                Kirigami.Separator {
-                    Layout.fillHeight: true
-                }
 
                 ListView {
                     orientation: ListView.Horizontal
