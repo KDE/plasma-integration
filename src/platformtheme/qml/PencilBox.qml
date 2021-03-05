@@ -21,6 +21,7 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.10
 import QtQuick.Controls 2.10
+import QtQuick.Templates 2.10 as T
 import org.kde.kirigami 2.13 as Kirigami
 import QtGraphicalEffects 1.12
 
@@ -132,7 +133,7 @@ Kirigami.Page {
             Repeater {
                 model: modelData
 
-                delegate: Control {
+                delegate: T.Control {
                     implicitHeight: implicitContentHeight
                     implicitWidth: implicitContentWidth
 
