@@ -84,11 +84,8 @@ QFont *KFontSettingsData::font(FontTypes fontType)
         //NOTE: We are not using KConfig directly because we can't call QFont::QFont from here
         if (!fontInfo.isEmpty()) {
             cachedFont->fromString(fontInfo);
-        } else {
-            // set the canonical stylename here, where it cannot override
-            // user-specific font attributes if those do not include a stylename.
-            cachedFont->setStyleName(QLatin1String(fontData.StyleName));
         }
+        // Don't set default font style names, as it prevents different font weights from being used (the QFont::Normal weight should work)
 
         mFonts[fontType] = cachedFont;
     }
