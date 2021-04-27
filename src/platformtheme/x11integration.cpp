@@ -88,7 +88,7 @@ bool X11Integration::eventFilter(QObject *watched, QEvent *event)
                     }
                     const auto blurBehindProperty = w->property(s_blurBehindPropertyName.constData());
                     if (blurBehindProperty.isValid()) {
-                        KWindowEffects::enableBlurBehind(w->winId(), blurBehindProperty.toBool());
+                        KWindowEffects::enableBlurBehind(w, blurBehindProperty.toBool());
                     }
                     installDesktopFileName(w);
                 }

@@ -103,7 +103,7 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
     }
     const auto blurBehindProperty = w->property(s_blurBehindPropertyName.constData());
     if (blurBehindProperty.isValid()) {
-        KWindowEffects::enableBlurBehind(w->winId(), blurBehindProperty.toBool());
+        KWindowEffects::enableBlurBehind(w, blurBehindProperty.toBool());
     }
     // create deco
     Surface *s = Surface::fromWindow(w);
