@@ -39,9 +39,9 @@
 
 #include "qxdgdesktopportalfiledialog_p.h"
 
-#include <QtCore/qeventloop.h>
+#include <qeventloop.h>
 
-#include <QtDBus/QtDBus>
+#include <QtDBus>
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QDBusPendingCall>
