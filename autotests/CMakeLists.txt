@@ -32,7 +32,7 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
 endmacro()
 
 set(dbus_interface)
-qt5_add_dbus_interface(dbus_interface ../src/platformtheme/org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
+qt_add_dbus_interface(dbus_interface ../src/platformtheme/org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
 
 set(platformThemeSRCS
   ../src/platformtheme/qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience

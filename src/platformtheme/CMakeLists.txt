@@ -33,7 +33,7 @@ set(platformtheme_SRCS
     qxdgdesktopportalfiledialog.cpp
 )
 
-qt5_add_dbus_interface(platformtheme_SRCS org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
+qt_add_dbus_interface(platformtheme_SRCS org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
 
 add_library(KDEPlasmaPlatformTheme MODULE ${platformtheme_SRCS})
 
