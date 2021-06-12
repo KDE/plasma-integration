@@ -401,19 +401,19 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     mainLayout->addWidget(d->m_treeView, 1);
     mainLayout->addWidget(d->m_urlCombo, 0);
 
-    connect(d->m_treeView, SIGNAL(currentChanged(QUrl)),
-            SLOT(slotCurrentChanged()));
-    connect(d->m_treeView, SIGNAL(activated(QModelIndex)),
-            SLOT(slotExpand(QModelIndex)));
-    connect(d->m_treeView, SIGNAL(customContextMenuRequested(QPoint)),
-            SLOT(slotContextMenuRequested(QPoint)));
+    connect(d->m_treeView, QOverload<const QUrl&>::of(&KFileTreeView::currentChanged),
+            this, [this](const QUrl &) { this->d->slotCurrentChanged();});
+    connect(d->m_treeView, &QTreeView::activated,
+            this, [this](const QModelIndex &index) { this->d->slotExpand(index);});
+    connect(d->m_treeView, &KFileTreeView::customContextMenuRequested,
+            this, [this](const QPoint &point) { this->d->slotContextMenuRequested(point);});
 
-    connect(d->m_urlCombo, SIGNAL(editTextChanged(QString)),
-            SLOT(slotComboTextChanged(QString)));
-    connect(d->m_urlCombo, SIGNAL(activated(QString)),
-            SLOT(slotUrlActivated(QString)));
-    connect(d->m_urlCombo, SIGNAL(returnPressed(QString)),
-            SLOT(slotUrlActivated(QString)));
+    connect(d->m_urlCombo, &QComboBox::editTextChanged,
+            this, [this](const QString &text){ this->d->slotComboTextChanged(text); });
+    connect(d->m_urlCombo, &QComboBox::textActivated,
+            this, [this](const QString &text){ this->d->slotUrlActivated(text); });
+    connect(d->m_urlCombo, QOverload<const QString&>::of(&KComboBox::returnPressed),
+            this, [this](const QString &text){ this->d->slotUrlActivated(text); });
 
     setCurrentUrl(d->m_startURL);
 }
