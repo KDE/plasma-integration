@@ -62,7 +62,6 @@ void KWaylandIntegration::init()
     );
 
     m_registry->setup();
-    connection->roundtrip();
 }
 
 bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
