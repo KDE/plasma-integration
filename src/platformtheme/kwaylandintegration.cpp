@@ -15,10 +15,7 @@
 #include "qwayland-appmenu.h"
 #include "qwayland-server-decoration-palette.h"
 
-#include <KWindowEffects>
-
 static const QByteArray s_schemePropertyName = QByteArrayLiteral("KDE_COLOR_SCHEME_PATH");
-static const QByteArray s_blurBehindPropertyName = QByteArrayLiteral("ENABLE_BLUR_BEHIND_HINT");
 
 class AppMenuManager : public QWaylandClientExtensionTemplate<AppMenuManager>, public QtWayland::org_kde_kwin_appmenu_manager
 {
@@ -131,10 +128,6 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
     // set colorscheme hint
     if (qApp->property(s_schemePropertyName.constData()).isValid()) {
         installColorScheme(w);
-    }
-    const auto blurBehindProperty = w->property(s_blurBehindPropertyName.constData());
-    if (blurBehindProperty.isValid()) {
-        KWindowEffects::enableBlurBehind(w, blurBehindProperty.toBool());
     }
     // create deco
     wl_surface *s = surfaceFromWindow(w);
