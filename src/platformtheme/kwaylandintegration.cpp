@@ -21,6 +21,7 @@
 
 #include <QExposeEvent>
 #include <QGuiApplication>
+
 #include <qpa/qplatformnativeinterface.h>
 
 #include <KWayland/Client/connection_thread.h>
@@ -131,15 +132,36 @@ void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
     w->setProperty("org.kde.plasma.integration.palette", QVariant());
 }
 
+void KWaylandIntegration::createPaletteManagerIfNeeded()
+{
+    if (m_paletteManager) {
+        return;
+    }
+    const auto paletteManagerInterface = m_registry->interface(Registry::Interface::ServerSideDecorationPalette);
+    if (paletteManagerInterface.name == 0) {
+        return;
+    } else {
+        m_paletteManager = m_registry->createServerSideDecorationPaletteManager(paletteManagerInterface.name, paletteManagerInterface.version, this);
+
+        connect(m_registry,  &KWayland::Client::Registry::serverSideDecorationPaletteManagerRemoved, this, [this]() {
+            // this isn't really the right place, but YOLO
+            for (QWindow *w : qApp->topLevelWindows()) {
+                w->setProperty("org.kde.plasma.integration.shellSurfaceCreated", QVariant());
+
+                delete w->property("org.kde.plasma.integration.palette").value<ServerSideDecorationPalette*>();
+                w->setProperty("org.kde.plasma.integration.palette", QVariant());
+            }
+            delete m_paletteManager;
+            m_paletteManager = nullptr;
+        });
+    }
+}
+
 void KWaylandIntegration::installColorScheme(QWindow *w)
 {
+    createPaletteManagerIfNeeded();
     if (!m_paletteManager) {
-        const auto paletteManagerInterface = m_registry->interface(Registry::Interface::ServerSideDecorationPalette);
-        if (paletteManagerInterface.name == 0) {
-            return;
-        } else {
-            m_paletteManager = m_registry->createServerSideDecorationPaletteManager(paletteManagerInterface.name, paletteManagerInterface.version, this);
-        }
+        return;
     }
     auto palette = w->property("org.kde.plasma.integration.palette").value<ServerSideDecorationPalette*>();
     if (!palette) {
