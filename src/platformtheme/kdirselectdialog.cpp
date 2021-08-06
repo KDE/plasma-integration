@@ -69,7 +69,6 @@ public:
     void slotUrlActivated(const QString &);
     void slotComboTextChanged(const QString &);
     void slotContextMenuRequested(const QPoint &);
-    void slotNewFolder();
     void slotMoveToTrash();
     void slotDelete();
     void slotProperties();
@@ -238,11 +237,6 @@ void KDirSelectDialog::Private::slotExpand(const QModelIndex &index)
     m_treeView->setExpanded(index, !m_treeView->isExpanded(index));
 }
 
-void KDirSelectDialog::Private::slotNewFolder()
-{
-    slotMkdir();
-}
-
 void KDirSelectDialog::Private::slotMoveToTrash()
 {
     const QUrl url = m_treeView->selectedUrl();
@@ -288,14 +282,16 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     QFrame *page = new QFrame(this);
     topLayout->addWidget(page);
 
-    QPushButton *folderButton = new QPushButton;
+    QPushButton *folderButton = new QPushButton(this);
     KGuiItem::assign(folderButton, KGuiItem(i18nc("@action:button", "New Folder..."), QStringLiteral("folder-new")));
-    connect(folderButton, SIGNAL(clicked()), this, SLOT(slotNewFolder()));
+    connect(folderButton, &QPushButton::clicked, this, [this]() {
+        d->slotMkdir();
+    });
 
     m_buttons = new QDialogButtonBox(this);
     m_buttons->addButton(folderButton, QDialogButtonBox::ActionRole);
     m_buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    connect(m_buttons, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(m_buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(m_buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
     topLayout->addWidget(m_buttons);
 
@@ -340,21 +336,27 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     d->m_actions->addAction(newFolder->objectName(), newFolder);
     newFolder->setIcon(QIcon::fromTheme(QStringLiteral("folder-new")));
     newFolder->setShortcuts(KStandardShortcut::createFolder());
-    connect(newFolder, SIGNAL(triggered(bool)), this, SLOT(slotNewFolder()));
+    connect(newFolder, &QAction::triggered, this, [this]() {
+        d->slotMkdir();
+    });
     d->m_contextMenu->addAction(newFolder);
 
     d->moveToTrash = new QAction(i18nc("@action:inmenu", "Move to Trash"), this);
     d->m_actions->addAction(d->moveToTrash->objectName(), d->moveToTrash);
     d->moveToTrash->setIcon(QIcon::fromTheme(QStringLiteral("user-trash")));
     d->moveToTrash->setShortcut(Qt::Key_Delete);
-    connect(d->moveToTrash, SIGNAL(triggered(bool)), this, SLOT(slotMoveToTrash()));
+    connect(d->moveToTrash, &QAction::triggered, this, [this]() {
+        d->slotMoveToTrash();
+    });
     d->m_contextMenu->addAction(d->moveToTrash);
 
     d->deleteAction = new QAction(i18nc("@action:inmenu", "Delete"), this);
     d->m_actions->addAction(d->deleteAction->objectName(), d->deleteAction);
     d->deleteAction->setIcon(QIcon::fromTheme(QStringLiteral("edit-delete")));
     d->deleteAction->setShortcut(Qt::SHIFT | Qt::Key_Delete);
-    connect(d->deleteAction, SIGNAL(triggered(bool)), this, SLOT(slotDelete()));
+    connect(d->deleteAction, &QAction::triggered, this, [this]() {
+        d->slotDelete();
+    });
     d->m_contextMenu->addAction(d->deleteAction);
 
     d->m_contextMenu->addSeparator();
@@ -370,7 +372,9 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     d->m_actions->addAction(propertiesAction->objectName(), propertiesAction);
     propertiesAction->setIcon(QIcon::fromTheme(QStringLiteral("document-properties")));
     propertiesAction->setShortcut(Qt::ALT | Qt::Key_Return);
-    connect(propertiesAction, SIGNAL(triggered(bool)), this, SLOT(slotProperties()));
+    connect(propertiesAction, &QAction::triggered, this, [this]() {
+        d->slotProperties();
+    });
     d->m_contextMenu->addAction(propertiesAction);
 
     d->m_startURL = KFileWidget::getStartUrl(startDir, d->m_recentDirClass);
@@ -392,12 +396,26 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     mainLayout->addWidget(d->m_urlCombo, 0);
 
     connect(d->m_treeView, SIGNAL(currentChanged(QUrl)), SLOT(slotCurrentChanged()));
-    connect(d->m_treeView, SIGNAL(activated(QModelIndex)), SLOT(slotExpand(QModelIndex)));
-    connect(d->m_treeView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(slotContextMenuRequested(QPoint)));
 
-    connect(d->m_urlCombo, SIGNAL(editTextChanged(QString)), SLOT(slotComboTextChanged(QString)));
-    connect(d->m_urlCombo, SIGNAL(activated(QString)), SLOT(slotUrlActivated(QString)));
-    connect(d->m_urlCombo, SIGNAL(returnPressed(QString)), SLOT(slotUrlActivated(QString)));
+    connect(d->m_treeView, &QAbstractItemView::activated, this, [this](const QModelIndex &index) {
+        d->slotExpand(index);
+    });
+
+    connect(d->m_treeView, &QWidget::customContextMenuRequested, this, [this](const QPoint &pos) {
+        d->slotContextMenuRequested(pos);
+    });
+
+    connect(d->m_urlCombo, &QComboBox::editTextChanged, this, [this](const QString &text) {
+        d->slotComboTextChanged(text);
+    });
+
+    connect(d->m_urlCombo, &QComboBox::textActivated, this, [this](const QString &text) {
+        d->slotUrlActivated(text);
+    });
+
+    connect(d->m_urlCombo, QOverload<const QString &>::of(&KComboBox::returnPressed), this, [this](const QString &text) {
+        d->slotUrlActivated(text);
+    });
 
     setCurrentUrl(d->m_startURL);
 }

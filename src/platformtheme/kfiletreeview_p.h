@@ -106,10 +106,6 @@ protected:
 private:
     class Private;
     Private *const d;
-
-    Q_PRIVATE_SLOT(d, void _k_activated(const QModelIndex &))
-    Q_PRIVATE_SLOT(d, void _k_currentChanged(const QModelIndex &, const QModelIndex &))
-    Q_PRIVATE_SLOT(d, void _k_expanded(const QModelIndex &))
 };
 
 #endif

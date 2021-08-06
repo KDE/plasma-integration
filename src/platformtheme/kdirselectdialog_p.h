@@ -111,14 +111,6 @@ private:
     Private *const d;
 
     Q_PRIVATE_SLOT(d, void slotCurrentChanged())
-    Q_PRIVATE_SLOT(d, void slotExpand(const QModelIndex &))
-    Q_PRIVATE_SLOT(d, void slotUrlActivated(const QString &))
-    Q_PRIVATE_SLOT(d, void slotComboTextChanged(const QString &))
-    Q_PRIVATE_SLOT(d, void slotContextMenuRequested(const QPoint &))
-    Q_PRIVATE_SLOT(d, void slotNewFolder())
-    Q_PRIVATE_SLOT(d, void slotMoveToTrash())
-    Q_PRIVATE_SLOT(d, void slotDelete())
-    Q_PRIVATE_SLOT(d, void slotProperties())
 };
 
 #endif

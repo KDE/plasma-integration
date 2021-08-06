@@ -33,7 +33,7 @@ void KDEPlatformSystemTrayIcon_UnitTest::testMenuRecreate()
     kpsti->updateMenu(trayIconMenu->platformMenu());
 
     QMenu *firstMenu = ourMenu->menu();
-    QSignalSpy menuDestroyedSpy(firstMenu, SIGNAL(destroyed()));
+    QSignalSpy menuDestroyedSpy(firstMenu, &QObject::destroyed);
     QCOMPARE(firstMenu->actions().size(), 1);
     QCOMPARE(firstMenu->actions().first()->text(), "testAction");
 
@@ -65,7 +65,7 @@ void KDEPlatformSystemTrayIcon_UnitTest::testAddActionAfterMenuRecreate()
     kpsti->updateMenu(trayIconMenu->platformMenu());
 
     QMenu *firstMenu = ourMenu->menu();
-    QSignalSpy menuDestroyedSpy(firstMenu, SIGNAL(destroyed()));
+    QSignalSpy menuDestroyedSpy(firstMenu, &QObject::destroyed);
     QCOMPARE(firstMenu->actions().size(), 1);
     QCOMPARE(firstMenu->actions().first()->text(), "testAction1");
 

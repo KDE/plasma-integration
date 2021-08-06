@@ -24,7 +24,7 @@ void KSniUnitTest::testHideDontCrash()
     QMenu *trayIconMenu = new QMenu();
     QAction *dummyAction = new QAction(QStringLiteral("foo"), sti);
     trayIconMenu->addAction(dummyAction);
-    QSignalSpy menuDestroyedSpy(trayIconMenu, SIGNAL(destroyed()));
+    QSignalSpy menuDestroyedSpy(trayIconMenu, &QObject::destroyed);
     QVERIFY(menuDestroyedSpy.isValid());
     sti->setContextMenu(trayIconMenu);
 

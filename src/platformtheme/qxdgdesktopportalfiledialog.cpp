@@ -340,8 +340,8 @@ void QXdgDesktopPortalFileDialog::exec()
 
     // HACK we have to avoid returning until we emit that the dialog was accepted or rejected
     QEventLoop loop;
-    loop.connect(this, SIGNAL(accept()), SLOT(quit()));
-    loop.connect(this, SIGNAL(reject()), SLOT(quit()));
+    QObject::connect(this, &QXdgDesktopPortalFileDialog::accept, &loop, &QEventLoop::quit);
+    QObject::connect(this, &QXdgDesktopPortalFileDialog::reject, &loop, &QEventLoop::quit);
     loop.exec();
 }
 

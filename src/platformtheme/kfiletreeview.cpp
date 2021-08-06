@@ -30,9 +30,9 @@ public:
 
     QUrl urlForProxyIndex(const QModelIndex &index) const;
 
-    void _k_activated(const QModelIndex &);
-    void _k_currentChanged(const QModelIndex &, const QModelIndex &);
-    void _k_expanded(const QModelIndex &);
+    void activated(const QModelIndex &);
+    void currentChanged(const QModelIndex &, const QModelIndex &);
+    void expanded(const QModelIndex &);
 
     KFileTreeView *const q;
     KDirModel *mSourceModel = nullptr;
@@ -46,7 +46,7 @@ QUrl KFileTreeView::Private::urlForProxyIndex(const QModelIndex &index) const
     return !item.isNull() ? item.url() : QUrl();
 }
 
-void KFileTreeView::Private::_k_activated(const QModelIndex &index)
+void KFileTreeView::Private::activated(const QModelIndex &index)
 {
     const QUrl url = urlForProxyIndex(index);
     if (url.isValid()) {
@@ -54,7 +54,7 @@ void KFileTreeView::Private::_k_activated(const QModelIndex &index)
     }
 }
 
-void KFileTreeView::Private::_k_currentChanged(const QModelIndex &currentIndex, const QModelIndex &)
+void KFileTreeView::Private::currentChanged(const QModelIndex &currentIndex, const QModelIndex &)
 {
     const QUrl url = urlForProxyIndex(currentIndex);
     if (url.isValid()) {
@@ -62,7 +62,7 @@ void KFileTreeView::Private::_k_currentChanged(const QModelIndex &currentIndex, 
     }
 }
 
-void KFileTreeView::Private::_k_expanded(const QModelIndex &baseIndex)
+void KFileTreeView::Private::expanded(const QModelIndex &baseIndex)
 {
     QModelIndex index = mProxyModel->mapFromSource(baseIndex);
 
@@ -86,10 +86,17 @@ KFileTreeView::KFileTreeView(QWidget *parent)
 
     d->mSourceModel->dirLister()->openUrl(QUrl::fromLocalFile(QDir::root().absolutePath()), KDirLister::Keep);
 
-    connect(this, SIGNAL(activated(QModelIndex)), this, SLOT(_k_activated(QModelIndex)));
-    connect(selectionModel(), SIGNAL(currentChanged(QModelIndex, QModelIndex)), this, SLOT(_k_currentChanged(QModelIndex, QModelIndex)));
+    connect(this, &QAbstractItemView::activated, this, [this](const QModelIndex &index) {
+        d->activated(index);
+    });
 
-    connect(d->mSourceModel, SIGNAL(expand(QModelIndex)), this, SLOT(_k_expanded(QModelIndex)));
+    connect(selectionModel(), &QItemSelectionModel::currentChanged, this, [this](const QModelIndex &current, const QModelIndex &previous) {
+        d->currentChanged(current, previous);
+    });
+
+    connect(d->mSourceModel, &KDirModel::expand, this, [this](const QModelIndex &index) {
+        d->expanded(index);
+    });
 }
 
 KFileTreeView::~KFileTreeView()
