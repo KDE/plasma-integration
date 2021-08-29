@@ -37,7 +37,7 @@ public:
         WindowTitleFont,
         TaskbarFont,
         SmallestReadableFont,
-        FontTypesCount
+        FontTypesCount,
     };
 
 public:

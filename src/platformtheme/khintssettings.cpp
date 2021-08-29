@@ -111,7 +111,7 @@ KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
         QStringLiteral(BREEZE_STYLE_NAME),
         QStringLiteral("oxygen"),
         QStringLiteral("fusion"),
-        QStringLiteral("windows")
+        QStringLiteral("windows"),
     };
     const QString configuredStyle = readConfigValue(cg, QStringLiteral("widgetStyle"), QString()).toString();
     if (!configuredStyle.isEmpty()) {

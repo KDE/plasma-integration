@@ -25,7 +25,7 @@ class QXdgDesktopPortalFileDialog : public QPlatformFileDialogHelper
 public:
     enum ConditionType : uint {
         GlobalPattern = 0,
-        MimeType = 1
+        MimeType = 1,
     };
     // Filters a(sa(us))
     // Example: [('Images', [(0, '*.ico'), (1, 'image/png')]), ('Text', [(0, '*.txt')])]
