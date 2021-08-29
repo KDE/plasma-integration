@@ -8,31 +8,31 @@
 
 #include <config-platformtheme.h>
 
+#include "kdeplatformfiledialoghelper.h"
+#include "kdeplatformsystemtrayicon.h"
 #include "kdeplatformtheme.h"
 #include "kfontsettingsdata.h"
 #include "khintssettings.h"
-#include "kdeplatformfiledialoghelper.h"
-#include "kdeplatformsystemtrayicon.h"
 #include "kwaylandintegration.h"
 #include "x11integration.h"
 
 #include <QApplication>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+#include <QDebug>
 #include <QFont>
 #include <QPalette>
 #include <QString>
 #include <QVariant>
-#include <QDBusConnection>
-#include <QDBusConnectionInterface>
-#include <QDebug>
 #include <QtQuickControls2/QQuickStyle>
 
+#include <KIO/Global>
+#include <KLocalizedString>
+#include <KStandardGuiItem>
+#include <KWindowSystem>
 #include <kiconengine.h>
 #include <kiconloader.h>
 #include <kstandardshortcut.h>
-#include <KStandardGuiItem>
-#include <KLocalizedString>
-#include <KWindowSystem>
-#include <KIO/Global>
 
 #include "qdbusmenubar_p.h"
 #include "qxdgdesktopportalfiledialog_p.h"
@@ -125,11 +125,13 @@ const QFont *KdePlatformTheme::font(Font type) const
     KFontSettingsData::FontTypes fdtype;
     switch (type) {
     case SystemFont:
-        fdtype = KFontSettingsData::GeneralFont; break;
+        fdtype = KFontSettingsData::GeneralFont;
+        break;
     case MenuFont:
     case MenuBarFont:
     case MenuItemFont:
-        fdtype = KFontSettingsData::MenuFont; break;
+        fdtype = KFontSettingsData::MenuFont;
+        break;
     case MessageBoxFont:
     case LabelFont:
     case TipLabelFont:
@@ -141,20 +143,26 @@ const QFont *KdePlatformTheme::font(Font type) const
     case ListBoxFont:
     case ComboMenuItemFont:
     case ComboLineEditFont:
-        fdtype = KFontSettingsData::GeneralFont; break;
+        fdtype = KFontSettingsData::GeneralFont;
+        break;
     case TitleBarFont:
     case MdiSubWindowTitleFont:
     case DockWidgetTitleFont:
-        fdtype = KFontSettingsData::WindowTitleFont; break;
+        fdtype = KFontSettingsData::WindowTitleFont;
+        break;
     case SmallFont:
     case MiniFont:
-        fdtype = KFontSettingsData::SmallestReadableFont; break;
+        fdtype = KFontSettingsData::SmallestReadableFont;
+        break;
     case FixedFont:
-        fdtype = KFontSettingsData::FixedFont; break;
+        fdtype = KFontSettingsData::FixedFont;
+        break;
     case ToolButtonFont:
-        fdtype = KFontSettingsData::ToolbarFont; break;
+        fdtype = KFontSettingsData::ToolbarFont;
+        break;
     default:
-        fdtype = KFontSettingsData::GeneralFont; break;
+        fdtype = KFontSettingsData::GeneralFont;
+        break;
     }
 
     return m_fontsData->font(fdtype);
@@ -261,7 +269,7 @@ QList<QKeySequence> KdePlatformTheme::keyBindings(QKeySequence::StandardKey key)
 
 bool KdePlatformTheme::usePlatformNativeDialog(QPlatformTheme::DialogType type) const
 {
-    return type == QPlatformTheme::FileDialog && qobject_cast<QApplication*>(QCoreApplication::instance());
+    return type == QPlatformTheme::FileDialog && qobject_cast<QApplication *>(QCoreApplication::instance());
 }
 
 QString KdePlatformTheme::standardButtonText(int button) const
@@ -371,18 +379,18 @@ QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
     return nullptr;
 }
 
-//force QtQuickControls2 to use the desktop theme as default
+// force QtQuickControls2 to use the desktop theme as default
 void KdePlatformTheme::setQtQuickControlsTheme()
 {
-    //if the user is running only a QGuiApplication, explicitly unset the QQC1 desktop style and abort
-    //as this style is all about QWidgets and we know setting this will make it crash
-    if (!qobject_cast<QApplication*>(qApp)) {
+    // if the user is running only a QGuiApplication, explicitly unset the QQC1 desktop style and abort
+    // as this style is all about QWidgets and we know setting this will make it crash
+    if (!qobject_cast<QApplication *>(qApp)) {
         if (qgetenv("QT_QUICK_CONTROLS_1_STYLE").right(7) == "Desktop") {
             qunsetenv("QT_QUICK_CONTROLS_1_STYLE");
         }
         return;
     }
-    //if the user has explicitly set something else, don't meddle
+    // if the user has explicitly set something else, don't meddle
     if (!QQuickStyle::name().isEmpty()) {
         return;
     }

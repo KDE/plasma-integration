@@ -10,16 +10,15 @@
  * after a window is hidden and shown.
  */
 
-#include <QApplication>
-#include <QWidget>
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <QTimer>
 #include <KColorSchemeManager>
+#include <QApplication>
 #include <QComboBox>
+#include <QPushButton>
+#include <QTimer>
+#include <QVBoxLayout>
+#include <QWidget>
 
-
-class ATestWindow: public QWidget
+class ATestWindow : public QWidget
 {
     Q_OBJECT
 public:
@@ -39,7 +38,9 @@ ATestWindow::ATestWindow()
 
     connect(mBtn, &QPushButton::clicked, this, [this]() {
         this->hide();
-        QTimer::singleShot(1000, this, [this](){this->show();});
+        QTimer::singleShot(1000, this, [this]() {
+            this->show();
+        });
     });
 
     QComboBox *colorCombo = new QComboBox();
@@ -56,8 +57,6 @@ ATestWindow::ATestWindow()
     setLayout(layout);
 }
 
-
-
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
@@ -67,6 +66,5 @@ int main(int argc, char **argv)
 
     return app.exec();
 }
-
 
 #include "windowdecotest.moc"

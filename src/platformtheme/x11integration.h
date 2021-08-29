@@ -7,8 +7,8 @@
 #ifndef X11INTEGRATION_H
 #define X11INTEGRATION_H
 
-#include <QObject>
 #include <QHash>
+#include <QObject>
 #include <xcb/xcb.h>
 
 class QWindow;

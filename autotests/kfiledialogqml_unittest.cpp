@@ -5,10 +5,10 @@
     SPDX-License-Identifier: LGPL-2.0-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 */
 
-#include <QTest>
-#include <QQmlEngine>
-#include <QQmlComponent>
 #include <KFileWidget>
+#include <QQmlComponent>
+#include <QQmlEngine>
+#include <QTest>
 
 class KFileDialogQml_UnitTest : public QObject
 {
@@ -50,7 +50,6 @@ private Q_SLOTS:
             QScopedPointer<QObject> object(component.create());
             QVERIFY(!object.isNull());
 
-
             fw = findFileWidget();
             QVERIFY(fw);
             QCOMPARE(fw->isVisible(), true);
@@ -78,4 +77,3 @@ private:
 QTEST_MAIN(KFileDialogQml_UnitTest)
 
 #include "kfiledialogqml_unittest.moc"
-

@@ -6,8 +6,8 @@
 #ifndef KWAYLANDINTEGRATION_H
 #define KWAYLANDINTEGRATION_H
 
-#include <QObject>
 #include <QHash>
+#include <QObject>
 
 class QWindow;
 
@@ -41,13 +41,13 @@ private:
     void installColorScheme(QWindow *w);
     KWayland::Client::AppMenuManager *m_appMenuManager = nullptr;
     KWayland::Client::ServerSideDecorationPaletteManager *m_paletteManager = nullptr;
-    KWayland::Client::Registry* m_registry = nullptr;
+    KWayland::Client::Registry *m_registry = nullptr;
 
     struct WindowInfo {
         QString appMenuServiceName;
         QString appMenuObjectPath;
     };
-    QHash<QWindow*, WindowInfo> m_windowInfo;
+    QHash<QWindow *, WindowInfo> m_windowInfo;
 };
 
 #endif

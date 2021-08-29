@@ -6,9 +6,9 @@
 #ifndef KDEPLATFORMSYSTEMTRAYICON_H
 #define KDEPLATFORMSYSTEMTRAYICON_H
 
+#include <QVariant>
 #include <qpa/qplatformmenu.h>
 #include <qpa/qplatformsystemtrayicon.h>
-#include <QVariant>
 
 class KStatusNotifierItem;
 class SystemTrayMenuItem;
@@ -48,7 +48,7 @@ private:
     QVariant m_separatorsCollapsible;
     quintptr m_tag;
     QPointer<QMenu> m_menu;
-    QList<SystemTrayMenuItem*> m_items;
+    QList<SystemTrayMenuItem *> m_items;
 };
 
 class SystemTrayMenuItem : public QPlatformMenuItem
@@ -92,8 +92,7 @@ public:
     void updateToolTip(const QString &tooltip) override;
     void updateMenu(QPlatformMenu *menu) override;
     QRect geometry() const override;
-    void showMessage(const QString &title, const QString &msg,
-                     const QIcon &icon, MessageIcon iconType, int secs) override;
+    void showMessage(const QString &title, const QString &msg, const QIcon &icon, MessageIcon iconType, int secs) override;
 
     bool isSystemTrayAvailable() const override;
     bool supportsMessages() const override;

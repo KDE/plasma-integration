@@ -30,9 +30,7 @@ public:
      * @param localOnly unused. You can only select paths below the startDir
      * @param parent the parent for the dialog, usually 0L
      */
-    explicit KDirSelectDialog(const QUrl &startDir = QUrl(),
-                              bool localOnly = false,
-                              QWidget *parent = nullptr);
+    explicit KDirSelectDialog(const QUrl &startDir = QUrl(), bool localOnly = false, QWidget *parent = nullptr);
 
     /**
      * Destroys the directory selection dialog.
@@ -75,9 +73,7 @@ public:
      * @deprecated since 5.0, use QFileDialog::getExistingDirectory (if localOnly was true)
      * or QFileDialog::getExistingDirectoryUrl (if localOnly was false) instead.
      */
-    static QUrl selectDirectory(const QUrl &startDir = QUrl(),
-            bool localOnly = false, QWidget *parent = nullptr,
-            const QString &caption = QString());
+    static QUrl selectDirectory(const QUrl &startDir = QUrl(), bool localOnly = false, QWidget *parent = nullptr, const QString &caption = QString());
 
     /**
      * @return The path for the root node

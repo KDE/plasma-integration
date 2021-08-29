@@ -18,10 +18,10 @@ class PlasmaIM : public QPlatformInputContextPlugin
     Q_PLUGIN_METADATA(IID QPlatformInputContextFactoryInterface_iid FILE "plasmaim.json")
 
 public:
-    QPlatformInputContext *create(const QString&, const QStringList&) Q_DECL_OVERRIDE;
+    QPlatformInputContext *create(const QString &, const QStringList &) Q_DECL_OVERRIDE;
 };
 
-QPlatformInputContext *PlasmaIM::create(const QString& system, const QStringList&)
+QPlatformInputContext *PlasmaIM::create(const QString &system, const QStringList &)
 {
     if (system == "plasmaim") {
         return new PlasmaIMContext;

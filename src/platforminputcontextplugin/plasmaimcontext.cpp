@@ -27,7 +27,7 @@ static QList<TooltipData> dataForIndex(const QString &ch, bool upperCase)
     QList<TooltipData> ret;
     int i = 0;
     for (auto item : KeyData::KeyMappings[ch]) {
-        ret << TooltipData {upperCase ? item.toUpper() : item, QString::number((i + 1) < 10 ? (i + 1) : 0, 10), i};
+        ret << TooltipData{upperCase ? item.toUpper() : item, QString::number((i + 1) < 10 ? (i + 1) : 0, 10), i};
         i++;
     }
     return ret;
@@ -67,7 +67,7 @@ void PlasmaIMContext::setFocusObject(QObject *object)
     m_focusObject = object;
 }
 
-void PlasmaIMContext::configChangedHandler(const KConfigGroup&, const QByteArrayList&)
+void PlasmaIMContext::configChangedHandler(const KConfigGroup &, const QByteArrayList &)
 {
     config->reparseConfiguration();
 }
@@ -83,8 +83,7 @@ void PlasmaIMContext::showPopup(const QList<TooltipData> &text)
         parentWin = QGuiApplication::focusWindow();
     }
 
-    auto isRtl =
-        text[0].character[0].script() == QChar::Script_Arabic || text[0].character[0].script() == QChar::Script_Hebrew;
+    auto isRtl = text[0].character[0].script() == QChar::Script_Arabic || text[0].character[0].script() == QChar::Script_Hebrew;
 
     popup = new QWidget;
     auto grid = new QGridLayout(popup.data());
@@ -128,7 +127,8 @@ void PlasmaIMContext::applyReplacement(const QString &data)
     }
 }
 
-inline bool between(int min, int val, int max) {
+inline bool between(int min, int val, int max)
+{
     qDebug() << min << val << max << !(val < min || max < val);
     return !(val < min || max < val);
 }

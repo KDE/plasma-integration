@@ -20,16 +20,19 @@
 #include <QStringList>
 #include <QUrl>
 
-#include <kio/jobuidelegate.h>
+#include <KFileUtils>
+#include <KStandardShortcut>
 #include <kactioncollection.h>
 #include <kauthorized.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kfileitemdelegate.h>
+#include <kfilewidget.h>
 #include <khistorycombobox.h>
-#include <kio/job.h>
-#include <kio/deletejob.h>
 #include <kio/copyjob.h>
+#include <kio/deletejob.h>
+#include <kio/job.h>
+#include <kio/jobuidelegate.h>
 #include <kio/mkdirjob.h>
 #include <kjobwidgets.h>
 #include <klocalizedstring.h>
@@ -41,22 +44,19 @@
 #include <ktoggleaction.h>
 #include <kurlcompletion.h>
 #include <kurlpixmapprovider.h>
-#include <kfilewidget.h>
-#include <KFileUtils>
-#include <KStandardShortcut>
 
 #include "kfiletreeview_p.h"
-#include <kfileplacesview.h>
 #include <kfileplacesmodel.h>
+#include <kfileplacesview.h>
 // ### add mutator for treeview!
 
 class KDirSelectDialog::Private
 {
 public:
     Private(bool localOnly, KDirSelectDialog *parent)
-        : m_parent(parent),
-          m_localOnly(localOnly),
-          m_comboLocked(false)
+        : m_parent(parent)
+        , m_localOnly(localOnly)
+        , m_comboLocked(false)
     {
     }
 
@@ -123,9 +123,12 @@ void KDirSelectDialog::Private::slotMkdir()
         name = KFileUtils::suggestName(m_parent->url(), name);
     }
 
-    const QString directory = QInputDialog::getText(m_parent, i18nc("@title:window", "New Folder"),
+    const QString directory = QInputDialog::getText(m_parent,
+                                                    i18nc("@title:window", "New Folder"),
                                                     i18nc("@label:textbox", "Create new folder in:\n%1", where),
-                                                    QLineEdit::Normal, name, &ok);
+                                                    QLineEdit::Normal,
+                                                    name,
+                                                    &ok);
     if (!ok) {
         return;
     }
@@ -141,7 +144,7 @@ void KDirSelectDialog::Private::slotMkdir()
         folderurl.setPath(folderurl.path() + QLatin1Char('/') + *it);
         KIO::StatJob *job = KIO::stat(folderurl);
         KJobWidgets::setWindow(job, m_parent);
-        job->setDetails(KIO::StatNoDetails);  // We only want to know if it exists
+        job->setDetails(KIO::StatNoDetails); // We only want to know if it exists
         job->setSide(KIO::StatJob::DestinationSide);
         exists = job->exec();
         if (!exists) {
@@ -195,7 +198,7 @@ void KDirSelectDialog::Private::slotUrlActivated(const QString &text)
     m_urlCombo->addToHistory(url.toDisplayString());
 
     if (m_parent->localOnly() && !url.isLocalFile()) {
-        return;    //FIXME: messagebox for the user
+        return; // FIXME: messagebox for the user
     }
 
     QUrl oldUrl = m_treeView->currentUrl();
@@ -270,12 +273,12 @@ void KDirSelectDialog::Private::slotProperties()
 }
 
 KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget *parent)
-// #ifdef Q_OS_WIN
-//     : QDialog(parent, Qt::WindowMinMaxButtonsHint),
-// #else
-//     : QDialog(parent),
-// #endif
-     : d(new Private(localOnly, this))
+    // #ifdef Q_OS_WIN
+    //     : QDialog(parent, Qt::WindowMinMaxButtonsHint),
+    // #else
+    //     : QDialog(parent),
+    // #endif
+    : d(new Private(localOnly, this))
 {
     setWindowTitle(i18nc("@title:window", "Select Folder"));
 
@@ -306,8 +309,7 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     d->m_placesView->setObjectName(QStringLiteral("speedbar"));
     d->m_placesView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     d->m_placesView->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    connect(d->m_placesView, &KFilePlacesView::urlChanged,
-            this, &KDirSelectDialog::setCurrentUrl);
+    connect(d->m_placesView, &KFilePlacesView::urlChanged, this, &KDirSelectDialog::setCurrentUrl);
     hlay->addWidget(d->m_placesView);
     hlay->addLayout(mainLayout);
 
@@ -389,19 +391,13 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     mainLayout->addWidget(d->m_treeView, 1);
     mainLayout->addWidget(d->m_urlCombo, 0);
 
-    connect(d->m_treeView, SIGNAL(currentChanged(QUrl)),
-            SLOT(slotCurrentChanged()));
-    connect(d->m_treeView, SIGNAL(activated(QModelIndex)),
-            SLOT(slotExpand(QModelIndex)));
-    connect(d->m_treeView, SIGNAL(customContextMenuRequested(QPoint)),
-            SLOT(slotContextMenuRequested(QPoint)));
+    connect(d->m_treeView, SIGNAL(currentChanged(QUrl)), SLOT(slotCurrentChanged()));
+    connect(d->m_treeView, SIGNAL(activated(QModelIndex)), SLOT(slotExpand(QModelIndex)));
+    connect(d->m_treeView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(slotContextMenuRequested(QPoint)));
 
-    connect(d->m_urlCombo, SIGNAL(editTextChanged(QString)),
-            SLOT(slotComboTextChanged(QString)));
-    connect(d->m_urlCombo, SIGNAL(activated(QString)),
-            SLOT(slotUrlActivated(QString)));
-    connect(d->m_urlCombo, SIGNAL(returnPressed(QString)),
-            SLOT(slotUrlActivated(QString)));
+    connect(d->m_urlCombo, SIGNAL(editTextChanged(QString)), SLOT(slotComboTextChanged(QString)));
+    connect(d->m_urlCombo, SIGNAL(activated(QString)), SLOT(slotUrlActivated(QString)));
+    connect(d->m_urlCombo, SIGNAL(returnPressed(QString)), SLOT(slotUrlActivated(QString)));
 
     setCurrentUrl(d->m_startURL);
 }
@@ -456,9 +452,9 @@ void KDirSelectDialog::setCurrentUrl(const QUrl &url)
 
     if (url.scheme() != d->m_rootUrl.scheme()) {
         QUrl u(url);
-        //We need the url to end with / because some code ahead (kdirmodel) is expecting
-        //to find the / separator. It can happen that a valid url like smb: does not have
-        //one so we should add it.
+        // We need the url to end with / because some code ahead (kdirmodel) is expecting
+        // to find the / separator. It can happen that a valid url like smb: does not have
+        // one so we should add it.
         if (!u.toString().endsWith(QLatin1Char('/'))) {
             u.setPath(QStringLiteral("/"));
         }
@@ -467,11 +463,10 @@ void KDirSelectDialog::setCurrentUrl(const QUrl &url)
         d->m_rootUrl = u;
     }
 
-    //Check if url represents a hidden folder and enable showing them
+    // Check if url represents a hidden folder and enable showing them
     QString fileName = url.fileName();
-    //TODO a better hidden file check?
-    bool isHidden = fileName.length() > 1 && fileName[0] == QLatin1Char('.') &&
-                    (fileName.length() > 2 ? fileName[1] != QLatin1Char('.') : true);
+    // TODO a better hidden file check?
+    bool isHidden = fileName.length() > 1 && fileName[0] == QLatin1Char('.') && (fileName.length() > 2 ? fileName[1] != QLatin1Char('.') : true);
     bool showHiddenFiles = isHidden && !d->m_treeView->showHiddenFiles();
     if (showHiddenFiles) {
         d->showHiddenFoldersAction->setChecked(true);
@@ -506,10 +501,7 @@ void KDirSelectDialog::hideEvent(QHideEvent *event)
 }
 
 // static
-QUrl KDirSelectDialog::selectDirectory(const QUrl &startDir,
-                                       bool localOnly,
-                                       QWidget *parent,
-                                       const QString &caption)
+QUrl KDirSelectDialog::selectDirectory(const QUrl &startDir, bool localOnly, QWidget *parent, const QString &caption)
 {
     KDirSelectDialog myDialog(startDir, localOnly, parent);
 
@@ -520,7 +512,7 @@ QUrl KDirSelectDialog::selectDirectory(const QUrl &startDir,
     if (myDialog.exec() == QDialog::Accepted) {
         QUrl url = myDialog.url();
 
-        //Returning the most local url
+        // Returning the most local url
         if (url.isLocalFile()) {
             return url;
         }
@@ -595,6 +587,5 @@ void KDirSelectDialog::selectNameFilter(const QString &filter)
 {
     Q_UNUSED(filter)
 }
-
 
 #include "moc_kdirselectdialog_p.cpp"

@@ -27,10 +27,10 @@
 #include <QString>
 #include <QWindow>
 
-#include <QtThemeSupport/private/qdbusplatformmenu_p.h>
 #include <QtThemeSupport/private/qdbusmenuadaptor_p.h>
 #include <QtThemeSupport/private/qdbusmenuconnection_p.h>
 #include <QtThemeSupport/private/qdbusmenuregistrarproxy_p.h>
+#include <QtThemeSupport/private/qdbusplatformmenu_p.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -49,8 +49,14 @@ public:
     QPlatformMenu *menuForTag(quintptr tag) const override;
     QPlatformMenu *createMenu() const override;
 
-    QWindow *window() const { return m_window; }
-    QString objectPath() const { return m_objectPath; }
+    QWindow *window() const
+    {
+        return m_window;
+    }
+    QString objectPath() const
+    {
+        return m_objectPath;
+    }
 
 Q_SIGNALS:
     void windowChanged(QWindow *newWindow, QWindow *oldWindow);

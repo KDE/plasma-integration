@@ -28,7 +28,7 @@ void KDEPlatformSystemTrayIcon_UnitTest::testMenuRecreate()
 
     // simulates first QSystemTrayIcon::show()
     kpsti->init();
-    SystemTrayMenu *ourMenu = qobject_cast<SystemTrayMenu*>(kpsti->createMenu());
+    SystemTrayMenu *ourMenu = qobject_cast<SystemTrayMenu *>(kpsti->createMenu());
     trayIconMenu->setPlatformMenu(ourMenu);
     kpsti->updateMenu(trayIconMenu->platformMenu());
 
@@ -60,7 +60,7 @@ void KDEPlatformSystemTrayIcon_UnitTest::testAddActionAfterMenuRecreate()
 
     // simulates first QSystemTrayIcon::show()
     kpsti->init();
-    SystemTrayMenu *ourMenu = qobject_cast<SystemTrayMenu*>(kpsti->createMenu());
+    SystemTrayMenu *ourMenu = qobject_cast<SystemTrayMenu *>(kpsti->createMenu());
     trayIconMenu->setPlatformMenu(ourMenu);
     kpsti->updateMenu(trayIconMenu->platformMenu());
 

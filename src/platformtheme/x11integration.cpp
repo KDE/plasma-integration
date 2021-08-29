@@ -6,12 +6,12 @@
 */
 #include "x11integration.h"
 
-#include <QCoreApplication>
-#include <QX11Info>
-#include <QPlatformSurfaceEvent>
-#include <QGuiApplication>
-#include <QWindow>
 #include <NETWM>
+#include <QCoreApplication>
+#include <QGuiApplication>
+#include <QPlatformSurfaceEvent>
+#include <QWindow>
+#include <QX11Info>
 
 #include <KWindowEffects>
 
@@ -34,18 +34,18 @@ void X11Integration::init()
 
 bool X11Integration::eventFilter(QObject *watched, QEvent *event)
 {
-    //the drag and drop window should NOT be a tooltip
-    //https://bugreports.qt.io/browse/QTBUG-52560
+    // the drag and drop window should NOT be a tooltip
+    // https://bugreports.qt.io/browse/QTBUG-52560
     if (event->type() == QEvent::Show && watched->inherits("QShapedPixmapWindow")) {
-        //static cast should be safe there
+        // static cast should be safe there
         QWindow *w = static_cast<QWindow *>(watched);
         NETWinInfo info(QX11Info::connection(), w->winId(), QX11Info::appRootWindow(), NET::WMWindowType, NET::Properties2());
         info.setWindowType(NET::DNDIcon);
         // TODO: does this flash the xcb connection?
     }
     if (event->type() == QEvent::PlatformSurface) {
-        if (QWindow *w = qobject_cast<QWindow*>(watched)) {
-            QPlatformSurfaceEvent *pe = static_cast<QPlatformSurfaceEvent*>(event);
+        if (QWindow *w = qobject_cast<QWindow *>(watched)) {
+            QPlatformSurfaceEvent *pe = static_cast<QPlatformSurfaceEvent *>(event);
             if (!w->flags().testFlag(Qt::ForeignWindow)) {
                 if (pe->surfaceEventType() == QPlatformSurfaceEvent::SurfaceCreated) {
                     auto flags = w->flags();
@@ -61,7 +61,7 @@ bool X11Integration::eventFilter(QObject *watched, QEvent *event)
                         }
 
                         // QWINDOWSIZE_MAX from qwindow_p.h
-                        const auto maxWindowSize = ((1<<24)-1);
+                        const auto maxWindowSize = ((1 << 24) - 1);
                         if (w->maximumSize() == QSize(maxWindowSize, maxWindowSize)) {
                             flags.setFlag(Qt::WindowMaximizeButtonHint, true);
                         }
@@ -112,8 +112,7 @@ void X11Integration::installColorScheme(QWindow *w)
     if (path.isEmpty()) {
         xcb_delete_property(c, w->winId(), atom);
     } else {
-        xcb_change_property(c, XCB_PROP_MODE_REPLACE, w->winId(), atom, XCB_ATOM_STRING,
-                            8, path.size(), qPrintable(path));
+        xcb_change_property(c, XCB_PROP_MODE_REPLACE, w->winId(), atom, XCB_ATOM_STRING, 8, path.size(), qPrintable(path));
     }
 }
 
@@ -158,7 +157,6 @@ void X11Integration::setWindowProperty(QWindow *window, const QByteArray &name, 
     if (value.isEmpty()) {
         xcb_delete_property(c, window->winId(), atom);
     } else {
-        xcb_change_property(c, XCB_PROP_MODE_REPLACE, window->winId(), atom, XCB_ATOM_STRING,
-                            8, value.length(), value.constData());
+        xcb_change_property(c, XCB_PROP_MODE_REPLACE, window->winId(), atom, XCB_ATOM_STRING, 8, value.length(), value.constData());
     }
 }

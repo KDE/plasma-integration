@@ -4,9 +4,9 @@
     SPDX-License-Identifier: LGPL-2.0-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 */
 
-#include <QString>
-#include <QMap>
 #include <QList>
+#include <QMap>
+#include <QString>
 
 // Curating key data
 // =================
@@ -60,9 +60,9 @@
 // of ^ being used for directional arrows.
 //
 
-namespace KeyData {
-
-const QMap<QString,QList<QString>> KeyMappings = {
+namespace KeyData
+{
+const QMap<QString, QList<QString>> KeyMappings = {
     //
     // Latin
     //
@@ -87,7 +87,11 @@ const QMap<QString,QList<QString>> KeyMappings = {
     {"е", {"ё"}}, // this in fact NOT the same E as before
     {"и", {"ӣ", "і"}}, // і is not i
     {"й", {"ј"}}, // ј is not j
-    {"к", {"қ", "ҝ",}},
+    {"к",
+     {
+         "қ",
+         "ҝ",
+     }},
     {"н", {"ң", "һ"}}, // һ is not h
     {"о", {"ә", "ө"}},
     {"ч", {"ҷ", "ҹ"}},
@@ -109,12 +113,12 @@ const QMap<QString,QList<QString>> KeyMappings = {
     // Hebrew
     //
     // Likewise, this will render oddly, but is still valid code.
-    {"ג",{"ג׳"}},
-    {"ז",{"ז׳"}},
-    {"ח",{"ח׳"}},
-    {"צ׳",{"צ׳"}},
-    {"ת",{"ת׳"}},
-    {"י",{"ײַ"}},
+    {"ג", {"ג׳"}},
+    {"ז", {"ז׳"}},
+    {"ח", {"ח׳"}},
+    {"צ׳", {"צ׳"}},
+    {"ת", {"ת׳"}},
+    {"י", {"ײַ"}},
     {"י", {"ײ"}},
     {"ח", {"ױ"}},
     {"ו", {"װ"}},

@@ -11,8 +11,8 @@
 #include <QObject>
 #include <QVariant>
 
-#include <qpa/qplatformtheme.h>
 #include <ksharedconfig.h>
+#include <qpa/qplatformtheme.h>
 
 class KConfigGroup;
 
@@ -22,22 +22,35 @@ class KHintsSettings : public QObject
     Q_OBJECT
 public:
     /**
-    * An identifier for change signals.
-    * @note Copied from KGlobalSettings
-    */
-    enum ChangeType { PaletteChanged = 0, FontChanged, StyleChanged,
-                      SettingsChanged, IconChanged, CursorChanged,
-                      ToolbarStyleChanged, ClipboardConfigChanged,
-                      BlockShortcuts, NaturalSortingChanged,
-                    };
+     * An identifier for change signals.
+     * @note Copied from KGlobalSettings
+     */
+    enum ChangeType {
+        PaletteChanged = 0,
+        FontChanged,
+        StyleChanged,
+        SettingsChanged,
+        IconChanged,
+        CursorChanged,
+        ToolbarStyleChanged,
+        ClipboardConfigChanged,
+        BlockShortcuts,
+        NaturalSortingChanged,
+    };
     /**
-    * Valid values for the settingsChanged signal
-    * @note Copied from KGlobalSettings
-    */
-    enum SettingsCategory { SETTINGS_MOUSE, SETTINGS_COMPLETION, SETTINGS_PATHS,
-                            SETTINGS_POPUPMENU, SETTINGS_QT, SETTINGS_SHORTCUTS,
-                            SETTINGS_LOCALE, SETTINGS_STYLE,
-                          };
+     * Valid values for the settingsChanged signal
+     * @note Copied from KGlobalSettings
+     */
+    enum SettingsCategory {
+        SETTINGS_MOUSE,
+        SETTINGS_COMPLETION,
+        SETTINGS_PATHS,
+        SETTINGS_POPUPMENU,
+        SETTINGS_QT,
+        SETTINGS_SHORTCUTS,
+        SETTINGS_LOCALE,
+        SETTINGS_STYLE,
+    };
     explicit KHintsSettings(KSharedConfig::Ptr kdeglobals = KSharedConfig::Ptr());
     ~KHintsSettings() override;
 
@@ -79,4 +92,4 @@ private:
     bool mUsePortal;
 };
 
-#endif //KHINTS_SETTINGS_H
+#endif // KHINTS_SETTINGS_H

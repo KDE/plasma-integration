@@ -8,8 +8,8 @@
 
 #include "kfiletreeview_p.h"
 
-#include <QDir>
 #include <QContextMenuEvent>
+#include <QDir>
 #include <QMenu>
 #include <QUrl>
 
@@ -73,7 +73,8 @@ void KFileTreeView::Private::_k_expanded(const QModelIndex &baseIndex)
 }
 
 KFileTreeView::KFileTreeView(QWidget *parent)
-    : QTreeView(parent), d(new Private(this))
+    : QTreeView(parent)
+    , d(new Private(this))
 {
     d->mSourceModel = new KDirModel(this);
     d->mProxyModel = new KDirSortFilterProxyModel(this);
@@ -85,13 +86,10 @@ KFileTreeView::KFileTreeView(QWidget *parent)
 
     d->mSourceModel->dirLister()->openUrl(QUrl::fromLocalFile(QDir::root().absolutePath()), KDirLister::Keep);
 
-    connect(this, SIGNAL(activated(QModelIndex)),
-            this, SLOT(_k_activated(QModelIndex)));
-    connect(selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
-            this, SLOT(_k_currentChanged(QModelIndex,QModelIndex)));
+    connect(this, SIGNAL(activated(QModelIndex)), this, SLOT(_k_activated(QModelIndex)));
+    connect(selectionModel(), SIGNAL(currentChanged(QModelIndex, QModelIndex)), this, SLOT(_k_currentChanged(QModelIndex, QModelIndex)));
 
-    connect(d->mSourceModel, SIGNAL(expand(QModelIndex)),
-            this, SLOT(_k_expanded(QModelIndex)));
+    connect(d->mSourceModel, SIGNAL(expand(QModelIndex)), this, SLOT(_k_expanded(QModelIndex)));
 }
 
 KFileTreeView::~KFileTreeView()
@@ -197,4 +195,3 @@ QSize KFileTreeView::sizeHint() const
 }
 
 #include "moc_kfiletreeview_p.cpp"
-

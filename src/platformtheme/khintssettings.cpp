@@ -8,29 +8,29 @@
 
 #include "khintssettings.h"
 
-#include <QDebug>
-#include <QDir>
-#include <QString>
-#include <QFileInfo>
-#include <QToolBar>
-#include <QPalette>
-#include <QToolButton>
-#include <QMainWindow>
 #include <QApplication>
-#include <QGuiApplication>
+#include <QDebug>
 #include <QDialogButtonBox>
+#include <QDir>
+#include <QFileInfo>
+#include <QGuiApplication>
+#include <QMainWindow>
+#include <QPalette>
 #include <QScreen>
 #include <QStandardPaths>
+#include <QString>
 #include <QTemporaryFile>
+#include <QToolBar>
+#include <QToolButton>
 
 #include <QDBusArgument>
 #include <QDBusConnection>
 #include <QDBusInterface>
 
-#include <kiconloader.h>
-#include <kconfiggroup.h>
-#include <ksharedconfig.h>
 #include <kcolorscheme.h>
+#include <kconfiggroup.h>
+#include <kiconloader.h>
+#include <ksharedconfig.h>
 
 #include <config-platformtheme.h>
 #ifdef UNIT_TEST
@@ -83,9 +83,13 @@ KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
 
     // try to extract the proper defaults file from a lookandfeel package
     const QString looknfeel = readConfigValue(cg, QStringLiteral("LookAndFeelPackage"), defaultLookAndFeelPackage).toString();
-    mDefaultLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("plasma/look-and-feel/") + defaultLookAndFeelPackage + QStringLiteral("/contents/defaults")));
+    mDefaultLnfConfig = KSharedConfig::openConfig(
+        QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                               QStringLiteral("plasma/look-and-feel/") + defaultLookAndFeelPackage + QStringLiteral("/contents/defaults")));
     if (looknfeel != defaultLookAndFeelPackage) {
-        mLnfConfig = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("plasma/look-and-feel/") + looknfeel + QStringLiteral("/contents/defaults")));
+        mLnfConfig =
+            KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                                             QStringLiteral("plasma/look-and-feel/") + looknfeel + QStringLiteral("/contents/defaults")));
     }
 
     const auto cursorBlinkRate = readConfigValue(cg, QStringLiteral("CursorBlinkRate"), 1000).toInt();
@@ -219,13 +223,21 @@ QStringList KHintsSettings::xdgIconThemePaths() const
 
 void KHintsSettings::delayedDBusConnects()
 {
-    QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/KToolBar"), QStringLiteral("org.kde.KToolBar"),
-                                          QStringLiteral("styleChanged"), this, SLOT(toolbarStyleChanged()));
-    QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/KGlobalSettings"), QStringLiteral("org.kde.KGlobalSettings"),
-                                          QStringLiteral("notifyChange"), this, SLOT(slotNotifyChange(int,int)));
+    QDBusConnection::sessionBus()
+        .connect(QString(), QStringLiteral("/KToolBar"), QStringLiteral("org.kde.KToolBar"), QStringLiteral("styleChanged"), this, SLOT(toolbarStyleChanged()));
+    QDBusConnection::sessionBus().connect(QString(),
+                                          QStringLiteral("/KGlobalSettings"),
+                                          QStringLiteral("org.kde.KGlobalSettings"),
+                                          QStringLiteral("notifyChange"),
+                                          this,
+                                          SLOT(slotNotifyChange(int, int)));
     if (mUsePortal) {
-        QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/org/freedesktop/portal/desktop"), QStringLiteral("org.freedesktop.portal.Settings"),
-                                              QStringLiteral("SettingChanged"), this, SLOT(slotPortalSettingChanged(QString,QString,QDBusVariant)));
+        QDBusConnection::sessionBus().connect(QString(),
+                                              QStringLiteral("/org/freedesktop/portal/desktop"),
+                                              QStringLiteral("org.freedesktop.portal.Settings"),
+                                              QStringLiteral("SettingChanged"),
+                                              this,
+                                              SLOT(slotPortalSettingChanged(QString, QString, QDBusVariant)));
     }
 }
 
@@ -240,7 +252,7 @@ void KHintsSettings::toolbarStyleChanged()
     KConfigGroup cg(mKdeGlobals, "Toolbar style");
 
     m_hints[QPlatformTheme::ToolButtonStyle] = toolButtonStyle(cg);
-    //from gtksymbol.cpp
+    // from gtksymbol.cpp
     QWidgetList widgets = QApplication::allWidgets();
     for (int i = 0; i < widgets.size(); ++i) {
         QWidget *widget = widgets.at(i);
@@ -264,8 +276,8 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         }
         loadPalettes();
 
-        //QApplication::setPalette and QGuiApplication::setPalette are different functions
-        //and non virtual. Call the correct one
+        // QApplication::setPalette and QGuiApplication::setPalette are different functions
+        // and non virtual. Call the correct one
         if (qobject_cast<QApplication *>(QCoreApplication::instance())) {
             QPalette palette = *m_palettes[QPlatformTheme::SystemPalette];
             QApplication::setPalette(palette);
@@ -279,7 +291,6 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         break;
     }
     case SettingsChanged: {
-
         SettingsCategory category = static_cast<SettingsCategory>(arg);
         if (category == SETTINGS_QT || category == SETTINGS_MOUSE) {
             updateQtSettings(cg);
@@ -296,7 +307,7 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         break;
     }
     case IconChanged:
-        iconChanged(arg); //Once the KCM is ported to use IconChanged, this should not be needed
+        iconChanged(arg); // Once the KCM is ported to use IconChanged, this should not be needed
         break;
     case CursorChanged:
         updateCursorTheme();
@@ -314,10 +325,7 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         if (theme != QStringLiteral(BREEZE_STYLE_NAME)) {
             styleNames << theme;
         }
-        styleNames << QStringLiteral(BREEZE_STYLE_NAME)
-                   << QStringLiteral("oxygen")
-                   << QStringLiteral("fusion")
-                   << QStringLiteral("windows");
+        styleNames << QStringLiteral(BREEZE_STYLE_NAME) << QStringLiteral("oxygen") << QStringLiteral("fusion") << QStringLiteral("windows");
         const QString lnfStyle = readConfigValue(QStringLiteral("KDE"), QStringLiteral("widgetStyle"), QString()).toString();
         if (!lnfStyle.isEmpty() && !styleNames.contains(lnfStyle)) {
             styleNames.prepend(lnfStyle);
@@ -356,7 +364,7 @@ void KHintsSettings::slotPortalSettingChanged(const QString &group, const QStrin
 
 void KHintsSettings::iconChanged(int group)
 {
-    KIconLoader::Group iconGroup = (KIconLoader::Group) group;
+    KIconLoader::Group iconGroup = (KIconLoader::Group)group;
     if (iconGroup != KIconLoader::MainToolbar) {
         m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue(QStringLiteral("Icons"), QStringLiteral("Theme"), QStringLiteral("breeze"));
         return;
@@ -369,7 +377,7 @@ void KHintsSettings::iconChanged(int group)
 
     m_hints[QPlatformTheme::ToolBarIconSize] = currentSize;
 
-    //If we are not a QApplication, means that we are a QGuiApplication, then we do nothing.
+    // If we are not a QApplication, means that we are a QGuiApplication, then we do nothing.
     if (!qobject_cast<QApplication *>(QCoreApplication::instance())) {
         return;
     }
@@ -419,11 +427,11 @@ Qt::ToolButtonStyle KHintsSettings::toolButtonStyle(const KConfigGroup &cg)
 {
     const QString buttonStyle = readConfigValue(cg, QStringLiteral("ToolButtonStyle"), QStringLiteral("TextBesideIcon")).toString().toLower();
     return buttonStyle == QLatin1String("textbesideicon") ? Qt::ToolButtonTextBesideIcon
-           : buttonStyle == QLatin1String("icontextright") ? Qt::ToolButtonTextBesideIcon
-           : buttonStyle == QLatin1String("textundericon") ? Qt::ToolButtonTextUnderIcon
-           : buttonStyle == QLatin1String("icontextbottom") ? Qt::ToolButtonTextUnderIcon
-           : buttonStyle == QLatin1String("textonly") ? Qt::ToolButtonTextOnly
-           : Qt::ToolButtonIconOnly;
+        : buttonStyle == QLatin1String("icontextright")   ? Qt::ToolButtonTextBesideIcon
+        : buttonStyle == QLatin1String("textundericon")   ? Qt::ToolButtonTextUnderIcon
+        : buttonStyle == QLatin1String("icontextbottom")  ? Qt::ToolButtonTextUnderIcon
+        : buttonStyle == QLatin1String("textonly")        ? Qt::ToolButtonTextOnly
+                                                          : Qt::ToolButtonIconOnly;
 }
 
 void KHintsSettings::loadPalettes()
@@ -451,7 +459,8 @@ void KHintsSettings::loadPalettes()
     } else {
         KConfigGroup cg(mKdeGlobals, "KDE");
         const QString looknfeel = readConfigValue(cg, QStringLiteral("LookAndFeelPackage"), defaultLookAndFeelPackage).toString();
-        QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("plasma/look-and-feel/") + looknfeel + QStringLiteral("/contents/colors"));
+        QString path = QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                              QStringLiteral("plasma/look-and-feel/") + looknfeel + QStringLiteral("/contents/colors"));
         if (!path.isEmpty()) {
             m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(path)));
             return;
@@ -471,7 +480,7 @@ void KHintsSettings::updateCursorTheme()
     KConfig config(QStringLiteral("kcminputrc"));
     KConfigGroup g(&config, "Mouse");
 
-    int size      = g.readEntry("cursorSize", 24);
+    int size = g.readEntry("cursorSize", 24);
 
 #if HAVE_X11
     if (QX11Info::isPlatformX11()) {
@@ -480,8 +489,7 @@ void KHintsSettings::updateCursorTheme()
         // with a NULL theme would cause Xcursor to use "default", but
         // in 7.2 and later it will cause it to revert to the theme that
         // was configured when the application was started.
-        XcursorSetTheme(QX11Info::display(), theme.isNull() ?
-                        "default" : QFile::encodeName(theme).constData());
+        XcursorSetTheme(QX11Info::display(), theme.isNull() ? "default" : QFile::encodeName(theme).constData());
         XcursorSetDefaultSize(QX11Info::display(), size);
     }
 #endif

@@ -10,8 +10,8 @@
 #define KFONTSETTINGSDATA_H
 
 #include <QDBusVariant>
-#include <QObject>
 #include <QFont>
+#include <QObject>
 #include <ksharedconfig.h>
 
 struct KFontData {

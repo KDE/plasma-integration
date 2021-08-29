@@ -4,18 +4,17 @@
     SPDX-License-Identifier: LGPL-2.0-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 */
 
-#include "kdeplatformtheme_config.h"
 #include "../src/platformtheme/kfontsettingsdata.h"
+#include "kdeplatformtheme_config.h"
 
-#include <QTest>
+#include <QApplication>
 #include <QDir>
 #include <QFile>
 #include <QString>
-#include <QApplication>
+#include <QTest>
 
-#include <QDBusMessage>
 #include <QDBusConnection>
-
+#include <QDBusMessage>
 
 static void prepareEnvironment()
 {
@@ -48,6 +47,7 @@ public:
         }
         return QWidget::event(e);
     }
+
 private:
     bool m_appChangedFont;
     KFontSettingsData *m_fonts;
@@ -78,10 +78,15 @@ private Q_SLOTS:
         QVERIFY(QFile::copy(CHANGED_CONFIGFILE, configPath));
 
         QEventLoop loop;
-        QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/KDEPlatformTheme"), QStringLiteral("org.kde.KDEPlatformTheme"),
-                                              QStringLiteral("refreshFonts"), &loop, SLOT(quit()));
+        QDBusConnection::sessionBus().connect(QString(),
+                                              QStringLiteral("/KDEPlatformTheme"),
+                                              QStringLiteral("org.kde.KDEPlatformTheme"),
+                                              QStringLiteral("refreshFonts"),
+                                              &loop,
+                                              SLOT(quit()));
 
-        QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/KDEPlatformTheme"), QStringLiteral("org.kde.KDEPlatformTheme"), QStringLiteral("refreshFonts"));
+        QDBusMessage message =
+            QDBusMessage::createSignal(QStringLiteral("/KDEPlatformTheme"), QStringLiteral("org.kde.KDEPlatformTheme"), QStringLiteral("refreshFonts"));
         QDBusConnection::sessionBus().send(message);
         loop.exec();
 
@@ -99,4 +104,3 @@ private Q_SLOTS:
 QTEST_MAIN(KFontSettingsData_UnitTest)
 
 #include "kfontsettingsdata_unittest.moc"
-

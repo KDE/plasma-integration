@@ -4,10 +4,10 @@
     SPDX-License-Identifier: LGPL-2.0-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 */
 #include "../src/platformtheme/khintssettings.h"
-#include <config-platformtheme.h>
-#include <QTest>
-#include <QDialogButtonBox>
 #include <KSharedConfig>
+#include <QDialogButtonBox>
+#include <QTest>
+#include <config-platformtheme.h>
 
 class KHintsSettingsTest : public QObject
 {
@@ -36,7 +36,8 @@ void KHintsSettingsTest::testDefaults()
     QCOMPARE(hints.hint(QPlatformTheme::SystemIconFallbackThemeName).toString(), QStringLiteral("hicolor"));
     QCOMPARE(hints.hint(QPlatformTheme::IconThemeSearchPaths).toStringList(), hints.xdgIconThemePaths());
 
-    const QStringList expectedStyles = QStringList{QStringLiteral(BREEZE_STYLE_NAME), QStringLiteral("oxygen"), QStringLiteral("fusion"), QStringLiteral("windows")};
+    const QStringList expectedStyles =
+        QStringList{QStringLiteral(BREEZE_STYLE_NAME), QStringLiteral("oxygen"), QStringLiteral("fusion"), QStringLiteral("windows")};
     QCOMPARE(hints.hint(QPlatformTheme::StyleNames).toStringList(), expectedStyles);
 
     QCOMPARE(hints.hint(QPlatformTheme::DialogButtonBoxLayout).toInt(), int(QDialogButtonBox::KdeLayout));

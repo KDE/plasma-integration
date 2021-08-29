@@ -4,9 +4,9 @@
     SPDX-License-Identifier: LGPL-2.0-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 */
 
-#include <QTest>
-#include "../src/platformtheme/kfiletreeview_p.h"
 #include "../src/platformtheme/kdirselectdialog_p.h"
+#include "../src/platformtheme/kfiletreeview_p.h"
+#include <QTest>
 
 class KDirSelectDialog_UnitTest : public QObject
 {
@@ -37,4 +37,3 @@ private Q_SLOTS:
 QTEST_MAIN(KDirSelectDialog_UnitTest)
 
 #include "kdirselectdialog_unittest.moc"
-

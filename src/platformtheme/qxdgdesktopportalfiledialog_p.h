@@ -11,8 +11,8 @@
 #ifndef QXDGDESKTOPPORTALFILEDIALOG_P_H
 #define QXDGDESKTOPPORTALFILEDIALOG_P_H
 
-#include <qpa/qplatformdialoghelper.h>
 #include <QVector>
+#include <qpa/qplatformdialoghelper.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -75,4 +75,3 @@ Q_DECLARE_METATYPE(QXdgDesktopPortalFileDialog::Filter)
 Q_DECLARE_METATYPE(QXdgDesktopPortalFileDialog::FilterList)
 
 #endif // QXDGDESKTOPPORTALFILEDIALOG_P_H
-

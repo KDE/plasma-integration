@@ -4,14 +4,14 @@
     SPDX-License-Identifier: LGPL-2.0-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 */
 
-#include <QTest>
-#include <QTimer>
+#include <KDirOperator>
+#include <KFileWidget>
 #include <QDir>
+#include <QFileDialog>
 #include <QTemporaryDir>
 #include <QTemporaryFile>
-#include <QFileDialog>
-#include <KFileWidget>
-#include <KDirOperator>
+#include <QTest>
+#include <QTimer>
 
 Q_DECLARE_METATYPE(QFileDialog::ViewMode)
 Q_DECLARE_METATYPE(QFileDialog::FileMode)
@@ -86,17 +86,11 @@ private Q_SLOTS:
         const auto jsonMime = QStringLiteral("application/json");
         const auto zipMime = QStringLiteral("application/zip");
 
-        QTest::newRow("single mime filter (C header file)")
-                << QStringList {headerMime}
-                << headerMime;
+        QTest::newRow("single mime filter (C header file)") << QStringList{headerMime} << headerMime;
 
-        QTest::newRow("single mime filter (JSON file)")
-                << QStringList {jsonMime}
-                << jsonMime;
+        QTest::newRow("single mime filter (JSON file)") << QStringList{jsonMime} << jsonMime;
 
-        QTest::newRow("multiple mime filters")
-                << QStringList {jsonMime, zipMime}
-                << jsonMime;
+        QTest::newRow("multiple mime filters") << QStringList{jsonMime, zipMime} << jsonMime;
     }
 
     void testSelectedMimeTypeFilter()
@@ -131,13 +125,13 @@ private Q_SLOTS:
 
     void testSelectUrl()
     {
-        QTemporaryFile tempFile(m_tempDir.path()+"/kfiledialogtest_XXXXXX");
+        QTemporaryFile tempFile(m_tempDir.path() + "/kfiledialogtest_XXXXXX");
         tempFile.setAutoRemove(true);
         tempFile.open();
         QString tempName = tempFile.fileName();
         QUrl url = QUrl::fromLocalFile(tempName);
         int idx = tempName.lastIndexOf('/');
-        QUrl directoryUrl = QUrl::fromLocalFile(tempName.left(idx+1));
+        QUrl directoryUrl = QUrl::fromLocalFile(tempName.left(idx + 1));
 
         QFileDialog dialog;
         dialog.selectUrl(url);
@@ -150,7 +144,7 @@ private Q_SLOTS:
     void testGetSaveFileUrl()
     {
         QObject lambdaGuard;
-        QTemporaryFile tempFile(m_tempDir.path()+"/kfiledialogtest_XXXXXX");
+        QTemporaryFile tempFile(m_tempDir.path() + "/kfiledialogtest_XXXXXX");
         tempFile.open();
         const QString tempName = tempFile.fileName();
         const QUrl url = QUrl::fromLocalFile(tempName);
@@ -299,33 +293,33 @@ private Q_SLOTS:
     {
         QFETCH(bool, qtOverwriteOption);
         QFETCH(bool, messageBoxExpected);
-        
-        QTemporaryFile tempFile(m_tempDir.path()+"/kfiledialogtest_XXXXXX");
+
+        QTemporaryFile tempFile(m_tempDir.path() + "/kfiledialogtest_XXXXXX");
         tempFile.setAutoRemove(true);
         tempFile.open();
         QString tempName = tempFile.fileName();
         tempFile.close();
         int idx = tempName.lastIndexOf('/');
-        
+
         QFileDialog dialog;
         dialog.setAcceptMode(QFileDialog::AcceptSave);
-        if (qtOverwriteOption) dialog.setOption(QFileDialog::DontConfirmOverwrite);
-        dialog.setDirectory(tempName.left(idx+1));
-        dialog.selectFile(tempName.mid(idx+1));
+        if (qtOverwriteOption)
+            dialog.setOption(QFileDialog::DontConfirmOverwrite);
+        dialog.setDirectory(tempName.left(idx + 1));
+        dialog.selectFile(tempName.mid(idx + 1));
         dialog.open();
-        
+
         KFileWidget *fw = findFileWidget();
         QVERIFY(fw);
         QVERIFY(QTest::qWaitForWindowExposed(fw->window()));
         QCOMPARE(fw->isVisible(), true);
-        
+
         bool timerRun = false;
 
         QTimer::singleShot(3500, this, [&] {
             timerRun = true;
             QDialog *msgbox = findMessageBox();
-            if (msgbox)
-            {
+            if (msgbox) {
                 QVERIFY(QTest::qWaitForWindowExposed(msgbox));
                 QCOMPARE(msgbox->isVisible(), true);
                 msgbox->close();
@@ -335,7 +329,7 @@ private Q_SLOTS:
             }
         });
         fw->slotOk();
-        
+
         QTRY_VERIFY(timerRun);
     }
 
@@ -372,16 +366,16 @@ private:
     static QString fileViewToString(KFile::FileView fv)
     {
         switch (fv) {
-            case KFile::Detail:
-                return QStringLiteral("Detail");
-            case KFile::Simple:
-                return QStringLiteral("Simple");
-            case KFile::Tree:
-                return QStringLiteral("Tree");
-            case KFile::DetailTree:
-                return QStringLiteral("DetailTree");
-            default:
-                break;
+        case KFile::Detail:
+            return QStringLiteral("Detail");
+        case KFile::Simple:
+            return QStringLiteral("Simple");
+        case KFile::Tree:
+            return QStringLiteral("Tree");
+        case KFile::DetailTree:
+            return QStringLiteral("DetailTree");
+        default:
+            break;
         }
         return QStringLiteral("ERROR");
     }
@@ -415,4 +409,3 @@ private:
 QTEST_MAIN(KFileDialog_UnitTest)
 
 #include "kfiledialog_unittest.moc"
-

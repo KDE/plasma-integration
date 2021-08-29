@@ -11,8 +11,8 @@
 #include <QWidget>
 
 #include <KConfigGroup>
-#include <KSharedConfig>
 #include <KConfigWatcher>
+#include <KSharedConfig>
 
 #include <qpa/qplatforminputcontext.h>
 
@@ -34,24 +34,22 @@ public:
 
     bool isValid() const Q_DECL_OVERRIDE;
     void setFocusObject(QObject *object) Q_DECL_OVERRIDE;
-    bool filterEvent(const QEvent* event) Q_DECL_OVERRIDE;
+    bool filterEvent(const QEvent *event) Q_DECL_OVERRIDE;
 
 private:
-
     void cleanUpState();
-    void applyReplacement(const QString& data);
-    void showPopup(const QList<TooltipData>& text);
-    void configChangedHandler(const KConfigGroup& grp, const QByteArrayList& names);
+    void applyReplacement(const QString &data);
+    void showPopup(const QList<TooltipData> &text);
+    void configChangedHandler(const KConfigGroup &grp, const QByteArrayList &names);
 
     QPointer<QWidget> popup;
     QPointer<QObject> m_focusObject = nullptr;
 
     bool isPreHold = false;
     QString preHoldText = QString();
-    KSharedConfig::Ptr config = KSharedConfig::openConfig( QStringLiteral("kcminputrc") );
+    KSharedConfig::Ptr config = KSharedConfig::openConfig(QStringLiteral("kcminputrc"));
     KConfigGroup keyboard = KConfigGroup(config, "Keyboard");
     KConfigWatcher::Ptr watcher = KConfigWatcher::create(config);
-
 };
 
 QT_END_NAMESPACE

@@ -1,8 +1,8 @@
-#include <QApplication>
-#include <QSystemTrayIcon>
-#include <QMenu>
 #include <QAction>
 #include <QActionGroup>
+#include <QApplication>
+#include <QMenu>
+#include <QSystemTrayIcon>
 
 int main(int argc, char *argv[])
 {

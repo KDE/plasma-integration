@@ -7,17 +7,17 @@
 */
 
 #include "kfontsettingsdata.h"
+#include <QApplication>
 #include <QCoreApplication>
+#include <QDBusConnection>
+#include <QDBusMessage>
+#include <QDBusReply>
 #include <QString>
 #include <QVariant>
-#include <QApplication>
-#include <QDBusMessage>
-#include <QDBusConnection>
-#include <QDBusReply>
 #include <qpa/qwindowsysteminterface.h>
 
-#include <ksharedconfig.h>
 #include <kconfiggroup.h>
+#include <ksharedconfig.h>
 
 static inline bool checkUsePortalSupport()
 {
@@ -44,17 +44,17 @@ KFontSettingsData::~KFontSettingsData()
 }
 
 // NOTE: keep in sync with plasma-desktop/kcms/fonts/fonts.cpp
-static const char GeneralId[] =      "General";
-static const char DefaultFont[] =    "Noto Sans";
+static const char GeneralId[] = "General";
+static const char DefaultFont[] = "Noto Sans";
 
 static const KFontData DefaultFontData[KFontSettingsData::FontTypesCount] = {
-    { GeneralId, "font",                 DefaultFont,  10, QFont::Normal, QFont::SansSerif, "Regular" },
-    { GeneralId, "fixed",                "Hack",       10, QFont::Normal, QFont::Monospace, "Regular" },
-    { GeneralId, "toolBarFont",          DefaultFont,  10, QFont::Normal, QFont::SansSerif, "Regular" },
-    { GeneralId, "menuFont",             DefaultFont,  10, QFont::Normal, QFont::SansSerif, "Regular" },
-    { "WM",      "activeFont",           DefaultFont,  10, QFont::Normal, QFont::SansSerif, "Regular" },
-    { GeneralId, "taskbarFont",          DefaultFont,  10, QFont::Normal, QFont::SansSerif, "Regular" },
-    { GeneralId, "smallestReadableFont", DefaultFont,  8, QFont::Normal, QFont::SansSerif, "Regular" }
+    {GeneralId, "font", DefaultFont, 10, QFont::Normal, QFont::SansSerif, "Regular"},
+    {GeneralId, "fixed", "Hack", 10, QFont::Normal, QFont::Monospace, "Regular"},
+    {GeneralId, "toolBarFont", DefaultFont, 10, QFont::Normal, QFont::SansSerif, "Regular"},
+    {GeneralId, "menuFont", DefaultFont, 10, QFont::Normal, QFont::SansSerif, "Regular"},
+    {"WM", "activeFont", DefaultFont, 10, QFont::Normal, QFont::SansSerif, "Regular"},
+    {GeneralId, "taskbarFont", DefaultFont, 10, QFont::Normal, QFont::SansSerif, "Regular"},
+    {GeneralId, "smallestReadableFont", DefaultFont, 8, QFont::Normal, QFont::SansSerif, "Regular"},
 };
 
 QFont *KFontSettingsData::font(FontTypes fontType)
@@ -68,8 +68,8 @@ QFont *KFontSettingsData::font(FontTypes fontType)
 
         const QString fontInfo = readConfigValue(QLatin1String(fontData.ConfigGroupKey), QLatin1String(fontData.ConfigKey));
 
-        //If we have serialized information for this font, restore it
-        //NOTE: We are not using KConfig directly because we can't call QFont::QFont from here
+        // If we have serialized information for this font, restore it
+        // NOTE: We are not using KConfig directly because we can't call QFont::QFont from here
         if (!fontInfo.isEmpty()) {
             cachedFont->fromString(fontInfo);
         }
@@ -100,12 +100,20 @@ void KFontSettingsData::dropFontSettingsCache()
 
 void KFontSettingsData::delayedDBusConnects()
 {
-    QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/KDEPlatformTheme"), QStringLiteral("org.kde.KDEPlatformTheme"),
-                                          QStringLiteral("refreshFonts"), this, SLOT(dropFontSettingsCache()));
+    QDBusConnection::sessionBus().connect(QString(),
+                                          QStringLiteral("/KDEPlatformTheme"),
+                                          QStringLiteral("org.kde.KDEPlatformTheme"),
+                                          QStringLiteral("refreshFonts"),
+                                          this,
+                                          SLOT(dropFontSettingsCache()));
 
     if (mUsePortal) {
-        QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/org/freedesktop/portal/desktop"), QStringLiteral("org.freedesktop.portal.Settings"),
-                                              QStringLiteral("SettingChanged"), this, SLOT(slotPortalSettingChanged(QString,QString,QDBusVariant)));
+        QDBusConnection::sessionBus().connect(QString(),
+                                              QStringLiteral("/org/freedesktop/portal/desktop"),
+                                              QStringLiteral("org.freedesktop.portal.Settings"),
+                                              QStringLiteral("SettingChanged"),
+                                              this,
+                                              SLOT(slotPortalSettingChanged(QString, QString, QDBusVariant)));
     }
 }
 

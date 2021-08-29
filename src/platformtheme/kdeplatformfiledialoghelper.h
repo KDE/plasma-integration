@@ -7,8 +7,8 @@
 #ifndef KDEPLATFORMFILEDIALOGHELPER_H
 #define KDEPLATFORMFILEDIALOGHELPER_H
 
-#include <qpa/qplatformdialoghelper.h>
 #include "kdeplatformfiledialogbase_p.h"
+#include <qpa/qplatformdialoghelper.h>
 
 class KFileWidget;
 class KDEPlatformFileDialog : public KDEPlatformFileDialogBase
@@ -25,7 +25,7 @@ public:
     void selectFile(const QUrl &filename) override;
     void setViewMode(QFileDialogOptions::ViewMode view);
     void setFileMode(QFileDialogOptions::FileMode mode);
-    void setCustomLabel(QFileDialogOptions::DialogLabel label, const QString & text);
+    void setCustomLabel(QFileDialogOptions::DialogLabel label, const QString &text);
     QString selectedMimeTypeFilter() override;
     QString selectedNameFilter() override;
     QString currentFilterText() override;
@@ -54,7 +54,7 @@ public:
     void selectFile(const QUrl &filename) override;
     void setFilter() override;
     void setDirectory(const QUrl &directory) override;
-    bool isSupportedUrl(const QUrl& url) const override;
+    bool isSupportedUrl(const QUrl &url) const override;
 
     void exec() override;
     void hide() override;

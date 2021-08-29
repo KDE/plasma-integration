@@ -9,7 +9,6 @@
 
 #include "qdbusmenubar_p.h"
 
-
 QT_BEGIN_NAMESPACE
 
 /* note: do not change these to QStringLiteral;
@@ -24,14 +23,12 @@ QDBusMenuBar::QDBusMenuBar()
     , m_menuAdaptor(new QDBusMenuAdaptor(m_menu))
 {
     QDBusMenuItem::registerDBusTypes();
-    connect(m_menu, &QDBusPlatformMenu::propertiesUpdated,
-            m_menuAdaptor, &QDBusMenuAdaptor::ItemsPropertiesUpdated);
-    connect(m_menu, &QDBusPlatformMenu::updated,
-            m_menuAdaptor, &QDBusMenuAdaptor::LayoutUpdated);
+    connect(m_menu, &QDBusPlatformMenu::propertiesUpdated, m_menuAdaptor, &QDBusMenuAdaptor::ItemsPropertiesUpdated);
+    connect(m_menu, &QDBusPlatformMenu::updated, m_menuAdaptor, &QDBusMenuAdaptor::LayoutUpdated);
 
     // This signal is new in Qt 5.8 but distros might have backported it, hence a runtime look-up
     if (m_menu->metaObject()->indexOfSignal("popupRequested(int,uint)") != -1) {
-        connect(m_menu, SIGNAL(popupRequested(int,uint)), m_menuAdaptor, SIGNAL(ItemActivationRequested(int,uint)));
+        connect(m_menu, SIGNAL(popupRequested(int, uint)), m_menuAdaptor, SIGNAL(ItemActivationRequested(int, uint)));
     }
 }
 
@@ -139,8 +136,7 @@ void QDBusMenuBar::registerMenuBar()
     QDBusPendingReply<> r = registrar.RegisterWindow(static_cast<uint>(window()->winId()), QDBusObjectPath(m_objectPath));
     r.waitForFinished();
     if (r.isError()) {
-        qWarning("Failed to register window menu, reason: %s (\"%s\")",
-                 qUtf8Printable(r.error().name()), qUtf8Printable(r.error().message()));
+        qWarning("Failed to register window menu, reason: %s (\"%s\")", qUtf8Printable(r.error().name()), qUtf8Printable(r.error().message()));
         connection.unregisterObject(m_objectPath);
     }
 }
@@ -154,8 +150,7 @@ void QDBusMenuBar::unregisterMenuBar()
         QDBusPendingReply<> r = registrar.UnregisterWindow(static_cast<uint>(window()->winId()));
         r.waitForFinished();
         if (r.isError())
-            qWarning("Failed to unregister window menu, reason: %s (\"%s\")",
-                     qUtf8Printable(r.error().name()), qUtf8Printable(r.error().message()));
+            qWarning("Failed to unregister window menu, reason: %s (\"%s\")", qUtf8Printable(r.error().name()), qUtf8Printable(r.error().message()));
     }
 
     if (!m_objectPath.isEmpty())

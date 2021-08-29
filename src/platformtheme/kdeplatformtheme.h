@@ -19,7 +19,6 @@ class X11Integration;
 class QIconEngine;
 class QWindow;
 
-
 class KdePlatformTheme : public QPlatformTheme
 {
 public:
@@ -27,8 +26,7 @@ public:
     ~KdePlatformTheme() override;
 
     QVariant themeHint(ThemeHint hint) const override;
-    QIcon fileIcon(const QFileInfo &fileInfo,
-                           QPlatformTheme::IconOptions iconOptions) const override;
+    QIcon fileIcon(const QFileInfo &fileInfo, QPlatformTheme::IconOptions iconOptions) const override;
 
     const QPalette *palette(Palette type = SystemPalette) const override;
     const QFont *font(Font type) const override;
@@ -56,7 +54,6 @@ private:
     KFontSettingsData *m_fontsData = nullptr;
     QScopedPointer<KWaylandIntegration> m_kwaylandIntegration;
     QScopedPointer<X11Integration> m_x11Integration;
-
 };
 
 #endif // KDEPLATFORMTHEME_H

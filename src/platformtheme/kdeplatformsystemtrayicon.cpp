@@ -4,12 +4,12 @@
     SPDX-License-Identifier: LGPL-2.0-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 */
 #include "kdeplatformsystemtrayicon.h"
-#include <kstatusnotifieritem.h>
 #include <QAction>
+#include <QApplication>
 #include <QIcon>
 #include <QMenu>
 #include <QRect>
-#include <QApplication>
+#include <kstatusnotifieritem.h>
 
 #include "statusnotifierwatcher_interface.h"
 
@@ -41,9 +41,9 @@ QPlatformMenu *SystemTrayMenu::createSubMenu() const
 
 void SystemTrayMenu::insertMenuItem(QPlatformMenuItem *menuItem, QPlatformMenuItem *before)
 {
-    if (SystemTrayMenuItem *ours = qobject_cast<SystemTrayMenuItem*>(menuItem)) {
+    if (SystemTrayMenuItem *ours = qobject_cast<SystemTrayMenuItem *>(menuItem)) {
         bool inserted = false;
-        if (SystemTrayMenuItem *oursBefore = qobject_cast<SystemTrayMenuItem*>(before)) {
+        if (SystemTrayMenuItem *oursBefore = qobject_cast<SystemTrayMenuItem *>(before)) {
             for (auto it = m_items.begin(); it != m_items.end(); ++it) {
                 if (*it == oursBefore) {
                     m_items.insert(it, ours);
@@ -85,7 +85,7 @@ QPlatformMenuItem *SystemTrayMenu::menuItemForTag(quintptr tag) const
 
 void SystemTrayMenu::removeMenuItem(QPlatformMenuItem *menuItem)
 {
-    if (SystemTrayMenuItem *ours = qobject_cast<SystemTrayMenuItem*>(menuItem)) {
+    if (SystemTrayMenuItem *ours = qobject_cast<SystemTrayMenuItem *>(menuItem)) {
         m_items.removeOne(ours);
         if (ours->action() && m_menu) {
             m_menu->removeAction(ours->action());
@@ -349,7 +349,7 @@ void KDEPlatformSystemTrayIcon::updateMenu(QPlatformMenu *menu)
     if (!m_sni) {
         return;
     }
-    if (SystemTrayMenu *ourMenu = qobject_cast<SystemTrayMenu*>(menu)) {
+    if (SystemTrayMenu *ourMenu = qobject_cast<SystemTrayMenu *>(menu)) {
         m_sni->setContextMenu(ourMenu->menu());
     }
 }
@@ -365,8 +365,7 @@ QRect KDEPlatformSystemTrayIcon::geometry() const
     return QRect();
 }
 
-void KDEPlatformSystemTrayIcon::showMessage(const QString &title, const QString &msg,
-                                            const QIcon &icon, MessageIcon iconType, int secs)
+void KDEPlatformSystemTrayIcon::showMessage(const QString &title, const QString &msg, const QIcon &icon, MessageIcon iconType, int secs)
 {
     Q_UNUSED(iconType)
     if (!m_sni) {

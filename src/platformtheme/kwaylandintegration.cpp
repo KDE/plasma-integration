@@ -9,12 +9,12 @@
 #include <QGuiApplication>
 #include <qpa/qplatformnativeinterface.h>
 
+#include <KWayland/Client/appmenu.h>
 #include <KWayland/Client/connection_thread.h>
 #include <KWayland/Client/registry.h>
-#include <KWayland/Client/surface.h>
 #include <KWayland/Client/server_decoration.h>
 #include <KWayland/Client/server_decoration_palette.h>
-#include <KWayland/Client/appmenu.h>
+#include <KWayland/Client/surface.h>
 #include <KWindowEffects>
 
 using namespace KWayland::Client;
@@ -37,15 +37,13 @@ void KWaylandIntegration::init()
     }
     m_registry = new Registry(this);
     m_registry->create(connection);
-    QObject::connect(m_registry, &Registry::interfacesAnnounced, this,
-        [this] {
-            QCoreApplication::instance()->installEventFilter(this);
-            const auto menuInterface = m_registry->interface(Registry::Interface::AppMenu);
-            if (menuInterface.name != 0) {
-                m_appMenuManager = m_registry->createAppMenuManager(menuInterface.name, menuInterface.version, this);
-            }
+    QObject::connect(m_registry, &Registry::interfacesAnnounced, this, [this] {
+        QCoreApplication::instance()->installEventFilter(this);
+        const auto menuInterface = m_registry->interface(Registry::Interface::AppMenu);
+        if (menuInterface.name != 0) {
+            m_appMenuManager = m_registry->createAppMenuManager(menuInterface.name, menuInterface.version, this);
         }
-    );
+    });
 
     m_registry->setup();
 }
@@ -53,11 +51,11 @@ void KWaylandIntegration::init()
 bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
 {
     if (event->type() == QEvent::Expose) {
-        auto ee = static_cast<QExposeEvent*>(event);
+        auto ee = static_cast<QExposeEvent *>(event);
         if (ee->region().isNull()) {
             return false;
         }
-        QWindow *w = qobject_cast<QWindow*>(watched);
+        QWindow *w = qobject_cast<QWindow *>(watched);
         if (!w || w->parent() || !w->isVisible()) {
             return false;
         }
@@ -65,7 +63,7 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
             shellSurfaceCreated(w);
         }
     } else if (event->type() == QEvent::Hide) {
-        QWindow *w = qobject_cast<QWindow*>(watched);
+        QWindow *w = qobject_cast<QWindow *>(watched);
         if (!w || w->parent()) {
             return false;
         }
@@ -109,10 +107,10 @@ void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
 {
     w->setProperty("org.kde.plasma.integration.shellSurfaceCreated", QVariant());
 
-    delete w->property("org.kde.plasma.integration.appmenu").value<AppMenu*>();
+    delete w->property("org.kde.plasma.integration.appmenu").value<AppMenu *>();
     w->setProperty("org.kde.plasma.integration.appmenu", QVariant());
 
-    delete w->property("org.kde.plasma.integration.palette").value<ServerSideDecorationPalette*>();
+    delete w->property("org.kde.plasma.integration.palette").value<ServerSideDecorationPalette *>();
     w->setProperty("org.kde.plasma.integration.palette", QVariant());
 }
 
@@ -126,7 +124,7 @@ void KWaylandIntegration::installColorScheme(QWindow *w)
             m_paletteManager = m_registry->createServerSideDecorationPaletteManager(paletteManagerInterface.name, paletteManagerInterface.version, this);
         }
     }
-    auto palette = w->property("org.kde.plasma.integration.palette").value<ServerSideDecorationPalette*>();
+    auto palette = w->property("org.kde.plasma.integration.palette").value<ServerSideDecorationPalette *>();
     if (!palette) {
         Surface *s = Surface::fromWindow(w);
         if (!s) {
@@ -142,14 +140,14 @@ void KWaylandIntegration::installColorScheme(QWindow *w)
 
 void KWaylandIntegration::setAppMenu(QWindow *window, const QString &serviceName, const QString &objectPath)
 {
-    if (!m_windowInfo.contains(window)) { //effectively makes this connect unique
+    if (!m_windowInfo.contains(window)) { // effectively makes this connect unique
         connect(window, &QObject::destroyed, this, [=]() {
             m_windowInfo.remove(window);
         });
     }
     m_windowInfo[window].appMenuServiceName = serviceName;
     m_windowInfo[window].appMenuObjectPath = objectPath;
-    auto menu = window->property("org.kde.plasma.integration.appmenu").value<AppMenu*>();
+    auto menu = window->property("org.kde.plasma.integration.appmenu").value<AppMenu *>();
     if (menu) {
         menu->setAddress(serviceName, objectPath);
     }

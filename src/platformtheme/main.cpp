@@ -14,7 +14,9 @@ class KdePlatformThemePlugin : public QPlatformThemePlugin
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QPA.QPlatformThemeFactoryInterface.5.1" FILE "kdeplatformtheme.json")
 public:
     KdePlatformThemePlugin(QObject *parent = nullptr)
-        : QPlatformThemePlugin(parent) {}
+        : QPlatformThemePlugin(parent)
+    {
+    }
 
     QPlatformTheme *create(const QString &key, const QStringList &paramList) override
     {

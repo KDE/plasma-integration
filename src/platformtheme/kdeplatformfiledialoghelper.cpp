@@ -9,41 +9,39 @@
 #include "kdeplatformfiledialogbase_p.h"
 #include "kdirselectdialog_p.h"
 
-#include <kfilefiltercombo.h>
-#include <kfilewidget.h>
-#include <klocalizedstring.h>
-#include <kdiroperator.h>
-#include <KSharedConfig>
-#include <KWindowConfig>
-#include <KProtocolInfo>
-#include <kio_version.h>
 #include <KIO/StatJob>
 #include <KJobWidgets>
+#include <KProtocolInfo>
+#include <KSharedConfig>
+#include <KWindowConfig>
+#include <kdiroperator.h>
+#include <kfilefiltercombo.h>
+#include <kfilewidget.h>
+#include <kio_version.h>
+#include <klocalizedstring.h>
 
-#include <QMimeDatabase>
-#include <QVBoxLayout>
 #include <QDialogButtonBox>
+#include <QMimeDatabase>
 #include <QPushButton>
-#include <QWindow>
 #include <QTextStream>
+#include <QVBoxLayout>
+#include <QWindow>
 namespace
 {
-
 /*
  * Map a Qt filter string into a KDE one.
  */
 static QString qt2KdeFilter(const QStringList &f)
 {
-    QString               filter;
-    QTextStream           str(&filter, QIODevice::WriteOnly);
-    QStringList           list(f);
+    QString filter;
+    QTextStream str(&filter, QIODevice::WriteOnly);
+    QStringList list(f);
     list.replaceInStrings(QStringLiteral("/"), QStringLiteral("\\/"));
     QStringList::const_iterator it(list.constBegin()), end(list.constEnd());
-    bool                  first = true;
+    bool first = true;
 
     for (; it != end; ++it) {
-        int ob = it->lastIndexOf(QLatin1Char('(')),
-            cb = it->lastIndexOf(QLatin1Char(')'));
+        int ob = it->lastIndexOf(QLatin1Char('(')), cb = it->lastIndexOf(QLatin1Char(')'));
 
         if (-1 != cb && ob < cb) {
             if (first) {
@@ -64,14 +62,12 @@ static QString qt2KdeFilter(const QStringList &f)
 static QString kde2QtFilter(const QStringList &list, const QString &kde, const QString &filterText)
 {
     QStringList::const_iterator it(list.constBegin()), end(list.constEnd());
-    int                   pos;
+    int pos;
 
     for (; it != end; ++it) {
-        if (-1 != (pos = it->indexOf(kde)) && pos > 0 &&
-                (QLatin1Char('(') == (*it)[pos - 1] || QLatin1Char(' ') == (*it)[pos - 1]) &&
-                it->length() >= kde.length() + pos &&
-                (QLatin1Char(')') == (*it)[pos + kde.length()] || QLatin1Char(' ') == (*it)[pos + kde.length()]) &&
-                (filterText.isEmpty() || it->startsWith(filterText))) {
+        if (-1 != (pos = it->indexOf(kde)) && pos > 0 && (QLatin1Char('(') == (*it)[pos - 1] || QLatin1Char(' ') == (*it)[pos - 1])
+            && it->length() >= kde.length() + pos && (QLatin1Char(')') == (*it)[pos + kde.length()] || QLatin1Char(' ') == (*it)[pos + kde.length()])
+            && (filterText.isEmpty() || it->startsWith(filterText))) {
             return *it;
         }
     }
@@ -93,8 +89,7 @@ KDEPlatformFileDialog::KDEPlatformFileDialog()
     connect(m_buttons, &QDialogButtonBox::rejected, m_fileWidget, &KFileWidget::slotCancel);
     // Also call the cancel function when the dialog is closed via the escape key
     // or titlebar close button to make sure we always save the view config
-    connect(this, &KDEPlatformFileDialog::rejected,
-            m_fileWidget, &KFileWidget::slotCancel);
+    connect(this, &KDEPlatformFileDialog::rejected, m_fileWidget, &KFileWidget::slotCancel);
     connect(m_fileWidget->okButton(), &QAbstractButton::clicked, m_fileWidget, &KFileWidget::slotOk);
     connect(m_fileWidget, &KFileWidget::accepted, m_fileWidget, &KFileWidget::accept);
     connect(m_fileWidget, &KFileWidget::accepted, this, &QDialog::accept);
@@ -208,7 +203,7 @@ void KDEPlatformFileDialog::selectNameFilter(const QString &filter)
 
 void KDEPlatformFileDialog::setDirectory(const QUrl &directory)
 {
-    if (!directory.isLocalFile())  {
+    if (!directory.isLocalFile()) {
         // Qt can not determine if the remote URL points to a file or a
         // directory, that is why options()->initialDirectory() always returns
         // the full URL.
@@ -220,18 +215,16 @@ void KDEPlatformFileDialog::setDirectory(const QUrl &directory)
                 // this is probably a file remove the file part
                 m_fileWidget->setUrl(directory.adjusted(QUrl::RemoveFilename));
                 m_fileWidget->setSelectedUrl(directory);
-            }
-            else {
+            } else {
                 m_fileWidget->setUrl(directory);
             }
         }
-    }
-    else {
+    } else {
         m_fileWidget->setUrl(directory);
     }
 }
 
-bool KDEPlatformFileDialogHelper::isSupportedUrl(const QUrl& url) const
+bool KDEPlatformFileDialogHelper::isSupportedUrl(const QUrl &url) const
 {
     return KProtocolInfo::protocols().contains(url.scheme());
 }
@@ -273,24 +266,25 @@ void KDEPlatformFileDialogHelper::initializeDialog()
         } else if (options()->isLabelExplicitlySet(QFileDialogOptions::Reject)) { // Cancel button
             dialog->setCancelButtonText(options()->labelText(QFileDialogOptions::Reject));
         } else if (options()->isLabelExplicitlySet(QFileDialogOptions::LookIn)) { // Location label
-            //Not implemented yet.
+            // Not implemented yet.
         }
 
         if (!options()->windowTitle().isEmpty())
             m_dialog->setWindowTitle(options()->windowTitle());
     } else {
         // needed for accessing m_fileWidget
-        KDEPlatformFileDialog *dialog = qobject_cast<KDEPlatformFileDialog*>(m_dialog);
+        KDEPlatformFileDialog *dialog = qobject_cast<KDEPlatformFileDialog *>(m_dialog);
         dialog->m_fileWidget->setOperationMode(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? KFileWidget::Opening : KFileWidget::Saving);
         if (options()->windowTitle().isEmpty()) {
-            dialog->setWindowTitle(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? i18nc("@title:window", "Open File") : i18nc("@title:window", "Save File"));
+            dialog->setWindowTitle(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? i18nc("@title:window", "Open File")
+                                                                                             : i18nc("@title:window", "Save File"));
         } else {
             dialog->setWindowTitle(options()->windowTitle());
         }
         if (!m_directorySet) {
             setDirectory(options()->initialDirectory());
         }
-        //dialog->setViewMode(options()->viewMode()); // don't override our options, fixes remembering the chosen view mode and sizes!
+        // dialog->setViewMode(options()->viewMode()); // don't override our options, fixes remembering the chosen view mode and sizes!
         dialog->setFileMode(options()->fileMode());
 
         // custom labels
@@ -314,8 +308,8 @@ void KDEPlatformFileDialogHelper::initializeDialog()
             }
             dialog->m_fileWidget->setMimeFilter(mimeFilters, defaultMimeFilter);
 
-            if ( mimeFilters.contains( QStringLiteral("inode/directory") ) )
-                dialog->m_fileWidget->setMode( dialog->m_fileWidget->mode() | KFile::Directory );
+            if (mimeFilters.contains(QStringLiteral("inode/directory")))
+                dialog->m_fileWidget->setMode(dialog->m_fileWidget->mode() | KFile::Directory);
         } else if (!nameFilters.isEmpty()) {
             dialog->m_fileWidget->setFilter(qt2KdeFilter(nameFilters));
         }
@@ -329,8 +323,8 @@ void KDEPlatformFileDialogHelper::initializeDialog()
         // overwrite option
         if (options()->testOption(QFileDialogOptions::FileDialogOption::DontConfirmOverwrite)) {
             dialog->m_fileWidget->setConfirmOverwrite(false);
-         } else if (options()->acceptMode() == QFileDialogOptions::AcceptSave) {
-             dialog->m_fileWidget->setConfirmOverwrite(true);
+        } else if (options()->acceptMode() == QFileDialogOptions::AcceptSave) {
+            dialog->m_fileWidget->setConfirmOverwrite(true);
         }
 
         QStringList schemes = options()->supportedSchemes();
