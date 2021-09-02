@@ -64,7 +64,7 @@ public:
     void saveConfig(KSharedConfigPtr config, const QString &group);
     void slotMkdir();
 
-    void slotCurrentChanged();
+    void slotCurrentChanged(const QUrl &url);
     void slotExpand(const QModelIndex &);
     void slotUrlActivated(const QString &);
     void slotComboTextChanged(const QString &);
@@ -172,16 +172,14 @@ void KDirSelectDialog::Private::slotMkdir()
     m_parent->setCurrentUrl(folderurl);
 }
 
-void KDirSelectDialog::Private::slotCurrentChanged()
+void KDirSelectDialog::Private::slotCurrentChanged(const QUrl &url)
 {
     if (m_comboLocked) {
         return;
     }
 
-    const QUrl u = m_treeView->currentUrl();
-
-    if (u.isValid()) {
-        m_urlCombo->setEditText(u.toDisplayString(QUrl::PreferLocalFile));
+    if (url.isValid()) {
+        m_urlCombo->setEditText(url.toDisplayString(QUrl::PreferLocalFile));
     } else {
         m_urlCombo->setEditText(QString());
     }
@@ -395,7 +393,9 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     mainLayout->addWidget(d->m_treeView, 1);
     mainLayout->addWidget(d->m_urlCombo, 0);
 
-    connect(d->m_treeView, SIGNAL(currentChanged(QUrl)), SLOT(slotCurrentChanged()));
+    connect(d->m_treeView, &KFileTreeView::currentUrlChanged, this, [this](const QUrl &url) {
+        d->slotCurrentChanged(url);
+    });
 
     connect(d->m_treeView, &QAbstractItemView::activated, this, [this](const QModelIndex &index) {
         d->slotExpand(index);

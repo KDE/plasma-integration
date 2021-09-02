@@ -97,10 +97,9 @@ Q_SIGNALS:
     /**
      * This signal is emitted whenever the current @p url has been changed.
      */
-    void currentChanged(const QUrl &url);
+    void currentUrlChanged(const QUrl &url);
 
 protected:
-    using QTreeView::currentChanged;
     void contextMenuEvent(QContextMenuEvent *) override;
 
 private:

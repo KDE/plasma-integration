@@ -58,7 +58,7 @@ void KFileTreeView::Private::currentChanged(const QModelIndex &currentIndex, con
 {
     const QUrl url = urlForProxyIndex(currentIndex);
     if (url.isValid()) {
-        Q_EMIT q->currentChanged(url);
+        Q_EMIT q->currentUrlChanged(url);
     }
 }
 
