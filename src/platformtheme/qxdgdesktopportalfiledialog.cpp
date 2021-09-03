@@ -85,11 +85,11 @@ public:
     bool selectDirectory = false;
     bool saveFile = false;
     QString acceptLabel;
-    QString directory;
+    QUrl directory;
     QString title;
     QStringList nameFilters;
     QStringList mimeTypesFilters;
-    QStringList selectedFiles;
+    QList<QUrl> selectedFiles;
     QPlatformFileDialogHelper *nativeFileDialog = nullptr;
 };
 
@@ -161,10 +161,10 @@ void QXdgDesktopPortalFileDialog::openPortal()
 
     if (d->saveFile) {
         if (!d->directory.isEmpty())
-            options.insert(QLatin1String("current_folder"), QFile::encodeName(d->directory).append('\0'));
+            options.insert(QLatin1String("current_folder"), QFile::encodeName(d->directory.toLocalFile()).append('\0'));
 
         if (!d->selectedFiles.isEmpty())
-            options.insert(QLatin1String("current_file"), QFile::encodeName(d->selectedFiles.first()).append('\0'));
+            options.insert(QLatin1String("current_file"), QFile::encodeName(d->selectedFiles.first().toLocalFile()).append('\0'));
     }
 
     // Insert filters
@@ -264,7 +264,7 @@ void QXdgDesktopPortalFileDialog::setDirectory(const QUrl &directory)
         d->nativeFileDialog->setDirectory(directory);
     }
 
-    d->directory = directory.path();
+    d->directory = directory;
 }
 
 QUrl QXdgDesktopPortalFileDialog::directory() const
@@ -274,7 +274,7 @@ QUrl QXdgDesktopPortalFileDialog::directory() const
     if (d->nativeFileDialog && (options()->fileMode() == QFileDialogOptions::Directory || options()->fileMode() == QFileDialogOptions::DirectoryOnly))
         return d->nativeFileDialog->directory();
 
-    return QUrl(d->directory);
+    return d->directory;
 }
 
 void QXdgDesktopPortalFileDialog::selectFile(const QUrl &filename)
@@ -286,7 +286,7 @@ void QXdgDesktopPortalFileDialog::selectFile(const QUrl &filename)
         d->nativeFileDialog->selectFile(filename);
     }
 
-    d->selectedFiles << filename.path();
+    d->selectedFiles << filename;
 }
 
 QList<QUrl> QXdgDesktopPortalFileDialog::selectedFiles() const
@@ -296,11 +296,7 @@ QList<QUrl> QXdgDesktopPortalFileDialog::selectedFiles() const
     if (d->nativeFileDialog && (options()->fileMode() == QFileDialogOptions::Directory || options()->fileMode() == QFileDialogOptions::DirectoryOnly))
         return d->nativeFileDialog->selectedFiles();
 
-    QList<QUrl> files;
-    for (const QString &file : d->selectedFiles) {
-        files << QUrl(file);
-    }
-    return files;
+    return d->selectedFiles;
 }
 
 void QXdgDesktopPortalFileDialog::setFilter()
@@ -375,9 +371,15 @@ void QXdgDesktopPortalFileDialog::gotResponse(uint response, const QVariantMap &
     Q_D(QXdgDesktopPortalFileDialog);
 
     if (!response) {
-        if (results.contains(QLatin1String("uris")))
-            d->selectedFiles = results.value(QLatin1String("uris")).toStringList();
-
+        if (results.contains(QLatin1String("uris"))) {
+            const QStringList uris = results.value(QLatin1String("uris")).toStringList();
+            d->selectedFiles.clear();
+            d->selectedFiles.reserve(uris.size());
+            for (const QString &uri : uris) {
+                // uris are expected to have proper "file:" scheme set
+                d->selectedFiles.append(QUrl(uri));
+            }
+        }
         Q_EMIT accept();
     } else {
         Q_EMIT reject();
