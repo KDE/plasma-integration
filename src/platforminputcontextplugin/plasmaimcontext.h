@@ -32,9 +32,9 @@ public:
     PlasmaIMContext();
     ~PlasmaIMContext();
 
-    bool isValid() const Q_DECL_OVERRIDE;
-    void setFocusObject(QObject *object) Q_DECL_OVERRIDE;
-    bool filterEvent(const QEvent *event) Q_DECL_OVERRIDE;
+    bool isValid() const override;
+    void setFocusObject(QObject *object) override;
+    bool filterEvent(const QEvent *event) override;
 
 private:
     void cleanUpState();
