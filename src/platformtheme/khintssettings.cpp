@@ -477,13 +477,12 @@ void KHintsSettings::loadPalettes()
 
 void KHintsSettings::updateCursorTheme()
 {
-    KConfig config(QStringLiteral("kcminputrc"));
-    KConfigGroup g(&config, "Mouse");
-
-    int size = g.readEntry("cursorSize", 24);
-
 #if HAVE_X11
     if (QX11Info::isPlatformX11()) {
+        KConfig config(QStringLiteral("kcminputrc"));
+        KConfigGroup g(&config, "Mouse");
+
+        int size = g.readEntry("cursorSize", 24);
         const QString theme = g.readEntry("cursorTheme", QString());
         // Note that in X11R7.1 and earlier, calling XcursorSetTheme()
         // with a NULL theme would cause Xcursor to use "default", but
