@@ -86,8 +86,6 @@ private:
     QHash<QPlatformTheme::Palette, QPalette *> m_palettes;
     QHash<QPlatformTheme::ThemeHint, QVariant> m_hints;
     KSharedConfigPtr mKdeGlobals;
-    KSharedConfigPtr mDefaultLnfConfig;
-    KSharedConfigPtr mLnfConfig;
     QMap<QString, QVariantMap> mKdeGlobalsPortal;
     bool mUsePortal;
 };

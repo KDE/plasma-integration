@@ -81,17 +81,6 @@ KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
         updatePortalSetting();
     }
 
-    // try to extract the proper defaults file from a lookandfeel package
-    const QString looknfeel = readConfigValue(cg, QStringLiteral("LookAndFeelPackage"), defaultLookAndFeelPackage).toString();
-    mDefaultLnfConfig = KSharedConfig::openConfig(
-        QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                               QStringLiteral("plasma/look-and-feel/") + defaultLookAndFeelPackage + QStringLiteral("/contents/defaults")));
-    if (looknfeel != defaultLookAndFeelPackage) {
-        mLnfConfig =
-            KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                                             QStringLiteral("plasma/look-and-feel/") + looknfeel + QStringLiteral("/contents/defaults")));
-    }
-
     const auto cursorBlinkRate = readConfigValue(cg, QStringLiteral("CursorBlinkRate"), 1000).toInt();
     m_hints[QPlatformTheme::CursorFlashTime] = cursorBlinkRate > 0 ? qBound(200, cursorBlinkRate, 2000) : 0; // 0 => no blinking
     m_hints[QPlatformTheme::MouseDoubleClickInterval] = readConfigValue(cg, QStringLiteral("DoubleClickInterval"), 400);
@@ -163,31 +152,7 @@ KHintsSettings::~KHintsSettings()
 QVariant KHintsSettings::readConfigValue(const QString &group, const QString &key, const QVariant &defaultValue)
 {
     KConfigGroup userCg(mKdeGlobals, group);
-    QVariant value = readConfigValue(userCg, key, QString());
-
-    if (!value.isNull()) {
-        return value;
-    }
-
-    if (mLnfConfig) {
-        KConfigGroup lnfCg(mLnfConfig, "kdeglobals");
-        lnfCg = KConfigGroup(&lnfCg, group);
-        if (lnfCg.isValid()) {
-            value = lnfCg.readEntry(key, defaultValue);
-
-            if (!value.isNull()) {
-                return value;
-            }
-        }
-    }
-
-    KConfigGroup lnfCg(mDefaultLnfConfig, "kdeglobals");
-    lnfCg = KConfigGroup(&lnfCg, group);
-    if (lnfCg.isValid()) {
-        return lnfCg.readEntry(key, defaultValue);
-    }
-
-    return defaultValue;
+    return readConfigValue(userCg, key, defaultValue);
 }
 
 QVariant KHintsSettings::readConfigValue(const KConfigGroup &cg, const QString &key, const QVariant &defaultValue) const
