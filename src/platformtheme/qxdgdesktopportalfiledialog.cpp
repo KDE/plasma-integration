@@ -145,26 +145,26 @@ void QXdgDesktopPortalFileDialog::openPortal()
 {
     Q_D(const QXdgDesktopPortalFileDialog);
 
-    QDBusMessage message = QDBusMessage::createMethodCall(QLatin1String("org.freedesktop.portal.Desktop"),
-                                                          QLatin1String("/org/freedesktop/portal/desktop"),
-                                                          QLatin1String("org.freedesktop.portal.FileChooser"),
-                                                          d->saveFile ? QLatin1String("SaveFile") : QLatin1String("OpenFile"));
-    QString parentWindowId = QLatin1String("x11:") + QString::number(d->winId, 16);
+    QDBusMessage message = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.portal.Desktop"),
+                                                          QStringLiteral("/org/freedesktop/portal/desktop"),
+                                                          QStringLiteral("org.freedesktop.portal.FileChooser"),
+                                                          d->saveFile ? QStringLiteral("SaveFile") : QStringLiteral("OpenFile"));
+    QString parentWindowId = QStringLiteral("x11:") + QString::number(d->winId, 16);
 
     QVariantMap options;
     if (!d->acceptLabel.isEmpty())
-        options.insert(QLatin1String("accept_label"), d->acceptLabel);
+        options.insert(QStringLiteral("accept_label"), d->acceptLabel);
 
-    options.insert(QLatin1String("modal"), d->modal);
-    options.insert(QLatin1String("multiple"), d->multipleFiles);
-    options.insert(QLatin1String("directory"), d->selectDirectory);
+    options.insert(QStringLiteral("modal"), d->modal);
+    options.insert(QStringLiteral("multiple"), d->multipleFiles);
+    options.insert(QStringLiteral("directory"), d->selectDirectory);
 
     if (d->saveFile) {
         if (!d->directory.isEmpty())
-            options.insert(QLatin1String("current_folder"), QFile::encodeName(d->directory.toLocalFile()).append('\0'));
+            options.insert(QStringLiteral("current_folder"), QFile::encodeName(d->directory.toLocalFile()).append('\0'));
 
         if (!d->selectedFiles.isEmpty())
-            options.insert(QLatin1String("current_file"), QFile::encodeName(d->selectedFiles.first().toLocalFile()).append('\0'));
+            options.insert(QStringLiteral("current_file"), QFile::encodeName(d->selectedFiles.first().toLocalFile()).append('\0'));
     }
 
     // Insert filters
@@ -207,7 +207,7 @@ void QXdgDesktopPortalFileDialog::openPortal()
                 QStringList filterStrings = match.captured(2).split(QLatin1Char(' '), Qt::SkipEmptyParts);
 
                 FilterConditionList filterConditions;
-                for (const QString &filterString : filterStrings) {
+                for (const QString &filterString : qAsConst(filterStrings)) {
                     FilterCondition filterCondition;
                     filterCondition.type = GlobalPattern;
                     filterCondition.pattern = filterString;
@@ -224,9 +224,9 @@ void QXdgDesktopPortalFileDialog::openPortal()
     }
 
     if (!filterList.isEmpty())
-        options.insert(QLatin1String("filters"), QVariant::fromValue(filterList));
+        options.insert(QStringLiteral("filters"), QVariant::fromValue(filterList));
 
-    options.insert(QLatin1String("handle_token"), QStringLiteral("qt%1").arg(QRandomGenerator::global()->generate()));
+    options.insert(QStringLiteral("handle_token"), QStringLiteral("qt%1").arg(QRandomGenerator::global()->generate()));
 
     // TODO choices a(ssa(ss)s)
     // List of serialized combo boxes to add to the file chooser.
@@ -242,8 +242,8 @@ void QXdgDesktopPortalFileDialog::openPortal()
         } else {
             QDBusConnection::sessionBus().connect({},
                                                   reply.value().path(),
-                                                  QLatin1String("org.freedesktop.portal.Request"),
-                                                  QLatin1String("Response"),
+                                                  QStringLiteral("org.freedesktop.portal.Request"),
+                                                  QStringLiteral("Response"),
                                                   this,
                                                   SLOT(gotResponse(uint, QVariantMap)));
         }
@@ -371,8 +371,8 @@ void QXdgDesktopPortalFileDialog::gotResponse(uint response, const QVariantMap &
     Q_D(QXdgDesktopPortalFileDialog);
 
     if (!response) {
-        if (results.contains(QLatin1String("uris"))) {
-            const QStringList uris = results.value(QLatin1String("uris")).toStringList();
+        if (results.contains(QStringLiteral("uris"))) {
+            const QStringList uris = results.value(QStringLiteral("uris")).toStringList();
             d->selectedFiles.clear();
             d->selectedFiles.reserve(uris.size());
             for (const QString &uri : uris) {

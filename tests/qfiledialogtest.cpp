@@ -89,12 +89,12 @@ int main(int argc, char **argv)
         dialog.setNameFilters(nameFilterList);
     }
 
-    if (parser.isSet(QLatin1String("options"))) {
-        auto optStrings = parser.values(QLatin1String("options"));
+    if (parser.isSet(QStringLiteral("options"))) {
+        auto optStrings = parser.values(QStringLiteral("options"));
         QFileDialog::Options options = {};
         const auto mo = QFileDialog::staticMetaObject;
         const auto enumerator = mo.indexOfEnumerator("Options");
-        for (const auto &optString : optStrings) {
+        for (const auto &optString : qAsConst(optStrings)) {
             options |= QFileDialog::Option(mo.enumerator(enumerator).keyToValue(optString.toLatin1().constData()));
         }
         dialog.setOptions(options);

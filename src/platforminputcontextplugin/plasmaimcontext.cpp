@@ -26,7 +26,7 @@ static QList<TooltipData> dataForIndex(const QString &ch, bool upperCase)
 {
     QList<TooltipData> ret;
     int i = 0;
-    for (auto item : KeyData::KeyMappings[ch]) {
+    for (const auto &item : KeyData::KeyMappings[ch]) {
         ret << TooltipData{upperCase ? item.toUpper() : item, QString::number((i + 1) < 10 ? (i + 1) : 0, 10), i};
         i++;
     }

@@ -25,8 +25,8 @@ public:
     ATestWindow();
 
 private:
-    QPushButton *mBtn;
-    QWidget *m_area;
+    QPushButton *mBtn = nullptr;
+    QWidget *m_area = nullptr;
 };
 
 ATestWindow::ATestWindow()
