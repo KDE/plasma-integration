@@ -23,7 +23,7 @@ public:
 
 QPlatformInputContext *PlasmaIM::create(const QString &system, const QStringList &)
 {
-    if (system == "plasmaim") {
+    if (system == QLatin1String("plasmaim")) {
         return new PlasmaIMContext;
     }
 

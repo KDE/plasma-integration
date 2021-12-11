@@ -90,7 +90,7 @@ void PlasmaIMContext::showPopup(const QList<TooltipData> &text)
     popup->setLayoutDirection(isRtl ? Qt::RightToLeft : Qt::LeftToRight);
     popup->setLayout(grid);
     int col = 0;
-    for (auto item : text) {
+    for (const auto &item : text) {
         auto label = new QLabel(item.character, popup.data());
         auto button = new QPushButton(item.number, popup.data());
 

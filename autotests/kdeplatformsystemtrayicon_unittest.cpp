@@ -22,7 +22,7 @@ private Q_SLOTS:
 void KDEPlatformSystemTrayIcon_UnitTest::testMenuRecreate()
 {
     QMenu *trayIconMenu = new QMenu();
-    trayIconMenu->addAction("testAction");
+    trayIconMenu->addAction(QStringLiteral("testAction"));
 
     KDEPlatformSystemTrayIcon *kpsti = new KDEPlatformSystemTrayIcon();
 
@@ -54,7 +54,7 @@ void KDEPlatformSystemTrayIcon_UnitTest::testMenuRecreate()
 void KDEPlatformSystemTrayIcon_UnitTest::testAddActionAfterMenuRecreate()
 {
     QMenu *trayIconMenu = new QMenu();
-    trayIconMenu->addAction("testAction1");
+    trayIconMenu->addAction(QStringLiteral("testAction1"));
 
     KDEPlatformSystemTrayIcon *kpsti = new KDEPlatformSystemTrayIcon();
 
@@ -73,7 +73,7 @@ void KDEPlatformSystemTrayIcon_UnitTest::testAddActionAfterMenuRecreate()
     kpsti->cleanup();
 
     // add action, internal menu is destroyed
-    trayIconMenu->addAction("testAction2");
+    trayIconMenu->addAction(QStringLiteral("testAction2"));
 
     // simulates second QSystemTrayIcon::show()
     kpsti->init();
