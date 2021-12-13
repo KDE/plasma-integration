@@ -347,8 +347,8 @@ void KHintsSettings::iconChanged(int group)
         return;
     }
 
-    QWidgetList widgets = QApplication::allWidgets();
-    Q_FOREACH (QWidget *widget, widgets) {
+    const QWidgetList widgets = QApplication::allWidgets();
+    for (QWidget *widget : widgets) {
         if (qobject_cast<QToolBar *>(widget) || qobject_cast<QMainWindow *>(widget)) {
             QEvent event(QEvent::StyleChange);
             QApplication::sendEvent(widget, &event);
