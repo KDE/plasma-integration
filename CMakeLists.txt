@@ -43,7 +43,8 @@ set_package_properties(Breeze PROPERTIES
 # dependencies for QPA plugin
 find_package(Qt5ThemeSupport REQUIRED)
 set(QT5PLATFORMSUPPORT_LIBS Qt5ThemeSupport::Qt5ThemeSupport)
-
+add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f02)
+add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055900)
 add_definitions(-DTRANSLATION_DOMAIN=\"plasmaintegration5\")
 if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
     ki18n_install(po)
