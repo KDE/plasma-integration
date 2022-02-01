@@ -35,6 +35,7 @@ public:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
+    static bool isRelevantTopLevel(QWindow *w);
     void shellSurfaceCreated(QWindow *w);
     void shellSurfaceDestroyed(QWindow *w);
 

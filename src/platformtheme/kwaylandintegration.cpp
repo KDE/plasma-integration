@@ -48,6 +48,19 @@ void KWaylandIntegration::init()
     m_registry->setup();
 }
 
+bool KWaylandIntegration::isRelevantTopLevel(QWindow *w)
+{
+    if (!w || w->parent()) {
+        return false;
+    }
+
+    // ignore  windows that map to XdgPopup
+    if (w->type() == Qt::ToolTip || w->type() == Qt::Popup) {
+        return false;
+    }
+    return true;
+}
+
 bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
 {
     if (event->type() == QEvent::Expose) {
@@ -56,22 +69,28 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
             return false;
         }
         QWindow *w = qobject_cast<QWindow *>(watched);
-        if (!w || w->parent() || !w->isVisible()) {
+        if (!isRelevantTopLevel(w)) {
             return false;
         }
+        if (!w->isVisible()) {
+            return false;
+        }
+
         if (w->property("org.kde.plasma.integration.shellSurfaceCreated").isNull()) {
             shellSurfaceCreated(w);
         }
     } else if (event->type() == QEvent::Hide) {
         QWindow *w = qobject_cast<QWindow *>(watched);
-        if (!w || w->parent()) {
+        if (!isRelevantTopLevel(w)) {
             return false;
         }
         shellSurfaceDestroyed(w);
     } else if (event->type() == QEvent::ApplicationPaletteChange) {
         const auto topLevelWindows = QGuiApplication::topLevelWindows();
         for (QWindow *w : topLevelWindows) {
-            installColorScheme(w);
+            if (isRelevantTopLevel(w)) {
+                installColorScheme(w);
+            }
         }
     }
 
