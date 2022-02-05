@@ -434,9 +434,12 @@ void KHintsSettings::loadPalettes()
         const QString scheme = readConfigValue(QStringLiteral("General"), QStringLiteral("ColorScheme"), QStringLiteral("BreezeLight")).toString();
         path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("color-schemes/") + scheme + QStringLiteral(".colors"));
 
-        if (!path.isEmpty()) {
-            m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(path)));
+        if (path.isEmpty()) {
+            qWarning() << "Could not find color scheme" << scheme << "falling back to BreezeLight";
+            path = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("color-schemes/BreezeLight.colors"));
         }
+
+        m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(path)));
     }
 }
 
