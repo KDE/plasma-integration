@@ -19,16 +19,20 @@ include(GenerateExportHeader)
 include(KDEClangFormat)
 include(KDEGitCommitHooks)
 
-find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED Widgets DBus QuickControls2)
+find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED Widgets DBus QuickControls2 WaylandClient)
 find_package(Qt${QT_MAJOR_VERSION}Gui ${QT_MIN_VERSION} CONFIG REQUIRED Private)
 if (QT_MAJOR_VERSION EQUAL "5")
     find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED X11Extras)
 endif()
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
-                Config ConfigWidgets I18n IconThemes KIO Notifications Wayland
+                Config ConfigWidgets I18n IconThemes KIO Notifications
                 WidgetsAddons WindowSystem ConfigWidgets
 )
+
+find_package(QtWaylandScanner REQUIRED)
+find_package(Wayland 1.9 REQUIRED Client)
+find_package(PlasmaWaylandProtocols 1.6.0 CONFIG REQUIRED)
 
 find_package(XCB COMPONENTS XCB)
 set_package_properties(XCB PROPERTIES

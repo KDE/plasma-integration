@@ -28,11 +28,22 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
     ecm_mark_as_test(${_testname})
     ecm_mark_nongui_executable(${_testname})
     target_include_directories(${_testname} PRIVATE ${CMAKE_BINARY_DIR}/src/platformtheme)
-    target_link_libraries(${_testname} Qt::GuiPrivate Qt::Test Qt::DBus Qt::X11Extras Qt::QuickControls2 ${QT5PLATFORMSUPPORT_LIBS} KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::KIOFileWidgets KF5::I18n KF5::Notifications KF5::WindowSystem KF5::WaylandClient XCB::XCB)
+    target_link_libraries(${_testname} Qt::GuiPrivate Qt::Test Qt::DBus Qt::X11Extras Qt::QuickControls2 ${QT5PLATFORMSUPPORT_LIBS} KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::KIOFileWidgets KF5::I18n KF5::Notifications KF5::WindowSystem Qt::WaylandClient XCB::XCB Wayland::Client)
 endmacro()
 
 set(dbus_interface)
 qt_add_dbus_interface(dbus_interface ../src/platformtheme/org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
+
+set(wayland_interfaces)
+ecm_add_qtwayland_client_protocol(wayland_interfaces
+    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
+    BASENAME appmenu
+)
+
+ecm_add_qtwayland_client_protocol(wayland_interfaces
+    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
+    BASENAME server-decoration-palette
+)
 
 set(platformThemeSRCS
   ../src/platformtheme/qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
@@ -48,6 +59,7 @@ set(platformThemeSRCS
   ../src/platformtheme/x11integration.cpp
   ../src/platformtheme/qxdgdesktopportalfiledialog.cpp
   ${dbus_interface}
+  ${wayland_interfaces}
 )
 
 frameworkintegration_tests(

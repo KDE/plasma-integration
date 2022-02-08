@@ -63,7 +63,6 @@ KdePlatformTheme::KdePlatformTheme()
 
     if (KWindowSystem::isPlatformWayland()) {
         m_kwaylandIntegration.reset(new KWaylandIntegration());
-        m_kwaylandIntegration->init();
     }
 
 #if HAVE_X11

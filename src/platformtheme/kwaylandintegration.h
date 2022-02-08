@@ -8,18 +8,12 @@
 
 #include <QHash>
 #include <QObject>
+#include <QtWaylandClient/QWaylandClientExtensionTemplate>
 
 class QWindow;
 
-namespace KWayland
-{
-namespace Client
-{
-class ServerSideDecorationPaletteManager;
 class AppMenuManager;
-class Registry;
-}
-}
+class ServerSideDecorationPaletteManager;
 
 class KWaylandIntegration : public QObject
 {
@@ -27,7 +21,6 @@ class KWaylandIntegration : public QObject
 public:
     explicit KWaylandIntegration();
     ~KWaylandIntegration() override;
-    void init();
 
     void setAppMenu(QWindow *window, const QString &serviceName, const QString &objectPath);
     void setPalette(QWindow *window, const QString &paletteName);
@@ -36,13 +29,13 @@ public:
 
 private:
     static bool isRelevantTopLevel(QWindow *w);
+    static struct wl_surface *surfaceFromWindow(QWindow *w);
     void shellSurfaceCreated(QWindow *w);
     void shellSurfaceDestroyed(QWindow *w);
 
     void installColorScheme(QWindow *w);
-    KWayland::Client::AppMenuManager *m_appMenuManager = nullptr;
-    KWayland::Client::ServerSideDecorationPaletteManager *m_paletteManager = nullptr;
-    KWayland::Client::Registry *m_registry = nullptr;
+    QScopedPointer<AppMenuManager> m_appMenuManager;
+    QScopedPointer<ServerSideDecorationPaletteManager> m_paletteManager;
 
     struct WindowInfo {
         QString appMenuServiceName;

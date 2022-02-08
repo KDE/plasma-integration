@@ -18,7 +18,6 @@ configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-p
 # qdbusmenubar uses them
 remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS)
 
-
 set(platformtheme_SRCS
     qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
     kdeplatformtheme.cpp
@@ -39,6 +38,16 @@ set(platformtheme_SRCS
 qt_add_dbus_interface(platformtheme_SRCS org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
 kconfig_add_kcfg_files(platformtheme_SRCS renderersettings.kcfgc)
 
+ecm_add_qtwayland_client_protocol(platformtheme_SRCS
+    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
+    BASENAME appmenu
+)
+
+ecm_add_qtwayland_client_protocol(platformtheme_SRCS
+    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
+    BASENAME server-decoration-palette
+)
+
 add_library(KDEPlasmaPlatformTheme MODULE ${platformtheme_SRCS})
 
 target_link_libraries(KDEPlasmaPlatformTheme
@@ -55,9 +64,11 @@ target_link_libraries(KDEPlasmaPlatformTheme
         KF5::I18n
         KF5::Notifications
         KF5::WindowSystem
-        KF5::WaylandClient
         XCB::XCB
         ${QT5PLATFORMSUPPORT_LIBS}
+        Qt::WaylandClient
+        Qt::GuiPrivate
+        Wayland::Client
 )
 if (QT_MAJOR_VERSION EQUAL "5")
     target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt5::X11Extras)

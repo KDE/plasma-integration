@@ -7,46 +7,52 @@
 
 #include <QExposeEvent>
 #include <QGuiApplication>
+#include <QWindow>
 #include <qpa/qplatformnativeinterface.h>
 
-#include <KWayland/Client/appmenu.h>
-#include <KWayland/Client/connection_thread.h>
-#include <KWayland/Client/registry.h>
-#include <KWayland/Client/server_decoration.h>
-#include <KWayland/Client/server_decoration_palette.h>
-#include <KWayland/Client/surface.h>
-#include <KWindowEffects>
+#include "qwayland-appmenu.h"
+#include "qwayland-server-decoration-palette.h"
 
-using namespace KWayland::Client;
+#include <KWindowEffects>
 
 static const QByteArray s_schemePropertyName = QByteArrayLiteral("KDE_COLOR_SCHEME_PATH");
 static const QByteArray s_blurBehindPropertyName = QByteArrayLiteral("ENABLE_BLUR_BEHIND_HINT");
 
+class AppMenuManager : public QWaylandClientExtensionTemplate<AppMenuManager>, public QtWayland::org_kde_kwin_appmenu_manager
+{
+    Q_OBJECT
+public:
+    AppMenuManager()
+        : QWaylandClientExtensionTemplate<AppMenuManager>(1)
+    {
+    }
+};
+
+class ServerSideDecorationPaletteManager : public QWaylandClientExtensionTemplate<ServerSideDecorationPaletteManager>,
+                                           public QtWayland::org_kde_kwin_server_decoration_palette_manager
+{
+    Q_OBJECT
+public:
+    ServerSideDecorationPaletteManager()
+        : QWaylandClientExtensionTemplate<ServerSideDecorationPaletteManager>(1)
+    {
+    }
+};
+
+using AppMenu = QtWayland::org_kde_kwin_appmenu;
+using ServerSideDecorationPalette = QtWayland::org_kde_kwin_server_decoration_palette;
+
+Q_DECLARE_METATYPE(AppMenu *);
+Q_DECLARE_METATYPE(ServerSideDecorationPalette *);
+
 KWaylandIntegration::KWaylandIntegration()
     : QObject()
+    , m_appMenuManager(new AppMenuManager)
+    , m_paletteManager(new ServerSideDecorationPaletteManager)
 {
 }
 
 KWaylandIntegration::~KWaylandIntegration() = default;
-
-void KWaylandIntegration::init()
-{
-    auto connection = ConnectionThread::fromApplication(this);
-    if (!connection) {
-        return;
-    }
-    m_registry = new Registry(this);
-    m_registry->create(connection);
-    QObject::connect(m_registry, &Registry::interfacesAnnounced, this, [this] {
-        QCoreApplication::instance()->installEventFilter(this);
-        const auto menuInterface = m_registry->interface(Registry::Interface::AppMenu);
-        if (menuInterface.name != 0) {
-            m_appMenuManager = m_registry->createAppMenuManager(menuInterface.name, menuInterface.version, this);
-        }
-    });
-
-    m_registry->setup();
-}
 
 bool KWaylandIntegration::isRelevantTopLevel(QWindow *w)
 {
@@ -108,17 +114,17 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
         KWindowEffects::enableBlurBehind(w, blurBehindProperty.toBool());
     }
     // create deco
-    Surface *s = Surface::fromWindow(w);
+    wl_surface *s = surfaceFromWindow(w);
     if (!s) {
         return;
     }
 
     w->setProperty("org.kde.plasma.integration.shellSurfaceCreated", true);
 
-    if (m_appMenuManager) {
-        auto menu = m_appMenuManager->create(s, w);
+    if (m_appMenuManager->isActive()) {
+        auto menu = new AppMenu(m_appMenuManager->create(s));
         w->setProperty("org.kde.plasma.integration.appmenu", QVariant::fromValue(menu));
-        menu->setAddress(m_windowInfo[w].appMenuServiceName, m_windowInfo[w].appMenuObjectPath);
+        menu->set_address(m_windowInfo[w].appMenuServiceName, m_windowInfo[w].appMenuObjectPath);
     }
 }
 
@@ -126,34 +132,34 @@ void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
 {
     w->setProperty("org.kde.plasma.integration.shellSurfaceCreated", QVariant());
 
-    delete w->property("org.kde.plasma.integration.appmenu").value<AppMenu *>();
+    auto appMenu = w->property("org.kde.plasma.integration.appmenu").value<AppMenu *>();
+    if (appMenu) {
+        appMenu->release();
+        delete appMenu;
+    }
     w->setProperty("org.kde.plasma.integration.appmenu", QVariant());
 
-    delete w->property("org.kde.plasma.integration.palette").value<ServerSideDecorationPalette *>();
+    auto decoPallete = w->property("org.kde.plasma.integration.palette").value<ServerSideDecorationPalette *>();
+    if (decoPallete) {
+        decoPallete->release();
+        delete decoPallete;
+    }
     w->setProperty("org.kde.plasma.integration.palette", QVariant());
 }
 
 void KWaylandIntegration::installColorScheme(QWindow *w)
 {
-    if (!m_paletteManager) {
-        const auto paletteManagerInterface = m_registry->interface(Registry::Interface::ServerSideDecorationPalette);
-        if (paletteManagerInterface.name == 0) {
-            return;
-        } else {
-            m_paletteManager = m_registry->createServerSideDecorationPaletteManager(paletteManagerInterface.name, paletteManagerInterface.version, this);
-        }
-    }
     auto palette = w->property("org.kde.plasma.integration.palette").value<ServerSideDecorationPalette *>();
     if (!palette) {
-        Surface *s = Surface::fromWindow(w);
+        auto s = surfaceFromWindow(w);
         if (!s) {
             return;
         }
-        palette = m_paletteManager->create(s, w);
+        auto palette = new ServerSideDecorationPalette(m_paletteManager->create(s));
         w->setProperty("org.kde.plasma.integration.palette", QVariant::fromValue(palette));
     }
     if (palette) {
-        palette->setPalette(qApp->property(s_schemePropertyName.constData()).toString());
+        palette->set_palette(qApp->property(s_schemePropertyName.constData()).toString());
     }
 }
 
@@ -168,6 +174,17 @@ void KWaylandIntegration::setAppMenu(QWindow *window, const QString &serviceName
     m_windowInfo[window].appMenuObjectPath = objectPath;
     auto menu = window->property("org.kde.plasma.integration.appmenu").value<AppMenu *>();
     if (menu) {
-        menu->setAddress(serviceName, objectPath);
+        menu->set_address(serviceName, objectPath);
     }
 }
+
+wl_surface *KWaylandIntegration::surfaceFromWindow(QWindow *window)
+{
+    QPlatformNativeInterface *nativeInterface = qGuiApp->platformNativeInterface();
+    if (!nativeInterface) {
+        return nullptr;
+    }
+    return static_cast<wl_surface *>(nativeInterface->nativeResourceForWindow("surface", window));
+}
+
+#include "kwaylandintegration.moc"
