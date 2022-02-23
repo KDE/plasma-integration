@@ -204,6 +204,11 @@ void KDEPlatformFileDialog::selectNameFilter(const QString &filter)
 void KDEPlatformFileDialog::setDirectory(const QUrl &directory)
 {
     if (!directory.isLocalFile()) {
+        // Short-circuit: Avoid stat if the effective URL hasn't changed
+        if (directory == m_fileWidget->baseUrl()) {
+            return;
+        }
+
         // Qt can not determine if the remote URL points to a file or a
         // directory, that is why options()->initialDirectory() always returns
         // the full URL.
