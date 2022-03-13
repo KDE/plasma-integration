@@ -25,6 +25,14 @@ static const QByteArray s_blurBehindPropertyName = QByteArrayLiteral("ENABLE_BLU
 KWaylandIntegration::KWaylandIntegration()
     : QObject()
 {
+    connect(qApp, &QGuiApplication::paletteChanged, this, [this]() {
+        const auto topLevelWindows = QGuiApplication::topLevelWindows();
+        for (QWindow *w : topLevelWindows) {
+            if (isRelevantTopLevel(w)) {
+                installColorScheme(w);
+            }
+        }
+    });
 }
 
 KWaylandIntegration::~KWaylandIntegration() = default;
@@ -85,15 +93,7 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
             return false;
         }
         shellSurfaceDestroyed(w);
-    } else if (event->type() == QEvent::ApplicationPaletteChange) {
-        const auto topLevelWindows = QGuiApplication::topLevelWindows();
-        for (QWindow *w : topLevelWindows) {
-            if (isRelevantTopLevel(w)) {
-                installColorScheme(w);
-            }
-        }
     }
-
     return false;
 }
 
