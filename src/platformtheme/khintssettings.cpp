@@ -67,7 +67,7 @@ static inline bool checkUsePortalSupport()
     return !QStandardPaths::locate(QStandardPaths::RuntimeLocation, QStringLiteral("flatpak-info")).isEmpty() || qEnvironmentVariableIsSet("SNAP");
 }
 
-KHintsSettings::KHintsSettings(KSharedConfig::Ptr kdeglobals)
+KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
     : QObject(nullptr)
     , mKdeGlobals(kdeglobals)
     , mUsePortal(checkUsePortalSupport())

@@ -51,7 +51,7 @@ public:
         SETTINGS_LOCALE,
         SETTINGS_STYLE,
     };
-    explicit KHintsSettings(KSharedConfig::Ptr kdeglobals = KSharedConfig::Ptr());
+    explicit KHintsSettings(const KSharedConfig::Ptr &kdeglobals = KSharedConfig::Ptr());
     ~KHintsSettings() override;
 
     inline QVariant hint(QPlatformTheme::ThemeHint hint) const

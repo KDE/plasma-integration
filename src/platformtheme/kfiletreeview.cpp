@@ -161,14 +161,14 @@ void KFileTreeView::setShowHiddenFiles(bool enabled)
 
 void KFileTreeView::setCurrentUrl(const QUrl &url)
 {
-    QModelIndex baseIndex = d->mSourceModel->indexForUrl(url);
+    const QModelIndex baseIndex = d->mSourceModel->indexForUrl(url);
 
     if (!baseIndex.isValid()) {
         d->mSourceModel->expandToUrl(url);
         return;
     }
 
-    QModelIndex proxyIndex = d->mProxyModel->mapFromSource(baseIndex);
+    const QModelIndex proxyIndex = d->mProxyModel->mapFromSource(baseIndex);
     selectionModel()->clearSelection();
     selectionModel()->setCurrentIndex(proxyIndex, QItemSelectionModel::SelectCurrent);
     scrollTo(proxyIndex);

@@ -110,7 +110,7 @@ QList<QUrl> KDEPlatformFileDialog::selectedFiles()
 
 void KDEPlatformFileDialog::selectFile(const QUrl &filename)
 {
-    QUrl dirUrl = filename.adjusted(QUrl::RemoveFilename);
+    const QUrl dirUrl = filename.adjusted(QUrl::RemoveFilename);
     m_fileWidget->setUrl(dirUrl);
     m_fileWidget->setSelectedUrl(filename);
 }
@@ -332,7 +332,7 @@ void KDEPlatformFileDialogHelper::initializeDialog()
             dialog->m_fileWidget->setConfirmOverwrite(true);
         }
 
-        QStringList schemes = options()->supportedSchemes();
+        const QStringList schemes = options()->supportedSchemes();
         dialog->m_fileWidget->setSupportedSchemes(schemes);
     }
 }
