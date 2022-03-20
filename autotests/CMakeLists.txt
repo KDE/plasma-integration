@@ -1,8 +1,8 @@
 include(ECMMarkAsTest)
 include(ECMMarkNonGuiExecutable)
 
-find_package(Qt5Test ${QT_MIN_VERSION} CONFIG QUIET)
-find_package(Qt5Qml ${QT_MIN_VERSION} CONFIG QUIET)
+find_package(Qt${QT_MAJOR_VERSION}Test ${QT_MIN_VERSION} CONFIG QUIET)
+find_package(Qt${QT_MAJOR_VERSION}Qml ${QT_MIN_VERSION} CONFIG QUIET)
 
 if(NOT Qt5Test_FOUND)
     message(STATUS "Qt5Test not found, autotests will not be built.")

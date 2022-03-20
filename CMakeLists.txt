@@ -5,7 +5,7 @@ set(PROJECT_VERSION "5.24.80")
 set(PROJECT_VERSION_MAJOR 5)
 
 set(QT_MIN_VERSION "5.15.0")
-set(KF5_MIN_VERSION "5.86")
+set(KF5_MIN_VERSION "5.90")
 set(KDE_COMPILERSETTINGS_LEVEL "5.82")
 
 find_package(ECM ${KF5_MIN_VERSION}  REQUIRED NO_MODULE)
@@ -19,8 +19,11 @@ include(GenerateExportHeader)
 include(KDEClangFormat)
 include(KDEGitCommitHooks)
 
-find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Widgets DBus X11Extras QuickControls2)
-find_package(Qt5Gui ${QT_MIN_VERSION} CONFIG REQUIRED Private)
+find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED Widgets DBus QuickControls2)
+find_package(Qt${QT_MAJOR_VERSION}Gui ${QT_MIN_VERSION} CONFIG REQUIRED Private)
+if (QT_MAJOR_VERSION EQUAL "5")
+    find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED X11Extras)
+endif()
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
                 Config ConfigWidgets I18n IconThemes KIO Notifications Wayland
@@ -41,8 +44,10 @@ set_package_properties(Breeze PROPERTIES
                        PURPOSE "For setting the default QStyle name")
 
 # dependencies for QPA plugin
-find_package(Qt5ThemeSupport REQUIRED)
-set(QT5PLATFORMSUPPORT_LIBS Qt5ThemeSupport::Qt5ThemeSupport)
+if (QT_MAJOR_VERSION EQUAL "5")
+    find_package(Qt5ThemeSupport REQUIRED)
+    set(QT5PLATFORMSUPPORT_LIBS Qt5ThemeSupport::Qt5ThemeSupport)
+endif()
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f02)
 add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055B00)
 add_definitions(-DTRANSLATION_DOMAIN=\"plasmaintegration5\")

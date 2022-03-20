@@ -5,7 +5,9 @@ set_package_properties(X11 PROPERTIES DESCRIPTION "Required for updating the Cur
                         )
 set(HAVE_X11 ${X11_FOUND})
 if(HAVE_X11)
-  find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED X11Extras)
+  if (QT_MAJOR_VERSION EQUAL "5")
+    find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED X11Extras)
+  endif()
 
   find_package(XCB COMPONENTS XCB)
   set_package_properties(XCB PROPERTIES TYPE REQUIRED)
@@ -43,7 +45,6 @@ target_link_libraries(KDEPlasmaPlatformTheme
     PRIVATE
         Qt::GuiPrivate
         Qt::DBus
-        Qt::X11Extras
         Qt::QuickControls2
         KF5::ConfigWidgets
         KF5::ConfigCore
@@ -58,9 +59,12 @@ target_link_libraries(KDEPlasmaPlatformTheme
         XCB::XCB
         ${QT5PLATFORMSUPPORT_LIBS}
 )
+if (QT_MAJOR_VERSION EQUAL "5")
+    target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt5::X11Extras)
+endif()
 
 if(HAVE_X11)
-  target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt::X11Extras ${X11_Xcursor_LIB} ${XCB_XCB_LIBRARY})
+  target_link_libraries(KDEPlasmaPlatformTheme PRIVATE ${X11_Xcursor_LIB} ${XCB_XCB_LIBRARY})
 endif()
 
 set_target_properties(KDEPlasmaPlatformTheme PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/platformthemes/")

@@ -5,6 +5,7 @@
 */
 #include "kdeplatformsystemtrayicon.h"
 #include <QAction>
+#include <QActionGroup>
 #include <QApplication>
 #include <QIcon>
 #include <QMenu>
