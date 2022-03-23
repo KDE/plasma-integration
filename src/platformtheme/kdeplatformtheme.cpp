@@ -61,7 +61,8 @@ KdePlatformTheme::KdePlatformTheme()
 {
     loadSettings();
 
-    if (KWindowSystem::isPlatformWayland()) {
+    // explicitly not KWindowSystem::isPlatformWayland to not include the kwin process
+    if (QGuiApplication::platformName() == QLatin1String("wayland")) {
         m_kwaylandIntegration.reset(new KWaylandIntegration());
     }
 
