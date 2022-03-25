@@ -155,7 +155,7 @@ void KWaylandIntegration::installColorScheme(QWindow *w)
         if (!s) {
             return;
         }
-        auto palette = new ServerSideDecorationPalette(m_paletteManager->create(s));
+        palette = new ServerSideDecorationPalette(m_paletteManager->create(s));
         w->setProperty("org.kde.plasma.integration.palette", QVariant::fromValue(palette));
     }
     if (palette) {
