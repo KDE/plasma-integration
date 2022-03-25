@@ -50,6 +50,7 @@ KWaylandIntegration::KWaylandIntegration()
     , m_appMenuManager(new AppMenuManager)
     , m_paletteManager(new ServerSideDecorationPaletteManager)
 {
+    QCoreApplication::instance()->installEventFilter(this);
 }
 
 KWaylandIntegration::~KWaylandIntegration() = default;
