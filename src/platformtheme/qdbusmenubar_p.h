@@ -23,6 +23,8 @@
 // We mean it.
 //
 
+#include "kdeplatformtheme.h"
+
 #include <QHash>
 #include <QString>
 #include <QWindow>
@@ -46,7 +48,7 @@ class QDBusMenuBar : public QPlatformMenuBar
     Q_OBJECT
 
 public:
-    QDBusMenuBar();
+    QDBusMenuBar(KdePlatformTheme *platformTheme);
     ~QDBusMenuBar() override;
 
     void insertMenu(QPlatformMenu *menu, QPlatformMenu *before) override;
@@ -55,6 +57,8 @@ public:
     void handleReparent(QWindow *newParentWindow) override;
     QPlatformMenu *menuForTag(quintptr tag) const override;
     QPlatformMenu *createMenu() const override;
+    static QDBusMenuBar *globalMenuBar();
+    static QDBusMenuBar *menuBarForWindow(QWindow *window);
 
     QWindow *window() const
     {
@@ -74,11 +78,18 @@ private:
     QHash<quintptr, QDBusPlatformMenuItem *> m_menuItems;
     QPointer<QWindow> m_window;
     QString m_objectPath;
+    bool m_initted = false;
+    KdePlatformTheme *m_platformTheme;
+    static QDBusMenuBar *s_globalMenuBar;
+    static QMap<QWindow *, QDBusMenuBar *> s_menuBars;
 
     QDBusPlatformMenuItem *menuItemForMenu(QPlatformMenu *menu);
     static void updateMenuItem(QDBusPlatformMenuItem *item, QPlatformMenu *menu);
-    void registerMenuBar();
-    void unregisterMenuBar();
+    bool createDBusMenuBar();
+    void uncreateDBusMenuBar();
+
+    static void registerMenuBarX11(QWindow *window, const QString &objectPath);
+    static void unregisterMenuBarX11(QWindow *window);
 };
 
 QT_END_NAMESPACE

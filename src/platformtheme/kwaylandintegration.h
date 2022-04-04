@@ -6,6 +6,7 @@
 #ifndef KWAYLANDINTEGRATION_H
 #define KWAYLANDINTEGRATION_H
 
+#include "kdeplatformtheme.h"
 #include <QHash>
 #include <QObject>
 #include <QtWaylandClient/QWaylandClientExtensionTemplate>
@@ -19,7 +20,7 @@ class KWaylandIntegration : public QObject
 {
     Q_OBJECT
 public:
-    explicit KWaylandIntegration();
+    explicit KWaylandIntegration(KdePlatformTheme *platformTheme);
     ~KWaylandIntegration() override;
 
     void setAppMenu(QWindow *window, const QString &serviceName, const QString &objectPath);
@@ -37,11 +38,7 @@ private:
     QScopedPointer<AppMenuManager> m_appMenuManager;
     QScopedPointer<ServerSideDecorationPaletteManager> m_paletteManager;
 
-    struct WindowInfo {
-        QString appMenuServiceName;
-        QString appMenuObjectPath;
-    };
-    QHash<QWindow *, WindowInfo> m_windowInfo;
+    KdePlatformTheme *m_platformTheme;
 };
 
 #endif
