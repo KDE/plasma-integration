@@ -7,6 +7,7 @@
 #ifndef X11INTEGRATION_H
 #define X11INTEGRATION_H
 
+#include "kdeplatformtheme.h"
 #include <QHash>
 #include <QObject>
 #include <xcb/xcb.h>
@@ -17,7 +18,7 @@ class X11Integration : public QObject
 {
     Q_OBJECT
 public:
-    explicit X11Integration();
+    explicit X11Integration(KdePlatformTheme *platformTheme);
     ~X11Integration() override;
     void init();
 
@@ -29,6 +30,7 @@ private:
     void installColorScheme(QWindow *w);
     void installDesktopFileName(QWindow *w);
     QHash<QByteArray, xcb_atom_t> m_atoms;
+    KdePlatformTheme *m_platformTheme;
 };
 
 #endif

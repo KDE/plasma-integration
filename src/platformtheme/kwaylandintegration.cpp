@@ -11,6 +11,7 @@
 #include <qpa/qplatformnativeinterface.h>
 #include <qtwaylandclientversion.h>
 
+#include "qdbusmenubar_p.h"
 #include "qwayland-appmenu.h"
 #include "qwayland-server-decoration-palette.h"
 
@@ -58,10 +59,11 @@ using ServerSideDecorationPalette = QtWayland::org_kde_kwin_server_decoration_pa
 Q_DECLARE_METATYPE(AppMenu *);
 Q_DECLARE_METATYPE(ServerSideDecorationPalette *);
 
-KWaylandIntegration::KWaylandIntegration()
+KWaylandIntegration::KWaylandIntegration(KdePlatformTheme *platformTheme)
     : QObject()
     , m_appMenuManager(new AppMenuManager)
     , m_paletteManager(new ServerSideDecorationPaletteManager)
+    , m_platformTheme(platformTheme)
 {
     QCoreApplication::instance()->installEventFilter(this);
 }
@@ -112,6 +114,15 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
                 installColorScheme(w);
             }
         }
+    } else if (event->type() == QEvent::PlatformSurface) {
+        if (QWindow *w = qobject_cast<QWindow *>(watched)) {
+            QPlatformSurfaceEvent *pe = static_cast<QPlatformSurfaceEvent *>(event);
+            if (!w->flags().testFlag(Qt::ForeignWindow)) {
+                if (pe->surfaceEventType() == QPlatformSurfaceEvent::SurfaceCreated) {
+                    m_platformTheme->windowCreated(w);
+                }
+            }
+        }
     }
 
     return false;
@@ -138,7 +149,13 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
     if (m_appMenuManager->isActive()) {
         auto menu = new AppMenu(m_appMenuManager->create(s));
         w->setProperty("org.kde.plasma.integration.appmenu", QVariant::fromValue(menu));
-        menu->set_address(m_windowInfo[w].appMenuServiceName, m_windowInfo[w].appMenuObjectPath);
+        auto menuBar = QDBusMenuBar::menuBarForWindow(w);
+        if (!menuBar) {
+            menuBar = QDBusMenuBar::globalMenuBar();
+        }
+        if (menuBar) {
+            menu->set_address(QDBusConnection::sessionBus().baseService(), menuBar->objectPath());
+        }
     }
 }
 
@@ -182,13 +199,6 @@ void KWaylandIntegration::installColorScheme(QWindow *w)
 
 void KWaylandIntegration::setAppMenu(QWindow *window, const QString &serviceName, const QString &objectPath)
 {
-    if (!m_windowInfo.contains(window)) { // effectively makes this connect unique
-        connect(window, &QObject::destroyed, this, [=]() {
-            m_windowInfo.remove(window);
-        });
-    }
-    m_windowInfo[window].appMenuServiceName = serviceName;
-    m_windowInfo[window].appMenuObjectPath = objectPath;
     auto menu = window->property("org.kde.plasma.integration.appmenu").value<AppMenu *>();
     if (menu) {
         menu->set_address(serviceName, objectPath);
