@@ -9,6 +9,7 @@
 #include <QGuiApplication>
 #include <QWindow>
 #include <qpa/qplatformnativeinterface.h>
+#include <qtwaylandclientversion.h>
 
 #include "qwayland-appmenu.h"
 #include "qwayland-server-decoration-palette.h"
@@ -25,6 +26,12 @@ public:
     AppMenuManager()
         : QWaylandClientExtensionTemplate<AppMenuManager>(1)
     {
+#if QTWAYLANDCLIENT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
+        initialize();
+#else
+        // QWaylandClientExtensionTemplate invokes this with a QueuedConnection
+        QMetaObject::invokeMethod(this, "addRegistryListener");
+#endif
     }
 };
 
@@ -36,6 +43,12 @@ public:
     ServerSideDecorationPaletteManager()
         : QWaylandClientExtensionTemplate<ServerSideDecorationPaletteManager>(1)
     {
+#if QTWAYLANDCLIENT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
+        initialize();
+#else
+        // QWaylandClientExtensionTemplate invokes this with a QueuedConnection
+        QMetaObject::invokeMethod(this, "addRegistryListener");
+#endif
     }
 };
 
@@ -150,6 +163,9 @@ void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
 
 void KWaylandIntegration::installColorScheme(QWindow *w)
 {
+    if (!m_paletteManager->isActive()) {
+        return;
+    }
     auto palette = w->property("org.kde.plasma.integration.palette").value<ServerSideDecorationPalette *>();
     if (!palette) {
         auto s = surfaceFromWindow(w);
