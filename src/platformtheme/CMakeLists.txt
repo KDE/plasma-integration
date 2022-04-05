@@ -37,18 +37,24 @@ set(platformtheme_SRCS
 
 qt_add_dbus_interface(platformtheme_SRCS org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
 kconfig_add_kcfg_files(platformtheme_SRCS renderersettings.kcfgc)
+add_library(KDEPlasmaPlatformTheme MODULE)
+if (QT_MAJOR_VERSION EQUAL "5")
+    ecm_add_qtwayland_client_protocol(platformtheme_SRCS
+        PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
+        BASENAME appmenu
+    )
 
-ecm_add_qtwayland_client_protocol(platformtheme_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
-    BASENAME appmenu
-)
-
-ecm_add_qtwayland_client_protocol(platformtheme_SRCS
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
-    BASENAME server-decoration-palette
-)
-
-add_library(KDEPlasmaPlatformTheme MODULE ${platformtheme_SRCS})
+    ecm_add_qtwayland_client_protocol(platformtheme_SRCS
+        PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
+        BASENAME server-decoration-palette
+    )
+else()
+    qt6_generate_wayland_protocol_client_sources(KDEPlasmaPlatformTheme FILES
+        ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
+        ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
+    )
+endif()
+target_sources(KDEPlasmaPlatformTheme PRIVATE ${platformtheme_SRCS})
 
 target_link_libraries(KDEPlasmaPlatformTheme
     PRIVATE

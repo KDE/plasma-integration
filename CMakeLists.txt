@@ -30,7 +30,9 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
                 WidgetsAddons WindowSystem ConfigWidgets
 )
 
-find_package(QtWaylandScanner REQUIRED)
+if (QT_MAJOR_VERSION EQUAL "5")
+    find_package(QtWaylandScanner ${QT_MIN_VERSION} REQUIRED)
+endif()
 find_package(Wayland 1.9 REQUIRED Client)
 find_package(PlasmaWaylandProtocols 1.6.0 CONFIG REQUIRED)
 
