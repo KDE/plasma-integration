@@ -25,10 +25,10 @@
 #include <QToolButton>
 #include <Qt>
 
+#include <KWindowSystem>
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QTimer>
-#include <QX11Info>
 
 #include <KIconTheme>
 #include <KWindowInfo>
@@ -305,7 +305,7 @@ private Q_SLOTS:
 
     void dndWindowFlagsTest()
     {
-        if (!QX11Info::isPlatformX11()) {
+        if (!KWindowSystem::isPlatformX11()) {
             QSKIP("This test requires xcb platform.");
         }
 
