@@ -4,13 +4,13 @@ include(ECMMarkNonGuiExecutable)
 find_package(Qt${QT_MAJOR_VERSION}Test ${QT_MIN_VERSION} CONFIG QUIET)
 find_package(Qt${QT_MAJOR_VERSION}Qml ${QT_MIN_VERSION} CONFIG QUIET)
 
-if(NOT Qt5Test_FOUND)
-    message(STATUS "Qt5Test not found, autotests will not be built.")
+if(NOT Qt${QT_MAJOR_VERSION}Test_FOUND)
+    message(STATUS "Qt${QT_MAJOR_VERSION}Test not found, autotests will not be built.")
     return()
 endif()
 
-if(NOT Qt5Qml_FOUND)
-    message(STATUS "Qt5Qml not found, QML autotests will not be built.")
+if(NOT Qt${QT_MAJOR_VERSION}Qml_FOUND)
+    message(STATUS "Qt${QT_MAJOR_VERSION}Qml not found, QML autotests will not be built.")
 endif()
 
 set(CONFIGFILE "${CMAKE_CURRENT_SOURCE_DIR}/kdeplatformtheme_kdeglobals")
@@ -98,7 +98,7 @@ frameworkintegration_tests(
   ../src/platformtheme/khintssettings.cpp
 )
 
-if(Qt5Qml_FOUND)
+if(Qt${QT_MAJOR_VERSION}Qml_FOUND)
     add_test(NAME qmltests COMMAND qmltestrunner WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
     frameworkintegration_tests(kfiledialogqml_unittest)
