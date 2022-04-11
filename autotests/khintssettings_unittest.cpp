@@ -44,7 +44,7 @@ void KHintsSettingsTest::testDefaults()
     QCOMPARE(hints.hint(QPlatformTheme::DialogButtonBoxButtonsHaveIcons).toBool(), true);
     QCOMPARE(hints.hint(QPlatformTheme::UseFullScreenForPopupMenu).toBool(), true);
     QCOMPARE(hints.hint(QPlatformTheme::KeyboardScheme).toInt(), int(QPlatformTheme::KdeKeyboardScheme));
-    QCOMPARE(hints.hint(QPlatformTheme::UiEffects).toInt(), 0);
+    QCOMPARE(hints.hint(QPlatformTheme::UiEffects).toInt(), QPlatformTheme::HoverEffect);
     QCOMPARE(hints.hint(QPlatformTheme::IconPixmapSizes).value<QList<int>>(), QList<int>({512, 256, 128, 64, 32, 22, 16, 8}));
     QCOMPARE(hints.hint(QPlatformTheme::WheelScrollLines).toInt(), 3);
 }
