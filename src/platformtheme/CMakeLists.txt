@@ -13,6 +13,17 @@ if(HAVE_X11)
   set_package_properties(XCB PROPERTIES TYPE REQUIRED)
 endif()
 
+# TODO Plasma 6: remove code for checking ButtonPressKeys
+include(CheckCXXSourceRuns)
+check_cxx_source_runs(
+"#include <qpa/qplatformtheme.h>
+int main()
+{
+    return QPlatformTheme::ThemeHint::ButtonPressKeys;
+}"
+    HAS_BUTTONPRESSKEYS
+)
+
 configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-platformtheme.h )
 
 # qdbusmenubar uses them
