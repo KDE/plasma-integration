@@ -136,6 +136,8 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
 
     m_hints[QPlatformTheme::ShowShortcutsInContextMenus] = true;
 
+    m_hints[QPlatformTheme::ButtonPressKeys] = QVariant::fromValue(QList<Qt::Key>({Qt::Key_Space, Qt::Key_Return, Qt::Key_Enter, Qt::Key_Select}));
+
     QMetaObject::invokeMethod(this, "delayedDBusConnects", Qt::QueuedConnection);
     QMetaObject::invokeMethod(this, "setupIconLoader", Qt::QueuedConnection);
 
