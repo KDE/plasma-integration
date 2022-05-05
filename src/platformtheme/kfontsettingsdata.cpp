@@ -17,7 +17,6 @@
 #include <qpa/qwindowsysteminterface.h>
 
 #include <kconfiggroup.h>
-#include <ksharedconfig.h>
 
 static inline bool checkUsePortalSupport()
 {

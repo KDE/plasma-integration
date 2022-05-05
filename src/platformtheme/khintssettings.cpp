@@ -30,7 +30,6 @@
 #include <kcolorscheme.h>
 #include <kconfiggroup.h>
 #include <kiconloader.h>
-#include <ksharedconfig.h>
 
 #include <config-platformtheme.h>
 #ifdef UNIT_TEST

@@ -6,7 +6,6 @@
 */
 
 #include "kdeplatformfiledialoghelper.h"
-#include "kdeplatformfiledialogbase_p.h"
 #include "kdirselectdialog_p.h"
 
 #include <KIO/StatJob>

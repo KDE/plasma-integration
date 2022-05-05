@@ -19,8 +19,6 @@
 
 #include <KWindowEffects>
 
-#include <xcb/xcb.h>
-
 static const char s_schemePropertyName[] = "KDE_COLOR_SCHEME_PATH";
 static const QByteArray s_blurBehindPropertyName = QByteArrayLiteral("ENABLE_BLUR_BEHIND_HINT");
 
