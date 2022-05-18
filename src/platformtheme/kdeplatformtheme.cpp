@@ -2,6 +2,7 @@
     SPDX-FileCopyrightText: 2013 Kevin Ottens <ervin+bluesystems@kde.org>
     SPDX-FileCopyrightText: 2013 Aleix Pol Gonzalez <aleixpol@blue-systems.com>
     SPDX-FileCopyrightText: 2014 Lukáš Tinkl <ltinkl@redhat.com>
+    SPDX-FileCopyrightText: 2022 Harald Sitter <sitter@kde.org>
 
     SPDX-License-Identifier: LGPL-2.0-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 */
@@ -27,8 +28,15 @@
 #include <QtQuickControls2/QQuickStyle>
 
 #include <KIO/Global>
+#include <KIO/JobUiDelegate>
+#include <KIO/JobUiDelegateFactory>
+#include <KIO/OpenWithHandlerInterface>
+#include <KJobWidgets>
 #include <KLocalizedString>
 #include <KStandardGuiItem>
+#include <KWayland/Client/connection_thread.h>
+#include <KWayland/Client/registry.h>
+#include <KWayland/Client/xdgforeign.h>
 #include <KWindowSystem>
 #include <kiconengine.h>
 #include <kiconloader.h>
@@ -56,6 +64,178 @@ static bool isDBusGlobalMenuAvailable()
     static bool dbusGlobalMenuAvailable = checkDBusGlobalMenuAvailable();
     return dbusGlobalMenuAvailable;
 }
+
+static QString desktopPortalService()
+{
+    return QStringLiteral("org.freedesktop.impl.portal.desktop.kde");
+}
+
+static QString desktopPortalPath()
+{
+    return QStringLiteral("/org/freedesktop/portal/desktop");
+}
+
+class XdgWindowExporter : public QObject
+{
+    Q_OBJECT
+public:
+    using QObject::QObject;
+    virtual void run(QWidget *widget) = 0;
+Q_SIGNALS:
+    void exported(const QString &id);
+};
+
+class XdgWindowExporterWayland : public XdgWindowExporter
+{
+public:
+    using XdgWindowExporter::XdgWindowExporter;
+
+    void run(QWidget *widget) override
+    {
+        Q_ASSERT(widget);
+
+        auto connection = KWayland::Client::ConnectionThread::fromApplication(QGuiApplication::instance());
+        if (!connection) {
+            Q_EMIT exported({});
+            return;
+        }
+
+        auto registry = new KWayland::Client::Registry(this);
+        connect(registry, &KWayland::Client::Registry::exporterUnstableV2Announced, this, [this, registry, widget](quint32 name, quint32 version) {
+            auto exporter = registry->createXdgExporter(name, std::min(version, quint32(1)), this);
+            auto surface = KWayland::Client::Surface::fromWindow(widget->windowHandle());
+            auto xdgExported = exporter->exportTopLevel(surface, this);
+            Q_EMIT exported(QLatin1String("wayland:") + xdgExported->handle());
+        });
+
+        registry->create(connection);
+        registry->setup();
+    }
+};
+
+class XdgWindowExporterX11 : public XdgWindowExporter
+{
+public:
+    using XdgWindowExporter::XdgWindowExporter;
+
+    void run(QWidget *widget) override
+    {
+        Q_ASSERT(widget);
+        Q_EMIT exported(QLatin1String("x11:") + QString::number(widget->winId()));
+    }
+};
+
+class KIOOpenWith : public KIO::OpenWithHandlerInterface
+{
+    Q_OBJECT
+public:
+    explicit KIOOpenWith(QWidget *parentWidget, QObject *parent = nullptr)
+        : KIO::OpenWithHandlerInterface(parent)
+        , m_parentWidget(parentWidget)
+    {
+    }
+
+    void promptUserForApplication(KJob *job, const QList<QUrl> &urls, const QString &mimeType) override
+    {
+        Q_UNUSED(mimeType);
+
+        QWidget *widget = nullptr;
+        if (job) {
+            widget = KJobWidgets::window(job);
+        }
+
+        if (!widget) {
+            widget = m_parentWidget;
+        }
+
+        if (!widget) {
+            promptInternal({}, urls);
+            return;
+        }
+
+        XdgWindowExporter *exporter = nullptr;
+        switch (KWindowSystem::platform()) {
+        case KWindowSystem::Platform::X11:
+            exporter = new XdgWindowExporterX11(this);
+            break;
+        case KWindowSystem::Platform::Wayland:
+            exporter = new XdgWindowExporterWayland(this);
+            break;
+        case KWindowSystem::Platform::Unknown:
+            break;
+        }
+        if (exporter) {
+            connect(exporter, &XdgWindowExporter::exported, this, [this, urls, exporter](const QString &windowId) {
+                exporter->deleteLater();
+                promptInternal(windowId, urls);
+            });
+            exporter->run(widget);
+        } else {
+            promptInternal({}, urls);
+        }
+    }
+
+    void promptInternal(const QString &windowId, const QList<QUrl> &urls)
+    {
+        QDBusMessage message = QDBusMessage::createMethodCall(desktopPortalService(),
+                                                              desktopPortalPath(),
+                                                              QStringLiteral("org.freedesktop.impl.portal.AppChooser"),
+                                                              QStringLiteral("ChooseApplicationPrivate"));
+
+        QStringList urlStrings;
+        for (const auto &url : urls) {
+            urlStrings << url.toString();
+        }
+        message << windowId << urlStrings << QVariantMap{{QStringLiteral("ask"), true}};
+
+        QDBusPendingCall pendingCall = QDBusConnection::sessionBus().asyncCall(message, std::numeric_limits<int>::max());
+        auto watcher = new QDBusPendingCallWatcher(pendingCall, this);
+        connect(watcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *watcher) {
+            watcher->deleteLater();
+
+            QDBusPendingReply<uint, QVariantMap> reply = *watcher;
+            if (reply.isError()) {
+                qWarning() << "Couldn't get reply";
+                qWarning() << "Error: " << reply.error().message();
+                Q_EMIT canceled();
+            } else {
+                if (reply.argumentAt<0>() == 0) {
+                    Q_EMIT serviceSelected(KService::serviceByDesktopName(reply.argumentAt<1>().value(QStringLiteral("choice")).toString()));
+                } else {
+                    Q_EMIT canceled();
+                }
+            }
+        });
+    }
+
+private:
+    QWidget *const m_parentWidget;
+};
+
+class KIOUiDelegate : public KIO::JobUiDelegate
+{
+public:
+    explicit KIOUiDelegate(KJobUiDelegate::Flags flags = AutoHandlingDisabled, QWidget *window = nullptr)
+        : KIO::JobUiDelegate(KIO::JobUiDelegate::Version::V2, flags, window, {new KIOOpenWith(window, nullptr)})
+    {
+    }
+};
+
+class KIOUiFactory : public KIO::JobUiDelegateFactoryV2
+{
+public:
+    KIOUiFactory() = default;
+
+    KJobUiDelegate *createDelegate() const override
+    {
+        return new KIOUiDelegate;
+    }
+
+    KJobUiDelegate *createDelegate(KJobUiDelegate::Flags flags, QWidget *window) const override
+    {
+        return new KIOUiDelegate(flags, window);
+    }
+};
 
 KdePlatformTheme::KdePlatformTheme()
 {
@@ -85,6 +265,12 @@ KdePlatformTheme::KdePlatformTheme()
 
     QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar, false);
     setQtQuickControlsTheme();
+
+    static KIOUiFactory factory;
+    KIO::setDefaultJobUiDelegateFactoryV2(&factory);
+
+    static KIOUiDelegate delegateExtension;
+    KIO::setDefaultJobUiDelegateExtension(&delegateExtension);
 }
 
 KdePlatformTheme::~KdePlatformTheme()
@@ -446,3 +632,4 @@ void KdePlatformTheme::setMenuBarForWindow(QWindow *window, const QString &servi
         m_kwaylandIntegration->setAppMenu(window, serviceName, objectPath);
     }
 }
+#include "kdeplatformtheme.moc"
