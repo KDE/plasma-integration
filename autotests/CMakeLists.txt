@@ -28,24 +28,37 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
     ecm_mark_as_test(${_testname})
     ecm_mark_nongui_executable(${_testname})
     target_include_directories(${_testname} PRIVATE ${CMAKE_BINARY_DIR}/src/platformtheme)
-    target_link_libraries(${_testname} Qt::GuiPrivate Qt::Test Qt::DBus Qt::X11Extras Qt::QuickControls2 ${QT5PLATFORMSUPPORT_LIBS} KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::KIOFileWidgets KF5::I18n KF5::Notifications KF5::WindowSystem Qt::WaylandClient XCB::XCB Wayland::Client)
+    target_link_libraries(${_testname} Qt::GuiPrivate Qt::Test Qt::DBus Qt::QuickControls2 ${QT5PLATFORMSUPPORT_LIBS} KF5::ConfigWidgets KF5::ConfigCore KF5::IconThemes KF5::KIOFileWidgets KF5::I18n KF5::Notifications KF5::WindowSystem Qt::WaylandClient XCB::XCB Wayland::Client)
+    if (QT_MAJOR_VERSION EQUAL "5")
+        target_link_libraries(${_testname} Qt5::X11Extras)
+    endif()
 endmacro()
 
 set(dbus_interface)
 qt_add_dbus_interface(dbus_interface ../src/platformtheme/org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
 
+frameworkintegration_tests(
+    kdeplatformtheme_unittest
+)
 set(wayland_interfaces)
-ecm_add_qtwayland_client_protocol(wayland_interfaces
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
-    BASENAME appmenu
-)
+if (QT_MAJOR_VERSION EQUAL "5")
+    ecm_add_qtwayland_client_protocol(wayland_interfaces
+        PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
+        BASENAME appmenu
+    )
 
-ecm_add_qtwayland_client_protocol(wayland_interfaces
-    PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
-    BASENAME server-decoration-palette
-)
+    ecm_add_qtwayland_client_protocol(wayland_interfaces
+        PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
+        BASENAME server-decoration-palette
+    )
+else()
+    qt6_generate_wayland_protocol_client_sources(kdeplatformtheme_unittest FILES
+        ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
+        ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
+    )
+endif()
 
-set(platformThemeSRCS
+target_sources(kdeplatformtheme_unittest PRIVATE
   ../src/platformtheme/qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
   ../src/platformtheme/kdeplatformtheme.cpp
   ../src/platformtheme/kfontsettingsdata.cpp
@@ -60,11 +73,6 @@ set(platformThemeSRCS
   ../src/platformtheme/qxdgdesktopportalfiledialog.cpp
   ${dbus_interface}
   ${wayland_interfaces}
-)
-
-frameworkintegration_tests(
-  kdeplatformtheme_unittest
-  ${platformThemeSRCS}
 )
 
 frameworkintegration_tests(
