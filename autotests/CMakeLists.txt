@@ -59,7 +59,6 @@ else()
 endif()
 
 target_sources(kdeplatformtheme_unittest PRIVATE
-  ../src/platformtheme/qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
   ../src/platformtheme/kdeplatformtheme.cpp
   ../src/platformtheme/kfontsettingsdata.cpp
   ../src/platformtheme/khintssettings.cpp
@@ -74,7 +73,11 @@ target_sources(kdeplatformtheme_unittest PRIVATE
   ${dbus_interface}
   ${wayland_interfaces}
 )
-
+if(BUILD_DBUSGLOBALMENU_SUPPORT)
+  target_sources(kdeplatformtheme_unittest PRIVATE
+    ../src/platformtheme/qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
+  )
+endif()
 frameworkintegration_tests(
   kfontsettingsdata_unittest
   ../src/platformtheme/kfontsettingsdata.cpp

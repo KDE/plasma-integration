@@ -4,3 +4,9 @@
 include:
   - https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/linux.yml
   - https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/freebsd.yml
+  - https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/linux-qt6.yml
+
+# temporary workaround to get passing builds, until https://phabricator.kde.org/T15397 is solved
+suse_tumbleweed_qt62:
+  script:
+    - python3 -u ci-utilities/run-ci-build.py --project $CI_PROJECT_NAME --branch $CI_COMMIT_REF_NAME --platform Linux --extra-cmake-args=-DBUILD_WITH_QT6=ON --extra-cmake-args=-DEXCLUDE_DEPRECATED_BEFORE_AND_AT=5.94.0 --extra-cmake-args=-DQT_MAJOR_VERSION=6 --extra-cmake-args=-DBUILD_DBUSGLOBALMENU_SUPPORT=OFF --skip-publishing

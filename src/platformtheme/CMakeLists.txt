@@ -19,7 +19,6 @@ configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-p
 remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS)
 
 set(platformtheme_SRCS
-    qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
     kdeplatformtheme.cpp
     kfontsettingsdata.cpp
     khintssettings.cpp
@@ -34,6 +33,11 @@ set(platformtheme_SRCS
     qxdgdesktopportalfiledialog.cpp
     qtquickrenderersettings.cpp
 )
+if(BUILD_DBUSGLOBALMENU_SUPPORT)
+    list(APPEND platformtheme_SRCS
+        qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
+    )
+endif()
 
 qt_add_dbus_interface(platformtheme_SRCS org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
 kconfig_add_kcfg_files(platformtheme_SRCS renderersettings.kcfgc)

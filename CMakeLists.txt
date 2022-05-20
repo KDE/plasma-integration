@@ -19,6 +19,12 @@ include(GenerateExportHeader)
 include(KDEClangFormat)
 include(KDEGitCommitHooks)
 
+# Currently broken with Qt6 (TODO: bug report/number)
+# due to missing (static) lib with symbols to link to
+# Manually set to OFF for testing, broken by default to keep the issue visible
+option(BUILD_DBUSGLOBALMENU_SUPPORT "Build support for D-Bus Global Menu." ON)
+add_feature_info(DBUSGLOBALMENU ${BUILD_DBUSGLOBALMENU_SUPPORT} "Support for D-Bus Global Menu")
+
 find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED Widgets DBus QuickControls2 WaylandClient)
 find_package(Qt${QT_MAJOR_VERSION}Gui ${QT_MIN_VERSION} CONFIG REQUIRED Private)
 if (QT_MAJOR_VERSION EQUAL "5")

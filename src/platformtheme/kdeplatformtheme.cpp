@@ -40,6 +40,7 @@
 static const QByteArray s_x11AppMenuServiceNamePropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_SERVICE_NAME");
 static const QByteArray s_x11AppMenuObjectPathPropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_OBJECT_PATH");
 
+#if BUILD_DBUSGLOBALMENU_SUPPORT
 static bool checkDBusGlobalMenuAvailable()
 {
     if (qEnvironmentVariableIsSet("KDE_NO_GLOBAL_MENU")) {
@@ -56,6 +57,7 @@ static bool isDBusGlobalMenuAvailable()
     static bool dbusGlobalMenuAvailable = checkDBusGlobalMenuAvailable();
     return dbusGlobalMenuAvailable;
 }
+#endif
 
 KdePlatformTheme::KdePlatformTheme()
 {
@@ -345,6 +347,7 @@ QPlatformSystemTrayIcon *KdePlatformTheme::createPlatformSystemTrayIcon() const
 
 QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
 {
+#if BUILD_DBUSGLOBALMENU_SUPPORT
     if (isDBusGlobalMenuAvailable()) {
         auto *menu = new QDBusMenuBar(const_cast<KdePlatformTheme *>(this));
 
@@ -358,7 +361,7 @@ QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
 
         return menu;
     }
-
+#endif
     return nullptr;
 }
 
