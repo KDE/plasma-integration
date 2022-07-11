@@ -2,6 +2,7 @@
     SPDX-FileCopyrightText: 2000, 2006 David Faure <faure@kde.org>
     SPDX-FileCopyrightText: 2008 Friedrich W. H. Kossebau <kossebau@kde.org>
     SPDX-FileCopyrightText: 2013 Aleix Pol Gonzalez <aleixpol@blue-systems.com>
+    SPDX-FileCopyrightText: 2022 Harald Sitter <sitter@kde.org>
 
     SPDX-License-Identifier: LGPL-2.0-only
 */
@@ -17,15 +18,11 @@
 #include <qpa/qwindowsysteminterface.h>
 
 #include <kconfiggroup.h>
-
-static inline bool checkUsePortalSupport()
-{
-    return !QStandardPaths::locate(QStandardPaths::RuntimeLocation, QStringLiteral("flatpak-info")).isEmpty() || qEnvironmentVariableIsSet("SNAP");
-}
+#include <KSandbox>
 
 KFontSettingsData::KFontSettingsData()
     : QObject(nullptr)
-    , mUsePortal(checkUsePortalSupport())
+    , mUsePortal(KSandbox::isInside())
     , mKdeGlobals(KSharedConfig::openConfig())
 {
     QMetaObject::invokeMethod(this, "delayedDBusConnects", Qt::QueuedConnection);

@@ -2,6 +2,7 @@
     SPDX-FileCopyrightText: 2013 Kevin Ottens <ervin+bluesystems@kde.org>
     SPDX-FileCopyrightText: 2013 Aleix Pol Gonzalez <aleixpol@blue-systems.com>
     SPDX-FileCopyrightText: 2013 Alejandro Fiestas Olivares <afiestas@kde.org>
+    SPDX-FileCopyrightText: 2022 Harald Sitter <sitter@kde.org>
 
     SPDX-License-Identifier: LGPL-2.0-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 */
@@ -30,6 +31,7 @@
 #include <kcolorscheme.h>
 #include <kconfiggroup.h>
 #include <kiconloader.h>
+#include <KSandbox>
 
 #include <config-platformtheme.h>
 #ifdef UNIT_TEST
@@ -65,15 +67,10 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, QMap<QString, QVa
     return argument;
 }
 
-static inline bool checkUsePortalSupport()
-{
-    return !QStandardPaths::locate(QStandardPaths::RuntimeLocation, QStringLiteral("flatpak-info")).isEmpty() || qEnvironmentVariableIsSet("SNAP");
-}
-
 KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
     : QObject(nullptr)
     , mKdeGlobals(kdeglobals)
-    , mUsePortal(checkUsePortalSupport())
+    , mUsePortal(KSandbox::isInside())
 {
     if (!mKdeGlobals) {
         mKdeGlobals = KSharedConfig::openConfig();
