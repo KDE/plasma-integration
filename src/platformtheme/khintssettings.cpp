@@ -28,10 +28,10 @@
 #include <QDBusConnection>
 #include <QDBusInterface>
 
+#include <KSandbox>
 #include <kcolorscheme.h>
 #include <kconfiggroup.h>
 #include <kiconloader.h>
-#include <KSandbox>
 
 #include <config-platformtheme.h>
 #ifdef UNIT_TEST

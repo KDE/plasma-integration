@@ -17,8 +17,8 @@
 #include <QVariant>
 #include <qpa/qwindowsysteminterface.h>
 
-#include <kconfiggroup.h>
 #include <KSandbox>
+#include <kconfiggroup.h>
 
 KFontSettingsData::KFontSettingsData()
     : QObject(nullptr)

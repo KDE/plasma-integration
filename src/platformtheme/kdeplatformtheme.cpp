@@ -386,7 +386,7 @@ bool KdePlatformTheme::useXdgDesktopPortal()
     return usePortal;
 }
 
-inline bool windowRelevantForGlobalMenu(QWindow* window)
+inline bool windowRelevantForGlobalMenu(QWindow *window)
 {
     return !(window->type() & Qt::WindowType::Popup);
 }
@@ -432,7 +432,7 @@ void KdePlatformTheme::globalMenuBarNoLongerExists()
     }
 }
 
-void KdePlatformTheme::setMenuBarForWindow(QWindow* window, const QString& serviceName, const QString& objectPath) const
+void KdePlatformTheme::setMenuBarForWindow(QWindow *window, const QString &serviceName, const QString &objectPath) const
 {
     if (!window)
         return;
