@@ -69,6 +69,19 @@ void initializeRendererSessions()
     if (!qEnvironmentVariableIsSet("QSG_RENDER_LOOP")) {
         if (!s.renderLoop().isEmpty()) {
             qputenv("QSG_RENDER_LOOP", s.renderLoop().toLatin1());
+        } else if (QGuiApplication::platformName() == QLatin1String("wayland")) {
+#if QT_CONFIG(opengl)
+            // Workaround for Bug 432062 / QTBUG-95817
+            QOffscreenSurface surface;
+            surface.create();
+            if (checkContext.makeCurrent(&surface)) {
+                const char *vendor = reinterpret_cast<const char *>(checkContext.functions()->glGetString(GL_VENDOR));
+                if (qstrcmp(vendor, "NVIDIA Corporation") == 0) {
+                    // Otherwise Qt Quick Windows break when resized
+                    qputenv("QSG_RENDER_LOOP", "basic");
+                }
+            }
+#endif
         }
     }
 }
