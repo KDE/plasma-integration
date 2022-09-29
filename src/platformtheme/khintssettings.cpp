@@ -137,6 +137,9 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
     updateShowIconsInMenuItems(cg);
 
     m_hints[QPlatformTheme::ShowShortcutsInContextMenus] = true;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+    m_hints[QPlatformTheme::SetFocusOnTouchRelease] = qEnvironmentVariableIntValue("PLASMA_INTEGRATION_FOCUS_ON_RELEASE") == 1;
+#endif
 
     QMetaObject::invokeMethod(this, "delayedDBusConnects", Qt::QueuedConnection);
     QMetaObject::invokeMethod(this, "setupIconLoader", Qt::QueuedConnection);
