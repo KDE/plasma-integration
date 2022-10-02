@@ -1,0 +1,148 @@
+# Translation of plasmaintegration5.po to Euskara/Basque (eu)
+# Copyright (C) 2018, The Free Software Foundation, Inc.
+# This file is distributed under the same license as the kde-workspace package.
+# KDE euskaratzeko proiektuaren arduraduna <xalba@euskalnet.net>.
+#
+# Translators:
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: plasmaintegrtion5\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-05-06 00:47+0000\n"
+"PO-Revision-Date: 2018-02-24 22:54+0100\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Basque <kde-i18n-doc@kde.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:283
+#, kde-format
+msgctxt "@title:window"
+msgid "Open File"
+msgstr "Ireki fitxategia"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:284
+#, kde-format
+msgctxt "@title:window"
+msgid "Save File"
+msgstr "Gorde fitxategia"
+
+#: platformtheme/kdeplatformtheme.cpp:288
+#, kde-format
+msgctxt "@action:button"
+msgid "Save All"
+msgstr "Gorde guztiak"
+
+#: platformtheme/kdeplatformtheme.cpp:294
+#, kde-format
+msgctxt "@action:button"
+msgid "Yes to All"
+msgstr "Bai guztiari"
+
+#: platformtheme/kdeplatformtheme.cpp:298
+#, kde-format
+msgctxt "@action:button"
+msgid "No to All"
+msgstr "Ez guztiari"
+
+#: platformtheme/kdeplatformtheme.cpp:301
+#, kde-format
+msgctxt "@action:button"
+msgid "Abort"
+msgstr "Galarazi"
+
+#: platformtheme/kdeplatformtheme.cpp:303
+#, kde-format
+msgctxt "@action:button"
+msgid "Retry"
+msgstr "Berriz saiatu"
+
+#: platformtheme/kdeplatformtheme.cpp:305
+#, kde-format
+msgctxt "@action:button"
+msgid "Ignore"
+msgstr "Ez ikusi egin"
+
+#: platformtheme/kdirselectdialog.cpp:120
+#, kde-format
+msgctxt "folder name"
+msgid "New Folder"
+msgstr "Karpeta berria"
+
+#: platformtheme/kdirselectdialog.cpp:126
+#, kde-format
+msgctxt "@title:window"
+msgid "New Folder"
+msgstr "Karpeta berria"
+
+#: platformtheme/kdirselectdialog.cpp:127
+#, kde-format
+msgctxt "@label:textbox"
+msgid ""
+"Create new folder in:\n"
+"%1"
+msgstr ""
+"Sortu karpetan berria hemen:\n"
+"%1"
+
+#: platformtheme/kdirselectdialog.cpp:158
+#, kde-format
+msgid "A file or folder named %1 already exists."
+msgstr "Dagoeneko badago %1 izeneko fitxategi edo karpeta bat."
+
+#: platformtheme/kdirselectdialog.cpp:167
+#, kde-format
+msgid "You do not have permission to create that folder."
+msgstr "Ez duzu karpeta hori sortzeko baimena."
+
+#: platformtheme/kdirselectdialog.cpp:275
+#, kde-format
+msgctxt "@title:window"
+msgid "Select Folder"
+msgstr "Hautatu karpeta"
+
+#: platformtheme/kdirselectdialog.cpp:284
+#, kde-format
+msgctxt "@action:button"
+msgid "New Folder..."
+msgstr "Karpeta berria..."
+
+#: platformtheme/kdirselectdialog.cpp:333
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "New Folder..."
+msgstr "Karpeta berria..."
+
+#: platformtheme/kdirselectdialog.cpp:342
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Move to Trash"
+msgstr "Bota zakarrontzira"
+
+#: platformtheme/kdirselectdialog.cpp:351
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Delete"
+msgstr "Ezabatu"
+
+#: platformtheme/kdirselectdialog.cpp:362
+#, kde-format
+msgctxt "@option:check"
+msgid "Show Hidden Folders"
+msgstr "Erakutsi ezkutuko karpetak"
+
+#: platformtheme/kdirselectdialog.cpp:369
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Properties"
+msgstr "Propietateak"
+
+#: platformtheme/kfiletreeview.cpp:185
+#, kde-format
+msgid "Show Hidden Folders"
+msgstr "Erakutsi ezkutuko karpetak"

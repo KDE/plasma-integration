@@ -1,0 +1,152 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2016, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-05-06 00:47+0000\n"
+"PO-Revision-Date: 2022-04-10 11:32+0200\n"
+"Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
+"Language-Team: Polish <kde-i18n-doc@kde.org>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 22.03.70\n"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:283
+#, kde-format
+msgctxt "@title:window"
+msgid "Open File"
+msgstr "Otwórz plik"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:284
+#, kde-format
+msgctxt "@title:window"
+msgid "Save File"
+msgstr "Zapisz plik"
+
+#: platformtheme/kdeplatformtheme.cpp:288
+#, kde-format
+msgctxt "@action:button"
+msgid "Save All"
+msgstr "Zapisz wszystko"
+
+#: platformtheme/kdeplatformtheme.cpp:294
+#, kde-format
+msgctxt "@action:button"
+msgid "Yes to All"
+msgstr "Tak dla wszystkich"
+
+#: platformtheme/kdeplatformtheme.cpp:298
+#, kde-format
+msgctxt "@action:button"
+msgid "No to All"
+msgstr "Nie dla wszystkich"
+
+#: platformtheme/kdeplatformtheme.cpp:301
+#, kde-format
+msgctxt "@action:button"
+msgid "Abort"
+msgstr "Przerwij"
+
+#: platformtheme/kdeplatformtheme.cpp:303
+#, kde-format
+msgctxt "@action:button"
+msgid "Retry"
+msgstr "Ponów"
+
+#: platformtheme/kdeplatformtheme.cpp:305
+#, kde-format
+msgctxt "@action:button"
+msgid "Ignore"
+msgstr "Pomiń"
+
+#: platformtheme/kdirselectdialog.cpp:120
+#, kde-format
+msgctxt "folder name"
+msgid "New Folder"
+msgstr "Nowy katalog"
+
+#: platformtheme/kdirselectdialog.cpp:126
+#, kde-format
+msgctxt "@title:window"
+msgid "New Folder"
+msgstr "Nowy katalog"
+
+#: platformtheme/kdirselectdialog.cpp:127
+#, kde-format
+msgctxt "@label:textbox"
+msgid ""
+"Create new folder in:\n"
+"%1"
+msgstr ""
+"Utwórz nowy katalog w:\n"
+"%1"
+
+#: platformtheme/kdirselectdialog.cpp:158
+#, kde-format
+msgid "A file or folder named %1 already exists."
+msgstr "Plik lub katalog o nazwie %1 już istnieje."
+
+#: platformtheme/kdirselectdialog.cpp:167
+#, kde-format
+msgid "You do not have permission to create that folder."
+msgstr "Nie masz praw do utworzenia tego katalogu."
+
+#: platformtheme/kdirselectdialog.cpp:275
+#, kde-format
+msgctxt "@title:window"
+msgid "Select Folder"
+msgstr "Wybierz katalog"
+
+#: platformtheme/kdirselectdialog.cpp:284
+#, kde-format
+msgctxt "@action:button"
+msgid "New Folder..."
+msgstr "Nowy katalog..."
+
+#: platformtheme/kdirselectdialog.cpp:333
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "New Folder..."
+msgstr "Nowy katalog..."
+
+#: platformtheme/kdirselectdialog.cpp:342
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Move to Trash"
+msgstr "Wyrzuć do kosza"
+
+#: platformtheme/kdirselectdialog.cpp:351
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Delete"
+msgstr "Usuń"
+
+#: platformtheme/kdirselectdialog.cpp:362
+#, kde-format
+msgctxt "@option:check"
+msgid "Show Hidden Folders"
+msgstr "Pokaż ukryte katalogi"
+
+#: platformtheme/kdirselectdialog.cpp:369
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Properties"
+msgstr "Właściwości"
+
+#: platformtheme/kfiletreeview.cpp:185
+#, kde-format
+msgid "Show Hidden Folders"
+msgstr "Pokaż ukryte katalogi"
+
+#~ msgid "Opening..."
+#~ msgstr "Otwieranie..."
+
+#~ msgid "Saving..."
+#~ msgstr "Zapisywanie..."

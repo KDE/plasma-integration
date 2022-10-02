@@ -1,0 +1,149 @@
+# translation of frameworkintegration5.po to Slovak
+# Roman Paholík <wizzardsk@gmail.com>, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: frameworkintegration5\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-05-06 00:47+0000\n"
+"PO-Revision-Date: 2021-12-01 15:33+0100\n"
+"Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
+"Language-Team: Slovak <kde-sk@linux.sk>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:283
+#, kde-format
+msgctxt "@title:window"
+msgid "Open File"
+msgstr "Otvoriť súbor"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:284
+#, kde-format
+msgctxt "@title:window"
+msgid "Save File"
+msgstr "Uložiť súbor"
+
+#: platformtheme/kdeplatformtheme.cpp:288
+#, kde-format
+msgctxt "@action:button"
+msgid "Save All"
+msgstr "Uložiť všetko"
+
+#: platformtheme/kdeplatformtheme.cpp:294
+#, kde-format
+msgctxt "@action:button"
+msgid "Yes to All"
+msgstr "Áno všetkým"
+
+#: platformtheme/kdeplatformtheme.cpp:298
+#, kde-format
+msgctxt "@action:button"
+msgid "No to All"
+msgstr "Nie všetkým"
+
+#: platformtheme/kdeplatformtheme.cpp:301
+#, kde-format
+msgctxt "@action:button"
+msgid "Abort"
+msgstr "Prerušiť"
+
+#: platformtheme/kdeplatformtheme.cpp:303
+#, kde-format
+msgctxt "@action:button"
+msgid "Retry"
+msgstr "Skúsiť znova"
+
+#: platformtheme/kdeplatformtheme.cpp:305
+#, kde-format
+msgctxt "@action:button"
+msgid "Ignore"
+msgstr "Ignorovať"
+
+#: platformtheme/kdirselectdialog.cpp:120
+#, kde-format
+msgctxt "folder name"
+msgid "New Folder"
+msgstr "Nový priečinok"
+
+#: platformtheme/kdirselectdialog.cpp:126
+#, kde-format
+msgctxt "@title:window"
+msgid "New Folder"
+msgstr "Nový priečinok"
+
+#: platformtheme/kdirselectdialog.cpp:127
+#, kde-format
+msgctxt "@label:textbox"
+msgid ""
+"Create new folder in:\n"
+"%1"
+msgstr ""
+"Vytvoriť nový priečinok v:\n"
+"%1"
+
+#: platformtheme/kdirselectdialog.cpp:158
+#, kde-format
+msgid "A file or folder named %1 already exists."
+msgstr "Súbor alebo priečinok s názvom %1 už existuje."
+
+#: platformtheme/kdirselectdialog.cpp:167
+#, kde-format
+msgid "You do not have permission to create that folder."
+msgstr "Nemáte práva na vytvorenie tohto priečinka."
+
+#: platformtheme/kdirselectdialog.cpp:275
+#, kde-format
+msgctxt "@title:window"
+msgid "Select Folder"
+msgstr "Vybrať priečinok"
+
+#: platformtheme/kdirselectdialog.cpp:284
+#, kde-format
+msgctxt "@action:button"
+msgid "New Folder..."
+msgstr "Nový priečinok..."
+
+#: platformtheme/kdirselectdialog.cpp:333
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "New Folder..."
+msgstr "Nový priečinok..."
+
+#: platformtheme/kdirselectdialog.cpp:342
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Move to Trash"
+msgstr "Presunúť do koša"
+
+#: platformtheme/kdirselectdialog.cpp:351
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Delete"
+msgstr "Odstrániť"
+
+#: platformtheme/kdirselectdialog.cpp:362
+#, kde-format
+msgctxt "@option:check"
+msgid "Show Hidden Folders"
+msgstr "Zobraziť skryté priečinky"
+
+#: platformtheme/kdirselectdialog.cpp:369
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Properties"
+msgstr "Vlastnosti"
+
+#: platformtheme/kfiletreeview.cpp:185
+#, kde-format
+msgid "Show Hidden Folders"
+msgstr "Zobraziť skryté priečinky"
+
+#~ msgid "Opening..."
+#~ msgstr "Otvára sa..."
+
+#~ msgid "Saving..."
+#~ msgstr "Ukladám..."
