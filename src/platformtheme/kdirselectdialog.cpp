@@ -21,6 +21,7 @@
 #include <QUrl>
 
 #include <KFileUtils>
+#include <KIO/DeleteOrTrashJob>
 #include <KStandardShortcut>
 #include <kactioncollection.h>
 #include <kauthorized.h>
@@ -238,23 +239,17 @@ void KDirSelectDialog::Private::slotExpand(const QModelIndex &index)
 void KDirSelectDialog::Private::slotMoveToTrash()
 {
     const QUrl url = m_treeView->selectedUrl();
-    KIO::JobUiDelegate job;
-    if (job.askDeleteConfirmation(QList<QUrl>() << url, KIO::JobUiDelegate::Trash, KIO::JobUiDelegate::DefaultConfirmation)) {
-        KIO::CopyJob *copyJob = KIO::trash(url);
-        KJobWidgets::setWindow(copyJob, m_parent);
-        copyJob->uiDelegate()->setAutoErrorHandlingEnabled(true);
-    }
+    using Iface = KIO::AskUserActionInterface;
+    auto *trashJob = new KIO::DeleteOrTrashJob({url}, Iface::Trash, Iface::DefaultConfirmation, m_parent);
+    trashJob->start();
 }
 
 void KDirSelectDialog::Private::slotDelete()
 {
     const QUrl url = m_treeView->selectedUrl();
-    KIO::JobUiDelegate job;
-    if (job.askDeleteConfirmation(QList<QUrl>() << url, KIO::JobUiDelegate::Delete, KIO::JobUiDelegate::DefaultConfirmation)) {
-        KIO::DeleteJob *deleteJob = KIO::del(url);
-        KJobWidgets::setWindow(deleteJob, m_parent);
-        deleteJob->uiDelegate()->setAutoErrorHandlingEnabled(true);
-    }
+    using Iface = KIO::AskUserActionInterface;
+    auto *deleteJob = new KIO::DeleteOrTrashJob({url}, Iface::Delete, Iface::DefaultConfirmation, m_parent);
+    deleteJob->start();
 }
 
 void KDirSelectDialog::Private::slotProperties()
