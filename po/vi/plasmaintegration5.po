@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-05-06 00:47+0000\n"
+"POT-Creation-Date: 2022-10-16 00:48+0000\n"
 "PO-Revision-Date: 2021-12-23 11:48+0100\n"
 "Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
 "Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
@@ -65,19 +65,19 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "Bỏ qua"
 
-#: platformtheme/kdirselectdialog.cpp:120
+#: platformtheme/kdirselectdialog.cpp:121
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
 msgstr "Thư mục mới"
 
-#: platformtheme/kdirselectdialog.cpp:126
+#: platformtheme/kdirselectdialog.cpp:127
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
 msgstr "Thư mục mới"
 
-#: platformtheme/kdirselectdialog.cpp:127
+#: platformtheme/kdirselectdialog.cpp:128
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -87,53 +87,53 @@ msgstr ""
 "Tạo thư mục mới trong:\n"
 "%1"
 
-#: platformtheme/kdirselectdialog.cpp:158
+#: platformtheme/kdirselectdialog.cpp:159
 #, kde-format
 msgid "A file or folder named %1 already exists."
 msgstr "Một tệp hay thư mục tên là %1 đã tồn tại."
 
-#: platformtheme/kdirselectdialog.cpp:167
+#: platformtheme/kdirselectdialog.cpp:168
 #, kde-format
 msgid "You do not have permission to create that folder."
 msgstr "Bạn không có quyền truy cập để tạo thư mục đó."
 
-#: platformtheme/kdirselectdialog.cpp:275
+#: platformtheme/kdirselectdialog.cpp:270
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
 msgstr "Chọn thư mục"
 
-#: platformtheme/kdirselectdialog.cpp:284
+#: platformtheme/kdirselectdialog.cpp:279
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
 msgstr "Thư mục mới..."
 
-#: platformtheme/kdirselectdialog.cpp:333
+#: platformtheme/kdirselectdialog.cpp:328
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
 msgstr "Thư mục mới..."
 
-#: platformtheme/kdirselectdialog.cpp:342
+#: platformtheme/kdirselectdialog.cpp:337
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Move to Trash"
 msgstr "Chuyển vào thùng rác"
 
-#: platformtheme/kdirselectdialog.cpp:351
+#: platformtheme/kdirselectdialog.cpp:346
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
 msgstr "Xoá"
 
-#: platformtheme/kdirselectdialog.cpp:362
+#: platformtheme/kdirselectdialog.cpp:357
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
 msgstr "Hiện thư mục ẩn"
 
-#: platformtheme/kdirselectdialog.cpp:369
+#: platformtheme/kdirselectdialog.cpp:364
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"

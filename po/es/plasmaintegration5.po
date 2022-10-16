@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frameworkintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-05-06 00:47+0000\n"
+"POT-Creation-Date: 2022-10-16 00:48+0000\n"
 "PO-Revision-Date: 2016-04-09 13:34+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -67,19 +67,19 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "Ignorar"
 
-#: platformtheme/kdirselectdialog.cpp:120
+#: platformtheme/kdirselectdialog.cpp:121
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
 msgstr "Nueva carpeta"
 
-#: platformtheme/kdirselectdialog.cpp:126
+#: platformtheme/kdirselectdialog.cpp:127
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
 msgstr "Nueva carpeta"
 
-#: platformtheme/kdirselectdialog.cpp:127
+#: platformtheme/kdirselectdialog.cpp:128
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -89,53 +89,53 @@ msgstr ""
 "Crear nueva carpeta en:\n"
 "%1"
 
-#: platformtheme/kdirselectdialog.cpp:158
+#: platformtheme/kdirselectdialog.cpp:159
 #, kde-format
 msgid "A file or folder named %1 already exists."
 msgstr "Ya existe un archivo o una carpeta con el nombre %1."
 
-#: platformtheme/kdirselectdialog.cpp:167
+#: platformtheme/kdirselectdialog.cpp:168
 #, kde-format
 msgid "You do not have permission to create that folder."
 msgstr "No tiene permiso para crear esta carpeta."
 
-#: platformtheme/kdirselectdialog.cpp:275
+#: platformtheme/kdirselectdialog.cpp:270
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
 msgstr "Seleccionar carpeta"
 
-#: platformtheme/kdirselectdialog.cpp:284
+#: platformtheme/kdirselectdialog.cpp:279
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
 msgstr "Nueva carpeta..."
 
-#: platformtheme/kdirselectdialog.cpp:333
+#: platformtheme/kdirselectdialog.cpp:328
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
 msgstr "Nueva carpeta..."
 
-#: platformtheme/kdirselectdialog.cpp:342
+#: platformtheme/kdirselectdialog.cpp:337
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Move to Trash"
 msgstr "Mover a la Papelera"
 
-#: platformtheme/kdirselectdialog.cpp:351
+#: platformtheme/kdirselectdialog.cpp:346
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
 msgstr "Borrar"
 
-#: platformtheme/kdirselectdialog.cpp:362
+#: platformtheme/kdirselectdialog.cpp:357
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
 msgstr "Mostrar carpetas ocultas"
 
-#: platformtheme/kdirselectdialog.cpp:369
+#: platformtheme/kdirselectdialog.cpp:364
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
