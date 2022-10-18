@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:48+0000\n"
+"POT-Creation-Date: 2022-10-18 00:46+0000\n"
 "PO-Revision-Date: 2016-08-18 19:28+0300\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-i18n-doc@kde.org>\n"
@@ -29,37 +29,37 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Faili salvestamine"
 
-#: platformtheme/kdeplatformtheme.cpp:288
+#: platformtheme/kdeplatformtheme.cpp:474
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Salvesta kõik"
 
-#: platformtheme/kdeplatformtheme.cpp:294
+#: platformtheme/kdeplatformtheme.cpp:480
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Jah kõigile"
 
-#: platformtheme/kdeplatformtheme.cpp:298
+#: platformtheme/kdeplatformtheme.cpp:484
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Ei kõigile"
 
-#: platformtheme/kdeplatformtheme.cpp:301
+#: platformtheme/kdeplatformtheme.cpp:487
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Katkesta"
 
-#: platformtheme/kdeplatformtheme.cpp:303
+#: platformtheme/kdeplatformtheme.cpp:489
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Proovi uuesti"
 
-#: platformtheme/kdeplatformtheme.cpp:305
+#: platformtheme/kdeplatformtheme.cpp:491
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"

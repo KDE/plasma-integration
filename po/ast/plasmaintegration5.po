@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:48+0000\n"
+"POT-Creation-Date: 2022-10-18 00:46+0000\n"
 "PO-Revision-Date: 2020-11-28 01:46+0100\n"
 "Last-Translator: enolp <enolp@softastur.org>\n"
 "Language-Team: Asturian <alministradores@softastur.org>\n"
@@ -29,37 +29,37 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr ""
 
-#: platformtheme/kdeplatformtheme.cpp:288
+#: platformtheme/kdeplatformtheme.cpp:474
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Guardar too"
 
-#: platformtheme/kdeplatformtheme.cpp:294
+#: platformtheme/kdeplatformtheme.cpp:480
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Sí a too"
 
-#: platformtheme/kdeplatformtheme.cpp:298
+#: platformtheme/kdeplatformtheme.cpp:484
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Non a too"
 
-#: platformtheme/kdeplatformtheme.cpp:301
+#: platformtheme/kdeplatformtheme.cpp:487
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Aceutar"
 
-#: platformtheme/kdeplatformtheme.cpp:303
+#: platformtheme/kdeplatformtheme.cpp:489
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Retentar"
 
-#: platformtheme/kdeplatformtheme.cpp:305
+#: platformtheme/kdeplatformtheme.cpp:491
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"

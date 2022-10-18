@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:48+0000\n"
+"POT-Creation-Date: 2022-10-18 00:46+0000\n"
 "PO-Revision-Date: 2021-04-14 06:20+0200\n"
 "Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -29,37 +29,37 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Datei speichern"
 
-#: platformtheme/kdeplatformtheme.cpp:288
+#: platformtheme/kdeplatformtheme.cpp:474
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Alle speichern"
 
-#: platformtheme/kdeplatformtheme.cpp:294
+#: platformtheme/kdeplatformtheme.cpp:480
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Ja für alle"
 
-#: platformtheme/kdeplatformtheme.cpp:298
+#: platformtheme/kdeplatformtheme.cpp:484
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Nein für alle"
 
-#: platformtheme/kdeplatformtheme.cpp:301
+#: platformtheme/kdeplatformtheme.cpp:487
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Abbrechen"
 
-#: platformtheme/kdeplatformtheme.cpp:303
+#: platformtheme/kdeplatformtheme.cpp:489
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Erneut versuchen"
 
-#: platformtheme/kdeplatformtheme.cpp:305
+#: platformtheme/kdeplatformtheme.cpp:491
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"

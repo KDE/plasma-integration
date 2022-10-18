@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:48+0000\n"
+"POT-Creation-Date: 2022-10-18 00:46+0000\n"
 "PO-Revision-Date: 2021-06-24 20:23+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -29,37 +29,37 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "கோப்பை சேமித்தல்"
 
-#: platformtheme/kdeplatformtheme.cpp:288
+#: platformtheme/kdeplatformtheme.cpp:474
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "அனைத்தையும் சேமி"
 
-#: platformtheme/kdeplatformtheme.cpp:294
+#: platformtheme/kdeplatformtheme.cpp:480
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "அனைத்திற்கும் 'ஆம்'"
 
-#: platformtheme/kdeplatformtheme.cpp:298
+#: platformtheme/kdeplatformtheme.cpp:484
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "அனைத்திற்கும் 'இல்லை'"
 
-#: platformtheme/kdeplatformtheme.cpp:301
+#: platformtheme/kdeplatformtheme.cpp:487
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "ரத்து செய்"
 
-#: platformtheme/kdeplatformtheme.cpp:303
+#: platformtheme/kdeplatformtheme.cpp:489
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "மீண்டும் முயற்சி"
 
-#: platformtheme/kdeplatformtheme.cpp:305
+#: platformtheme/kdeplatformtheme.cpp:491
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
