@@ -154,7 +154,7 @@ void KFileTreeView::setDirOnlyMode(bool enabled)
 void KFileTreeView::setShowHiddenFiles(bool enabled)
 {
     QUrl url = currentUrl();
-    d->mSourceModel->dirLister()->setShowingDotFiles(enabled);
+    d->mSourceModel->dirLister()->setShowHiddenFiles(enabled);
     d->mSourceModel->dirLister()->openUrl(d->mSourceModel->dirLister()->url());
     setCurrentUrl(url);
 }
@@ -183,7 +183,7 @@ void KFileTreeView::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu menu;
     KToggleAction *showHiddenAction = new KToggleAction(i18n("Show Hidden Folders"), &menu);
-    showHiddenAction->setChecked(d->mSourceModel->dirLister()->showingDotFiles());
+    showHiddenAction->setChecked(d->mSourceModel->dirLister()->showHiddenFiles());
     connect(showHiddenAction, &QAction::toggled, this, &KFileTreeView::setShowHiddenFiles);
 
     menu.addAction(showHiddenAction);
@@ -192,7 +192,7 @@ void KFileTreeView::contextMenuEvent(QContextMenuEvent *event)
 
 bool KFileTreeView::showHiddenFiles() const
 {
-    return d->mSourceModel->dirLister()->showingDotFiles();
+    return d->mSourceModel->dirLister()->showHiddenFiles();
 }
 
 QSize KFileTreeView::sizeHint() const
