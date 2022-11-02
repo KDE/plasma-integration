@@ -475,11 +475,11 @@ QString KdePlatformTheme::standardButtonText(int button) const
     case QPlatformDialogHelper::Open:
         return KStandardGuiItem::open().text();
     case QPlatformDialogHelper::Yes:
-        return KStandardGuiItem::yes().text();
+        return i18nc("@action:button", "&Yes");
     case QPlatformDialogHelper::YesToAll:
         return i18nc("@action:button", "Yes to All");
     case QPlatformDialogHelper::No:
-        return KStandardGuiItem::no().text();
+        return i18nc("@action:button", "&No");
     case QPlatformDialogHelper::NoToAll:
         return i18nc("@action:button", "No to All");
     case QPlatformDialogHelper::Abort:
