@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-18 00:46+0000\n"
+"POT-Creation-Date: 2022-11-04 00:47+0000\n"
 "PO-Revision-Date: 2016-07-29 20:02+0200\n"
 "Last-Translator: Dimitris Kardarakos <dimkard@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -35,11 +35,23 @@ msgctxt "@action:button"
 msgid "Save All"
 msgstr "Αποθήκευση όλων"
 
+#: platformtheme/kdeplatformtheme.cpp:478
+#, kde-format
+msgctxt "@action:button"
+msgid "&Yes"
+msgstr ""
+
 #: platformtheme/kdeplatformtheme.cpp:480
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Ναι σε όλα"
+
+#: platformtheme/kdeplatformtheme.cpp:482
+#, kde-format
+msgctxt "@action:button"
+msgid "&No"
+msgstr ""
 
 #: platformtheme/kdeplatformtheme.cpp:484
 #, kde-format

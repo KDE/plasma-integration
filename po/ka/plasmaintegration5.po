@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-18 00:46+0000\n"
+"POT-Creation-Date: 2022-11-04 00:47+0000\n"
 "PO-Revision-Date: 2022-05-09 07:07+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -36,11 +36,23 @@ msgctxt "@action:button"
 msgid "Save All"
 msgstr "ყველას შენახვა"
 
+#: platformtheme/kdeplatformtheme.cpp:478
+#, kde-format
+msgctxt "@action:button"
+msgid "&Yes"
+msgstr ""
+
 #: platformtheme/kdeplatformtheme.cpp:480
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "დიახ ყველაფერზე"
+
+#: platformtheme/kdeplatformtheme.cpp:482
+#, kde-format
+msgctxt "@action:button"
+msgid "&No"
+msgstr ""
 
 #: platformtheme/kdeplatformtheme.cpp:484
 #, kde-format

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frameworkintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-18 00:46+0000\n"
+"POT-Creation-Date: 2022-11-04 00:47+0000\n"
 "PO-Revision-Date: 2016-04-09 13:34+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -37,11 +37,23 @@ msgctxt "@action:button"
 msgid "Save All"
 msgstr "Guardar todo"
 
+#: platformtheme/kdeplatformtheme.cpp:478
+#, kde-format
+msgctxt "@action:button"
+msgid "&Yes"
+msgstr ""
+
 #: platformtheme/kdeplatformtheme.cpp:480
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Sí a todo"
+
+#: platformtheme/kdeplatformtheme.cpp:482
+#, kde-format
+msgctxt "@action:button"
+msgid "&No"
+msgstr ""
 
 #: platformtheme/kdeplatformtheme.cpp:484
 #, kde-format

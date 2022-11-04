@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-18 00:46+0000\n"
+"POT-Creation-Date: 2022-11-04 00:47+0000\n"
 "PO-Revision-Date: 2016-04-10 08:12+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -35,11 +35,23 @@ msgctxt "@action:button"
 msgid "Save All"
 msgstr "Spara alla"
 
+#: platformtheme/kdeplatformtheme.cpp:478
+#, kde-format
+msgctxt "@action:button"
+msgid "&Yes"
+msgstr ""
+
 #: platformtheme/kdeplatformtheme.cpp:480
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Ja till alla"
+
+#: platformtheme/kdeplatformtheme.cpp:482
+#, kde-format
+msgctxt "@action:button"
+msgid "&No"
+msgstr ""
 
 #: platformtheme/kdeplatformtheme.cpp:484
 #, kde-format

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-18 00:46+0000\n"
+"POT-Creation-Date: 2022-11-04 00:47+0000\n"
 "PO-Revision-Date: 2022-03-24 06:21+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
@@ -35,11 +35,23 @@ msgctxt "@action:button"
 msgid "Save All"
 msgstr "Simpan Semua"
 
+#: platformtheme/kdeplatformtheme.cpp:478
+#, kde-format
+msgctxt "@action:button"
+msgid "&Yes"
+msgstr ""
+
 #: platformtheme/kdeplatformtheme.cpp:480
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Ya Semuanya"
+
+#: platformtheme/kdeplatformtheme.cpp:482
+#, kde-format
+msgctxt "@action:button"
+msgid "&No"
+msgstr ""
 
 #: platformtheme/kdeplatformtheme.cpp:484
 #, kde-format
