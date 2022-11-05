@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: plasmaintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-04 00:47+0000\n"
-"PO-Revision-Date: 2022-03-12 14:16+0300\n"
+"PO-Revision-Date: 2022-11-04 10:08+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.08.2\n"
 
 #: platformtheme/kdeplatformfiledialoghelper.cpp:283
 #, kde-format
@@ -39,7 +39,7 @@ msgstr "Tümünü Kaydet"
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
-msgstr ""
+msgstr "&Evet"
 
 #: platformtheme/kdeplatformtheme.cpp:480
 #, kde-format
@@ -51,7 +51,7 @@ msgstr "Tümüne Evet"
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
-msgstr ""
+msgstr "&Hayır"
 
 #: platformtheme/kdeplatformtheme.cpp:484
 #, kde-format

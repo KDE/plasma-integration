@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: plasmaintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-04 00:47+0000\n"
-"PO-Revision-Date: 2016-01-12 11:24+0000\n"
+"PO-Revision-Date: 2022-11-04 10:46+0000\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
 "Language: pt\n"
@@ -39,7 +39,7 @@ msgstr "Gravar Tudo"
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
-msgstr ""
+msgstr "&Sim"
 
 #: platformtheme/kdeplatformtheme.cpp:480
 #, kde-format
@@ -51,7 +51,7 @@ msgstr "Sim a Tudo"
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
-msgstr ""
+msgstr "&Não"
 
 #: platformtheme/kdeplatformtheme.cpp:484
 #, kde-format
@@ -155,9 +155,3 @@ msgstr "Propriedades"
 #, kde-format
 msgid "Show Hidden Folders"
 msgstr "Mostrar as Pastas Escondidas"
-
-#~ msgid "Opening..."
-#~ msgstr "A abrir..."
-
-#~ msgid "Saving..."
-#~ msgstr "A gravar..."
