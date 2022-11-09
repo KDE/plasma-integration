@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the plasma-integration package.
 #
-# Kishore G <kishore96@gmail.com>, 2021.
+# Kishore G <kishore96@gmail.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-04 00:47+0000\n"
-"PO-Revision-Date: 2021-06-24 20:23+0530\n"
+"PO-Revision-Date: 2022-11-08 21:21+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.04.2\n"
+"X-Generator: Lokalize 22.08.3\n"
 
 #: platformtheme/kdeplatformfiledialoghelper.cpp:283
 #, kde-format
@@ -39,7 +39,7 @@ msgstr "அனைத்தையும் சேமி"
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
-msgstr ""
+msgstr "&ஆம்"
 
 #: platformtheme/kdeplatformtheme.cpp:480
 #, kde-format
@@ -51,7 +51,7 @@ msgstr "அனைத்திற்கும் 'ஆம்'"
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
-msgstr ""
+msgstr "&இல்லை"
 
 #: platformtheme/kdeplatformtheme.cpp:484
 #, kde-format
