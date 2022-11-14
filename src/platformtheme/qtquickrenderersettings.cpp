@@ -84,6 +84,16 @@ void initializeRendererSessions()
             qputenv("QSG_RENDER_LOOP", s.renderLoop().toLatin1());
         } else if (QGuiApplication::platformName() == QLatin1String("wayland")) {
 #if QT_CONFIG(opengl)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+            // qtwayland can't ensure that wl_surface lives as long as the qtquick render
+            // thread needs it. If the wl_surface is destroyed while the render thread is
+            // still active, the compositor will eventually post a protocol error and the
+            // client (us) will crash. This is fixed in Qt 6, but there are no suitable
+            // alternatives in Qt 5, other than to force basic render loop.
+            //
+            // Note that the NVIDIA case below is still valid and should be kept in Qt 6!
+            qputenv("QSG_RENDER_LOOP", "basic");
+#else
             // Workaround for Bug 432062 / QTBUG-95817
             QOffscreenSurface surface;
             surface.create();
@@ -94,6 +104,7 @@ void initializeRendererSessions()
                     qputenv("QSG_RENDER_LOOP", "basic");
                 }
             }
+#endif
 #endif
         }
     }
