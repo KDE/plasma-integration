@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-04 00:47+0000\n"
-"PO-Revision-Date: 2022-05-09 07:07+0200\n"
+"PO-Revision-Date: 2022-11-16 14:34+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.2\n"
 
 #: platformtheme/kdeplatformfiledialoghelper.cpp:283
 #, kde-format
@@ -40,7 +40,7 @@ msgstr "ყველას შენახვა"
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
-msgstr ""
+msgstr "&დიახ"
 
 #: platformtheme/kdeplatformtheme.cpp:480
 #, kde-format
@@ -52,7 +52,7 @@ msgstr "დიახ ყველაფერზე"
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
-msgstr ""
+msgstr "&არა"
 
 #: platformtheme/kdeplatformtheme.cpp:484
 #, kde-format
