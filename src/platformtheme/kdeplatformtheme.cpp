@@ -104,6 +104,11 @@ public:
         connect(registry, &KWayland::Client::Registry::exporterUnstableV2Announced, this, [this, registry, widget](quint32 name, quint32 version) {
             auto exporter = registry->createXdgExporter(name, std::min(version, quint32(1)), this);
             auto surface = KWayland::Client::Surface::fromWindow(widget->windowHandle());
+            if (!surface) {
+                qWarning() << "wayland surface was unexpectedly null, not exporting any window as transient parent";
+                Q_EMIT exported({});
+                return;
+            }
             auto xdgExported = exporter->exportTopLevel(surface, this);
             Q_EMIT exported(QLatin1String("wayland:") + xdgExported->handle());
         });
@@ -152,6 +157,8 @@ public:
             promptInternal({}, urls);
             return;
         }
+
+        widget->winId(); // ensure we have a handle so we can export a window (without this windowHandle() may be null)
 
         XdgWindowExporter *exporter = nullptr;
         switch (KWindowSystem::platform()) {
