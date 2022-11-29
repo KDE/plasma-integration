@@ -72,6 +72,11 @@ static QString kde2QtFilter(const QStringList &list, const QString &kde, const Q
     }
     return QString();
 }
+
+static QString fileFilter2NameFilter(const KFileFilter &filter)
+{
+    return QStringLiteral("%1 (%2)").arg(filter.label(), filter.filePatterns().join(" "));
+}
 }
 
 KDEPlatformFileDialog::KDEPlatformFileDialog()
@@ -80,8 +85,18 @@ KDEPlatformFileDialog::KDEPlatformFileDialog()
 {
     auto v = new QVBoxLayout;
     v->setContentsMargins({});
-    setLayout(v);
-    connect(m_fileWidget, &KFileWidget::filterChanged, this, &KDEPlatformFileDialogBase::filterSelected);
+    setLayout(v);setLayout(new QVBoxLayout);
+    connect(m_fileWidget, &KFileWidget::filterChanged, this, [this](const KFileFilter &filter) {
+        if (!filter.filePatterns().isEmpty()) {
+            Q_EMIT filterSelected(fileFilter2NameFilter(filter));
+        } else {
+            Q_ASSERT(!filter.mimePatterns().isEmpty());
+            QMimeDatabase db;
+            QMimeType mimeType = db.mimeTypeForName(filter.mimePatterns().first());
+            Q_EMIT filterSelected(mimeType.filterString());
+        }
+    });
+
     layout()->addWidget(m_fileWidget);
     m_fileWidget->okButton()->show();
     m_fileWidget->cancelButton()->show();
@@ -163,13 +178,10 @@ void KDEPlatformFileDialog::setCustomLabel(QFileDialogOptions::DialogLabel label
 
 QString KDEPlatformFileDialog::selectedMimeTypeFilter()
 {
-    if (m_fileWidget->filterWidget()->isMimeFilter()) {
-        const auto mimeTypeFromFilter = QMimeDatabase().mimeTypeForName(m_fileWidget->filterWidget()->currentFilter());
-        // If one does not call selectMimeTypeFilter(), KFileFilterCombo::currentFilter() returns invalid mimeTypes,
-        // such as "application/json application/zip".
-        if (mimeTypeFromFilter.isValid()) {
-            return mimeTypeFromFilter.name();
-        }
+    const QStringList mimeTypes = m_fileWidget->filterWidget()->currentFilter().mimePatterns();
+
+    if (mimeTypes.length() == 1) {
+        return mimeTypes.first();
     }
 
     if (selectedFiles().isEmpty()) {
@@ -182,7 +194,7 @@ QString KDEPlatformFileDialog::selectedMimeTypeFilter()
 
 QString KDEPlatformFileDialog::selectedNameFilter()
 {
-    return m_fileWidget->filterWidget()->currentFilter();
+    return fileFilter2NameFilter(m_fileWidget->filterWidget()->currentFilter());
 }
 
 QString KDEPlatformFileDialog::currentFilterText()
@@ -192,12 +204,12 @@ QString KDEPlatformFileDialog::currentFilterText()
 
 void KDEPlatformFileDialog::selectMimeTypeFilter(const QString &filter)
 {
-    m_fileWidget->filterWidget()->setCurrentFilter(filter);
+    m_fileWidget->filterWidget()->setCurrentFilter(KFileFilter::fromMimeType(filter));
 }
 
 void KDEPlatformFileDialog::selectNameFilter(const QString &filter)
 {
-    m_fileWidget->filterWidget()->setCurrentFilter(filter);
+    m_fileWidget->filterWidget()->setCurrentFilter(KFileFilter::fromFilterString(qt2KdeFilter({filter})).first());
 }
 
 void KDEPlatformFileDialog::setDirectory(const QUrl &directory)
@@ -312,12 +324,12 @@ void KDEPlatformFileDialogHelper::initializeDialog()
                     defaultMimeFilter = mimeFilters.at(0);
                 }
             }
-            dialog->m_fileWidget->setMimeFilter(mimeFilters, defaultMimeFilter);
+            dialog->m_fileWidget->setFilters(KFileFilter::fromMimeTypes(mimeFilters), KFileFilter::fromMimeType(defaultMimeFilter));
 
             if (mimeFilters.contains(QStringLiteral("inode/directory")))
                 dialog->m_fileWidget->setMode(dialog->m_fileWidget->mode() | KFile::Directory);
         } else if (!nameFilters.isEmpty()) {
-            dialog->m_fileWidget->setFilter(qt2KdeFilter(nameFilters));
+            dialog->m_fileWidget->setFilters(KFileFilter::fromFilterString(qt2KdeFilter(nameFilters)));
         }
 
         if (!options()->initiallySelectedMimeTypeFilter().isEmpty()) {
