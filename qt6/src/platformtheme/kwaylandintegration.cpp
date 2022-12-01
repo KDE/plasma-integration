@@ -8,8 +8,7 @@
 #include <QExposeEvent>
 #include <QGuiApplication>
 #include <QWindow>
-#include <qpa/qplatformnativeinterface.h>
-#include <qtwaylandclientversion.h>
+#include <qpa/qplatformwindow_p.h>
 
 #include "qdbusmenubar_p.h"
 #include "qwayland-appmenu.h"
@@ -73,32 +72,7 @@ bool KWaylandIntegration::isRelevantTopLevel(QWindow *w)
 
 bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
 {
-    if (event->type() == QEvent::Expose) {
-        auto ee = static_cast<QExposeEvent *>(event);
-        if (ee->region().isNull()) {
-            return false;
-        }
-        QWindow *w = qobject_cast<QWindow *>(watched);
-        if (!isRelevantTopLevel(w)) {
-            return false;
-        }
-        if (!w->isVisible()) {
-            return false;
-        }
-
-        if (w->property("org.kde.plasma.integration.shellSurfaceCreated").isNull()) {
-            shellSurfaceCreated(w);
-        }
-    } else if (event->type() == QEvent::Hide) {
-        QWindow *w = qobject_cast<QWindow *>(watched);
-        if (!isRelevantTopLevel(w)) {
-            return false;
-        }
-        shellSurfaceDestroyed(w);
-    } else if (event->type() == QEvent::ApplicationPaletteChange) {
-        if (watched != QGuiApplication::instance()) {
-            return false;
-        }
+    if (event->type() == QEvent::ApplicationPaletteChange) {
         const auto topLevelWindows = QGuiApplication::topLevelWindows();
         for (QWindow *w : topLevelWindows) {
             if (isRelevantTopLevel(w)) {
@@ -110,14 +84,27 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
         QPlatformSurfaceEvent *pe = static_cast<QPlatformSurfaceEvent *>(event);
         if (w && !w->flags().testFlag(Qt::ForeignWindow) && pe->surfaceEventType() == QPlatformSurfaceEvent::SurfaceCreated) {
             m_platformTheme->windowCreated(w);
+            if (auto waylandWindow = w->nativeInterface<QNativeInterface::Private::QWaylandWindow>()) {
+                connect(waylandWindow, &QNativeInterface::Private::QWaylandWindow::surfaceCreated, this, [this, w] {
+                    shellSurfaceCreated(w);
+                });
+                connect(waylandWindow, &QNativeInterface::Private::QWaylandWindow::surfaceDestroyed, this, [this, w] {
+                    shellSurfaceDestroyed(w);
+                });
+                if (waylandWindow->surface()) {
+                    shellSurfaceCreated(w);
+                }
+            }
         }
     }
-
     return false;
 }
 
 void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
 {
+    if (!isRelevantTopLevel(w)) {
+        return;
+    }
     // set colorscheme hint
     if (qApp->property(s_schemePropertyName.constData()).isValid()) {
         installColorScheme(w);
@@ -131,9 +118,6 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
     if (!s) {
         return;
     }
-
-    w->setProperty("org.kde.plasma.integration.shellSurfaceCreated", true);
-
 #ifndef KF6_TODO_DBUS_MENUBAR
     if (!m_appMenuManager) {
         m_appMenuManager.reset(new AppMenuManager());
@@ -154,8 +138,6 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
 
 void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
 {
-    w->setProperty("org.kde.plasma.integration.shellSurfaceCreated", QVariant());
-
     auto appMenu = w->property("org.kde.plasma.integration.appmenu").value<AppMenu *>();
     if (appMenu) {
         appMenu->release();
@@ -203,11 +185,11 @@ void KWaylandIntegration::setAppMenu(QWindow *window, const QString &serviceName
 
 wl_surface *KWaylandIntegration::surfaceFromWindow(QWindow *window)
 {
-    QPlatformNativeInterface *nativeInterface = qGuiApp->platformNativeInterface();
-    if (!nativeInterface) {
+    auto waylandWindow = window->nativeInterface<QNativeInterface::Private::QWaylandWindow>();
+    if (!waylandWindow) {
         return nullptr;
     }
-    return static_cast<wl_surface *>(nativeInterface->nativeResourceForWindow("surface", window));
+    return waylandWindow->surface();
 }
 
 #include "kwaylandintegration.moc"
