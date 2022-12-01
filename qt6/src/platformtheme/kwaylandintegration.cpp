@@ -106,13 +106,10 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
             }
         }
     } else if (event->type() == QEvent::PlatformSurface) {
-        if (QWindow *w = qobject_cast<QWindow *>(watched)) {
-            QPlatformSurfaceEvent *pe = static_cast<QPlatformSurfaceEvent *>(event);
-            if (!w->flags().testFlag(Qt::ForeignWindow)) {
-                if (pe->surfaceEventType() == QPlatformSurfaceEvent::SurfaceCreated) {
-                    m_platformTheme->windowCreated(w);
-                }
-            }
+        QWindow *w = qobject_cast<QWindow *>(watched);
+        QPlatformSurfaceEvent *pe = static_cast<QPlatformSurfaceEvent *>(event);
+        if (w && !w->flags().testFlag(Qt::ForeignWindow) && pe->surfaceEventType() == QPlatformSurfaceEvent::SurfaceCreated) {
+            m_platformTheme->windowCreated(w);
         }
     }
 
