@@ -101,9 +101,15 @@ public:
         }
 
         auto registry = new KWayland::Client::Registry(this);
-        connect(registry, &KWayland::Client::Registry::exporterUnstableV2Announced, this, [this, registry, widget](quint32 name, quint32 version) {
+        QPointer<QWidget> maybeWidget(widget);
+        connect(registry, &KWayland::Client::Registry::exporterUnstableV2Announced, this, [this, registry, maybeWidget](quint32 name, quint32 version) {
             auto exporter = registry->createXdgExporter(name, std::min(version, quint32(1)), this);
-            auto surface = KWayland::Client::Surface::fromWindow(widget->windowHandle());
+            if (!maybeWidget) {
+                qWarning() << "widget was invalid, not exporting any window as transient parent";
+                Q_EMIT exported({});
+                return;
+            }
+            auto surface = KWayland::Client::Surface::fromWindow(maybeWidget->windowHandle());
             if (!surface) {
                 qWarning() << "wayland surface was unexpectedly null, not exporting any window as transient parent";
                 Q_EMIT exported({});
