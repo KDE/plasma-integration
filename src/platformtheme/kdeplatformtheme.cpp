@@ -132,7 +132,7 @@ public:
     void run(QWidget *widget) override
     {
         Q_ASSERT(widget);
-        Q_EMIT exported(QLatin1String("x11:") + QString::number(widget->winId()));
+        Q_EMIT exported(QLatin1String("x11:") + QString::number(widget->winId(), 16));
     }
 };
 
