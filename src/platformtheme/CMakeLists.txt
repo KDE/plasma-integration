@@ -19,7 +19,6 @@ configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-p
 remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS)
 
 set(platformtheme_SRCS
-    qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
     kdeplatformtheme.cpp
     kfontsettingsdata.cpp
     khintssettings.cpp
@@ -34,6 +33,9 @@ set(platformtheme_SRCS
     qxdgdesktopportalfiledialog.cpp
     qtquickrenderersettings.cpp
 )
+if (QT_MAJOR_VERSION EQUAL "5")
+    list(APPEND platformtheme_SRCS qdbusmenubar.cpp) # fork of Qt's qdbusmenubar with some added setters for our convenience
+endif()
 
 qt_add_dbus_interface(platformtheme_SRCS org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
 kconfig_add_kcfg_files(platformtheme_SRCS renderersettings.kcfgc)
@@ -49,6 +51,8 @@ if (QT_MAJOR_VERSION EQUAL "5")
         BASENAME server-decoration-palette
     )
 else()
+    # TODO KF6 Port D-Bus menu support
+    target_compile_definitions(KDEPlasmaPlatformTheme PRIVATE -DKF6_TODO_DBUS_MENUBAR)
     qt6_generate_wayland_protocol_client_sources(KDEPlasmaPlatformTheme FILES
         ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
         ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml

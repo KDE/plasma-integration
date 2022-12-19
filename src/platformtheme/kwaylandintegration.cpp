@@ -146,6 +146,7 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
 
     w->setProperty("org.kde.plasma.integration.shellSurfaceCreated", true);
 
+#ifndef KF6_TODO_DBUS_MENUBAR
     if (m_appMenuManager->isActive()) {
         auto menu = new AppMenu(m_appMenuManager->create(s));
         w->setProperty("org.kde.plasma.integration.appmenu", QVariant::fromValue(menu));
@@ -157,6 +158,7 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
             menu->set_address(QDBusConnection::sessionBus().baseService(), menuBar->objectPath());
         }
     }
+#endif
 }
 
 void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)

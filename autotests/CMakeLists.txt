@@ -59,7 +59,6 @@ else()
 endif()
 
 target_sources(kdeplatformtheme_unittest PRIVATE
-  ../src/platformtheme/qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
   ../src/platformtheme/kdeplatformtheme.cpp
   ../src/platformtheme/kfontsettingsdata.cpp
   ../src/platformtheme/khintssettings.cpp
@@ -74,6 +73,14 @@ target_sources(kdeplatformtheme_unittest PRIVATE
   ${dbus_interface}
   ${wayland_interfaces}
 )
+if (QT_MAJOR_VERSION EQUAL "5")
+  target_sources(kdeplatformtheme_unittest PRIVATE
+    ../src/platformtheme/qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
+  )
+else()
+  # TODO KF6 Port D-Bus menu support
+  target_compile_definitions(kdeplatformtheme_unittest PRIVATE -DKF6_TODO_DBUS_MENUBAR)
+endif()
 
 frameworkintegration_tests(
   kfontsettingsdata_unittest
