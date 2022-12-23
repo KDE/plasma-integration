@@ -18,6 +18,7 @@ include(FeatureSummary)
 include(GenerateExportHeader)
 include(KDEClangFormat)
 include(KDEGitCommitHooks)
+include(ECMDeprecationSettings)
 
 find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED Widgets DBus QuickControls2 WaylandClient)
 find_package(Qt${QT_MAJOR_VERSION}Gui ${QT_MIN_VERSION} CONFIG REQUIRED Private)
@@ -56,8 +57,10 @@ if (QT_MAJOR_VERSION EQUAL "5")
 else()
     set(QT5PLATFORMSUPPORT_LIBS)
 endif()
-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f02)
-add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055B00)
+ecm_set_disabled_deprecation_versions(QT 5.15.2
+    KF 5.101
+)
+
 add_definitions(-DTRANSLATION_DOMAIN=\"plasmaintegration5\")
 if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
     ki18n_install(po)
