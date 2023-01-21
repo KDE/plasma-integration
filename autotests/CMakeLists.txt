@@ -59,16 +59,16 @@ else()
 endif()
 
 target_sources(kdeplatformtheme_unittest PRIVATE
-  ../src/platformtheme/kdeplatformtheme.cpp
-  ../src/platformtheme/kfontsettingsdata.cpp
-  ../src/platformtheme/khintssettings.cpp
-  ../src/platformtheme/kdeplatformfiledialoghelper.cpp
+  ../src/platformtheme/kdeplatformtheme.cpp ../src/platformtheme/kdeplatformtheme.h
+  ../src/platformtheme/kfontsettingsdata.cpp ../src/platformtheme/kfontsettingsdata.h
+  ../src/platformtheme/khintssettings.cpp ../src/platformtheme/khintssettings.h
+  ../src/platformtheme/kdeplatformfiledialoghelper.cpp ../src/platformtheme/kdeplatformfiledialoghelper.h
   ../src/platformtheme/kdeplatformfiledialogbase.cpp
-  ../src/platformtheme/kdeplatformsystemtrayicon.cpp
+  ../src/platformtheme/kdeplatformsystemtrayicon.cpp ../src/platformtheme/kdeplatformsystemtrayicon.h
   ../src/platformtheme/kdirselectdialog.cpp
   ../src/platformtheme/kfiletreeview.cpp
-  ../src/platformtheme/kwaylandintegration.cpp
-  ../src/platformtheme/x11integration.cpp
+  ../src/platformtheme/kwaylandintegration.cpp ../src/platformtheme/kwaylandintegration.h
+  ../src/platformtheme/x11integration.cpp ../src/platformtheme/x11integration.h
   ../src/platformtheme/qxdgdesktopportalfiledialog.cpp
   ${dbus_interface}
   ${wayland_interfaces}
@@ -84,7 +84,7 @@ endif()
 
 frameworkintegration_tests(
   kfontsettingsdata_unittest
-  ../src/platformtheme/kfontsettingsdata.cpp
+  ../src/platformtheme/kfontsettingsdata.cpp ../src/platformtheme/kfontsettingsdata.h
 )
 
 frameworkintegration_tests(
@@ -97,7 +97,7 @@ frameworkintegration_tests(
 
 frameworkintegration_tests(
   kdeplatformsystemtrayicon_unittest
-  ../src/platformtheme/kdeplatformsystemtrayicon.cpp
+  ../src/platformtheme/kdeplatformsystemtrayicon.cpp ../src/platformtheme/kdeplatformsystemtrayicon.h
   ${dbus_interface}
 )
 
@@ -110,7 +110,7 @@ frameworkintegration_tests(
 
 frameworkintegration_tests(
   khintssettings_unittest
-  ../src/platformtheme/khintssettings.cpp
+  ../src/platformtheme/khintssettings.cpp ../src/platformtheme/khintssettings.h
 )
 
 if(Qt${QT_MAJOR_VERSION}Qml_FOUND)

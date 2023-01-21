@@ -19,16 +19,16 @@ configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-p
 remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS)
 
 set(platformtheme_SRCS
-    kdeplatformtheme.cpp
-    kfontsettingsdata.cpp
-    khintssettings.cpp
-    kdeplatformfiledialoghelper.cpp
+    kdeplatformtheme.cpp kdeplatformtheme.h
+    kfontsettingsdata.cpp kfontsettingsdata.h
+    khintssettings.cpp khintssettings.h
+    kdeplatformfiledialoghelper.cpp kdeplatformfiledialoghelper.h
     kdeplatformfiledialogbase.cpp
-    kdeplatformsystemtrayicon.cpp
+    kdeplatformsystemtrayicon.cpp kdeplatformsystemtrayicon.h
     kfiletreeview.cpp
     kdirselectdialog.cpp
-    kwaylandintegration.cpp
-    x11integration.cpp
+    kwaylandintegration.cpp kwaylandintegration.h
+    x11integration.cpp x11integration.h
     main.cpp
     qxdgdesktopportalfiledialog.cpp
     qtquickrenderersettings.cpp
