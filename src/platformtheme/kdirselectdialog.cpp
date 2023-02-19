@@ -44,7 +44,6 @@
 #include <KStandardShortcut>
 #include <KToggleAction>
 #include <KUrlCompletion>
-#include <KUrlPixmapProvider>
 
 #include "kfiletreeview_p.h"
 #include <KFilePlacesModel>
