@@ -34,18 +34,18 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         Qt::DBus
         Qt::QuickControls2
         ${QT5PLATFORMSUPPORT_LIBS}
-        KF5::ConfigWidgets
-        KF5::ConfigCore
-        KF5::IconThemes
-        KF5::KIOFileWidgets
-        KF5::I18n
-        KF5::Notifications
-        KF5::WindowSystem
+        KF${QT_MAJOR_VERSION}::ConfigWidgets
+        KF${QT_MAJOR_VERSION}::ConfigCore
+        KF${QT_MAJOR_VERSION}::IconThemes
+        KF${QT_MAJOR_VERSION}::KIOFileWidgets
+        KF${QT_MAJOR_VERSION}::I18n
+        KF${QT_MAJOR_VERSION}::Notifications
+        KF${QT_MAJOR_VERSION}::WindowSystem
         Qt::WaylandClient
         XCB::XCB
         Wayland::Client
-        KF5::WaylandClient
-        KF5::XmlGui
+        KF${QT_MAJOR_VERSION}::WaylandClient
+        KF${QT_MAJOR_VERSION}::XmlGui
     )
     if (QT_MAJOR_VERSION EQUAL "5")
         target_link_libraries(${_testname} Qt5::X11Extras)

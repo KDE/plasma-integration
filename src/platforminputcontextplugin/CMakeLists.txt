@@ -15,7 +15,7 @@ target_link_libraries(input_plugin
     Qt::Quick
     Qt::Widgets
     Qt::GuiPrivate
-    KF5::ConfigCore
+    KF${QT_MAJOR_VERSION}::ConfigCore
 )
 set_target_properties(input_plugin PROPERTIES OUTPUT_NAME plasmaimplatforminputcontextplugin)
 

@@ -65,22 +65,22 @@ target_link_libraries(KDEPlasmaPlatformTheme
         Qt::GuiPrivate
         Qt::DBus
         Qt::QuickControls2
-        KF5::ConfigWidgets
-        KF5::ConfigCore
-        KF5::IconThemes
-        KF5::KIOFileWidgets # KFileFilterCombo, KDirSortFilterProxyModel, KRecentDirs
-        KF5::KIOWidgets
-        KF5::KIOGui
-        KF5::XmlGui
-        KF5::I18n
-        KF5::Notifications
-        KF5::WindowSystem
+        KF${QT_MAJOR_VERSION}::ConfigWidgets
+        KF${QT_MAJOR_VERSION}::ConfigCore
+        KF${QT_MAJOR_VERSION}::IconThemes
+        KF${QT_MAJOR_VERSION}::KIOFileWidgets # KFileFilterCombo, KDirSortFilterProxyModel, KRecentDirs
+        KF${QT_MAJOR_VERSION}::KIOWidgets
+        KF${QT_MAJOR_VERSION}::KIOGui
+        KF${QT_MAJOR_VERSION}::XmlGui
+        KF${QT_MAJOR_VERSION}::I18n
+        KF${QT_MAJOR_VERSION}::Notifications
+        KF${QT_MAJOR_VERSION}::WindowSystem
         XCB::XCB
         ${QT5PLATFORMSUPPORT_LIBS}
         Qt::WaylandClient
         Qt::GuiPrivate
         Wayland::Client
-        KF5::WaylandClient
+        KF${QT_MAJOR_VERSION}::WaylandClient
 )
 if (QT_MAJOR_VERSION EQUAL "5")
     target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt5::X11Extras)
