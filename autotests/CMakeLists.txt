@@ -45,6 +45,7 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         XCB::XCB
         Wayland::Client
         KF5::WaylandClient
+        KF5::XmlGui
     )
     if (QT_MAJOR_VERSION EQUAL "5")
         target_link_libraries(${_testname} Qt5::X11Extras)
