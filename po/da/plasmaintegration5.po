@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-09 00:48+0000\n"
+"POT-Creation-Date: 2023-02-20 00:59+0000\n"
 "PO-Revision-Date: 2016-06-18 14:51+0100\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -77,19 +77,19 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "Ignorér"
 
-#: platformtheme/kdirselectdialog.cpp:121
+#: platformtheme/kdirselectdialog.cpp:120
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
 msgstr "Ny mappe"
 
-#: platformtheme/kdirselectdialog.cpp:127
+#: platformtheme/kdirselectdialog.cpp:126
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
 msgstr "Ny mappe"
 
-#: platformtheme/kdirselectdialog.cpp:128
+#: platformtheme/kdirselectdialog.cpp:127
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -99,53 +99,53 @@ msgstr ""
 "Opret ny mappe i:\n"
 "%1"
 
-#: platformtheme/kdirselectdialog.cpp:159
+#: platformtheme/kdirselectdialog.cpp:158
 #, kde-format
 msgid "A file or folder named %1 already exists."
 msgstr "En fil eller mappe ved navn %1 eksisterer allerede."
 
-#: platformtheme/kdirselectdialog.cpp:168
+#: platformtheme/kdirselectdialog.cpp:167
 #, kde-format
 msgid "You do not have permission to create that folder."
 msgstr "Du har ikke rettigheder til at oprette den mappe."
 
-#: platformtheme/kdirselectdialog.cpp:270
+#: platformtheme/kdirselectdialog.cpp:269
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
 msgstr "Vælg mappe"
 
-#: platformtheme/kdirselectdialog.cpp:279
+#: platformtheme/kdirselectdialog.cpp:278
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
 msgstr "Ny mappe..."
 
-#: platformtheme/kdirselectdialog.cpp:328
+#: platformtheme/kdirselectdialog.cpp:327
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
 msgstr "Ny mappe..."
 
-#: platformtheme/kdirselectdialog.cpp:337
+#: platformtheme/kdirselectdialog.cpp:336
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Move to Trash"
 msgstr "Flyt til papirkurv"
 
-#: platformtheme/kdirselectdialog.cpp:346
+#: platformtheme/kdirselectdialog.cpp:345
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
 msgstr "Slet"
 
-#: platformtheme/kdirselectdialog.cpp:357
+#: platformtheme/kdirselectdialog.cpp:356
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
 msgstr "Vis skjulte mapper"
 
-#: platformtheme/kdirselectdialog.cpp:364
+#: platformtheme/kdirselectdialog.cpp:363
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
