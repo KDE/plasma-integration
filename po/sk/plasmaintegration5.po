@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frameworkintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-09 00:48+0000\n"
+"POT-Creation-Date: 2023-02-20 02:51+0000\n"
 "PO-Revision-Date: 2021-12-01 15:33+0100\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -75,19 +75,19 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "Ignorovať"
 
-#: platformtheme/kdirselectdialog.cpp:121
+#: platformtheme/kdirselectdialog.cpp:120
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
 msgstr "Nový priečinok"
 
-#: platformtheme/kdirselectdialog.cpp:127
+#: platformtheme/kdirselectdialog.cpp:126
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
 msgstr "Nový priečinok"
 
-#: platformtheme/kdirselectdialog.cpp:128
+#: platformtheme/kdirselectdialog.cpp:127
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -97,53 +97,53 @@ msgstr ""
 "Vytvoriť nový priečinok v:\n"
 "%1"
 
-#: platformtheme/kdirselectdialog.cpp:159
+#: platformtheme/kdirselectdialog.cpp:158
 #, kde-format
 msgid "A file or folder named %1 already exists."
 msgstr "Súbor alebo priečinok s názvom %1 už existuje."
 
-#: platformtheme/kdirselectdialog.cpp:168
+#: platformtheme/kdirselectdialog.cpp:167
 #, kde-format
 msgid "You do not have permission to create that folder."
 msgstr "Nemáte práva na vytvorenie tohto priečinka."
 
-#: platformtheme/kdirselectdialog.cpp:270
+#: platformtheme/kdirselectdialog.cpp:269
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
 msgstr "Vybrať priečinok"
 
-#: platformtheme/kdirselectdialog.cpp:279
+#: platformtheme/kdirselectdialog.cpp:278
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
 msgstr "Nový priečinok..."
 
-#: platformtheme/kdirselectdialog.cpp:328
+#: platformtheme/kdirselectdialog.cpp:327
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
 msgstr "Nový priečinok..."
 
-#: platformtheme/kdirselectdialog.cpp:337
+#: platformtheme/kdirselectdialog.cpp:336
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Move to Trash"
 msgstr "Presunúť do koša"
 
-#: platformtheme/kdirselectdialog.cpp:346
+#: platformtheme/kdirselectdialog.cpp:345
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
 msgstr "Odstrániť"
 
-#: platformtheme/kdirselectdialog.cpp:357
+#: platformtheme/kdirselectdialog.cpp:356
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
 msgstr "Zobraziť skryté priečinky"
 
-#: platformtheme/kdirselectdialog.cpp:364
+#: platformtheme/kdirselectdialog.cpp:363
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"

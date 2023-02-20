@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasmaintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-09 00:48+0000\n"
+"POT-Creation-Date: 2023-02-20 02:51+0000\n"
 "PO-Revision-Date: 2022-11-04 10:08+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -77,19 +77,19 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "Yok Say"
 
-#: platformtheme/kdirselectdialog.cpp:121
+#: platformtheme/kdirselectdialog.cpp:120
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
 msgstr "Yeni Klasör"
 
-#: platformtheme/kdirselectdialog.cpp:127
+#: platformtheme/kdirselectdialog.cpp:126
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
 msgstr "Yeni Klasör"
 
-#: platformtheme/kdirselectdialog.cpp:128
+#: platformtheme/kdirselectdialog.cpp:127
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -99,53 +99,53 @@ msgstr ""
 "Burada yeni klasör oluştur:\n"
 "%1"
 
-#: platformtheme/kdirselectdialog.cpp:159
+#: platformtheme/kdirselectdialog.cpp:158
 #, kde-format
 msgid "A file or folder named %1 already exists."
 msgstr "%1 adlı bir klasör ya da dosya zaten var."
 
-#: platformtheme/kdirselectdialog.cpp:168
+#: platformtheme/kdirselectdialog.cpp:167
 #, kde-format
 msgid "You do not have permission to create that folder."
 msgstr "Bu klasörü oluşturmaya izniniz yok."
 
-#: platformtheme/kdirselectdialog.cpp:270
+#: platformtheme/kdirselectdialog.cpp:269
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
 msgstr "Klasör Seç"
 
-#: platformtheme/kdirselectdialog.cpp:279
+#: platformtheme/kdirselectdialog.cpp:278
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
 msgstr "Yeni Klasör..."
 
-#: platformtheme/kdirselectdialog.cpp:328
+#: platformtheme/kdirselectdialog.cpp:327
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
 msgstr "Yeni Klasör..."
 
-#: platformtheme/kdirselectdialog.cpp:337
+#: platformtheme/kdirselectdialog.cpp:336
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Move to Trash"
 msgstr "Çöp Kutusuna Taşı"
 
-#: platformtheme/kdirselectdialog.cpp:346
+#: platformtheme/kdirselectdialog.cpp:345
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
 msgstr "Sil"
 
-#: platformtheme/kdirselectdialog.cpp:357
+#: platformtheme/kdirselectdialog.cpp:356
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
 msgstr "Gizli Klasörleri Göster"
 
-#: platformtheme/kdirselectdialog.cpp:364
+#: platformtheme/kdirselectdialog.cpp:363
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
