@@ -81,6 +81,12 @@ set_package_properties(FontHack PROPERTIES
     URL "https://sourcefoundry.org/hack/"
     TYPE RUNTIME
 )
+find_package(XDGDesktopPortalKDE)
+set_package_properties(XDGDesktopPortalKDE PROPERTIES
+    PURPOSE "Required for open-with dialog to work correctly -- this is not detected automatically, pass -DCMAKE_DISABLE_FIND_PACKAGE_XDGDesktopPortalKDE=true to mark it ignored."
+    URL "https://invent.kde.org/plasma/xdg-desktop-portal-kde"
+    TYPE RUNTIME
+)
 
 # add clang-format target for all our real source files
 file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h)
