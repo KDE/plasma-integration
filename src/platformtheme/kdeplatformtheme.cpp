@@ -116,7 +116,10 @@ public:
                 return;
             }
             auto xdgExported = exporter->exportTopLevel(surface, this);
-            Q_EMIT exported(QLatin1String("wayland:") + xdgExported->handle());
+
+            connect(xdgExported, &KWayland::Client::XdgExported::done, this, [this, xdgExported] {
+                Q_EMIT exported(QLatin1String("wayland:") + xdgExported->handle());
+            });
         });
 
         registry->create(connection);
