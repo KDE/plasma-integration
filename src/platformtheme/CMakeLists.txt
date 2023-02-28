@@ -70,7 +70,6 @@ target_link_libraries(KDEPlasmaPlatformTheme
         KF5::IconThemes
         KF5::KIOFileWidgets # KFileFilterCombo, KDirSortFilterProxyModel, KRecentDirs
         KF5::KIOWidgets
-        KF5::KIOGui
         KF5::XmlGui
         KF5::I18n
         KF5::Notifications
@@ -80,7 +79,6 @@ target_link_libraries(KDEPlasmaPlatformTheme
         Qt::WaylandClient
         Qt::GuiPrivate
         Wayland::Client
-        KF5::WaylandClient
 )
 if (QT_MAJOR_VERSION EQUAL "5")
     target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt5::X11Extras)
