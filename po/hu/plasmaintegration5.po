@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-20 02:51+0000\n"
+"POT-Creation-Date: 2023-03-01 00:52+0000\n"
 "PO-Revision-Date: 2017-02-24 22:49+0100\n"
 "Last-Translator: Kiszel Kristóf <kiszel.kristof@gmail.com>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -29,49 +29,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Fájl mentése"
 
-#: platformtheme/kdeplatformtheme.cpp:487
+#: platformtheme/kdeplatformtheme.cpp:288
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Összes mentése"
 
-#: platformtheme/kdeplatformtheme.cpp:491
+#: platformtheme/kdeplatformtheme.cpp:292
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr ""
 
-#: platformtheme/kdeplatformtheme.cpp:493
+#: platformtheme/kdeplatformtheme.cpp:294
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Igen, mindet"
 
-#: platformtheme/kdeplatformtheme.cpp:495
+#: platformtheme/kdeplatformtheme.cpp:296
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr ""
 
-#: platformtheme/kdeplatformtheme.cpp:497
+#: platformtheme/kdeplatformtheme.cpp:298
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Nem, egyet sem"
 
-#: platformtheme/kdeplatformtheme.cpp:500
+#: platformtheme/kdeplatformtheme.cpp:301
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Megszakítás"
 
-#: platformtheme/kdeplatformtheme.cpp:502
+#: platformtheme/kdeplatformtheme.cpp:303
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Újra"
 
-#: platformtheme/kdeplatformtheme.cpp:504
+#: platformtheme/kdeplatformtheme.cpp:305
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
