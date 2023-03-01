@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasmaintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-05-07 03:56+0200\n"
+"POT-Creation-Date: 2023-03-01 23:30+0000\n"
 "PO-Revision-Date: 2017-09-28 17:58+0200\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -18,67 +18,79 @@ msgstr ""
 "X-Text-Markup: kde4\n"
 "X-Environment: kde\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:292
+#: platformtheme/kdeplatformfiledialoghelper.cpp:283
 #, kde-format
 msgctxt "@title:window"
 msgid "Open File"
 msgstr "Otvaranje fajla"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:292
+#: platformtheme/kdeplatformfiledialoghelper.cpp:284
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
 msgstr "Upisivanje fajla"
 
-#: platformtheme/kdeplatformtheme.cpp:281
+#: platformtheme/kdeplatformtheme.cpp:490
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Sačuvaj sve"
 
-#: platformtheme/kdeplatformtheme.cpp:287
+#: platformtheme/kdeplatformtheme.cpp:494
+#, kde-format
+msgctxt "@action:button"
+msgid "&Yes"
+msgstr ""
+
+#: platformtheme/kdeplatformtheme.cpp:496
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Da za sve"
 
-#: platformtheme/kdeplatformtheme.cpp:291
+#: platformtheme/kdeplatformtheme.cpp:498
+#, kde-format
+msgctxt "@action:button"
+msgid "&No"
+msgstr ""
+
+#: platformtheme/kdeplatformtheme.cpp:500
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Ne za sve"
 
-#: platformtheme/kdeplatformtheme.cpp:294
+#: platformtheme/kdeplatformtheme.cpp:503
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Obustavi"
 
-#: platformtheme/kdeplatformtheme.cpp:296
+#: platformtheme/kdeplatformtheme.cpp:505
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Pokušaj ponovo"
 
-#: platformtheme/kdeplatformtheme.cpp:298
+#: platformtheme/kdeplatformtheme.cpp:507
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
 msgstr "Ignoriši"
 
-#: platformtheme/kdirselectdialog.cpp:134
+#: platformtheme/kdirselectdialog.cpp:120
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
 msgstr "Nova fascikla"
 
-#: platformtheme/kdirselectdialog.cpp:139
+#: platformtheme/kdirselectdialog.cpp:126
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
 msgstr "Nova fascikla"
 
-#: platformtheme/kdirselectdialog.cpp:140
+#: platformtheme/kdirselectdialog.cpp:127
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -88,59 +100,59 @@ msgstr ""
 "Napravi novu fasciklu u:\n"
 "‘%1’"
 
-#: platformtheme/kdirselectdialog.cpp:174
+#: platformtheme/kdirselectdialog.cpp:158
 #, kde-format
 msgid "A file or folder named %1 already exists."
 msgstr "Fajl ili fascikla po imenu ‘%1’ već postoji."
 
-#: platformtheme/kdirselectdialog.cpp:177
+#: platformtheme/kdirselectdialog.cpp:167
 #, kde-format
 msgid "You do not have permission to create that folder."
 msgstr "Nemate dozvolu da napravite tu fasciklu."
 
-#: platformtheme/kdirselectdialog.cpp:290
+#: platformtheme/kdirselectdialog.cpp:269
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
 msgstr "Izbor fascikle"
 
-#: platformtheme/kdirselectdialog.cpp:299
+#: platformtheme/kdirselectdialog.cpp:278
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
 msgstr "Nova fascikla..."
 
-#: platformtheme/kdirselectdialog.cpp:347
+#: platformtheme/kdirselectdialog.cpp:327
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
 msgstr "Nova fascikla..."
 
-#: platformtheme/kdirselectdialog.cpp:354
+#: platformtheme/kdirselectdialog.cpp:336
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Move to Trash"
 msgstr "Premesti u smeće"
 
-#: platformtheme/kdirselectdialog.cpp:361
+#: platformtheme/kdirselectdialog.cpp:345
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
 msgstr "Obriši"
 
-#: platformtheme/kdirselectdialog.cpp:370
+#: platformtheme/kdirselectdialog.cpp:356
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
 msgstr "Skrivene fascikle"
 
-#: platformtheme/kdirselectdialog.cpp:377
+#: platformtheme/kdirselectdialog.cpp:363
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
 msgstr "Svojstva"
 
-#: platformtheme/kfiletreeview.cpp:193
+#: platformtheme/kfiletreeview.cpp:185
 #, kde-format
 msgid "Show Hidden Folders"
 msgstr "Skrivene fascikle"
