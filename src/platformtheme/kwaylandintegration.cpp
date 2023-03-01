@@ -61,8 +61,6 @@ Q_DECLARE_METATYPE(ServerSideDecorationPalette *);
 
 KWaylandIntegration::KWaylandIntegration(KdePlatformTheme *platformTheme)
     : QObject()
-    , m_appMenuManager(new AppMenuManager)
-    , m_paletteManager(new ServerSideDecorationPaletteManager)
     , m_platformTheme(platformTheme)
 {
     QCoreApplication::instance()->installEventFilter(this);
@@ -147,6 +145,9 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
     w->setProperty("org.kde.plasma.integration.shellSurfaceCreated", true);
 
 #ifndef KF6_TODO_DBUS_MENUBAR
+    if (!m_appMenuManager) {
+        m_appMenuManager.reset(new AppMenuManager());
+    }
     if (m_appMenuManager->isActive()) {
         auto menu = new AppMenu(m_appMenuManager->create(s));
         w->setProperty("org.kde.plasma.integration.appmenu", QVariant::fromValue(menu));
@@ -182,6 +183,9 @@ void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
 
 void KWaylandIntegration::installColorScheme(QWindow *w)
 {
+    if (!m_paletteManager) {
+        m_paletteManager.reset(new ServerSideDecorationPaletteManager());
+    }
     if (!m_paletteManager->isActive()) {
         return;
     }
