@@ -578,7 +578,8 @@ void KdePlatformTheme::setQtQuickControlsTheme()
         return;
     }
     // if the user has explicitly set something else, don't meddle
-    if (!QQuickStyle::name().isEmpty()) {
+    // Also ignore the default Fusion style
+    if (!QQuickStyle::name().isEmpty() && QQuickStyle::name() != QLatin1String("Fusion")) {
         return;
     }
     QQuickStyle::setStyle(QLatin1String("org.kde.desktop"));
