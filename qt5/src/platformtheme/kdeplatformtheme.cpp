@@ -27,6 +27,7 @@
 #include <QVariant>
 #include <QtQuickControls2/QQuickStyle>
 
+#include <KConfigGroup>
 #include <KIO/Global>
 #include <KIO/JobUiDelegate>
 #include <KIO/JobUiDelegateFactory>
@@ -151,8 +152,6 @@ public:
 
     void promptUserForApplication(KJob *job, const QList<QUrl> &urls, const QString &mimeType) override
     {
-        Q_UNUSED(mimeType);
-
         QWidget *widget = nullptr;
         if (job) {
             widget = KJobWidgets::window(job);
@@ -163,7 +162,7 @@ public:
         }
 
         if (!widget) {
-            promptInternal({}, urls);
+            promptInternal({}, urls, mimeType);
             return;
         }
 
@@ -181,17 +180,17 @@ public:
             break;
         }
         if (exporter) {
-            connect(exporter, &XdgWindowExporter::exported, this, [this, urls, exporter](const QString &windowId) {
+            connect(exporter, &XdgWindowExporter::exported, this, [this, urls, exporter, mimeType](const QString &windowId) {
                 exporter->deleteLater();
-                promptInternal(windowId, urls);
+                promptInternal(windowId, urls, mimeType);
             });
             exporter->run(widget);
         } else {
-            promptInternal({}, urls);
+            promptInternal({}, urls, mimeType);
         }
     }
 
-    void promptInternal(const QString &windowId, const QList<QUrl> &urls)
+    void promptInternal(const QString &windowId, const QList<QUrl> &urls, const QString &mimeType)
     {
         QDBusMessage message = QDBusMessage::createMethodCall(desktopPortalService(),
                                                               desktopPortalPath(),
@@ -202,11 +201,29 @@ public:
         for (const auto &url : urls) {
             urlStrings << url.toString();
         }
-        message << windowId << urlStrings << QVariantMap{{QStringLiteral("ask"), true}};
+
+        QString lastChoice;
+        KSharedConfig::Ptr xdgConfig;
+        if (!mimeType.isEmpty()) {
+            xdgConfig = KSharedConfig::openConfig(QStringLiteral("xdg-desktop-portal-kderc"), KConfig::NoGlobals);
+            KConfigGroup appChooserGroup = xdgConfig->group("org.freedesktop.impl.portal.AppChooser");
+            if (appChooserGroup.isValid()) {
+                KConfigGroup lastUsedGroup = appChooserGroup.group("LastChoice");
+                if (lastUsedGroup.isValid()) {
+                    lastChoice = lastUsedGroup.readEntry(mimeType);
+                }
+            }
+        }
+
+        message << windowId << urlStrings
+                << QVariantMap{
+                       {QStringLiteral("ask"), true},
+                       {QStringLiteral("last_choice"), lastChoice},
+                   };
 
         QDBusPendingCall pendingCall = QDBusConnection::sessionBus().asyncCall(message, std::numeric_limits<int>::max());
         auto watcher = new QDBusPendingCallWatcher(pendingCall, this);
-        connect(watcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *watcher) {
+        connect(watcher, &QDBusPendingCallWatcher::finished, this, [this, mimeType](QDBusPendingCallWatcher *watcher) {
             watcher->deleteLater();
 
             QDBusPendingReply<uint, QVariantMap> reply = *watcher;
@@ -216,7 +233,15 @@ public:
                 Q_EMIT canceled();
             } else {
                 if (reply.argumentAt<0>() == 0) {
-                    Q_EMIT serviceSelected(KService::serviceByDesktopName(reply.argumentAt<1>().value(QStringLiteral("choice")).toString()));
+                    const QString choice = reply.argumentAt<1>().value(QStringLiteral("choice")).toString();
+                    Q_EMIT serviceSelected(KService::serviceByDesktopName(choice));
+
+                    if (!mimeType.isEmpty()) {
+                        KSharedConfig::Ptr xdgConfig = KSharedConfig::openConfig(QStringLiteral("xdg-desktop-portal-kderc"), KConfig::NoGlobals);
+                        KConfigGroup appChooserGroup = xdgConfig->group("org.freedesktop.impl.portal.AppChooser");
+                        KConfigGroup lastUsedGroup = appChooserGroup.group("LastChoice");
+                        lastUsedGroup.writeEntry(mimeType, choice);
+                    }
                 } else {
                     Q_EMIT canceled();
                 }
