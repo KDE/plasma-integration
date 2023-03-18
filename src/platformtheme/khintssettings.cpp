@@ -142,6 +142,7 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
     QMetaObject::invokeMethod(this, "setupIconLoader", Qt::QueuedConnection);
 
     loadPalettes();
+    updateCursorTheme();
 }
 
 KHintsSettings::~KHintsSettings()
@@ -276,6 +277,7 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         break;
     case CursorChanged:
         updateCursorTheme();
+        updateX11CursorTheme();
         break;
     case StyleChanged: {
         QApplication *app = qobject_cast<QApplication *>(QCoreApplication::instance());
@@ -444,6 +446,20 @@ void KHintsSettings::loadPalettes()
 }
 
 void KHintsSettings::updateCursorTheme()
+{
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+    KSharedConfig::Ptr inputConfig = KSharedConfig::openConfig(QStringLiteral("kcminputrc"));
+    KConfigGroup mouseConfig(inputConfig, "Mouse");
+
+    const QString cursorTheme = readConfigValue(mouseConfig, QStringLiteral("cursorTheme"), QStringLiteral("breeze_cursors")).toString();
+    const int cursorSize = readConfigValue(mouseConfig, QStringLiteral("cursorSize"), 24).toInt();
+
+    m_hints[QPlatformTheme::MouseCursorTheme] = cursorTheme;
+    m_hints[QPlatformTheme::MouseCursorSize] = QSize(cursorSize, cursorSize);
+#endif
+}
+
+void KHintsSettings::updateX11CursorTheme()
 {
 #if HAVE_X11
     if (QX11Info::isPlatformX11()) {

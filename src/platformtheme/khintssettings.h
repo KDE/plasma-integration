@@ -81,6 +81,7 @@ private:
     void updateShowIconsInMenuItems(KConfigGroup &cg);
     Qt::ToolButtonStyle toolButtonStyle(const KConfigGroup &cg);
     void updateCursorTheme();
+    void updateX11CursorTheme();
     void updatePortalSetting();
 
     QHash<QPlatformTheme::Palette, QPalette *> m_palettes;
