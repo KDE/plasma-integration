@@ -10,6 +10,7 @@
 
 #include <KIO/StatJob>
 #include <KJobWidgets>
+#include <KMessageDialog>
 #include <KProtocolInfo>
 #include <KSharedConfig>
 #include <KWindowConfig>
@@ -440,4 +441,131 @@ void KDEPlatformFileDialogHelper::setFilter()
 bool KDEPlatformFileDialogHelper::defaultNameFilterDisables() const
 {
     return false;
+}
+
+KDEPlatformMessageDialogHelper::KDEPlatformMessageDialogHelper()
+    : QPlatformMessageDialogHelper()
+{
+    qDebug() << "new helper";
+}
+
+KDEPlatformMessageDialogHelper::~KDEPlatformMessageDialogHelper()
+{
+}
+
+void KDEPlatformMessageDialogHelper::exec()
+{
+    qDebug() << "exec";
+}
+
+void KDEPlatformMessageDialogHelper::hide()
+{
+    qDebug() << "hide";
+    m_dialog->hide();
+}
+
+QDialogButtonBox::StandardButtons buttonsToButtons(QPlatformDialogHelper::StandardButtons buttons)
+{
+    QDialogButtonBox::StandardButtons result;
+
+#define THING(x)                                                                                                                                               \
+    if (buttons.testFlag(QPlatformDialogHelper::x)) {                                                                                                          \
+        result |= QDialogButtonBox::x;                                                                                                                         \
+    }
+
+    THING(Ok);
+    THING(NoButton)
+    THING(Ok)
+    THING(Save)
+    THING(SaveAll)
+    THING(Open)
+    THING(Yes)
+    THING(YesToAll)
+    THING(No)
+    THING(NoToAll)
+    THING(Abort)
+    THING(Retry)
+    THING(Ignore)
+    THING(Close)
+    THING(Cancel)
+    THING(Discard)
+    THING(Help)
+    THING(Apply)
+    THING(Reset)
+    THING(RestoreDefaults)
+
+    return result;
+}
+
+QDialogButtonBox::StandardButtons reverseButtonsToButtons(QPlatformDialogHelper::StandardButtons buttons)
+{
+    QDialogButtonBox::StandardButtons result;
+
+#define THING(x)                                                                                                                                               \
+    if (buttons.testFlag(QPlatformDialogHelper::x)) {                                                                                                          \
+        result |= QDialogButtonBox::x;                                                                                                                         \
+    }
+
+    THING(Ok);
+    THING(NoButton)
+    THING(Ok)
+    THING(Save)
+    THING(SaveAll)
+    THING(Open)
+    THING(Yes)
+    THING(YesToAll)
+    THING(No)
+    THING(NoToAll)
+    THING(Abort)
+    THING(Retry)
+    THING(Ignore)
+    THING(Close)
+    THING(Cancel)
+    THING(Discard)
+    THING(Help)
+    THING(Apply)
+    THING(Reset)
+    THING(RestoreDefaults)
+
+    return result;
+}
+
+bool KDEPlatformMessageDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent)
+{
+    qDebug() << "show" << windowFlags << windowModality << parent;
+
+    KMessageDialog::Type type = KMessageDialog::Information;
+
+    if (options()->standardButtons() == (QPlatformDialogHelper::Apply | QPlatformDialogHelper::Cancel | QPlatformFileDialogHelper::Discard)) {
+        type = KMessageDialog::QuestionTwoActionsCancel;
+    } else if (options()->standardButtons() == (QPlatformDialogHelper::Apply | QPlatformFileDialogHelper::Discard)) {
+        type = KMessageDialog::QuestionTwoActions;
+    }
+
+    qDebug() << options()->windowTitle() << options()->checkBoxLabel() << options()->checkBoxState() << options()->customButtons().size()
+             << options()->detailedText() << options()->informativeText() << options()->standardButtons() << options()->text();
+
+    m_dialog = new KMessageDialog(type, options()->text());
+    m_dialog->setAttribute(Qt::WA_DeleteOnClose);
+
+    QDialogButtonBox *box = new QDialogButtonBox(m_dialog);
+    box->setStandardButtons(buttonsToButtons(options()->standardButtons()));
+    m_dialog->setDialogButtonBox(box);
+
+    m_dialog->setCaption(options()->windowTitle());
+    m_dialog->setDetails(options()->detailedText());
+
+    connect(box, &QDialogButtonBox::clicked, this, [this, box](QAbstractButton *button) {
+        Q_EMIT clicked((QPlatformDialogHelper::StandardButton)box->standardButton(button), (QPlatformDialogHelper::ButtonRole)box->buttonRole(button));
+
+        if (box->buttonRole(button) == QDialogButtonBox::AcceptRole || box->buttonRole(button) == QDialogButtonBox::ApplyRole) {
+            Q_EMIT accept();
+        } else if (box->buttonRole(button) == QDialogButtonBox::RejectRole) {
+            Q_EMIT reject();
+        }
+    });
+
+    m_dialog->show();
+
+    return true;
 }

@@ -11,6 +11,7 @@
 #include <qpa/qplatformdialoghelper.h>
 
 class KFileWidget;
+class KMessageDialog;
 class KDEPlatformFileDialog : public KDEPlatformFileDialogBase
 {
     Q_OBJECT
@@ -71,6 +72,21 @@ private:
     bool m_directorySet = false;
     bool m_fileSelected = false;
     bool m_dialogInitialized = false;
+};
+
+class KDEPlatformMessageDialogHelper : public QPlatformMessageDialogHelper
+{
+    Q_OBJECT
+public:
+    KDEPlatformMessageDialogHelper();
+    ~KDEPlatformMessageDialogHelper() override;
+
+    void exec() override;
+    void hide() override;
+    bool show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent) override;
+
+private:
+    KMessageDialog *m_dialog;
 };
 
 #endif // KDEPLATFORMFILEDIALOGHELPER_H

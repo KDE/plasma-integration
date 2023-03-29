@@ -483,6 +483,10 @@ QList<QKeySequence> KdePlatformTheme::keyBindings(QKeySequence::StandardKey key)
 
 bool KdePlatformTheme::usePlatformNativeDialog(QPlatformTheme::DialogType type) const
 {
+    if (type == QPlatformTheme::MessageDialog) {
+        return true;
+    }
+
     return type == QPlatformTheme::FileDialog && qobject_cast<QApplication *>(QCoreApplication::instance());
 }
 
@@ -544,7 +548,10 @@ QPlatformDialogHelper *KdePlatformTheme::createPlatformDialogHelper(QPlatformThe
         return new KDEPlatformFileDialogHelper;
     case QPlatformTheme::FontDialog:
     case QPlatformTheme::ColorDialog:
-    case QPlatformTheme::MessageDialog:
+    case QPlatformTheme::MessageDialog: {
+        qWarning() << "msg dlg";
+        return new KDEPlatformMessageDialogHelper;
+    }
     default:
         return nullptr;
     }
