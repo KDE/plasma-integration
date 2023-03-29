@@ -42,10 +42,6 @@ static bool checkBackend(QOpenGLContext &checkContext)
 #else
     bool ok = checkContext.create();
 #endif
-    if (!ok) {
-        qWarning("Warning: fallback to QtQuick software backend.");
-        QQuickWindow::setSceneGraphBackend(QStringLiteral("software"));
-    }
     return ok;
 }
 
@@ -72,16 +68,39 @@ void initializeRendererSessions()
 
     PlasmaQtQuickSettings::RendererSettings s;
     QOpenGLContext checkContext;
-    if (!s.sceneGraphBackend().isEmpty()) {
-        QQuickWindow::setSceneGraphBackend(s.sceneGraphBackend());
-    } else {
-        QQuickWindow::setSceneGraphBackend(QStringLiteral(""));
-        checkBackend(checkContext);
+
+    QSGRendererInterface::GraphicsApi graphicsApi = QSGRendererInterface::Unknown;
+
+    switch (s.sceneGraphBackend()) {
+    case PlasmaQtQuickSettings::RendererSettings::software:
+        graphicsApi = QSGRendererInterface::Software;
+        break;
+    case PlasmaQtQuickSettings::RendererSettings::opengl:
+        graphicsApi = QSGRendererInterface::OpenGL;
+        break;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    case PlasmaQtQuickSettings::RendererSettings::vulkan:
+        graphicsApi = QSGRendererInterface::Vulkan;
+        break;
+#endif
+    default:
+        if (!checkBackend(checkContext)) {
+            qWarning("Warning: fallback to QtQuick software backend.");
+            graphicsApi = QSGRendererInterface::Software;
+        }
+    }
+
+    if (graphicsApi != QSGRendererInterface::Unknown) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        QQuickWindow::setSceneGraphBackend(graphicsApi);
+#else
+        QQuickWindow::setGraphicsApi(graphicsApi);
+#endif
     }
 
     if (!qEnvironmentVariableIsSet("QSG_RENDER_LOOP")) {
-        if (!s.renderLoop().isEmpty()) {
-            qputenv("QSG_RENDER_LOOP", s.renderLoop().toLatin1());
+        if (s.renderLoop() == PlasmaQtQuickSettings::RendererSettings::basic) {
+            qputenv("QSG_RENDER_LOOP", "basic");
         } else if (QGuiApplication::platformName() == QLatin1String("wayland")) {
 #if QT_CONFIG(opengl)
             // Workaround for Bug 432062 / QTBUG-95817
