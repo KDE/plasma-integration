@@ -1,18 +1,19 @@
 # translation of frameworkintegration5.po to Slovak
 # Roman Paholík <wizzardsk@gmail.com>, 2016.
+# Matej Mrenica <matejm98mthw@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: frameworkintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-01 00:52+0000\n"
-"PO-Revision-Date: 2021-12-01 15:33+0100\n"
-"Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
-"Language-Team: Slovak <kde-sk@linux.sk>\n"
+"PO-Revision-Date: 2023-04-02 15:25+0200\n"
+"Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
+"Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Lokalize 22.12.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: platformtheme/kdeplatformfiledialoghelper.cpp:283
@@ -37,7 +38,7 @@ msgstr "Uložiť všetko"
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
-msgstr ""
+msgstr "Áno"
 
 #: platformtheme/kdeplatformtheme.cpp:294
 #, kde-format
@@ -49,7 +50,7 @@ msgstr "Áno všetkým"
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
-msgstr ""
+msgstr "Nie"
 
 #: platformtheme/kdeplatformtheme.cpp:298
 #, kde-format
