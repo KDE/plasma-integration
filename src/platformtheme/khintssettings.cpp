@@ -447,15 +447,20 @@ void KHintsSettings::loadPalettes()
 
 void KHintsSettings::updateCursorTheme()
 {
-#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
     KSharedConfig::Ptr inputConfig = KSharedConfig::openConfig(QStringLiteral("kcminputrc"));
     KConfigGroup mouseConfig(inputConfig, "Mouse");
 
     const QString cursorTheme = readConfigValue(mouseConfig, QStringLiteral("cursorTheme"), QStringLiteral("breeze_cursors")).toString();
     const int cursorSize = readConfigValue(mouseConfig, QStringLiteral("cursorSize"), 24).toInt();
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
     m_hints[QPlatformTheme::MouseCursorTheme] = cursorTheme;
     m_hints[QPlatformTheme::MouseCursorSize] = QSize(cursorSize, cursorSize);
+#else
+    if (QGuiApplication::platformName() == QLatin1String("wayland")) {
+        qputenv("XCURSOR_THEME", cursorTheme.toUtf8());
+        qputenv("XCURSOR_SIZE", QByteArray::number(cursorSize));
+    }
 #endif
 }
 
