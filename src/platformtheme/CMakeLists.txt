@@ -75,6 +75,7 @@ target_link_libraries(KDEPlasmaPlatformTheme
         KF${QT_MAJOR_VERSION}::I18n
         KF${QT_MAJOR_VERSION}::Notifications
         KF${QT_MAJOR_VERSION}::WindowSystem
+        KF${QT_MAJOR_VERSION}::GuiAddons
         XCB::XCB
         ${QT5PLATFORMSUPPORT_LIBS}
         Qt::WaylandClient

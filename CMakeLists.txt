@@ -31,7 +31,7 @@ endif()
 
 find_package(KF${QT_MAJOR_VERSION} ${KF_MIN_VERSION} REQUIRED COMPONENTS
                 Config ConfigWidgets I18n IconThemes KIO Notifications
-                WidgetsAddons WindowSystem ConfigWidgets Wayland
+                WidgetsAddons WindowSystem ConfigWidgets Wayland GuiAddons
 )
 
 if (QT_MAJOR_VERSION EQUAL "5")
@@ -75,6 +75,12 @@ add_subdirectory(tests)
 find_package(FontNotoSans)
 set_package_properties(FontNotoSans PROPERTIES
     PURPOSE "Default sans-serif font -- this is not detected automatically, pass -DCMAKE_DISABLE_FIND_PACKAGE_FontNotoSans=true to mark it ignored."
+    URL "https://www.google.com/get/noto/"
+    TYPE RUNTIME
+)
+find_package(FontNotoColorEmoji)
+set_package_properties(FontNotoColorEmoji PROPERTIES
+    PURPOSE "Default emoji font -- this is not detected automatically, pass -DCMAKE_DISABLE_FIND_PACKAGE_FontNotoColorEmoji=true to mark it ignored."
     URL "https://www.google.com/get/noto/"
     TYPE RUNTIME
 )
