@@ -295,7 +295,7 @@ KdePlatformTheme::KdePlatformTheme()
     KIO::setDefaultJobUiDelegateExtension(&delegateExtension);
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    KCountryFlagEmojiIconEngine::setGlobalDefaultFont(QFont(u"Noto Color Emoji; emoji"_qs));
+    KCountryFlagEmojiIconEngine::setGlobalDefaultFont(QFont(u"Noto Color Emoji, emoji"_qs));
 #endif
 }
 
