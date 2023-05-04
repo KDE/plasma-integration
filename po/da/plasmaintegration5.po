@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-01 23:30+0000\n"
+"POT-Creation-Date: 2023-05-04 02:21+0000\n"
 "PO-Revision-Date: 2016-06-18 14:51+0100\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -29,49 +29,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Gem fil"
 
-#: platformtheme/kdeplatformtheme.cpp:490
+#: platformtheme/kdeplatformtheme.cpp:500
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Gem alt"
 
-#: platformtheme/kdeplatformtheme.cpp:494
+#: platformtheme/kdeplatformtheme.cpp:504
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr ""
 
-#: platformtheme/kdeplatformtheme.cpp:496
+#: platformtheme/kdeplatformtheme.cpp:506
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Ja til alle"
 
-#: platformtheme/kdeplatformtheme.cpp:498
+#: platformtheme/kdeplatformtheme.cpp:508
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr ""
 
-#: platformtheme/kdeplatformtheme.cpp:500
+#: platformtheme/kdeplatformtheme.cpp:510
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Nej til alle"
 
-#: platformtheme/kdeplatformtheme.cpp:503
+#: platformtheme/kdeplatformtheme.cpp:513
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Afbryd"
 
-#: platformtheme/kdeplatformtheme.cpp:505
+#: platformtheme/kdeplatformtheme.cpp:515
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Prøv igen"
 
-#: platformtheme/kdeplatformtheme.cpp:507
+#: platformtheme/kdeplatformtheme.cpp:517
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"

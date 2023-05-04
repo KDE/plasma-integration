@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasmaintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-01 23:30+0000\n"
+"POT-Creation-Date: 2023-05-04 02:21+0000\n"
 "PO-Revision-Date: 2022-11-04 10:08+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -29,49 +29,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Dosyayı Kaydet"
 
-#: platformtheme/kdeplatformtheme.cpp:490
+#: platformtheme/kdeplatformtheme.cpp:500
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Tümünü Kaydet"
 
-#: platformtheme/kdeplatformtheme.cpp:494
+#: platformtheme/kdeplatformtheme.cpp:504
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&Evet"
 
-#: platformtheme/kdeplatformtheme.cpp:496
+#: platformtheme/kdeplatformtheme.cpp:506
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Tümüne Evet"
 
-#: platformtheme/kdeplatformtheme.cpp:498
+#: platformtheme/kdeplatformtheme.cpp:508
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&Hayır"
 
-#: platformtheme/kdeplatformtheme.cpp:500
+#: platformtheme/kdeplatformtheme.cpp:510
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Tümüne Hayır"
 
-#: platformtheme/kdeplatformtheme.cpp:503
+#: platformtheme/kdeplatformtheme.cpp:513
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "İptal Et"
 
-#: platformtheme/kdeplatformtheme.cpp:505
+#: platformtheme/kdeplatformtheme.cpp:515
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Yeniden Dene"
 
-#: platformtheme/kdeplatformtheme.cpp:507
+#: platformtheme/kdeplatformtheme.cpp:517
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
