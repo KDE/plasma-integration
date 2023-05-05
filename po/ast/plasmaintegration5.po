@@ -1,0 +1,155 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the plasma-integration package.
+#
+# Enol P. <enolp@softastur.org>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: plasma-integration\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2023-05-04 02:21+0000\n"
+"PO-Revision-Date: 2023-05-03 21:11+0200\n"
+"Last-Translator: Enol P. <enolp@softastur.org>\n"
+"Language-Team: \n"
+"Language: ast_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 23.04.0\n"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:283
+#, kde-format
+msgctxt "@title:window"
+msgid "Open File"
+msgstr ""
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:284
+#, kde-format
+msgctxt "@title:window"
+msgid "Save File"
+msgstr ""
+
+#: platformtheme/kdeplatformtheme.cpp:500
+#, kde-format
+msgctxt "@action:button"
+msgid "Save All"
+msgstr ""
+
+#: platformtheme/kdeplatformtheme.cpp:504
+#, kde-format
+msgctxt "@action:button"
+msgid "&Yes"
+msgstr "&Sí"
+
+#: platformtheme/kdeplatformtheme.cpp:506
+#, kde-format
+msgctxt "@action:button"
+msgid "Yes to All"
+msgstr ""
+
+#: platformtheme/kdeplatformtheme.cpp:508
+#, kde-format
+msgctxt "@action:button"
+msgid "&No"
+msgstr "&Non"
+
+#: platformtheme/kdeplatformtheme.cpp:510
+#, kde-format
+msgctxt "@action:button"
+msgid "No to All"
+msgstr ""
+
+#: platformtheme/kdeplatformtheme.cpp:513
+#, kde-format
+msgctxt "@action:button"
+msgid "Abort"
+msgstr ""
+
+#: platformtheme/kdeplatformtheme.cpp:515
+#, kde-format
+msgctxt "@action:button"
+msgid "Retry"
+msgstr ""
+
+#: platformtheme/kdeplatformtheme.cpp:517
+#, kde-format
+msgctxt "@action:button"
+msgid "Ignore"
+msgstr ""
+
+#: platformtheme/kdirselectdialog.cpp:120
+#, kde-format
+msgctxt "folder name"
+msgid "New Folder"
+msgstr ""
+
+#: platformtheme/kdirselectdialog.cpp:126
+#, kde-format
+msgctxt "@title:window"
+msgid "New Folder"
+msgstr ""
+
+#: platformtheme/kdirselectdialog.cpp:127
+#, kde-format
+msgctxt "@label:textbox"
+msgid ""
+"Create new folder in:\n"
+"%1"
+msgstr ""
+
+#: platformtheme/kdirselectdialog.cpp:158
+#, kde-format
+msgid "A file or folder named %1 already exists."
+msgstr ""
+
+#: platformtheme/kdirselectdialog.cpp:167
+#, kde-format
+msgid "You do not have permission to create that folder."
+msgstr ""
+
+#: platformtheme/kdirselectdialog.cpp:269
+#, kde-format
+msgctxt "@title:window"
+msgid "Select Folder"
+msgstr ""
+
+#: platformtheme/kdirselectdialog.cpp:278
+#, kde-format
+msgctxt "@action:button"
+msgid "New Folder..."
+msgstr ""
+
+#: platformtheme/kdirselectdialog.cpp:327
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "New Folder..."
+msgstr ""
+
+#: platformtheme/kdirselectdialog.cpp:336
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Move to Trash"
+msgstr ""
+
+#: platformtheme/kdirselectdialog.cpp:345
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Delete"
+msgstr ""
+
+#: platformtheme/kdirselectdialog.cpp:356
+#, kde-format
+msgctxt "@option:check"
+msgid "Show Hidden Folders"
+msgstr ""
+
+#: platformtheme/kdirselectdialog.cpp:363
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Properties"
+msgstr ""
+
+#: platformtheme/kfiletreeview.cpp:185
+#, kde-format
+msgid "Show Hidden Folders"
+msgstr ""
