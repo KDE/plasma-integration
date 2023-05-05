@@ -25,6 +25,7 @@ Dependencies:
     'frameworks/kxmlgui': '@latest'
     'frameworks/solid': '@latest'
     'plasma/breeze': '@same'
+    'third-party/wayland': '@latest'
 
 - 'on': ['Linux/Qt6', 'FreeBSD/Qt6']
   'require':
@@ -50,3 +51,4 @@ Dependencies:
     'frameworks/kxmlgui': '@latest-kf6'
     'frameworks/solid': '@latest-kf6'
     'plasma/breeze': '@same'
+    'third-party/wayland': '@latest'
