@@ -106,6 +106,9 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
         }
         shellSurfaceDestroyed(w);
     } else if (event->type() == QEvent::ApplicationPaletteChange) {
+        if (watched != QGuiApplication::instance()) {
+            return false;
+        }
         const auto topLevelWindows = QGuiApplication::topLevelWindows();
         for (QWindow *w : topLevelWindows) {
             if (isRelevantTopLevel(w)) {
