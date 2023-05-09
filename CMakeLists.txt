@@ -35,6 +35,12 @@ find_package(KF${QT_MAJOR_VERSION} ${KF_MIN_VERSION} REQUIRED COMPONENTS
 )
 
 if (QT_MAJOR_VERSION EQUAL "5")
+    find_package(KF5ConfigWidgets ${KF_MIN_VERSION} REQUIRED CONFIG)
+else()
+    find_package(KF6ColorScheme ${KF_MIN_VERSION} REQUIRED CONFIG)
+endif()
+
+if (QT_MAJOR_VERSION EQUAL "5")
     find_package(QtWaylandScanner ${QT_MIN_VERSION} REQUIRED)
 endif()
 find_package(Wayland 1.9 REQUIRED Client)

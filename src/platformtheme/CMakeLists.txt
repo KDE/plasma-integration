@@ -65,7 +65,6 @@ target_link_libraries(KDEPlasmaPlatformTheme
         Qt::GuiPrivate
         Qt::DBus
         Qt::QuickControls2
-        KF${QT_MAJOR_VERSION}::ConfigWidgets
         KF${QT_MAJOR_VERSION}::ConfigCore
         KF${QT_MAJOR_VERSION}::IconThemes
         KF${QT_MAJOR_VERSION}::KIOFileWidgets # KFileFilterCombo, KDirSortFilterProxyModel, KRecentDirs
@@ -85,6 +84,9 @@ target_link_libraries(KDEPlasmaPlatformTheme
 )
 if (QT_MAJOR_VERSION EQUAL "5")
     target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt5::X11Extras)
+    target_link_libraries(KDEPlasmaPlatformTheme PRIVATE KF5::ConfigWidgets)
+else()
+    target_link_libraries(KDEPlasmaPlatformTheme PRIVATE KF6::ColorScheme)
 endif()
 
 if(HAVE_X11)
