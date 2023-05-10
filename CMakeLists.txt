@@ -32,6 +32,7 @@ endif()
 find_package(KF${QT_MAJOR_VERSION} ${KF_MIN_VERSION} REQUIRED COMPONENTS
                 Config ConfigWidgets I18n IconThemes KIO Notifications
                 WidgetsAddons WindowSystem ConfigWidgets Wayland GuiAddons
+                XmlGui
 )
 
 if (QT_MAJOR_VERSION EQUAL "5")
