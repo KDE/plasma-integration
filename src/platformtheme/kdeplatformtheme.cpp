@@ -222,7 +222,13 @@ public:
                 Q_EMIT canceled();
             } else {
                 if (reply.argumentAt<0>() == 0) {
-                    Q_EMIT serviceSelected(KService::serviceByDesktopName(reply.argumentAt<1>().value(QStringLiteral("choice")).toString()));
+                    const QString choice = reply.argumentAt<1>().value(QStringLiteral("choice")).toString();
+                    const auto service = KService::serviceByDesktopName(choice);
+                    if (service) {
+                        Q_EMIT serviceSelected(service);
+                    } else {
+                        qWarning() << "Invalid service. No service found for: " << choice;
+                    }
                 } else {
                     Q_EMIT canceled();
                 }
