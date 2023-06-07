@@ -47,7 +47,6 @@ bool X11Integration::eventFilter(QObject *watched, QEvent *event)
             QPlatformSurfaceEvent *pe = static_cast<QPlatformSurfaceEvent *>(event);
             if (!w->flags().testFlag(Qt::ForeignWindow)) {
                 if (pe->surfaceEventType() == QPlatformSurfaceEvent::SurfaceCreated) {
-                    m_platformTheme->windowCreated(w);
                     auto flags = w->flags();
                     // A recent KWin change means it now follows WindowButtonHints on X11
                     // Some KDE applications use QDialogs for their main window,

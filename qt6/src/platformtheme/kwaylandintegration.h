@@ -37,6 +37,11 @@ private:
     void installColorScheme(QWindow *w);
     QScopedPointer<AppMenuManager> m_appMenuManager;
     QScopedPointer<ServerSideDecorationPaletteManager> m_paletteManager;
+    struct DBusMenuInfo {
+        QString serviceName;
+        QString objectPath;
+    };
+    QHash<QWindow *, DBusMenuInfo> m_dbusMenuInfos;
 
     KdePlatformTheme *m_platformTheme;
 };

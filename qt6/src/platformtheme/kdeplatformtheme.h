@@ -7,10 +7,10 @@
 #ifndef KDEPLATFORMTHEME_H
 #define KDEPLATFORMTHEME_H
 
-#include <qpa/qplatformtheme.h>
-
 #include <QHash>
 #include <QKeySequence>
+
+#include <private/qgenericunixthemes_p.h>
 
 class KHintsSettings;
 class KFontSettingsData;
@@ -19,7 +19,7 @@ class X11Integration;
 class QIconEngine;
 class QWindow;
 
-class KdePlatformTheme : public QPlatformTheme
+class KdePlatformTheme : public QGenericUnixTheme
 {
 public:
     KdePlatformTheme();
@@ -41,10 +41,6 @@ public:
     QPlatformSystemTrayIcon *createPlatformSystemTrayIcon() const override;
 
     QPlatformMenuBar *createPlatformMenuBar() const override;
-
-    void globalMenuBarExistsNow();
-    void globalMenuBarNoLongerExists();
-    void windowCreated(QWindow *window);
 
 private:
     void setMenuBarForWindow(QWindow *window, const QString &serviceName, const QString &objectPath) const;

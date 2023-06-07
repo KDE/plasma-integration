@@ -10,7 +10,6 @@
 #include <QWindow>
 #include <qpa/qplatformwindow_p.h>
 
-#include "qdbusmenubar_p.h"
 #include "qwayland-appmenu.h"
 #include "qwayland-server-decoration-palette.h"
 
@@ -83,7 +82,6 @@ bool KWaylandIntegration::eventFilter(QObject *watched, QEvent *event)
         QWindow *w = qobject_cast<QWindow *>(watched);
         QPlatformSurfaceEvent *pe = static_cast<QPlatformSurfaceEvent *>(event);
         if (w && !w->flags().testFlag(Qt::ForeignWindow) && pe->surfaceEventType() == QPlatformSurfaceEvent::SurfaceCreated) {
-            m_platformTheme->windowCreated(w);
             if (auto waylandWindow = w->nativeInterface<QNativeInterface::Private::QWaylandWindow>()) {
                 connect(waylandWindow, &QNativeInterface::Private::QWaylandWindow::surfaceCreated, this, [this, w] {
                     shellSurfaceCreated(w);
@@ -118,22 +116,17 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
     if (!s) {
         return;
     }
-#ifndef KF6_TODO_DBUS_MENUBAR
+
     if (!m_appMenuManager) {
         m_appMenuManager.reset(new AppMenuManager());
     }
     if (m_appMenuManager->isActive()) {
         auto menu = new AppMenu(m_appMenuManager->create(s));
         w->setProperty("org.kde.plasma.integration.appmenu", QVariant::fromValue(menu));
-        auto menuBar = QDBusMenuBar::menuBarForWindow(w);
-        if (!menuBar) {
-            menuBar = QDBusMenuBar::globalMenuBar();
-        }
-        if (menuBar) {
-            menu->set_address(QDBusConnection::sessionBus().baseService(), menuBar->objectPath());
+        if (auto it = m_dbusMenuInfos.constFind(w); it != m_dbusMenuInfos.cend()) {
+            menu->set_address(it->serviceName, it->objectPath);
         }
     }
-#endif
 }
 
 void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
@@ -181,6 +174,10 @@ void KWaylandIntegration::setAppMenu(QWindow *window, const QString &serviceName
     if (menu) {
         menu->set_address(serviceName, objectPath);
     }
+    m_dbusMenuInfos.insert(window, {serviceName, objectPath});
+    connect(window, &QWindow::destroyed, this, [this, window] {
+        m_dbusMenuInfos.remove(window);
+    });
 }
 
 wl_surface *KWaylandIntegration::surfaceFromWindow(QWindow *window)

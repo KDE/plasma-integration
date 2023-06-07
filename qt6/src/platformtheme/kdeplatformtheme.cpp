@@ -15,6 +15,7 @@
 #include "kfontsettingsdata.h"
 #include "khintssettings.h"
 #include "kwaylandintegration.h"
+#include "qdbusmenubarwrapper.h"
 #include "x11integration.h"
 
 #include <QApplication>
@@ -42,7 +43,6 @@
 #include <kiconloader.h>
 #include <kstandardshortcut.h>
 
-#include "qdbusmenubar_p.h"
 #include "qxdgdesktopportalfiledialog_p.h"
 
 #include <KCountryFlagEmojiIconEngine>
@@ -544,10 +544,13 @@ QPlatformSystemTrayIcon *KdePlatformTheme::createPlatformSystemTrayIcon() const
 QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
 {
     if (isDBusGlobalMenuAvailable()) {
-#ifndef KF6_TODO_DBUS_MENUBAR
-        auto *menu = new QDBusMenuBar(const_cast<KdePlatformTheme *>(this));
+        auto dbusMenu = QGenericUnixTheme::createPlatformMenuBar();
+        if (!dbusMenu) {
+            return nullptr;
+        }
+        auto menu = new QDBusMenuBarWrapper(dbusMenu);
 
-        QObject::connect(menu, &QDBusMenuBar::windowChanged, menu, [this, menu](QWindow *newWindow, QWindow *oldWindow) {
+        QObject::connect(menu, &QDBusMenuBarWrapper::windowChanged, menu, [this, menu](QWindow *newWindow, QWindow *oldWindow) {
             const QString &serviceName = QDBusConnection::sessionBus().baseService();
             const QString &objectPath = menu->objectPath();
 
@@ -556,9 +559,7 @@ QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
         });
 
         return menu;
-#endif
     }
-
     return nullptr;
 }
 
@@ -590,53 +591,6 @@ bool KdePlatformTheme::useXdgDesktopPortal()
 inline bool windowRelevantForGlobalMenu(QWindow *window)
 {
     return !(window->type() & Qt::WindowType::Popup);
-}
-
-void KdePlatformTheme::globalMenuBarExistsNow()
-{
-#ifndef KF6_TODO_DBUS_MENUBAR
-    const QString &serviceName = QDBusConnection::sessionBus().baseService();
-    const QString &objectPath = QDBusMenuBar::globalMenuBar()->objectPath();
-
-    for (auto *window : qApp->topLevelWindows()) {
-        if (QDBusMenuBar::menuBarForWindow(window))
-            continue;
-        if (!windowRelevantForGlobalMenu(window))
-            return;
-
-        setMenuBarForWindow(window, serviceName, objectPath);
-    }
-#endif
-}
-
-void KdePlatformTheme::windowCreated(QWindow *window)
-{
-#ifndef KF6_TODO_DBUS_MENUBAR
-    if (!QDBusMenuBar::globalMenuBar())
-        return;
-
-    if (QDBusMenuBar::menuBarForWindow(window))
-        return;
-
-    const QString &serviceName = QDBusConnection::sessionBus().baseService();
-    const QString &objectPath = QDBusMenuBar::globalMenuBar()->objectPath();
-
-    setMenuBarForWindow(window, serviceName, objectPath);
-#endif
-}
-
-void KdePlatformTheme::globalMenuBarNoLongerExists()
-{
-#ifndef KF6_TODO_DBUS_MENUBAR
-    for (auto *window : qApp->topLevelWindows()) {
-        if (QDBusMenuBar::menuBarForWindow(window))
-            continue;
-        if (!windowRelevantForGlobalMenu(window))
-            return;
-
-        setMenuBarForWindow(window, {}, {});
-    }
-#endif
 }
 
 void KdePlatformTheme::setMenuBarForWindow(QWindow *window, const QString &serviceName, const QString &objectPath) const
