@@ -37,9 +37,9 @@ if (QT_MAJOR_VERSION EQUAL "5")
     list(APPEND platformtheme_SRCS qdbusmenubar.cpp) # fork of Qt's qdbusmenubar with some added setters for our convenience
 endif()
 
-qt_add_dbus_interface(platformtheme_SRCS org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
+qt5_add_dbus_interface(platformtheme_SRCS org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
 kconfig_add_kcfg_files(platformtheme_SRCS renderersettings.kcfgc)
-add_library(KDEPlasmaPlatformTheme MODULE)
+add_library(KDEPlasmaPlatformTheme5 MODULE)
 if (QT_MAJOR_VERSION EQUAL "5")
     ecm_add_qtwayland_client_protocol(platformtheme_SRCS
         PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
@@ -58,13 +58,13 @@ else()
         ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
     )
 endif()
-target_sources(KDEPlasmaPlatformTheme PRIVATE ${platformtheme_SRCS})
+target_sources(KDEPlasmaPlatformTheme5 PRIVATE ${platformtheme_SRCS})
 
-target_link_libraries(KDEPlasmaPlatformTheme
+target_link_libraries(KDEPlasmaPlatformTheme5
     PRIVATE
-        Qt::GuiPrivate
-        Qt::DBus
-        Qt::QuickControls2
+        Qt5::GuiPrivate
+        Qt5::DBus
+        Qt5::QuickControls2
         KF${QT_MAJOR_VERSION}::ConfigCore
         KF${QT_MAJOR_VERSION}::IconThemes
         KF${QT_MAJOR_VERSION}::KIOFileWidgets # KFileFilterCombo, KDirSortFilterProxyModel, KRecentDirs
@@ -77,24 +77,24 @@ target_link_libraries(KDEPlasmaPlatformTheme
         KF${QT_MAJOR_VERSION}::GuiAddons
         XCB::XCB
         ${QT5PLATFORMSUPPORT_LIBS}
-        Qt::WaylandClient
-        Qt::GuiPrivate
+        Qt5::WaylandClient
+        Qt5::GuiPrivate
         Wayland::Client
         KF${QT_MAJOR_VERSION}::WaylandClient
 )
 if (QT_MAJOR_VERSION EQUAL "5")
-    target_link_libraries(KDEPlasmaPlatformTheme PRIVATE Qt5::X11Extras)
-    target_link_libraries(KDEPlasmaPlatformTheme PRIVATE KF5::ConfigWidgets)
+    target_link_libraries(KDEPlasmaPlatformTheme5 PRIVATE Qt5::X11Extras)
+    target_link_libraries(KDEPlasmaPlatformTheme5 PRIVATE KF5::ConfigWidgets)
 else()
     target_link_libraries(KDEPlasmaPlatformTheme PRIVATE KF6::ColorScheme)
 endif()
 
 if(HAVE_X11)
-  target_link_libraries(KDEPlasmaPlatformTheme PRIVATE ${X11_Xcursor_LIB} ${XCB_XCB_LIBRARY})
+  target_link_libraries(KDEPlasmaPlatformTheme5 PRIVATE ${X11_Xcursor_LIB} ${XCB_XCB_LIBRARY})
 endif()
 
-set_target_properties(KDEPlasmaPlatformTheme PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/platformthemes/")
-install(TARGETS KDEPlasmaPlatformTheme DESTINATION ${KDE_INSTALL_QTPLUGINDIR}/platformthemes)
+set_target_properties(KDEPlasmaPlatformTheme5 PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/platformthemes/")
+install(TARGETS KDEPlasmaPlatformTheme5 DESTINATION ${KDE_INSTALL_QTPLUGINDIR}/platformthemes)
 
 install(FILES fonts_global_toolbar.upd fonts_global.upd fonts_akregator.upd fonts_kate.upd DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR})
 install(PROGRAMS fonts_global.pl fonts_akregator.pl fonts_kate.pl DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR})
