@@ -39,11 +39,7 @@
 #define HAVE_X11 0
 #endif
 #if HAVE_X11
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#include <private/qtx11extras_p.h>
-#else
 #include <QX11Info>
-#endif
 #include <X11/Xcursor/Xcursor.h>
 #endif
 
@@ -453,15 +449,10 @@ void KHintsSettings::updateCursorTheme()
     const QString cursorTheme = readConfigValue(mouseConfig, QStringLiteral("cursorTheme"), QStringLiteral("breeze_cursors")).toString();
     const int cursorSize = readConfigValue(mouseConfig, QStringLiteral("cursorSize"), 24).toInt();
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
-    m_hints[QPlatformTheme::MouseCursorTheme] = cursorTheme;
-    m_hints[QPlatformTheme::MouseCursorSize] = QSize(cursorSize, cursorSize);
-#else
     if (QGuiApplication::platformName() == QLatin1String("wayland")) {
         qputenv("XCURSOR_THEME", cursorTheme.toUtf8());
         qputenv("XCURSOR_SIZE", QByteArray::number(cursorSize));
     }
-#endif
 }
 
 void KHintsSettings::updateX11CursorTheme()

@@ -45,11 +45,9 @@
 #include "qdbusmenubar_p.h"
 #include "qxdgdesktopportalfiledialog_p.h"
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <KCountryFlagEmojiIconEngine>
 
 using namespace Qt::StringLiterals;
-#endif
 
 static const QByteArray s_x11AppMenuServiceNamePropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_SERVICE_NAME");
 static const QByteArray s_x11AppMenuObjectPathPropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_OBJECT_PATH");
@@ -275,16 +273,6 @@ KdePlatformTheme::KdePlatformTheme()
     }
 #endif
 
-    // Don't show the titlebar "What's This?" help button for dialogs that
-    // have any UI elements with help text, unless the window specifically
-    // requests it. This is because KDE apps with help text will use the nice
-    // contextual tooltips instead; we only want to ever see the titlebar button
-    // to invoke the "What's This?" feature in 3rd-party Qt apps that have set
-    // "What's This" help text and requested the button
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QCoreApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton, true);
-#endif
-
     QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar, false);
     setQtQuickControlsTheme();
 
@@ -294,9 +282,7 @@ KdePlatformTheme::KdePlatformTheme()
     static KIOUiDelegate delegateExtension;
     KIO::setDefaultJobUiDelegateExtension(&delegateExtension);
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     KCountryFlagEmojiIconEngine::setGlobalDefaultFont(QFont(u"Noto Color Emoji, emoji"_qs));
-#endif
 }
 
 KdePlatformTheme::~KdePlatformTheme()

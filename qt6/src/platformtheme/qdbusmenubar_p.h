@@ -29,17 +29,10 @@
 #include <QString>
 #include <QWindow>
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <QtThemeSupport/private/qdbusmenuadaptor_p.h>
-#include <QtThemeSupport/private/qdbusmenuconnection_p.h>
-#include <QtThemeSupport/private/qdbusmenuregistrarproxy_p.h>
-#include <QtThemeSupport/private/qdbusplatformmenu_p.h>
-#else
 #include <private/qdbusmenuadaptor_p.h>
 #include <private/qdbusmenuconnection_p.h>
 #include <private/qdbusmenuregistrarproxy_p.h>
 #include <private/qdbusplatformmenu_p.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 

@@ -78,11 +78,6 @@ void initializeRendererSessions()
     case PlasmaQtQuickSettings::RendererSettings::opengl:
         graphicsApi = QSGRendererInterface::OpenGL;
         break;
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    case PlasmaQtQuickSettings::RendererSettings::vulkan:
-        graphicsApi = QSGRendererInterface::Vulkan;
-        break;
-#endif
     default:
         if (!checkBackend(checkContext)) {
             qWarning("Warning: fallback to QtQuick software backend.");
@@ -91,11 +86,7 @@ void initializeRendererSessions()
     }
 
     if (graphicsApi != QSGRendererInterface::Unknown) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         QQuickWindow::setSceneGraphBackend(graphicsApi);
-#else
-        QQuickWindow::setGraphicsApi(graphicsApi);
-#endif
     }
 
     if (!qEnvironmentVariableIsSet("QSG_RENDER_LOOP")) {
