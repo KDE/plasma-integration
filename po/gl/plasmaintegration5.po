@@ -144,7 +144,7 @@ msgstr "Eliminar"
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
-msgstr "Mostrar os cartafoles agochados"
+msgstr "Amosar os cartafoles agochados"
 
 #: platformtheme/kdirselectdialog.cpp:363
 #, kde-format
@@ -155,7 +155,7 @@ msgstr "Propiedades"
 #: platformtheme/kfiletreeview.cpp:185
 #, kde-format
 msgid "Show Hidden Folders"
-msgstr "Mostrar os cartafoles agochados"
+msgstr "Amosar os cartafoles agochados"
 
 #~ msgid "Opening..."
 #~ msgstr "Abrindo…"
