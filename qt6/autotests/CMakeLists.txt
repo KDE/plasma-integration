@@ -1,16 +1,16 @@
 include(ECMMarkAsTest)
 include(ECMMarkNonGuiExecutable)
 
-find_package(Qt${QT_MAJOR_VERSION}Test ${QT_MIN_VERSION} CONFIG QUIET)
-find_package(Qt${QT_MAJOR_VERSION}Qml ${QT_MIN_VERSION} CONFIG QUIET)
+find_package(Qt6Test ${QT_MIN_VERSION} CONFIG QUIET)
+find_package(Qt6Qml ${QT_MIN_VERSION} CONFIG QUIET)
 
-if(NOT Qt${QT_MAJOR_VERSION}Test_FOUND)
-    message(STATUS "Qt${QT_MAJOR_VERSION}Test not found, autotests will not be built.")
+if(NOT Qt6Test_FOUND)
+    message(STATUS "Qt6Test not found, autotests will not be built.")
     return()
 endif()
 
-if(NOT Qt${QT_MAJOR_VERSION}Qml_FOUND)
-    message(STATUS "Qt${QT_MAJOR_VERSION}Qml not found, QML autotests will not be built.")
+if(NOT Qt6Qml_FOUND)
+    message(STATUS "Qt6Qml not found, QML autotests will not be built.")
 endif()
 
 set(CONFIGFILE "${CMAKE_CURRENT_SOURCE_DIR}/kdeplatformtheme_kdeglobals")
@@ -34,19 +34,19 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         Qt6::DBus
         Qt6::QuickControls2
         ${QT5PLATFORMSUPPORT_LIBS}
-        KF${QT_MAJOR_VERSION}::ConfigWidgets
-        KF${QT_MAJOR_VERSION}::ConfigCore
-        KF${QT_MAJOR_VERSION}::IconThemes
-        KF${QT_MAJOR_VERSION}::KIOFileWidgets
-        KF${QT_MAJOR_VERSION}::I18n
-        KF${QT_MAJOR_VERSION}::Notifications
-        KF${QT_MAJOR_VERSION}::WindowSystem
-        KF${QT_MAJOR_VERSION}::GuiAddons
+        KF6::ConfigWidgets
+        KF6::ConfigCore
+        KF6::IconThemes
+        KF6::KIOFileWidgets
+        KF6::I18n
+        KF6::Notifications
+        KF6::WindowSystem
+        KF6::GuiAddons
         Qt6::WaylandClient
         XCB::XCB
         Wayland::Client
-        KF${QT_MAJOR_VERSION}::WaylandClient
-        KF${QT_MAJOR_VERSION}::XmlGui
+        KF6::WaylandClient
+        KF6::XmlGui
     )
     if (QT_MAJOR_VERSION EQUAL "5")
         target_link_libraries(${_testname} Qt5::X11Extras)
@@ -60,22 +60,10 @@ frameworkintegration_tests(
     kdeplatformtheme_unittest
 )
 set(wayland_interfaces)
-if (QT_MAJOR_VERSION EQUAL "5")
-    ecm_add_qtwayland_client_protocol(wayland_interfaces
-        PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
-        BASENAME appmenu
-    )
-
-    ecm_add_qtwayland_client_protocol(wayland_interfaces
-        PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
-        BASENAME server-decoration-palette
-    )
-else()
-    qt6_generate_wayland_protocol_client_sources(kdeplatformtheme_unittest6 FILES
-        ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
-        ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
-    )
-endif()
+qt6_generate_wayland_protocol_client_sources(kdeplatformtheme_unittest6 FILES
+    ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
+    ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
+)
 
 target_sources(kdeplatformtheme_unittest6 PRIVATE
   ../src/platformtheme/kdeplatformtheme.cpp ../src/platformtheme/kdeplatformtheme.h
@@ -92,14 +80,8 @@ target_sources(kdeplatformtheme_unittest6 PRIVATE
   ${dbus_interface}
   ${wayland_interfaces}
 )
-if (QT_MAJOR_VERSION EQUAL "5")
-  target_sources(kdeplatformtheme_unittest6 PRIVATE
-    ../src/platformtheme/qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
-  )
-else()
-  # TODO KF6 Port D-Bus menu support
-  target_compile_definitions(kdeplatformtheme_unittest6 PRIVATE -DKF6_TODO_DBUS_MENUBAR)
-endif()
+# TODO KF6 Port D-Bus menu support
+target_compile_definitions(kdeplatformtheme_unittest6 PRIVATE -DKF6_TODO_DBUS_MENUBAR)
 
 frameworkintegration_tests(
   kfontsettingsdata_unittest
@@ -132,7 +114,7 @@ frameworkintegration_tests(
   ../src/platformtheme/khintssettings.cpp ../src/platformtheme/khintssettings.h
 )
 
-if(Qt${QT_MAJOR_VERSION}Qml_FOUND)
+if(Qt6Qml_FOUND)
     add_test(NAME qmltests6 COMMAND qmltestrunner WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
     frameworkintegration_tests(kfiledialogqml_unittest)

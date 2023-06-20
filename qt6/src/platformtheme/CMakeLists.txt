@@ -47,21 +47,21 @@ target_link_libraries(KDEPlasmaPlatformTheme6
         Qt6::GuiPrivate
         Qt6::DBus
         Qt6::QuickControls2
-        KF${QT_MAJOR_VERSION}::ConfigCore
-        KF${QT_MAJOR_VERSION}::IconThemes
-        KF${QT_MAJOR_VERSION}::KIOFileWidgets # KFileFilterCombo, KDirSortFilterProxyModel, KRecentDirs
-        KF${QT_MAJOR_VERSION}::KIOWidgets
-        KF${QT_MAJOR_VERSION}::KIOGui
-        KF${QT_MAJOR_VERSION}::XmlGui
-        KF${QT_MAJOR_VERSION}::I18n
-        KF${QT_MAJOR_VERSION}::Notifications
-        KF${QT_MAJOR_VERSION}::WindowSystem
-        KF${QT_MAJOR_VERSION}::GuiAddons
+        KF6::ConfigCore
+        KF6::IconThemes
+        KF6::KIOFileWidgets # KFileFilterCombo, KDirSortFilterProxyModel, KRecentDirs
+        KF6::KIOWidgets
+        KF6::KIOGui
+        KF6::XmlGui
+        KF6::I18n
+        KF6::Notifications
+        KF6::WindowSystem
+        KF6::GuiAddons
         XCB::XCB
         Qt6::WaylandClient
         Qt6::GuiPrivate
         Wayland::Client
-        KF${QT_MAJOR_VERSION}::WaylandClient
+        KF6::WaylandClient
 )
 
 target_link_libraries(KDEPlasmaPlatformTheme6 PRIVATE KF6::ColorScheme)
