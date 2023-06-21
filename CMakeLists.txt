@@ -26,13 +26,20 @@ include(KDEClangFormat)
 include(KDEGitCommitHooks)
 include(ECMDeprecationSettings)
 
-find_package(KF6I18n CONFIG REQUIRED)
-
 find_package(Wayland 1.9 REQUIRED Client)
 find_package(PlasmaWaylandProtocols 1.6.0 CONFIG REQUIRED)
 
 option(BUILD_QT5 "Build for Qt5" ON)
 option(BUILD_QT6 "Build for Qt6" ON)
+
+#CI is stupid and doesn't allow us to set CMAKE options per build variant
+if ($ENV{CI_JOB_NAME_SLUG} MATCHES "qt5")
+    set(BUILD_QT5 ON)
+    set(BUILD_QT6 OFF)
+elseif($ENV{CI_JOB_NAME_SLUG} MATCHES "qt6")
+    set(BUILD_QT5 OFF)
+    set(BUILD_QT6 ON)
+endif()
 
 find_package(XCB COMPONENTS XCB)
 set_package_properties(XCB PROPERTIES
@@ -42,9 +49,12 @@ set_package_properties(XCB PROPERTIES
     PURPOSE "Required to pass style properties to native Windows on X11 Platform"
 )
 
-add_definitions(-DTRANSLATION_DOMAIN=\"plasmaintegration5\")
-if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
-    ki18n_install(po)
+if (${BUILD_QT6})
+    find_package(KF6I18n CONFIG REQUIRED)
+    add_definitions(-DTRANSLATION_DOMAIN=\"plasmaintegration5\")
+    if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
+        ki18n_install(po)
+    endif()
 endif()
 
 find_package(FontNotoSans)
@@ -76,15 +86,6 @@ set_package_properties(XDGDesktopPortalKDE PROPERTIES
 file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h)
 kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
 kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
-
-#CI is stupid and doesn't allow us to set CMAKE options per build variant
-if ($ENV{CI_JOB_NAME_SLUG} MATCHES "qt5")
-    set(BUILD_QT5 ON)
-    set(BUILD_QT6 OFF)
-elseif($ENV{CI_JOB_NAME_SLUG} MATCHES "qt6")
-    set(BUILD_QT5 OFF)
-    set(BUILD_QT6 ON)
-endif()
 
 if (${BUILD_QT5})
     unset(QUERY_EXECUTABLE CACHE)
