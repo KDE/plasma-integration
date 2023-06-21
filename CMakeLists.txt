@@ -31,6 +31,9 @@ find_package(KF6I18n CONFIG REQUIRED)
 find_package(Wayland 1.9 REQUIRED Client)
 find_package(PlasmaWaylandProtocols 1.6.0 CONFIG REQUIRED)
 
+option(BUILD_QT5 "Build for Qt5" ON)
+option(BUILD_QT6 "Build for Qt6" ON)
+
 find_package(XCB COMPONENTS XCB)
 set_package_properties(XCB PROPERTIES
     DESCRIPTION "X protocol C-language Binding"
@@ -74,10 +77,24 @@ file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h)
 kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
 kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
 
-add_subdirectory(qt5)
-unset(QUERY_EXECUTABLE CACHE)
+#CI is stupid and doesn't allow us to set CMAKE options per build variant
+if ($ENV{CI_JOB_NAME_SLUG} MATCHES "qt5")
+    set(BUILD_QT5 ON)
+    set(BUILD_QT6 OFF)
+elseif($ENV{CI_JOB_NAME_SLUG} MATCHES "qt6")
+    set(BUILD_QT5 OFF)
+    set(BUILD_QT6 ON)
+endif()
 
-add_subdirectory(qt6)
-unset(QUERY_EXECUTABLE CACHE)
+if (${BUILD_QT5})
+    unset(QUERY_EXECUTABLE CACHE)
+    add_subdirectory(qt5)
+endif()
+
+if (${BUILD_QT6})
+    unset(QUERY_EXECUTABLE CACHE)
+    add_subdirectory(qt6)
+endif()
+
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
