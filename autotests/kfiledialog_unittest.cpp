@@ -13,6 +13,8 @@
 #include <QTest>
 #include <QTimer>
 
+#include "../src/platformtheme/filefilterconverter.h"
+
 Q_DECLARE_METATYPE(QFileDialog::ViewMode)
 Q_DECLARE_METATYPE(QFileDialog::FileMode)
 Q_DECLARE_METATYPE(KFile::FileView)
@@ -358,6 +360,26 @@ private Q_SLOTS:
             QCOMPARE(dialog.directoryUrl().adjusted(QUrl::StripTrailingSlash), dir);
             fw->slotCancel();
         }
+    }
+
+    void testqt2KdeFilter_data()
+    {
+        QTest::addColumn<QStringList>("qtFilter");
+        QTest::addColumn<QString>("expectedKdeFilter");
+        QTest::newRow("txt") << QStringList("Plain Text (*.txt)") << "*.txt|Plain Text ";
+        QTest::newRow("txt_md") << QStringList("Plain Text (*.txt *.md)") << "*.txt *.md|Plain Text ";
+        QTest::newRow("txt_images") << QStringList{"Plain Text (*.txt *.md)", "Image files (*.png *.xpm *.jpg)"}
+                                    << "*.txt *.md|Plain Text \n*.png *.xpm *.jpg|Image files ";
+        QTest::newRow("any") << QStringList{"Image files (*.png *.xpm *.jpg)", "Text files (*.txt)", "Any files (*)"}
+                             << "*.png *.xpm *.jpg|Image files \n*.txt|Text files \n*|Any files ";
+    }
+
+    void testqt2KdeFilter()
+    {
+        QFETCH(QStringList, qtFilter);
+        QFETCH(QString, expectedKdeFilter);
+
+        QCOMPARE(qt2KdeFilter(qtFilter), expectedKdeFilter);
     }
 
 private:

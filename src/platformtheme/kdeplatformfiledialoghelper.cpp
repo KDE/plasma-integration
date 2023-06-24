@@ -6,6 +6,7 @@
 */
 
 #include "kdeplatformfiledialoghelper.h"
+#include "filefilterconverter.h"
 #include "kdirselectdialog_p.h"
 
 #include <KIO/StatJob>
@@ -25,54 +26,6 @@
 #include <QTextStream>
 #include <QVBoxLayout>
 #include <QWindow>
-namespace
-{
-/*
- * Map a Qt filter string into a KDE one.
- */
-static QString qt2KdeFilter(const QStringList &f)
-{
-    QString filter;
-    QTextStream str(&filter, QIODevice::WriteOnly);
-    QStringList list(f);
-    list.replaceInStrings(QStringLiteral("/"), QStringLiteral("\\/"));
-    QStringList::const_iterator it(list.constBegin()), end(list.constEnd());
-    bool first = true;
-
-    for (; it != end; ++it) {
-        int ob = it->lastIndexOf(QLatin1Char('(')), cb = it->lastIndexOf(QLatin1Char(')'));
-
-        if (-1 != cb && ob < cb) {
-            if (first) {
-                first = false;
-            } else {
-                str << '\n';
-            }
-            str << it->mid(ob + 1, (cb - ob) - 1) << '|' << it->mid(0, ob);
-        }
-    }
-
-    return filter;
-}
-
-/*
- * Map a KDE filter string into a Qt one.
- */
-static QString kde2QtFilter(const QStringList &list, const QString &kde, const QString &filterText)
-{
-    QStringList::const_iterator it(list.constBegin()), end(list.constEnd());
-    int pos;
-
-    for (; it != end; ++it) {
-        if (-1 != (pos = it->indexOf(kde)) && pos > 0 && (QLatin1Char('(') == (*it)[pos - 1] || QLatin1Char(' ') == (*it)[pos - 1])
-            && it->length() >= kde.length() + pos && (QLatin1Char(')') == (*it)[pos + kde.length()] || QLatin1Char(' ') == (*it)[pos + kde.length()])
-            && (filterText.isEmpty() || it->startsWith(filterText))) {
-            return *it;
-        }
-    }
-    return QString();
-}
-}
 
 KDEPlatformFileDialog::KDEPlatformFileDialog()
     : KDEPlatformFileDialogBase()
