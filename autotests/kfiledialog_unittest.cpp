@@ -372,6 +372,10 @@ private Q_SLOTS:
                                     << "*.txt *.md|Plain Text \n*.png *.xpm *.jpg|Image files ";
         QTest::newRow("any") << QStringList{"Image files (*.png *.xpm *.jpg)", "Text files (*.txt)", "Any files (*)"}
                              << "*.png *.xpm *.jpg|Image files \n*.txt|Text files \n*|Any files ";
+        QTest::newRow("nameless_one") << QStringList{"*.txt"} << "*.txt";
+        QTest::newRow("nameless_two") << QStringList{"*.txt *.md"} << "*.txt *.md";
+        QTest::newRow("nameless_three") << QStringList{"*.txt *.md", "*.html"} << "*.txt *.md\n*.html";
+        QTest::newRow("nameless_mixed") << QStringList{"*.txt *.md", "HTML Files (*.html *.htm)"} << "*.txt *.md\n*.html *.htm|HTML Files ";
     }
 
     void testqt2KdeFilter()

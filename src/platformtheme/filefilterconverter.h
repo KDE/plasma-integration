@@ -26,13 +26,16 @@ inline QString qt2KdeFilter(const QStringList &f)
     for (; it != end; ++it) {
         int ob = it->lastIndexOf(QLatin1Char('(')), cb = it->lastIndexOf(QLatin1Char(')'));
 
+        if (first) {
+            first = false;
+        } else {
+            str << '\n';
+        }
+
         if (-1 != cb && ob < cb) {
-            if (first) {
-                first = false;
-            } else {
-                str << '\n';
-            }
             str << it->mid(ob + 1, (cb - ob) - 1) << '|' << it->mid(0, ob);
+        } else {
+            str << *it;
         }
     }
 
