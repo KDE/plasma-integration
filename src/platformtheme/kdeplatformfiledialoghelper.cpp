@@ -441,3 +441,5 @@ bool KDEPlatformFileDialogHelper::defaultNameFilterDisables() const
 {
     return false;
 }
+
+#include "moc_kdeplatformfiledialoghelper.cpp"

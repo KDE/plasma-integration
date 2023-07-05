@@ -500,3 +500,5 @@ void KHintsSettings::updatePortalSetting()
         dbusArgument >> mKdeGlobalsPortal;
     }
 }
+
+#include "moc_khintssettings.cpp"

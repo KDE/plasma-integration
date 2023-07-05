@@ -147,3 +147,5 @@ QString KFontSettingsData::readConfigValue(const QString &group, const QString &
     const KConfigGroup configGroup(mKdeGlobals, group);
     return configGroup.readEntry(key, defaultValue);
 }
+
+#include "moc_kfontsettingsdata.cpp"

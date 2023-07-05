@@ -207,3 +207,5 @@ void QDBusMenuBar::unregisterMenuBarX11(QWindow *window)
 }
 
 QT_END_NAMESPACE
+
+#include "moc_qdbusmenubar_p.cpp"

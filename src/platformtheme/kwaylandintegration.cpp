@@ -224,3 +224,5 @@ wl_surface *KWaylandIntegration::surfaceFromWindow(QWindow *window)
 }
 
 #include "kwaylandintegration.moc"
+
+#include "moc_kwaylandintegration.cpp"

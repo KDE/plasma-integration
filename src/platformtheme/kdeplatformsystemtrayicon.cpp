@@ -391,3 +391,5 @@ bool KDEPlatformSystemTrayIcon::supportsMessages() const
 {
     return true;
 }
+
+#include "moc_kdeplatformsystemtrayicon.cpp"

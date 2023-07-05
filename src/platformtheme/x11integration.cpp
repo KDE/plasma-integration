@@ -164,3 +164,5 @@ void X11Integration::setWindowProperty(QWindow *window, const QByteArray &name, 
         xcb_change_property(c, XCB_PROP_MODE_REPLACE, window->winId(), atom, XCB_ATOM_STRING, 8, value.length(), value.constData());
     }
 }
+
+#include "moc_x11integration.cpp"
