@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasmaintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-04 02:21+0000\n"
+"POT-Creation-Date: 2023-07-10 02:12+0000\n"
 "PO-Revision-Date: 2017-05-22 05:11-0400\n"
 "Last-Translator: Elkana Bardugo <ttv200@gmail.com>\n"
 "Language-Team: Hebrew\n"
@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: Zanata 3.9.6\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:283
+#: platformtheme/kdeplatformfiledialoghelper.cpp:285
 #, kde-format
 msgctxt "@title:window"
 msgid "Open File"
 msgstr "פתח קובץ"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:284
+#: platformtheme/kdeplatformfiledialoghelper.cpp:286
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
