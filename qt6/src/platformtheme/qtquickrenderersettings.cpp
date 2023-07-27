@@ -47,25 +47,6 @@ static bool checkBackend(QOpenGLContext &checkContext)
 
 void initializeRendererSessions()
 {
-    // This is loaded via Q_COREAPP_STARTUP_FUNCTION
-
-    // Due to a quirk this gets called twice, see QTBUG-54479
-
-    // The order of events is:
-    // Q*Application constructor starts
-    // We load the QPA
-    // We load the QPT (The first arguably incorrect invocation triggers)
-    // QPA gets initalised
-    // QCoreApplication constructor ends
-    // Second (correct) invocation
-    // it's important that we run after the QPA is initalised'
-
-    static bool firstCall = true;
-    if (firstCall) {
-        firstCall = false;
-        return;
-    }
-
     PlasmaQtQuickSettings::RendererSettings s;
     QOpenGLContext checkContext;
 
