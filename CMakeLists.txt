@@ -49,14 +49,6 @@ set_package_properties(XCB PROPERTIES
     PURPOSE "Required to pass style properties to native Windows on X11 Platform"
 )
 
-if (${BUILD_QT6})
-    find_package(KF6I18n CONFIG REQUIRED)
-    add_definitions(-DTRANSLATION_DOMAIN=\"plasmaintegration5\")
-    if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
-        ki18n_install(po)
-    endif()
-endif()
-
 find_package(FontNotoSans)
 set_package_properties(FontNotoSans PROPERTIES
     PURPOSE "Default sans-serif font -- this is not detected automatically, pass -DCMAKE_DISABLE_FIND_PACKAGE_FontNotoSans=true to mark it ignored."
@@ -94,8 +86,12 @@ endif()
 
 if (${BUILD_QT6})
     unset(QUERY_EXECUTABLE CACHE)
-    add_subdirectory(qt6)
-endif()
 
+    add_definitions(-DTRANSLATION_DOMAIN=\"plasmaintegration5\")
+    add_subdirectory(qt6)
+
+    find_package(KF6I18n CONFIG REQUIRED)
+    ki18n_install(po)
+endif()
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
