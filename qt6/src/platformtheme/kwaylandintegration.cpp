@@ -29,7 +29,15 @@ public:
     }
 };
 
-using AppMenu = QtWayland::org_kde_kwin_appmenu;
+class AppMenu : public QtWayland::org_kde_kwin_appmenu
+{
+public:
+    using org_kde_kwin_appmenu::org_kde_kwin_appmenu;
+    ~AppMenu() override
+    {
+        release();
+    }
+};
 
 class ServerSideDecorationPaletteManager : public QWaylandClientExtensionTemplate<ServerSideDecorationPaletteManager>,
                                            public QtWayland::org_kde_kwin_server_decoration_palette_manager
@@ -151,7 +159,6 @@ void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
 {
     auto appMenu = w->property("org.kde.plasma.integration.appmenu").value<AppMenu *>();
     if (appMenu) {
-        appMenu->release();
         delete appMenu;
     }
     w->setProperty("org.kde.plasma.integration.appmenu", QVariant());
