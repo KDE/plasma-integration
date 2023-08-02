@@ -29,6 +29,8 @@ public:
     }
 };
 
+using AppMenu = QtWayland::org_kde_kwin_appmenu;
+
 class ServerSideDecorationPaletteManager : public QWaylandClientExtensionTemplate<ServerSideDecorationPaletteManager>,
                                            public QtWayland::org_kde_kwin_server_decoration_palette_manager
 {
@@ -41,8 +43,15 @@ public:
     }
 };
 
-using AppMenu = QtWayland::org_kde_kwin_appmenu;
-using ServerSideDecorationPalette = QtWayland::org_kde_kwin_server_decoration_palette;
+class ServerSideDecorationPalette : public QtWayland::org_kde_kwin_server_decoration_palette
+{
+public:
+    using org_kde_kwin_server_decoration_palette::org_kde_kwin_server_decoration_palette;
+    ~ServerSideDecorationPalette() override
+    {
+        release();
+    }
+};
 
 Q_DECLARE_METATYPE(AppMenu *);
 Q_DECLARE_METATYPE(ServerSideDecorationPalette *);
@@ -143,7 +152,6 @@ void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
 
     auto decoPallete = w->property("org.kde.plasma.integration.palette").value<ServerSideDecorationPalette *>();
     if (decoPallete) {
-        decoPallete->release();
         delete decoPallete;
     }
     w->setProperty("org.kde.plasma.integration.palette", QVariant());
