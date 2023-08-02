@@ -41,6 +41,12 @@ public:
     {
         initialize();
     }
+    ~ServerSideDecorationPaletteManager() override
+    {
+        if (isActive()) {
+            org_kde_kwin_server_decoration_palette_manager_destroy(object());
+        }
+    }
 };
 
 class ServerSideDecorationPalette : public QtWayland::org_kde_kwin_server_decoration_palette
