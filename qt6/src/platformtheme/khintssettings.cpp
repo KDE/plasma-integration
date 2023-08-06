@@ -86,8 +86,7 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
     KConfigGroup cgToolbar(mKdeGlobals, "Toolbar style");
     m_hints[QPlatformTheme::ToolButtonStyle] = toolButtonStyle(cgToolbar);
 
-    KConfigGroup cgToolbarIcon(mKdeGlobals, "MainToolbarIcons");
-    m_hints[QPlatformTheme::ToolBarIconSize] = readConfigValue(cgToolbarIcon, QStringLiteral("Size"), 22);
+    m_hints[QPlatformTheme::ToolBarIconSize] = KIconLoader::global()->currentSize(KIconLoader::MainToolbar);
 
     m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = readConfigValue(cg, QStringLiteral("SingleClick"), true);
 
