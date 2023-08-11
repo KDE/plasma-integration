@@ -3,8 +3,8 @@ set(QT_MAJOR_VERSION 6)
 include(KDEInstallDirs6)
 include(KDECMakeSettings)
 
-find_package(Qt6 ${QT6_MIN_VERSION} CONFIG REQUIRED Widgets DBus QuickControls2 WaylandClient)
-find_package(Qt6Gui ${QT6_MIN_VERSION} CONFIG REQUIRED Private)
+find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED Widgets DBus QuickControls2 WaylandClient)
+find_package(Qt6Gui ${QT_MIN_VERSION} CONFIG REQUIRED Private)
 
 # https://bugreports.qt.io/browse/QTBUG-114706
 add_library(Qt::Core ALIAS Qt6::Core)

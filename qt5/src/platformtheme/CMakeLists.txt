@@ -5,7 +5,7 @@ set_package_properties(X11 PROPERTIES DESCRIPTION "Required for updating the Cur
                         )
 set(HAVE_X11 ${X11_FOUND})
 if(HAVE_X11)
-  find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED X11Extras)
+  find_package(Qt5 ${QT5_MIN_VERSION} CONFIG REQUIRED X11Extras)
 
   find_package(XCB COMPONENTS XCB)
   set_package_properties(XCB PROPERTIES TYPE REQUIRED)

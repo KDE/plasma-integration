@@ -3,24 +3,24 @@ set(QT_MAJOR_VERSION 5)
 include(KDEInstallDirs5)
 include(KDECMakeSettings)
 
-find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Widgets DBus QuickControls2 WaylandClient)
-find_package(Qt5Gui ${QT_MIN_VERSION} CONFIG REQUIRED Private)
-find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED X11Extras)
+find_package(Qt5 ${QT5_MIN_VERSION} CONFIG REQUIRED Widgets DBus QuickControls2 WaylandClient)
+find_package(Qt5Gui ${QT5_MIN_VERSION} CONFIG REQUIRED Private)
+find_package(Qt5 ${QT5_MIN_VERSION} CONFIG REQUIRED X11Extras)
 
 # https://bugreports.qt.io/browse/QTBUG-114706
 add_library(Qt::Core ALIAS Qt5::Core)
 add_library(Qt::Network ALIAS Qt5::Network)
 add_library(Qt::Gui ALIAS Qt5::Gui)
 
-find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS
+find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
                 Config ConfigWidgets I18n IconThemes KIO Notifications
                 WindowSystem ConfigWidgets Wayland GuiAddons
                 XmlGui
 )
 
-find_package(KF5ConfigWidgets ${KF_MIN_VERSION} REQUIRED CONFIG)
+find_package(KF5ConfigWidgets ${KF5_MIN_VERSION} REQUIRED CONFIG)
 
-find_package(QtWaylandScanner ${QT_MIN_VERSION} REQUIRED)
+find_package(QtWaylandScanner ${QT5_MIN_VERSION} REQUIRED)
 
 find_package(Breeze 5 CONFIG)
 set_package_properties(Breeze PROPERTIES
