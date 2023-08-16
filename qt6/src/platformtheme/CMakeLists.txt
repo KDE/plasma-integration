@@ -10,6 +10,8 @@ if(HAVE_X11)
   set_package_properties(XCB PROPERTIES TYPE REQUIRED)
 endif()
 
+find_package(KF6StatusNotifierItem ${KF_MIN_VERSION} REQUIRED)
+
 configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-platformtheme.h )
 
 set(platformtheme_SRCS
@@ -55,7 +57,7 @@ target_link_libraries(KDEPlasmaPlatformTheme6
         KF6::KIOGui
         KF6::XmlGui
         KF6::I18n
-        KF6::Notifications
+        KF6::StatusNotifierItem
         KF6::WindowSystem
         KF6::GuiAddons
         XCB::XCB

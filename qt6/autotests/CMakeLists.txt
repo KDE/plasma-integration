@@ -4,6 +4,8 @@ include(ECMMarkNonGuiExecutable)
 find_package(Qt6Test ${QT_MIN_VERSION} CONFIG QUIET)
 find_package(Qt6Qml ${QT_MIN_VERSION} CONFIG QUIET)
 
+find_package(KF6StatusNotifierItem ${KF_MIN_VERSION} REQUIRED)
+
 if(NOT Qt6Test_FOUND)
     message(STATUS "Qt6Test not found, autotests will not be built.")
     return()
@@ -39,7 +41,7 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         KF6::IconThemes
         KF6::KIOFileWidgets
         KF6::I18n
-        KF6::Notifications
+        KF6::StatusNotifierItem
         KF6::WindowSystem
         KF6::GuiAddons
         Qt6::WaylandClient
