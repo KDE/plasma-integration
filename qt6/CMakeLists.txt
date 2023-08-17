@@ -15,7 +15,7 @@ add_library(Qt::Gui ALIAS Qt6::Gui)
 find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS
                 Config ConfigWidgets I18n IconThemes KIO Notifications
                 WindowSystem ConfigWidgets Wayland GuiAddons
-                XmlGui
+                XmlGui StatusNotifierItem
 )
 
 find_package(KF6ColorScheme ${KF6_MIN_VERSION} REQUIRED CONFIG)

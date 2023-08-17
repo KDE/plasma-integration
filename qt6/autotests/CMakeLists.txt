@@ -40,6 +40,7 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         KF6::KIOFileWidgets
         KF6::I18n
         KF6::Notifications
+        KF6::StatusNotifierItem
         KF6::WindowSystem
         KF6::GuiAddons
         Qt6::WaylandClient
