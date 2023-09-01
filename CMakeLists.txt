@@ -19,6 +19,14 @@ set(QT_NO_CREATE_VERSIONLESS_FUNCTIONS ON)
 find_package(ECM ${KF5_MIN_VERSION}  REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${ECM_MODULE_PATH} )
 
+# We need this because we can't include KDECMakeSettings here, because that
+# would need KDEInstallDirs, which we can only include in the qt{5,6} subdirs
+# to get the correct installation dirs for each Qt version.
+option(BUILD_TESTING "Build the testing tree." ON)
+if(BUILD_TESTING)
+    enable_testing()
+endif()
+
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(FeatureSummary)
 include(GenerateExportHeader)
