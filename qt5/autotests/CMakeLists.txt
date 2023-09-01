@@ -47,10 +47,8 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         Wayland::Client
         KF5::WaylandClient
         KF5::XmlGui
+        Qt5::X11Extras
     )
-    if (QT_MAJOR_VERSION EQUAL "5")
-        target_link_libraries(${_testname}5 Qt5::X11Extras)
-    endif()
 endmacro()
 
 set(dbus_interface)
