@@ -14,11 +14,8 @@ add_library(Qt::Gui ALIAS Qt5::Gui)
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
                 Config ConfigWidgets I18n IconThemes KIO Notifications
-                WindowSystem ConfigWidgets Wayland GuiAddons
-                XmlGui
+                WindowSystem Wayland GuiAddons XmlGui
 )
-
-find_package(KF5ConfigWidgets ${KF5_MIN_VERSION} REQUIRED CONFIG)
 
 find_package(QtWaylandScanner ${QT5_MIN_VERSION} REQUIRED)
 
