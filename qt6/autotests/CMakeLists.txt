@@ -3,6 +3,7 @@ include(ECMMarkNonGuiExecutable)
 
 find_package(Qt6Test ${QT_MIN_VERSION} CONFIG QUIET)
 find_package(Qt6Qml ${QT_MIN_VERSION} CONFIG QUIET)
+find_package(Qt6QmlTools ${QT_MIN_VERSION} CONFIG QUIET) # qmltestrunner
 
 if(NOT Qt6Test_FOUND)
     message(STATUS "Qt6Test not found, autotests will not be built.")
@@ -115,8 +116,8 @@ frameworkintegration_tests(
   ../src/platformtheme/khintssettings.cpp ../src/platformtheme/khintssettings.h
 )
 
-if(Qt6Qml_FOUND)
-    add_test(NAME qmltests6 COMMAND qmltestrunner WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+if(Qt6Qml_FOUND AND TARGET Qt6::qmltestrunner)
+    add_test(NAME qmltests6 COMMAND Qt6::qmltestrunner WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
     frameworkintegration_tests(kfiledialogqml_unittest)
     target_link_libraries(kfiledialogqml_unittest6 Qt6::Qml)
