@@ -79,46 +79,6 @@ static QString desktopPortalPath()
     return QStringLiteral("/org/freedesktop/portal/desktop");
 }
 
-class XdgWindowExporter : public QObject
-{
-    Q_OBJECT
-public:
-    using QObject::QObject;
-    virtual void run(QWidget *widget) = 0;
-Q_SIGNALS:
-    void exported(const QString &id);
-};
-
-class XdgWindowExporterWayland : public XdgWindowExporter
-{
-public:
-    using XdgWindowExporter::XdgWindowExporter;
-
-    void run(QWidget *widget) override
-    {
-        Q_ASSERT(widget);
-
-        auto services = QGuiApplicationPrivate::platformIntegration()->services();
-        if (auto unixServices = dynamic_cast<QGenericUnixServices *>(services)) {
-            Q_EMIT exported(unixServices->portalWindowIdentifier(widget->windowHandle()));
-        } else {
-            Q_EMIT exported(QString());
-        }
-    }
-};
-
-class XdgWindowExporterX11 : public XdgWindowExporter
-{
-public:
-    using XdgWindowExporter::XdgWindowExporter;
-
-    void run(QWidget *widget) override
-    {
-        Q_ASSERT(widget);
-        Q_EMIT exported(QLatin1String("x11:") + QString::number(widget->winId(), 16));
-    }
-};
-
 class KIOOpenWith : public KIO::OpenWithHandlerInterface
 {
     Q_OBJECT
@@ -142,37 +102,15 @@ public:
             widget = m_parentWidget;
         }
 
-        if (!widget) {
-            promptInternal({}, urls);
-            return;
+        QString windowId;
+        if (widget) {
+            widget->winId(); // ensure we have a handle so we can export a window (without this windowHandle() may be null)
+            auto services = QGuiApplicationPrivate::platformIntegration()->services();
+            if (auto unixServices = dynamic_cast<QGenericUnixServices *>(services)) {
+                windowId = unixServices->portalWindowIdentifier(widget->windowHandle());
+            }
         }
 
-        widget->winId(); // ensure we have a handle so we can export a window (without this windowHandle() may be null)
-
-        XdgWindowExporter *exporter = nullptr;
-        switch (KWindowSystem::platform()) {
-        case KWindowSystem::Platform::X11:
-            exporter = new XdgWindowExporterX11(this);
-            break;
-        case KWindowSystem::Platform::Wayland:
-            exporter = new XdgWindowExporterWayland(this);
-            break;
-        case KWindowSystem::Platform::Unknown:
-            break;
-        }
-        if (exporter) {
-            connect(exporter, &XdgWindowExporter::exported, this, [this, urls, exporter](const QString &windowId) {
-                exporter->deleteLater();
-                promptInternal(windowId, urls);
-            });
-            exporter->run(widget);
-        } else {
-            promptInternal({}, urls);
-        }
-    }
-
-    void promptInternal(const QString &windowId, const QList<QUrl> &urls)
-    {
         QDBusMessage message = QDBusMessage::createMethodCall(desktopPortalService(),
                                                               desktopPortalPath(),
                                                               QStringLiteral("org.freedesktop.impl.portal.AppChooser"),
