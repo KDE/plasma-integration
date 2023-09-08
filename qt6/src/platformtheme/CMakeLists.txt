@@ -63,7 +63,6 @@ target_link_libraries(KDEPlasmaPlatformTheme6
         Qt6::WaylandClient
         Qt6::GuiPrivate
         Wayland::Client
-        KF6::WaylandClient
 )
 
 target_link_libraries(KDEPlasmaPlatformTheme6 PRIVATE KF6::ColorScheme)

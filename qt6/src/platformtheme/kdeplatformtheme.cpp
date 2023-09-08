@@ -27,6 +27,9 @@
 #include <QString>
 #include <QVariant>
 #include <QtQuickControls2/QQuickStyle>
+#include <private/qgenericunixservices_p.h>
+#include <private/qguiapplication_p.h>
+#include <qpa/qplatformintegration.h>
 
 #include <KIO/Global>
 #include <KIO/JobUiDelegate>
@@ -35,9 +38,6 @@
 #include <KJobWidgets>
 #include <KLocalizedString>
 #include <KStandardGuiItem>
-#include <KWayland/Client/connection_thread.h>
-#include <KWayland/Client/registry.h>
-#include <KWayland/Client/xdgforeign.h>
 #include <KWindowSystem>
 #include <kiconengine.h>
 #include <kiconloader.h>
@@ -98,36 +98,12 @@ public:
     {
         Q_ASSERT(widget);
 
-        auto connection = KWayland::Client::ConnectionThread::fromApplication(QGuiApplication::instance());
-        if (!connection) {
-            Q_EMIT exported({});
-            return;
+        auto services = QGuiApplicationPrivate::platformIntegration()->services();
+        if (auto unixServices = dynamic_cast<QGenericUnixServices *>(services)) {
+            Q_EMIT exported(unixServices->portalWindowIdentifier(widget->windowHandle()));
+        } else {
+            Q_EMIT exported(QString());
         }
-
-        auto registry = new KWayland::Client::Registry(this);
-        QPointer<QWidget> maybeWidget(widget);
-        connect(registry, &KWayland::Client::Registry::exporterUnstableV2Announced, this, [this, registry, maybeWidget](quint32 name, quint32 version) {
-            auto exporter = registry->createXdgExporter(name, std::min(version, quint32(1)), this);
-            if (!maybeWidget) {
-                qWarning() << "widget was invalid, not exporting any window as transient parent";
-                Q_EMIT exported({});
-                return;
-            }
-            auto surface = KWayland::Client::Surface::fromWindow(maybeWidget->windowHandle());
-            if (!surface) {
-                qWarning() << "wayland surface was unexpectedly null, not exporting any window as transient parent";
-                Q_EMIT exported({});
-                return;
-            }
-            auto xdgExported = exporter->exportTopLevel(surface, this);
-
-            connect(xdgExported, &KWayland::Client::XdgExported::done, this, [this, xdgExported] {
-                Q_EMIT exported(QLatin1String("wayland:") + xdgExported->handle());
-            });
-        });
-
-        registry->create(connection);
-        registry->setup();
     }
 };
 

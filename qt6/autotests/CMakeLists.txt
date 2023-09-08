@@ -46,7 +46,6 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         Qt6::WaylandClient
         XCB::XCB
         Wayland::Client
-        KF6::WaylandClient
         KF6::XmlGui
     )
     if (QT_MAJOR_VERSION EQUAL "5")
