@@ -1,0 +1,157 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the plasma-integration package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: plasma-integration\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2023-07-19 03:24+0000\n"
+"PO-Revision-Date: 2023-09-25 23:45+0530\n"
+"Last-Translator: Ashish Kumar Prasad\n"
+"Language-Team: LANGUAGE <kde-i18n-doc@kde.org>\n"
+"Language: sa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:285
+#, kde-format
+msgctxt "@title:window"
+msgid "Open File"
+msgstr "सञ्चिकां उद्घाटयन्तु"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:286
+#, kde-format
+msgctxt "@title:window"
+msgid "Save File"
+msgstr "सञ्चिकां रक्षतु"
+
+#: platformtheme/kdeplatformtheme.cpp:486
+#, kde-format
+msgctxt "@action:button"
+msgid "Save All"
+msgstr "सर्वं रक्षन्तु"
+
+#: platformtheme/kdeplatformtheme.cpp:490
+#, kde-format
+msgctxt "@action:button"
+msgid "&Yes"
+msgstr "&हाँ"
+
+#: platformtheme/kdeplatformtheme.cpp:492
+#, kde-format
+msgctxt "@action:button"
+msgid "Yes to All"
+msgstr "हाँ सर्वेभ्यः"
+
+#: platformtheme/kdeplatformtheme.cpp:494
+#, kde-format
+msgctxt "@action:button"
+msgid "&No"
+msgstr "&न"
+
+#: platformtheme/kdeplatformtheme.cpp:496
+#, kde-format
+msgctxt "@action:button"
+msgid "No to All"
+msgstr "न सर्वेभ्यः"
+
+#: platformtheme/kdeplatformtheme.cpp:499
+#, kde-format
+msgctxt "@action:button"
+msgid "Abort"
+msgstr "रद्दं कुर्वन्तु"
+
+#: platformtheme/kdeplatformtheme.cpp:501
+#, kde-format
+msgctxt "@action:button"
+msgid "Retry"
+msgstr "पुनः प्रयासं कुर्वन्तु"
+
+#: platformtheme/kdeplatformtheme.cpp:503
+#, kde-format
+msgctxt "@action:button"
+msgid "Ignore"
+msgstr "उपेक्ष्यताम्"
+
+#: platformtheme/kdirselectdialog.cpp:120
+#, kde-format
+msgctxt "folder name"
+msgid "New Folder"
+msgstr "नूतनं पुटम्"
+
+#: platformtheme/kdirselectdialog.cpp:126
+#, kde-format
+msgctxt "@title:window"
+msgid "New Folder"
+msgstr "नूतनं पुटम्"
+
+#: platformtheme/kdirselectdialog.cpp:127
+#, kde-format
+msgctxt "@label:textbox"
+msgid ""
+"Create new folder in:\n"
+"%1"
+msgstr ""
+"अस्मिन् नूतनं पुटं रचयन्तु:\n"
+"%1"
+
+#: platformtheme/kdirselectdialog.cpp:158
+#, kde-format
+msgid "A file or folder named %1 already exists."
+msgstr "%1 इति नाम्ना सञ्चिका अथवा पुटं पूर्वमेव अस्ति ।."
+
+#: platformtheme/kdirselectdialog.cpp:167
+#, kde-format
+msgid "You do not have permission to create that folder."
+msgstr "तत् पुटं निर्मातुं भवतः अनुमतिः नास्ति ।."
+
+#: platformtheme/kdirselectdialog.cpp:269
+#, kde-format
+msgctxt "@title:window"
+msgid "Select Folder"
+msgstr "पुटम् इति चिनोतु"
+
+#: platformtheme/kdirselectdialog.cpp:278
+#, kde-format
+msgctxt "@action:button"
+msgid "New Folder..."
+msgstr "नूतनं पुटम्..."
+
+#: platformtheme/kdirselectdialog.cpp:327
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "New Folder..."
+msgstr "नूतनं पुटम्..."
+
+#: platformtheme/kdirselectdialog.cpp:336
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Move to Trash"
+msgstr "पुनःप्रयोगस्य कूपं मध्ये स्थानान्तरणम्"
+
+#: platformtheme/kdirselectdialog.cpp:345
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Delete"
+msgstr "विलोपयतु"
+
+#: platformtheme/kdirselectdialog.cpp:356
+#, kde-format
+msgctxt "@option:check"
+msgid "Show Hidden Folders"
+msgstr "गुप्तपुटं दर्शयन्तु"
+
+#: platformtheme/kdirselectdialog.cpp:363
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Properties"
+msgstr "गुणाः"
+
+#: platformtheme/kfiletreeview.cpp:185
+#, kde-format
+msgid "Show Hidden Folders"
+msgstr "गुप्तपुटं दर्शयन्तु"
