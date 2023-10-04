@@ -55,17 +55,11 @@ bool X11Integration::eventFilter(QObject *watched, QEvent *event)
                     // To avoid clients changing, we adjust flags here.
                     // This is documented as being only available on some platforms,
                     // so altering is relatively safe.
-                    if (flags.testFlag(Qt::Dialog)) {
+                    if (flags.testFlag(Qt::Dialog) && !flags.testFlag(Qt::CustomizeWindowHint)) {
                         if (!w->transientParent()) {
-                            flags.setFlag(Qt::WindowMinimizeButtonHint, true);
+                            flags.setFlag(Qt::WindowCloseButtonHint);
+                            flags.setFlag(Qt::WindowMinMaxButtonsHint);
                         }
-
-                        // QWINDOWSIZE_MAX from qwindow_p.h
-                        const auto maxWindowSize = ((1 << 24) - 1);
-                        if (w->maximumSize() == QSize(maxWindowSize, maxWindowSize)) {
-                            flags.setFlag(Qt::WindowMaximizeButtonHint, true);
-                        }
-
                         w->setFlags(flags);
                     }
 
