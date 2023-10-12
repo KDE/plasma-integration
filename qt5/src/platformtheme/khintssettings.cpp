@@ -33,7 +33,6 @@
 #include <kconfiggroup.h>
 #include <kiconloader.h>
 
-#include <config-platformtheme.h>
 #ifdef UNIT_TEST
 #undef HAVE_X11
 #define HAVE_X11 0
@@ -96,7 +95,7 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
     m_hints[QPlatformTheme::IconThemeSearchPaths] = xdgIconThemePaths();
 
     QStringList styleNames{
-        QStringLiteral(BREEZE_STYLE_NAME),
+        QStringLiteral("breeze"),
         QStringLiteral("oxygen"),
         QStringLiteral("fusion"),
         QStringLiteral("windows"),
@@ -281,13 +280,13 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         }
 
         // HOTFIX here. Hardcoded default value is duplicated and may be inconsistent with the one actually defined in kcm_style kcfg
-        const QString theme = readConfigValue(cg, QStringLiteral("widgetStyle"), QStringLiteral(BREEZE_STYLE_NAME)).toString();
+        const QString theme = readConfigValue(cg, QStringLiteral("widgetStyle"), QStringLiteral("breeze")).toString();
 
         QStringList styleNames;
-        if (theme != QStringLiteral(BREEZE_STYLE_NAME)) {
+        if (theme != QStringLiteral("breeze")) {
             styleNames << theme;
         }
-        styleNames << QStringLiteral(BREEZE_STYLE_NAME) << QStringLiteral("oxygen") << QStringLiteral("fusion") << QStringLiteral("windows");
+        styleNames << QStringLiteral("breeze") << QStringLiteral("oxygen") << QStringLiteral("fusion") << QStringLiteral("windows");
         const QString lnfStyle = readConfigValue(QStringLiteral("KDE"), QStringLiteral("widgetStyle"), QString()).toString();
         if (!lnfStyle.isEmpty() && !styleNames.contains(lnfStyle)) {
             styleNames.prepend(lnfStyle);

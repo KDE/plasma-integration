@@ -7,7 +7,6 @@
 #include <KSharedConfig>
 #include <QDialogButtonBox>
 #include <QTest>
-#include <config-platformtheme.h>
 
 class KHintsSettingsTest : public QObject
 {
@@ -36,8 +35,7 @@ void KHintsSettingsTest::testDefaults()
     QCOMPARE(hints.hint(QPlatformTheme::SystemIconFallbackThemeName).toString(), QStringLiteral("hicolor"));
     QCOMPARE(hints.hint(QPlatformTheme::IconThemeSearchPaths).toStringList(), hints.xdgIconThemePaths());
 
-    const QStringList expectedStyles =
-        QStringList{QStringLiteral(BREEZE_STYLE_NAME), QStringLiteral("oxygen"), QStringLiteral("fusion"), QStringLiteral("windows")};
+    const QStringList expectedStyles = QStringList{QStringLiteral("breeze"), QStringLiteral("oxygen"), QStringLiteral("fusion"), QStringLiteral("windows")};
     QCOMPARE(hints.hint(QPlatformTheme::StyleNames).toStringList(), expectedStyles);
 
     QCOMPARE(hints.hint(QPlatformTheme::DialogButtonBoxLayout).toInt(), int(QDialogButtonBox::KdeLayout));

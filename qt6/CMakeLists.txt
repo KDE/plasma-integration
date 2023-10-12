@@ -20,12 +20,6 @@ find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS
 
 find_package(KF6ColorScheme ${KF6_MIN_VERSION} REQUIRED CONFIG)
 
-# TODO this should be Breeze6 so as to not overlap with Breeze (which is Qt5)
-find_package(Breeze 5 CONFIG)
-set_package_properties(Breeze PROPERTIES
-                       TYPE REQUIRED
-                       PURPOSE "For setting the default QStyle name")
-
 ecm_set_disabled_deprecation_versions(QT 5.15.2
     KF 5.101
 )

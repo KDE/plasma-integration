@@ -11,8 +11,6 @@ if(HAVE_X11)
   set_package_properties(XCB PROPERTIES TYPE REQUIRED)
 endif()
 
-configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-platformtheme.h )
-
 # qdbusmenubar uses them
 remove_definitions(-DQT_NO_SIGNALS_SLOTS_KEYWORDS)
 

@@ -19,11 +19,6 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 
 find_package(QtWaylandScanner ${QT5_MIN_VERSION} REQUIRED)
 
-find_package(Breeze 5 CONFIG)
-set_package_properties(Breeze PROPERTIES
-                       TYPE REQUIRED
-                       PURPOSE "For setting the default QStyle name")
-
 # dependencies for QPA plugin
 find_package(Qt5ThemeSupport REQUIRED)
 set(QT5PLATFORMSUPPORT_LIBS Qt5ThemeSupport::Qt5ThemeSupport)
