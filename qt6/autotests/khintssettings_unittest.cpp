@@ -7,6 +7,7 @@
 #include <KSharedConfig>
 #include <QDialogButtonBox>
 #include <QTest>
+#include <config-platformtheme.h>
 
 class KHintsSettingsTest : public QObject
 {

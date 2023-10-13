@@ -7,7 +7,7 @@
 #include "../src/platformtheme/kdeplatformtheme.h"
 #include "../src/platformtheme/khintssettings.h"
 #include "kdeplatformtheme_config.h"
-
+#include <config-platformtheme.h>
 #undef HAVE_X11
 #define HAVE_X11 0
 

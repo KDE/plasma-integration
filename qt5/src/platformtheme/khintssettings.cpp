@@ -33,6 +33,7 @@
 #include <kconfiggroup.h>
 #include <kiconloader.h>
 
+#include <config-platformtheme.h>
 #ifdef UNIT_TEST
 #undef HAVE_X11
 #define HAVE_X11 0

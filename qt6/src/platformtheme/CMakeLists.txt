@@ -10,6 +10,8 @@ if(HAVE_X11)
   set_package_properties(XCB PROPERTIES TYPE REQUIRED)
 endif()
 
+configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-platformtheme.h )
+
 set(platformtheme_SRCS
     kdeplatformtheme.cpp kdeplatformtheme.h
     kfontsettingsdata.cpp kfontsettingsdata.h
