@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-19 03:24+0000\n"
+"POT-Creation-Date: 2023-10-14 01:49+0000\n"
 "PO-Revision-Date: 2023-02-01 23:05+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -29,49 +29,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Salveguarda file"
 
-#: platformtheme/kdeplatformtheme.cpp:486
+#: platformtheme/kdeplatformtheme.cpp:400
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Salveguarda toto"
 
-#: platformtheme/kdeplatformtheme.cpp:490
+#: platformtheme/kdeplatformtheme.cpp:404
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&Si"
 
-#: platformtheme/kdeplatformtheme.cpp:492
+#: platformtheme/kdeplatformtheme.cpp:406
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Si a toto"
 
-#: platformtheme/kdeplatformtheme.cpp:494
+#: platformtheme/kdeplatformtheme.cpp:408
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&No"
 
-#: platformtheme/kdeplatformtheme.cpp:496
+#: platformtheme/kdeplatformtheme.cpp:410
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "N a toto"
 
-#: platformtheme/kdeplatformtheme.cpp:499
+#: platformtheme/kdeplatformtheme.cpp:413
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Aborta"
 
-#: platformtheme/kdeplatformtheme.cpp:501
+#: platformtheme/kdeplatformtheme.cpp:415
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Prova de nove"
 
-#: platformtheme/kdeplatformtheme.cpp:503
+#: platformtheme/kdeplatformtheme.cpp:417
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"

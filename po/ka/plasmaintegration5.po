@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-19 03:24+0000\n"
+"POT-Creation-Date: 2023-10-14 01:49+0000\n"
 "PO-Revision-Date: 2022-11-16 14:34+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -30,49 +30,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "ფაილის შენახვა"
 
-#: platformtheme/kdeplatformtheme.cpp:486
+#: platformtheme/kdeplatformtheme.cpp:400
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "ყველას შენახვა"
 
-#: platformtheme/kdeplatformtheme.cpp:490
+#: platformtheme/kdeplatformtheme.cpp:404
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&დიახ"
 
-#: platformtheme/kdeplatformtheme.cpp:492
+#: platformtheme/kdeplatformtheme.cpp:406
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "დიახ ყველაფერზე"
 
-#: platformtheme/kdeplatformtheme.cpp:494
+#: platformtheme/kdeplatformtheme.cpp:408
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&არა"
 
-#: platformtheme/kdeplatformtheme.cpp:496
+#: platformtheme/kdeplatformtheme.cpp:410
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "არა ყველაფერზე"
 
-#: platformtheme/kdeplatformtheme.cpp:499
+#: platformtheme/kdeplatformtheme.cpp:413
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "შეწყვეტა"
 
-#: platformtheme/kdeplatformtheme.cpp:501
+#: platformtheme/kdeplatformtheme.cpp:415
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "თავიდან ცდა"
 
-#: platformtheme/kdeplatformtheme.cpp:503
+#: platformtheme/kdeplatformtheme.cpp:417
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
