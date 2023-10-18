@@ -94,7 +94,7 @@ int main(int argc, char **argv)
         QFileDialog::Options options = {};
         const auto mo = QFileDialog::staticMetaObject;
         const auto enumerator = mo.indexOfEnumerator("Options");
-        for (const auto &optString : qAsConst(optStrings)) {
+        for (const auto &optString : std::as_const(optStrings)) {
             options |= QFileDialog::Option(mo.enumerator(enumerator).keyToValue(optString.toLatin1().constData()));
         }
         dialog.setOptions(options);

@@ -179,7 +179,7 @@ void SystemTrayMenu::createMenu()
     if (!m_separatorsCollapsible.isNull()) {
         m_menu->setSeparatorsCollapsible(m_separatorsCollapsible.toBool());
     }
-    for (auto item : qAsConst(m_items)) {
+    for (auto item : std::as_const(m_items)) {
         m_menu->addAction(item->action());
     }
 }

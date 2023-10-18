@@ -207,7 +207,7 @@ void QXdgDesktopPortalFileDialog::openPortal()
                 QStringList filterStrings = match.captured(2).split(QLatin1Char(' '), Qt::SkipEmptyParts);
 
                 FilterConditionList filterConditions;
-                for (const QString &filterString : qAsConst(filterStrings)) {
+                for (const QString &filterString : std::as_const(filterStrings)) {
                     FilterCondition filterCondition;
                     filterCondition.type = GlobalPattern;
                     filterCondition.pattern = filterString;
