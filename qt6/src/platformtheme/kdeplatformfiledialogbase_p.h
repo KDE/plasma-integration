@@ -38,7 +38,6 @@ Q_SIGNALS:
 
 protected:
     void closeEvent(QCloseEvent *e) override;
-    QDialogButtonBox *m_buttons = nullptr;
 };
 
 #endif

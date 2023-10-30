@@ -78,14 +78,15 @@ KDEPlatformFileDialog::KDEPlatformFileDialog()
     : KDEPlatformFileDialogBase()
     , m_fileWidget(new KFileWidget(QUrl(), this))
 {
-    setLayout(new QVBoxLayout);
+    auto v = new QVBoxLayout;
+    v->setContentsMargins({});
+    setLayout(v);
     connect(m_fileWidget, &KFileWidget::filterChanged, this, &KDEPlatformFileDialogBase::filterSelected);
     layout()->addWidget(m_fileWidget);
+    m_fileWidget->okButton()->show();
+    m_fileWidget->cancelButton()->show();
 
-    m_buttons = new QDialogButtonBox(this);
-    m_buttons->addButton(m_fileWidget->okButton(), QDialogButtonBox::AcceptRole);
-    m_buttons->addButton(m_fileWidget->cancelButton(), QDialogButtonBox::RejectRole);
-    connect(m_buttons, &QDialogButtonBox::rejected, m_fileWidget, &KFileWidget::slotCancel);
+    connect(this, &QDialog::rejected, m_fileWidget, &KFileWidget::slotCancel);
     // Also call the cancel function when the dialog is closed via the escape key
     // or titlebar close button to make sure we always save the view config
     connect(this, &KDEPlatformFileDialog::rejected, m_fileWidget, &KFileWidget::slotCancel);
@@ -94,7 +95,6 @@ KDEPlatformFileDialog::KDEPlatformFileDialog()
     connect(m_fileWidget, &KFileWidget::accepted, this, &QDialog::accept);
     connect(m_fileWidget->cancelButton(), &QAbstractButton::clicked, this, &QDialog::reject);
     connect(m_fileWidget->dirOperator(), &KDirOperator::urlEntered, this, &KDEPlatformFileDialogBase::directoryEntered);
-    layout()->addWidget(m_buttons);
 }
 
 QUrl KDEPlatformFileDialog::directory()

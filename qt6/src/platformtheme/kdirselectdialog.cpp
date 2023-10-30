@@ -88,6 +88,7 @@ public:
     QAction *moveToTrash = nullptr;
     QAction *deleteAction = nullptr;
     QAction *showHiddenFoldersAction = nullptr;
+    QDialogButtonBox *m_buttons = nullptr;
 };
 
 void KDirSelectDialog::Private::readConfig(const KSharedConfig::Ptr &config, const QString &group)
@@ -280,12 +281,12 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
         d->slotMkdir();
     });
 
-    m_buttons = new QDialogButtonBox(this);
-    m_buttons->addButton(folderButton, QDialogButtonBox::ActionRole);
-    m_buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    connect(m_buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
-    connect(m_buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
-    topLayout->addWidget(m_buttons);
+    d->m_buttons = new QDialogButtonBox(this);
+    d->m_buttons->addButton(folderButton, QDialogButtonBox::ActionRole);
+    d->m_buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    connect(d->m_buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
+    connect(d->m_buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
+    topLayout->addWidget(d->m_buttons);
 
     QHBoxLayout *hlay = new QHBoxLayout(page);
     hlay->setContentsMargins(0, 0, 0, 0);
@@ -557,12 +558,12 @@ QList<QUrl> KDirSelectDialog::selectedFiles()
 
 void KDirSelectDialog::setOkButtonText(const QString &text)
 {
-    m_buttons->button(QDialogButtonBox::Ok)->setText(text);
+    d->m_buttons->button(QDialogButtonBox::Ok)->setText(text);
 }
 
 void KDirSelectDialog::setCancelButtonText(const QString &text)
 {
-    m_buttons->button(QDialogButtonBox::Cancel)->setText(text);
+    d->m_buttons->button(QDialogButtonBox::Cancel)->setText(text);
 }
 
 void KDirSelectDialog::setDirectory(const QUrl &directory)
