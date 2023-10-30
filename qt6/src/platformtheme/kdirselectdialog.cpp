@@ -16,6 +16,7 @@
 #include <QLayout>
 #include <QMenu>
 #include <QPushButton>
+#include <QSplitter>
 #include <QStandardPaths>
 #include <QStringList>
 #include <QUrl>
@@ -268,12 +269,11 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     : d(new Private(localOnly, this))
 {
     setWindowTitle(i18nc("@title:window", "Select Folder"));
+    setMinimumSize({200, 200});
 
     QVBoxLayout *topLayout = new QVBoxLayout;
+    topLayout->setContentsMargins({});
     setLayout(topLayout);
-
-    QFrame *page = new QFrame(this);
-    topLayout->addWidget(page);
 
     QPushButton *folderButton = new QPushButton(this);
     KGuiItem::assign(folderButton, KGuiItem(i18nc("@action:button", "New Folder..."), QStringLiteral("folder-new")));
@@ -281,36 +281,43 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
         d->slotMkdir();
     });
 
-    d->m_buttons = new QDialogButtonBox(this);
-    d->m_buttons->addButton(folderButton, QDialogButtonBox::ActionRole);
-    d->m_buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    connect(d->m_buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
-    connect(d->m_buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
-    topLayout->addWidget(d->m_buttons);
+    auto splitter = new QSplitter(this);
+    splitter->setChildrenCollapsible(false);
+    splitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    topLayout->addWidget(splitter);
 
-    QHBoxLayout *hlay = new QHBoxLayout(page);
-    hlay->setContentsMargins(0, 0, 0, 0);
-    QVBoxLayout *mainLayout = new QVBoxLayout();
+    auto mainWidget = new QWidget(splitter);
+    QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
+    mainLayout->setContentsMargins({});
+
     d->m_actions = new KActionCollection(this);
     d->m_actions->addAssociatedWidget(this);
-    d->m_placesView = new KFilePlacesView(page);
+    d->m_placesView = new KFilePlacesView(splitter);
     d->m_placesView->setModel(new KFilePlacesModel(d->m_placesView));
     d->m_placesView->setObjectName(QStringLiteral("speedbar"));
     d->m_placesView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    d->m_placesView->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    d->m_placesView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    d->m_placesView->setMinimumSize(250, 200);
     connect(d->m_placesView, &KFilePlacesView::urlChanged, this, &KDirSelectDialog::setCurrentUrl);
-    hlay->addWidget(d->m_placesView);
-    hlay->addLayout(mainLayout);
 
-    d->m_treeView = new KFileTreeView(page);
+    splitter->addWidget(d->m_placesView);
+    splitter->addWidget(mainWidget);
+
+    d->m_treeView = new KFileTreeView(splitter);
     d->m_treeView->setDirOnlyMode(true);
     d->m_treeView->setContextMenuPolicy(Qt::CustomContextMenu);
+    d->m_treeView->setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags{Qt::TopEdge | Qt::BottomEdge}));
 
     for (int i = 1; i < d->m_treeView->model()->columnCount(); ++i) {
         d->m_treeView->hideColumn(i);
     }
 
-    d->m_urlCombo = new KHistoryComboBox(page);
+    auto urlComboWrapper = new QWidget(splitter);
+    auto urlComboWrapperLayout = new QVBoxLayout(urlComboWrapper);
+    urlComboWrapperLayout->setContentsMargins(style()->pixelMetric(QStyle::PM_LayoutLeftMargin), 0, style()->pixelMetric(QStyle::PM_LayoutRightMargin), 0);
+
+    d->m_urlCombo = new KHistoryComboBox(urlComboWrapper);
+    d->m_urlCombo->setContentsMargins({});
     d->m_urlCombo->setLayoutDirection(Qt::LeftToRight);
     d->m_urlCombo->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     d->m_urlCombo->setTrapReturnKey(true);
@@ -322,6 +329,7 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     d->m_urlCombo->setCompletionObject(comp, true);
     d->m_urlCombo->setAutoDeleteCompletionObject(true);
     d->m_urlCombo->setDuplicatesEnabled(false);
+    urlComboWrapperLayout->addWidget(d->m_urlCombo);
 
     d->m_contextMenu = new QMenu(this);
 
@@ -385,8 +393,19 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
 
     d->readConfig(KSharedConfig::openConfig(), QStringLiteral("DirSelect Dialog"));
 
+    d->m_buttons = new QDialogButtonBox(mainWidget);
+    d->m_buttons->setContentsMargins(style()->pixelMetric(QStyle::PM_LayoutLeftMargin),
+                                     0,
+                                     style()->pixelMetric(QStyle::PM_LayoutRightMargin),
+                                     style()->pixelMetric(QStyle::PM_LayoutBottomMargin));
+    d->m_buttons->addButton(folderButton, QDialogButtonBox::ActionRole);
+    d->m_buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    connect(d->m_buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
+    connect(d->m_buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
+
     mainLayout->addWidget(d->m_treeView, 1);
-    mainLayout->addWidget(d->m_urlCombo, 0);
+    mainLayout->addWidget(urlComboWrapper, 0);
+    mainLayout->addWidget(d->m_buttons);
 
     connect(d->m_treeView, &KFileTreeView::currentUrlChanged, this, [this](const QUrl &url) {
         d->slotCurrentChanged(url);
