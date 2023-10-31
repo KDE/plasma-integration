@@ -150,12 +150,12 @@ class KIOUiDelegate : public KIO::JobUiDelegate
 {
 public:
     explicit KIOUiDelegate(KJobUiDelegate::Flags flags = AutoHandlingDisabled, QWidget *window = nullptr)
-        : KIO::JobUiDelegate(KIO::JobUiDelegate::Version::V2, flags, window, {new KIOOpenWith(window, nullptr)})
+        : KIO::JobUiDelegate(flags, window, {new KIOOpenWith(window, nullptr)})
     {
     }
 };
 
-class KIOUiFactory : public KIO::JobUiDelegateFactoryV2
+class KIOUiFactory : public KIO::JobUiDelegateFactory
 {
 public:
     KIOUiFactory() = default;
@@ -191,7 +191,7 @@ KdePlatformTheme::KdePlatformTheme()
     setQtQuickControlsTheme();
 
     static KIOUiFactory factory;
-    KIO::setDefaultJobUiDelegateFactoryV2(&factory);
+    KIO::setDefaultJobUiDelegateFactory(&factory);
 
     static KIOUiDelegate delegateExtension;
     KIO::setDefaultJobUiDelegateExtension(&delegateExtension);
