@@ -18,6 +18,7 @@ set(platformtheme_SRCS
     khintssettings.cpp khintssettings.h
     kdeplatformfiledialoghelper.cpp kdeplatformfiledialoghelper.h
     kdeplatformfiledialogbase.cpp
+    kdeplatformfontdialoghelper.cpp
     kdeplatformsystemtrayicon.cpp kdeplatformsystemtrayicon.h
     kfiletreeview.cpp
     kdirselectdialog.cpp

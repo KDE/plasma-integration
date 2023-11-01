@@ -72,6 +72,7 @@ target_sources(kdeplatformtheme_unittest6 PRIVATE
   ../src/platformtheme/khintssettings.cpp ../src/platformtheme/khintssettings.h
   ../src/platformtheme/kdeplatformfiledialoghelper.cpp ../src/platformtheme/kdeplatformfiledialoghelper.h
   ../src/platformtheme/kdeplatformfiledialogbase.cpp
+  ../src/platformtheme/kdeplatformfontdialoghelper.cpp
   ../src/platformtheme/kdeplatformsystemtrayicon.cpp ../src/platformtheme/kdeplatformsystemtrayicon.h
   ../src/platformtheme/kdirselectdialog.cpp
   ../src/platformtheme/kfiletreeview.cpp
