@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-14 01:49+0000\n"
-"PO-Revision-Date: 2023-10-24 23:40+0200\n"
+"PO-Revision-Date: 2023-11-02 00:42+0100\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: \n"
 "Language: ast\n"
@@ -33,7 +33,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
-msgstr ""
+msgstr "Guardar too"
 
 #: platformtheme/kdeplatformtheme.cpp:404
 #, kde-format
@@ -45,7 +45,7 @@ msgstr "&Sí"
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
-msgstr ""
+msgstr "Sí a too"
 
 #: platformtheme/kdeplatformtheme.cpp:408
 #, kde-format
@@ -57,7 +57,7 @@ msgstr "&Non"
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
-msgstr ""
+msgstr "Non a too"
 
 #: platformtheme/kdeplatformtheme.cpp:413
 #, kde-format
@@ -69,25 +69,25 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
-msgstr ""
+msgstr "Retentar"
 
 #: platformtheme/kdeplatformtheme.cpp:417
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
-msgstr ""
+msgstr "Inorar"
 
 #: platformtheme/kdirselectdialog.cpp:120
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
-msgstr ""
+msgstr "Carpeta nueva"
 
 #: platformtheme/kdirselectdialog.cpp:126
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
-msgstr ""
+msgstr "Carpeta nueva"
 
 #: platformtheme/kdirselectdialog.cpp:127
 #, kde-format
@@ -100,12 +100,12 @@ msgstr ""
 #: platformtheme/kdirselectdialog.cpp:158
 #, kde-format
 msgid "A file or folder named %1 already exists."
-msgstr ""
+msgstr "Xá esiste un ficheru o una carpeta col nome «%1»."
 
 #: platformtheme/kdirselectdialog.cpp:167
 #, kde-format
 msgid "You do not have permission to create that folder."
-msgstr ""
+msgstr "Nun tienes permisu pa crear esa carpeta."
 
 #: platformtheme/kdirselectdialog.cpp:269
 #, kde-format
@@ -117,37 +117,37 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
-msgstr ""
+msgstr "Carpeta nueva…"
 
 #: platformtheme/kdirselectdialog.cpp:327
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
-msgstr ""
+msgstr "Carpeta nueva…"
 
 #: platformtheme/kdirselectdialog.cpp:336
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Move to Trash"
-msgstr ""
+msgstr "Tirar a la papelera"
 
 #: platformtheme/kdirselectdialog.cpp:345
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
-msgstr ""
+msgstr "Desaniciar"
 
 #: platformtheme/kdirselectdialog.cpp:356
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
-msgstr ""
+msgstr "Amosar les carpetes anubríes"
 
 #: platformtheme/kdirselectdialog.cpp:363
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
-msgstr ""
+msgstr "Propiedaes"
 
 #: platformtheme/kfiletreeview.cpp:185
 #, kde-format
