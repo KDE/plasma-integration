@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frameworkintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-14 01:49+0000\n"
+"POT-Creation-Date: 2023-11-05 01:09+0000\n"
 "PO-Revision-Date: 2023-03-24 19:13+0100\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <opensuse-translation@opensuse.org>\n"
@@ -28,49 +28,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Uložiť súbor"
 
-#: platformtheme/kdeplatformtheme.cpp:400
+#: platformtheme/kdeplatformtheme.cpp:401
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Uložiť všetko"
 
-#: platformtheme/kdeplatformtheme.cpp:404
+#: platformtheme/kdeplatformtheme.cpp:405
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "Áno"
 
-#: platformtheme/kdeplatformtheme.cpp:406
+#: platformtheme/kdeplatformtheme.cpp:407
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Áno všetkým"
 
-#: platformtheme/kdeplatformtheme.cpp:408
+#: platformtheme/kdeplatformtheme.cpp:409
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "Nie"
 
-#: platformtheme/kdeplatformtheme.cpp:410
+#: platformtheme/kdeplatformtheme.cpp:411
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Nie všetkým"
 
-#: platformtheme/kdeplatformtheme.cpp:413
+#: platformtheme/kdeplatformtheme.cpp:414
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Prerušiť"
 
-#: platformtheme/kdeplatformtheme.cpp:415
+#: platformtheme/kdeplatformtheme.cpp:416
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Skúsiť znova"
 
-#: platformtheme/kdeplatformtheme.cpp:417
+#: platformtheme/kdeplatformtheme.cpp:418
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
