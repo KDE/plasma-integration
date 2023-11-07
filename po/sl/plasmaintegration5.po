@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 01:09+0000\n"
-"PO-Revision-Date: 2023-11-05 07:15+0100\n"
+"POT-Creation-Date: 2023-11-07 02:44+0000\n"
+"PO-Revision-Date: 2023-11-06 09:34+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -23,7 +23,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Open File"
-msgstr "&Odpri datoteko..."
+msgstr "&Odpri datoteko"
 
 #: platformtheme/kdeplatformfiledialoghelper.cpp:286
 #, kde-format
@@ -79,19 +79,19 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "Prezri"
 
-#: platformtheme/kdirselectdialog.cpp:120
+#: platformtheme/kdirselectdialog.cpp:122
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
 msgstr "Nova mapa"
 
-#: platformtheme/kdirselectdialog.cpp:126
+#: platformtheme/kdirselectdialog.cpp:128
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
 msgstr "Nova mapa"
 
-#: platformtheme/kdirselectdialog.cpp:127
+#: platformtheme/kdirselectdialog.cpp:129
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -101,53 +101,53 @@ msgstr ""
 "Ustvari novo mapo v:\n"
 "%1"
 
-#: platformtheme/kdirselectdialog.cpp:158
+#: platformtheme/kdirselectdialog.cpp:160
 #, kde-format
 msgid "A file or folder named %1 already exists."
 msgstr "Datoteka ali mapa %1 že obstaja."
 
-#: platformtheme/kdirselectdialog.cpp:167
+#: platformtheme/kdirselectdialog.cpp:169
 #, kde-format
 msgid "You do not have permission to create that folder."
 msgstr "Nimate dovoljenja za ustvaritev te mape."
 
-#: platformtheme/kdirselectdialog.cpp:269
+#: platformtheme/kdirselectdialog.cpp:271
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
 msgstr "Izberite mapo"
 
-#: platformtheme/kdirselectdialog.cpp:278
+#: platformtheme/kdirselectdialog.cpp:279
 #, kde-format
 msgctxt "@action:button"
-msgid "New Folder..."
-msgstr "Nova mapa ..."
-
-#: platformtheme/kdirselectdialog.cpp:327
-#, kde-format
-msgctxt "@action:inmenu"
 msgid "New Folder..."
 msgstr "Nova mapa ..."
 
 #: platformtheme/kdirselectdialog.cpp:336
 #, kde-format
 msgctxt "@action:inmenu"
+msgid "New Folder..."
+msgstr "Nova mapa ..."
+
+#: platformtheme/kdirselectdialog.cpp:345
+#, kde-format
+msgctxt "@action:inmenu"
 msgid "Move to Trash"
 msgstr "Premakni v Smeti"
 
-#: platformtheme/kdirselectdialog.cpp:345
+#: platformtheme/kdirselectdialog.cpp:354
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
 msgstr "Izbriši"
 
-#: platformtheme/kdirselectdialog.cpp:356
+#: platformtheme/kdirselectdialog.cpp:365
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
 msgstr "Pokaži skrite mape"
 
-#: platformtheme/kdirselectdialog.cpp:363
+#: platformtheme/kdirselectdialog.cpp:372
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"

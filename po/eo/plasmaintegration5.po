@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: desktop files\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 01:09+0000\n"
+"POT-Creation-Date: 2023-11-07 02:44+0000\n"
 "PO-Revision-Date: 2023-04-15 08:25+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -80,19 +80,19 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "Ignori"
 
-#: platformtheme/kdirselectdialog.cpp:120
+#: platformtheme/kdirselectdialog.cpp:122
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
 msgstr "Nova Dosierujo"
 
-#: platformtheme/kdirselectdialog.cpp:126
+#: platformtheme/kdirselectdialog.cpp:128
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
 msgstr "Nova Dosierujo"
 
-#: platformtheme/kdirselectdialog.cpp:127
+#: platformtheme/kdirselectdialog.cpp:129
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -102,53 +102,53 @@ msgstr ""
 "Krei novan dosierujon en:\n"
 "%1"
 
-#: platformtheme/kdirselectdialog.cpp:158
+#: platformtheme/kdirselectdialog.cpp:160
 #, kde-format
 msgid "A file or folder named %1 already exists."
 msgstr "Dosiero aŭ dosierujo nomita %1 jam ekzistas."
 
-#: platformtheme/kdirselectdialog.cpp:167
+#: platformtheme/kdirselectdialog.cpp:169
 #, kde-format
 msgid "You do not have permission to create that folder."
 msgstr "Vi ne havas permeson krei tiun dosierujon."
 
-#: platformtheme/kdirselectdialog.cpp:269
+#: platformtheme/kdirselectdialog.cpp:271
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
 msgstr "Elekti Dosierujon"
 
-#: platformtheme/kdirselectdialog.cpp:278
+#: platformtheme/kdirselectdialog.cpp:279
 #, kde-format
 msgctxt "@action:button"
-msgid "New Folder..."
-msgstr "Nova dosierujo..."
-
-#: platformtheme/kdirselectdialog.cpp:327
-#, kde-format
-msgctxt "@action:inmenu"
 msgid "New Folder..."
 msgstr "Nova dosierujo..."
 
 #: platformtheme/kdirselectdialog.cpp:336
 #, kde-format
 msgctxt "@action:inmenu"
+msgid "New Folder..."
+msgstr "Nova dosierujo..."
+
+#: platformtheme/kdirselectdialog.cpp:345
+#, kde-format
+msgctxt "@action:inmenu"
 msgid "Move to Trash"
 msgstr "Movi al Rubujo"
 
-#: platformtheme/kdirselectdialog.cpp:345
+#: platformtheme/kdirselectdialog.cpp:354
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
 msgstr "Forigi"
 
-#: platformtheme/kdirselectdialog.cpp:356
+#: platformtheme/kdirselectdialog.cpp:365
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
 msgstr "Montri Kaŝitajn Dosierujojn"
 
-#: platformtheme/kdirselectdialog.cpp:363
+#: platformtheme/kdirselectdialog.cpp:372
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
