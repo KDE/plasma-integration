@@ -14,10 +14,10 @@ Dependencies:
     'frameworks/kjobwidgets': '@latest'
     'frameworks/knotifications': '@latest'
     'frameworks/kservice': '@latest'
-    'frameworks/kwayland': '@latest'
     'frameworks/kwidgetsaddons': '@latest'
     'frameworks/kwindowsystem': '@latest'
     'frameworks/kxmlgui': '@latest'
+    'plasma/kwayland': '@same'
     'plasma/breeze': '@same'
     'third-party/wayland': '@latest'
 
