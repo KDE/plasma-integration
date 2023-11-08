@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasmaintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-07 02:44+0000\n"
+"POT-Creation-Date: 2023-11-08 08:48+0000\n"
 "PO-Revision-Date: 2022-11-04 10:46+0000\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:285
+#: platformtheme/kdeplatformfiledialoghelper.cpp:297
 #, kde-format
 msgctxt "@title:window"
 msgid "Open File"
 msgstr "Abrir um Ficheiro"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:286
+#: platformtheme/kdeplatformfiledialoghelper.cpp:298
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"

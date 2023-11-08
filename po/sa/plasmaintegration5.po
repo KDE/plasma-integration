@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-07 02:44+0000\n"
+"POT-Creation-Date: 2023-11-08 08:48+0000\n"
 "PO-Revision-Date: 2023-09-25 23:45+0530\n"
 "Last-Translator: Ashish Kumar Prasad\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -18,13 +18,13 @@ msgstr ""
 "X-Generator: Poedit 3.3.2\n"
 "Plural-Forms: nplurals=2; plural=(n>2);\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:285
+#: platformtheme/kdeplatformfiledialoghelper.cpp:297
 #, kde-format
 msgctxt "@title:window"
 msgid "Open File"
 msgstr "सञ्चिकां उद्घाटयन्तु"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:286
+#: platformtheme/kdeplatformfiledialoghelper.cpp:298
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
