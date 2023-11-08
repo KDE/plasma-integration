@@ -87,6 +87,10 @@ KDEPlatformFileDialog::KDEPlatformFileDialog()
     v->setContentsMargins({});
     setLayout(v);setLayout(new QVBoxLayout);
     connect(m_fileWidget, &KFileWidget::filterChanged, this, [this](const KFileFilter &filter) {
+        if (filter.isEmpty()) {
+            return;
+        }
+
         if (!filter.filePatterns().isEmpty()) {
             Q_EMIT filterSelected(fileFilter2NameFilter(filter));
         } else {
