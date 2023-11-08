@@ -17,7 +17,7 @@ Dependencies:
     'frameworks/kwidgetsaddons': '@latest'
     'frameworks/kwindowsystem': '@latest'
     'frameworks/kxmlgui': '@latest'
-    'plasma/kwayland': '@same'
+    'plasma/kwayland': 'kf5'
     'plasma/breeze': '@same'
     'third-party/wayland': '@latest'
 
