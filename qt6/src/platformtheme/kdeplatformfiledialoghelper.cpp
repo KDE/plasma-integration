@@ -213,7 +213,7 @@ void KDEPlatformFileDialog::selectMimeTypeFilter(const QString &filter)
 
 void KDEPlatformFileDialog::selectNameFilter(const QString &filter)
 {
-    m_fileWidget->filterWidget()->setCurrentFilter(KFileFilter::fromFilterString(qt2KdeFilter({filter})).first());
+    m_fileWidget->filterWidget()->setCurrentFilter(KFileFilter::fromFilterString(filter).first());
 }
 
 void KDEPlatformFileDialog::setDirectory(const QUrl &directory)
