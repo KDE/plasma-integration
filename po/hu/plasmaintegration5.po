@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-08 08:48+0000\n"
+"POT-Creation-Date: 2023-11-09 01:39+0000\n"
 "PO-Revision-Date: 2017-02-24 22:49+0100\n"
 "Last-Translator: Kiszel Kristóf <kiszel.kristof@gmail.com>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 2.0\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:297
+#: platformtheme/kdeplatformfiledialoghelper.cpp:305
 #, kde-format
 msgctxt "@title:window"
 msgid "Open File"
 msgstr "Fájl megnyitása"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:298
+#: platformtheme/kdeplatformfiledialoghelper.cpp:306
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"

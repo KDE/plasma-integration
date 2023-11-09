@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integrtion\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-08 08:48+0000\n"
+"POT-Creation-Date: 2023-11-09 01:39+0000\n"
 "PO-Revision-Date: 2022-11-04 06:21+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -20,13 +20,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 22.08.1\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:297
+#: platformtheme/kdeplatformfiledialoghelper.cpp:305
 #, kde-format
 msgctxt "@title:window"
 msgid "Open File"
 msgstr "Ireki fitxategia"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:298
+#: platformtheme/kdeplatformfiledialoghelper.cpp:306
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
