@@ -8,6 +8,7 @@
 #include "kdeplatformfiledialoghelper.h"
 #include "kdirselectdialog_p.h"
 
+#include <KFileFilter>
 #include <KIO/StatJob>
 #include <KJobWidgets>
 #include <KProtocolInfo>
@@ -85,7 +86,7 @@ KDEPlatformFileDialog::KDEPlatformFileDialog()
 {
     auto v = new QVBoxLayout;
     v->setContentsMargins({});
-    setLayout(v);setLayout(new QVBoxLayout);
+    setLayout(v);
     connect(m_fileWidget, &KFileWidget::filterChanged, this, [this](const KFileFilter &filter) {
         if (filter.isEmpty()) {
             return;
