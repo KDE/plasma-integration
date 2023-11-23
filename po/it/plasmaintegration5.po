@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frameworkintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-09 01:39+0000\n"
+"POT-Creation-Date: 2023-11-23 01:39+0000\n"
 "PO-Revision-Date: 2022-11-06 01:31+0100\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 22.08.3\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:305
+#: platformtheme/kdeplatformfiledialoghelper.cpp:306
 #, kde-format
 msgctxt "@title:window"
 msgid "Open File"
 msgstr "Apri file"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:306
+#: platformtheme/kdeplatformfiledialoghelper.cpp:307
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"

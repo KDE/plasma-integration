@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frameworkintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-09 01:39+0000\n"
+"POT-Creation-Date: 2023-11-23 01:39+0000\n"
 "PO-Revision-Date: 2019-11-02 18:30+0900\n"
 "Last-Translator: Tomohiro Hyakutake <tomhioo@outlook.jp>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -16,13 +16,13 @@ msgstr ""
 "X-Text-Markup: kde4\n"
 "X-Generator: Lokalize 19.08.2\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:305
+#: platformtheme/kdeplatformfiledialoghelper.cpp:306
 #, kde-format
 msgctxt "@title:window"
 msgid "Open File"
 msgstr "ファイルを開く"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:306
+#: platformtheme/kdeplatformfiledialoghelper.cpp:307
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
