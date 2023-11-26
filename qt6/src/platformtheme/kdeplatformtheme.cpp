@@ -488,6 +488,7 @@ void KdePlatformTheme::setQtQuickControlsTheme()
         if (qgetenv("QT_QUICK_CONTROLS_1_STYLE").right(7) == "Desktop") {
             qunsetenv("QT_QUICK_CONTROLS_1_STYLE");
         }
+        QQuickStyle::setStyle(QLatin1String("org.kde.breeze"));
         return;
     }
     // if the user has explicitly set something else, don't meddle
