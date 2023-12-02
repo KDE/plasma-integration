@@ -1,6 +1,0 @@
-Version=5
-Id=Plasma_Fonts_Kate
-Options=overwrite
-File=kateschemarc
-Group=Normal
-Script=fonts_kate.pl,perl
