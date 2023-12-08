@@ -105,10 +105,10 @@ public:
 
         QString windowId;
         if (widget) {
-            widget->winId(); // ensure we have a handle so we can export a window (without this windowHandle() may be null)
+            widget->window()->winId(); // ensure we have a handle so we can export a window (without this windowHandle() may be null)
             auto services = QGuiApplicationPrivate::platformIntegration()->services();
             if (auto unixServices = dynamic_cast<QGenericUnixServices *>(services)) {
-                windowId = unixServices->portalWindowIdentifier(widget->windowHandle());
+                windowId = unixServices->portalWindowIdentifier(widget->window()->windowHandle());
             }
         }
 
