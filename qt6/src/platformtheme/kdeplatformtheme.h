@@ -51,6 +51,8 @@ private:
 
     static bool useXdgDesktopPortal();
 
+    static bool checkIfThemeExists(const QString &themePath);
+
     KHintsSettings *m_hints = nullptr;
     KFontSettingsData *m_fontsData = nullptr;
     QScopedPointer<KWaylandIntegration> m_kwaylandIntegration;

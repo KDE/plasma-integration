@@ -24,6 +24,7 @@
 #include <QDBusConnectionInterface>
 #include <QDebug>
 #include <QFont>
+#include <QLibraryInfo>
 #include <QPalette>
 #include <QString>
 #include <QVariant>
@@ -488,7 +489,10 @@ void KdePlatformTheme::setQtQuickControlsTheme()
         if (qgetenv("QT_QUICK_CONTROLS_1_STYLE").right(7) == "Desktop") {
             qunsetenv("QT_QUICK_CONTROLS_1_STYLE");
         }
-        QQuickStyle::setStyle(QLatin1String("org.kde.breeze"));
+        // /org/kde/breeze/components is not installed by org.kde.breeze, but the impl folder is
+        if (checkIfThemeExists(QStringLiteral("/org/kde/breeze/impl"))) {
+            QQuickStyle::setStyle(QStringLiteral("org.kde.breeze"));
+        }
         return;
     }
     // if the user has explicitly set something else, don't meddle
@@ -496,7 +500,9 @@ void KdePlatformTheme::setQtQuickControlsTheme()
     if (!QQuickStyle::name().isEmpty() && QQuickStyle::name() != QLatin1String("Fusion")) {
         return;
     }
-    QQuickStyle::setStyle(QLatin1String("org.kde.desktop"));
+    if (checkIfThemeExists(QStringLiteral("/org/kde/desktop"))) {
+        QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
+    }
 }
 
 bool KdePlatformTheme::useXdgDesktopPortal()
@@ -524,4 +530,34 @@ void KdePlatformTheme::setMenuBarForWindow(QWindow *window, const QString &servi
         m_kwaylandIntegration->setAppMenu(window, serviceName, objectPath);
     }
 }
+
+bool KdePlatformTheme::checkIfThemeExists(const QString &themePath)
+{
+    // Qt hard-fails if the main style is non-existent, see QTBUG-120194.
+    // The search is manually implemented since you need a QmlEngine to get the default import list.
+    // But the import search list is explicitly documented here: https://doc.qt.io/qt-6/qtqml-syntax-imports.html#qml-import-path
+    QSet<QString> moduleSearchPaths;
+    moduleSearchPaths.insert(QLibraryInfo::path(QLibraryInfo::LibraryPath::QmlImportsPath));
+
+    const auto checkEnvironmentVariable = [&moduleSearchPaths](const char *envName) {
+        if (auto qmlImportPath = qEnvironmentVariable(envName); !qmlImportPath.isEmpty()) {
+            for (const auto &entry : qmlImportPath.split(':')) {
+                moduleSearchPaths.insert(entry);
+            }
+        }
+    };
+
+    // QML_IMPORT_PATH is the new one, but QML2_IMPORT_PATH is still used
+    checkEnvironmentVariable("QML2_IMPORT_PATH");
+    checkEnvironmentVariable("QML_IMPORT_PATH");
+
+    for (const QString &path : moduleSearchPaths) {
+        if (QDir(path + themePath).exists()) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 #include "kdeplatformtheme.moc"
