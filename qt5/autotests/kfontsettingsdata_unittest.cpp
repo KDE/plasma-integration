@@ -68,6 +68,10 @@ private Q_SLOTS:
         QCOMPARE(m_fonts->font(KFontSettingsData::WindowTitleFont)->family(), QStringLiteral("OxyActiveTest"));
         QCOMPARE(m_fonts->font(KFontSettingsData::TaskbarFont)->family(), QStringLiteral("OxyTaskbarTest"));
         QCOMPARE(m_fonts->font(KFontSettingsData::SmallestReadableFont)->family(), QStringLiteral("OxySmallestReadableTest"));
+
+        QCOMPARE(m_fonts->font(KFontSettingsData::WindowTitleFont)->weight(), QFont::Normal);
+        QCOMPARE(m_fonts->font(KFontSettingsData::GeneralFont)->weight(), QFont::Medium);
+        QCOMPARE(m_fonts->font(KFontSettingsData::FixedFont)->weight(), QFont::ExtraBold);
     }
 
     void testFontsChanged()
