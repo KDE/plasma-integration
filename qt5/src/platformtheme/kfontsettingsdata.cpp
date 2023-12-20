@@ -53,6 +53,61 @@ static const KFontData DefaultFontData[KFontSettingsData::FontTypesCount] = {
     {GeneralId, "smallestReadableFont", DefaultFont, 8, QFont::Normal, QFont::SansSerif, "Regular"},
 };
 
+// From https://invent.kde.org/qt/qt/qtbase/blob/6.7/src/gui/text/qfont.cpp#L146
+static int convertWeights(int weight, bool inverted)
+{
+    static constexpr int legacyToOpenTypeMap[][2] = {
+        {0, 100},
+        {12, 200},
+        {25, 300},
+        {50, 400},
+        {57, 500},
+        {63, 600},
+        {75, 700},
+        {81, 800},
+        {87, 900},
+    };
+
+    int closestDist = INT_MAX;
+    int result = -1;
+
+    // Go through and find the closest mapped value
+    for (const auto &mapping : legacyToOpenTypeMap) {
+        const int weightOld = mapping[inverted];
+        const int weightNew = mapping[!inverted];
+        const int dist = qAbs(weightOld - weight);
+        if (dist < closestDist) {
+            result = weightNew;
+            closestDist = dist;
+        } else {
+            // Break early since following values will be further away
+            break;
+        }
+    }
+
+    return result;
+}
+
+// Qt5: https://invent.kde.org/qt/qt/qtbase/blob/5.15/src/gui/text/qfont.cpp#L2110
+// Qt6: https://invent.kde.org/qt/qt/qtbase/blob/6.7/src/gui/text/qfont.cpp#L2135
+static QString convertQt6FontStringToQt5(const QString &fontInfo)
+{
+    const auto parts = fontInfo.trimmed().split(QLatin1Char(','));
+    const int count = parts.count();
+
+    if (count != 16 && count != 17) {
+        return fontInfo;
+    }
+
+    auto result = parts.mid(0, 10);
+    result[4] = QString::number(convertWeights(parts[4].toInt(), true));
+
+    if (count == 17) {
+        result << parts.last();
+    }
+    return result.join(QLatin1Char(','));
+}
+
 QFont *KFontSettingsData::font(FontTypes fontType)
 {
     QFont *cachedFont = mFonts[fontType];
@@ -67,7 +122,7 @@ QFont *KFontSettingsData::font(FontTypes fontType)
         // If we have serialized information for this font, restore it
         // NOTE: We are not using KConfig directly because we can't call QFont::QFont from here
         if (!fontInfo.isEmpty()) {
-            cachedFont->fromString(fontInfo);
+            cachedFont->fromString(convertQt6FontStringToQt5(fontInfo));
         }
         // Don't set default font style names, as it prevents different font weights from being used (the QFont::Normal weight should work)
 
