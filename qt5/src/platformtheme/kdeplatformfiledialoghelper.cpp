@@ -25,36 +25,34 @@
 #include <QTextStream>
 #include <QVBoxLayout>
 #include <QWindow>
-namespace
-{
+
 /*
  * Map a Qt filter string into a KDE one.
  */
-static QString qt2KdeFilter(const QStringList &f)
+QString KDEPlatformFileDialogHelper::qt2KdeFilter(const QStringList &f)
 {
-    QString filter;
-    QTextStream str(&filter, QIODevice::WriteOnly);
-    QStringList list(f);
-    list.replaceInStrings(QStringLiteral("/"), QStringLiteral("\\/"));
-    QStringList::const_iterator it(list.constBegin()), end(list.constEnd());
-    bool first = true;
+    QStringList qtFilters(f);
+    // escape slashes to avoid them being interpreted as MIME types
+    qtFilters.replaceInStrings(QStringLiteral("/"), QStringLiteral("\\/"));
 
-    for (; it != end; ++it) {
-        int ob = it->lastIndexOf(QLatin1Char('(')), cb = it->lastIndexOf(QLatin1Char(')'));
+    QStringList outFilters;
 
-        if (-1 != cb && ob < cb) {
-            if (first) {
-                first = false;
-            } else {
-                str << '\n';
-            }
-            str << it->mid(ob + 1, (cb - ob) - 1) << '|' << it->mid(0, ob);
+    for (const QString &filter : std::as_const(qtFilters)) {
+        const QString name = filter.left(filter.indexOf(QLatin1Char('('))).trimmed();
+        const QStringList extensions = cleanFilterList(filter);
+
+        if (name.isEmpty()) {
+            outFilters << extensions.join(QLatin1Char(' '));
+        } else {
+            outFilters << extensions.join(QLatin1Char(' ')) + QLatin1Char('|') + name;
         }
     }
 
-    return filter;
+    return outFilters.join(QLatin1Char('\n'));
 }
 
+namespace
+{
 /*
  * Map a KDE filter string into a Qt one.
  */

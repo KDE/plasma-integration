@@ -66,6 +66,7 @@ private Q_SLOTS:
     void saveSize();
 
 private:
+    QString qt2KdeFilter(const QStringList &f);
     void restoreSize();
     KDEPlatformFileDialogBase *m_dialog = nullptr;
     bool m_directorySet = false;
