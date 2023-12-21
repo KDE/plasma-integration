@@ -29,34 +29,6 @@
 namespace
 {
 /*
- * Map a Qt filter string into a KDE one.
- */
-static QString qt2KdeFilter(const QStringList &f)
-{
-    QString filter;
-    QTextStream str(&filter, QIODevice::WriteOnly);
-    QStringList list(f);
-    list.replaceInStrings(QStringLiteral("/"), QStringLiteral("\\/"));
-    QStringList::const_iterator it(list.constBegin()), end(list.constEnd());
-    bool first = true;
-
-    for (; it != end; ++it) {
-        int ob = it->lastIndexOf(QLatin1Char('(')), cb = it->lastIndexOf(QLatin1Char(')'));
-
-        if (-1 != cb && ob < cb) {
-            if (first) {
-                first = false;
-            } else {
-                str << '\n';
-            }
-            str << it->mid(ob + 1, (cb - ob) - 1) << '|' << it->mid(0, ob);
-        }
-    }
-
-    return filter;
-}
-
-/*
  * Map a KDE filter string into a Qt one.
  */
 static QString kde2QtFilter(const QStringList &list, const QString &kde, const QString &filterText)
@@ -212,13 +184,9 @@ void KDEPlatformFileDialog::selectMimeTypeFilter(const QString &filter)
     m_fileWidget->filterWidget()->setCurrentFilter(KFileFilter::fromMimeType(filter));
 }
 
-void KDEPlatformFileDialog::selectNameFilter(const QString &filter)
+void KDEPlatformFileDialog::selectNameFilter(const KFileFilter &filter)
 {
-    const auto filters = KFileFilter::fromFilterString(filter);
-
-    if (!filters.isEmpty()) {
-        m_fileWidget->filterWidget()->setCurrentFilter(filters.first());
-    }
+    m_fileWidget->filterWidget()->setCurrentFilter(filter);
 }
 
 void KDEPlatformFileDialog::setDirectory(const QUrl &directory)
@@ -338,7 +306,14 @@ void KDEPlatformFileDialogHelper::initializeDialog()
             if (mimeFilters.contains(QStringLiteral("inode/directory")))
                 dialog->m_fileWidget->setMode(dialog->m_fileWidget->mode() | KFile::Directory);
         } else if (!nameFilters.isEmpty()) {
-            dialog->m_fileWidget->setFilters(KFileFilter::fromFilterString(qt2KdeFilter(nameFilters)));
+            QList<KFileFilter> fileFilters;
+            fileFilters.reserve(nameFilters.size());
+
+            for (const QString &nameFilter : nameFilters) {
+                fileFilters << qtFilterToKFileFilter(nameFilter);
+            }
+
+            dialog->m_fileWidget->setFilters(fileFilters);
         }
 
         if (!options()->initiallySelectedMimeTypeFilter().isEmpty()) {
@@ -357,6 +332,18 @@ void KDEPlatformFileDialogHelper::initializeDialog()
         const QStringList schemes = options()->supportedSchemes();
         dialog->m_fileWidget->setSupportedSchemes(schemes);
     }
+}
+
+KFileFilter KDEPlatformFileDialogHelper::qtFilterToKFileFilter(const QString &qtFilter) const
+{
+    QString name = qtFilter.left(qtFilter.indexOf(u'(')).trimmed();
+    const QStringList extensions = cleanFilterList(qtFilter);
+
+    if (name.isEmpty()) {
+        name = extensions.join(QLatin1Char(' '));
+    }
+
+    return KFileFilter(name, extensions, {});
 }
 
 void KDEPlatformFileDialogHelper::exec()
@@ -453,7 +440,7 @@ void KDEPlatformFileDialogHelper::setDirectory(const QUrl &directory)
 
 void KDEPlatformFileDialogHelper::selectNameFilter(const QString &filter)
 {
-    m_dialog->selectNameFilter(qt2KdeFilter(QStringList(filter)));
+    m_dialog->selectNameFilter(qtFilterToKFileFilter(filter));
 }
 
 void KDEPlatformFileDialogHelper::setFilter()

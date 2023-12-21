@@ -615,7 +615,7 @@ void KDirSelectDialog::selectMimeTypeFilter(const QString &filter)
     Q_UNUSED(filter)
 }
 
-void KDirSelectDialog::selectNameFilter(const QString &filter)
+void KDirSelectDialog::selectNameFilter(const KFileFilter &filter)
 {
     Q_UNUSED(filter)
 }

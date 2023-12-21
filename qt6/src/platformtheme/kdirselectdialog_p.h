@@ -82,7 +82,7 @@ public:
 
     QUrl directory() override;
     void selectMimeTypeFilter(const QString &filter) override;
-    void selectNameFilter(const QString &filter) override;
+    void selectNameFilter(const KFileFilter &filter) override;
     void setDirectory(const QUrl &directory) override;
     void selectFile(const QUrl &filename) override;
     QString selectedMimeTypeFilter() override;

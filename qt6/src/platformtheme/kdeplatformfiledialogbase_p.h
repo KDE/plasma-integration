@@ -7,6 +7,7 @@
 #ifndef KDEPLATFORMFILEDIALOGBASE_H
 #define KDEPLATFORMFILEDIALOGBASE_H
 
+#include <KFileFilter>
 #include <QDialog>
 #include <QUrl>
 
@@ -20,7 +21,7 @@ public:
     explicit KDEPlatformFileDialogBase();
     virtual QUrl directory() = 0;
     virtual void selectMimeTypeFilter(const QString &filter) = 0;
-    virtual void selectNameFilter(const QString &filter) = 0;
+    virtual void selectNameFilter(const KFileFilter &filter) = 0;
     virtual void setDirectory(const QUrl &directory) = 0;
     virtual void selectFile(const QUrl &filename) = 0;
     virtual QString selectedMimeTypeFilter() = 0;

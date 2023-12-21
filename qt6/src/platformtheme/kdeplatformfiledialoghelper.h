@@ -10,6 +10,8 @@
 #include "kdeplatformfiledialogbase_p.h"
 #include <qpa/qplatformdialoghelper.h>
 
+#include <KFileFilter>
+
 class KFileWidget;
 class KDEPlatformFileDialog : public KDEPlatformFileDialogBase
 {
@@ -20,7 +22,7 @@ public:
     explicit KDEPlatformFileDialog();
     QUrl directory() override;
     void selectMimeTypeFilter(const QString &filter) override;
-    void selectNameFilter(const QString &filter) override;
+    void selectNameFilter(const KFileFilter &filter) override;
     void setDirectory(const QUrl &directory) override;
     void selectFile(const QUrl &filename) override;
     void setViewMode(QFileDialogOptions::ViewMode view);
@@ -67,6 +69,7 @@ private Q_SLOTS:
 
 private:
     void restoreSize();
+    KFileFilter qtFilterToKFileFilter(const QString &qtFilter) const;
     KDEPlatformFileDialogBase *m_dialog = nullptr;
     bool m_directorySet = false;
     bool m_fileSelected = false;
