@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-23 01:39+0000\n"
+"POT-Creation-Date: 2023-12-21 02:00+0000\n"
 "PO-Revision-Date: 2021-06-29 16:55+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -30,49 +30,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "फ़ाइल सहेजें"
 
-#: platformtheme/kdeplatformtheme.cpp:401
+#: platformtheme/kdeplatformtheme.cpp:402
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "सभी सहेजें"
 
-#: platformtheme/kdeplatformtheme.cpp:405
+#: platformtheme/kdeplatformtheme.cpp:406
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr ""
 
-#: platformtheme/kdeplatformtheme.cpp:407
+#: platformtheme/kdeplatformtheme.cpp:408
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "सभीं को हाँ"
 
-#: platformtheme/kdeplatformtheme.cpp:409
+#: platformtheme/kdeplatformtheme.cpp:410
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr ""
 
-#: platformtheme/kdeplatformtheme.cpp:411
+#: platformtheme/kdeplatformtheme.cpp:412
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "सभीं को ना"
 
-#: platformtheme/kdeplatformtheme.cpp:414
+#: platformtheme/kdeplatformtheme.cpp:415
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "छोड़ें"
 
-#: platformtheme/kdeplatformtheme.cpp:416
+#: platformtheme/kdeplatformtheme.cpp:417
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "फिर कोशिश करें"
 
-#: platformtheme/kdeplatformtheme.cpp:418
+#: platformtheme/kdeplatformtheme.cpp:419
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
