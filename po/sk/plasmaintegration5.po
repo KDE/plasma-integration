@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frameworkintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-21 02:00+0000\n"
+"POT-Creation-Date: 2023-12-22 01:40+0000\n"
 "PO-Revision-Date: 2023-03-24 19:13+0100\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <opensuse-translation@opensuse.org>\n"
@@ -16,13 +16,13 @@ msgstr ""
 "X-Generator: Lokalize 21.12.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:306
+#: platformtheme/kdeplatformfiledialoghelper.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Open File"
 msgstr "Otvoriť súbor"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:307
+#: platformtheme/kdeplatformfiledialoghelper.cpp:275
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
