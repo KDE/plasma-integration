@@ -11,6 +11,9 @@ add_library(Qt::Core ALIAS Qt6::Core)
 add_library(Qt::Network ALIAS Qt6::Network)
 add_library(Qt::OpenGL ALIAS Qt6::OpenGL)
 add_library(Qt::Gui ALIAS Qt6::Gui)
+if(Qt6_VERSION_MINOR GREATER 6)
+    add_library(Qt::PlatformModuleInternal ALIAS Qt6::PlatformModuleInternal)
+endif()
 
 find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS
                 Config ConfigWidgets I18n IconThemes KIO Notifications
