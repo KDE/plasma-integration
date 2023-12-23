@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Johan Claude-Breuninger <johan.claudebreuninger@gmail.com>, 2016.
 # Vincent Pinon <vpinon@kde.org>, 2016.
-# Xavier Besnard <xavier.besnard@neuf.fr>, 2021, 2022.
+# Xavier Besnard <xavier.besnard@kde.org>, 2021, 2022.
 #
 msgid ""
 msgstr ""
