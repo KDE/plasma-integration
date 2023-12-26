@@ -32,9 +32,9 @@
 #include <KIO/CopyJob>
 #include <KIO/DeleteJob>
 #include <KIO/DeleteOrTrashJob>
-#include <KIO/Job>
 #include <KIO/JobUiDelegate>
 #include <KIO/MkdirJob>
+#include <KIO/StatJob>
 #include <KJobWidgets>
 #include <KLocalizedString>
 #include <KMessageBox>
