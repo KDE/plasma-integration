@@ -44,13 +44,13 @@ static const char GeneralId[] = "General";
 static const char DefaultFont[] = "Noto Sans";
 
 static const KFontData DefaultFontData[KFontSettingsData::FontTypesCount] = {
-    {GeneralId, "font", DefaultFont, 10, QFont::Normal, QFont::SansSerif, "Regular"},
-    {GeneralId, "fixed", "Hack", 10, QFont::Normal, QFont::Monospace, "Regular"},
-    {GeneralId, "toolBarFont", DefaultFont, 10, QFont::Normal, QFont::SansSerif, "Regular"},
-    {GeneralId, "menuFont", DefaultFont, 10, QFont::Normal, QFont::SansSerif, "Regular"},
-    {"WM", "activeFont", DefaultFont, 10, QFont::Normal, QFont::SansSerif, "Regular"},
-    {GeneralId, "taskbarFont", DefaultFont, 10, QFont::Normal, QFont::SansSerif, "Regular"},
-    {GeneralId, "smallestReadableFont", DefaultFont, 8, QFont::Normal, QFont::SansSerif, "Regular"},
+    {GeneralId, "font", DefaultFont, 11, QFont::Normal, QFont::SansSerif, "Regular"},
+    {GeneralId, "fixed", "Hack", 11, QFont::Normal, QFont::Monospace, "Regular"},
+    {GeneralId, "toolBarFont", DefaultFont, 11, QFont::Normal, QFont::SansSerif, "Regular"},
+    {GeneralId, "menuFont", DefaultFont, 11, QFont::Normal, QFont::SansSerif, "Regular"},
+    {"WM", "activeFont", DefaultFont, 11, QFont::Normal, QFont::SansSerif, "Regular"},
+    {GeneralId, "taskbarFont", DefaultFont, 11, QFont::Normal, QFont::SansSerif, "Regular"},
+    {GeneralId, "smallestReadableFont", DefaultFont, 9, QFont::Normal, QFont::SansSerif, "Regular"},
 };
 
 // From https://invent.kde.org/qt/qt/qtbase/blob/6.7/src/gui/text/qfont.cpp#L146
