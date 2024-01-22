@@ -85,6 +85,9 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
     m_hints[QPlatformTheme::StartDragDistance] = readConfigValue(cg, QStringLiteral("StartDragDist"), 10);
     m_hints[QPlatformTheme::StartDragTime] = readConfigValue(cg, QStringLiteral("StartDragTime"), 500);
 
+    m_hints[QPlatformTheme::FlickMaximumVelocity] = readConfigValue(cg, QStringLiteral("FlickMaximumVelocity"), 5000);
+    m_hints[QPlatformTheme::FlickDeceleration] = readConfigValue(cg, QStringLiteral("FlickDeceleration"), 1500);
+
     KConfigGroup cgToolbar(mKdeGlobals, "Toolbar style");
     m_hints[QPlatformTheme::ToolButtonStyle] = toolButtonStyle(cgToolbar);
 
@@ -377,6 +380,12 @@ void KHintsSettings::updateQtSettings(KConfigGroup &cg)
 
     int startDragTime = cg.readEntry("StartDragTime", 500);
     m_hints[QPlatformTheme::StartDragTime] = startDragTime;
+
+    int flickMaximumVelocity = cg.readEntry("FlickMaximumVelocity", 5000);
+    m_hints[QPlatformTheme::FlickMaximumVelocity] = flickMaximumVelocity;
+
+    int flickDeceleration = cg.readEntry("FlickDeceleration", 1500);
+    m_hints[QPlatformTheme::FlickDeceleration] = flickDeceleration;
 
     m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = cg.readEntry("SingleClick", false);
 
