@@ -23,7 +23,8 @@ public:
     explicit KWaylandIntegration(KdePlatformTheme *platformTheme);
     ~KWaylandIntegration() override;
 
-    void setAppMenu(QWindow *window, const QString &serviceName, const QString &objectPath);
+    void setWindowMenu(QWindow *window, const QString &serviceName, const QString &objectPath);
+    void setAppMenu(const QString &serviceName, const QString &objectPath);
     void setPalette(QWindow *window, const QString &paletteName);
 
     bool eventFilter(QObject *watched, QEvent *event) override;

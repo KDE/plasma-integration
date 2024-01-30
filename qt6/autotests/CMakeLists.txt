@@ -62,8 +62,8 @@ frameworkintegration_tests(
 )
 set(wayland_interfaces)
 qt6_generate_wayland_protocol_client_sources(kdeplatformtheme_unittest6 FILES
-    ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
     ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
+    ${WaylandProtocols_DATADIR}/staging/xdg-dbus-annotation/xdg-dbus-annotation-v1.xml
 )
 
 target_sources(kdeplatformtheme_unittest6 PRIVATE

@@ -467,13 +467,22 @@ QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
         }
         auto menu = new QDBusMenuBarWrapper(dbusMenu);
 
-        QObject::connect(menu, &QDBusMenuBarWrapper::windowChanged, menu, [this, menu](QWindow *newWindow, QWindow *oldWindow) {
+        const auto updater = [this, menu](QWindow *newWindow, QWindow *oldWindow) {
+            if (oldWindow != nullptr) {
+                setMenuBarForWindow(oldWindow, {}, {});
+            } else if (newWindow != nullptr) {
+                setGlobalMenuBar({}, {});
+            }
             const QString &serviceName = QDBusConnection::sessionBus().baseService();
             const QString &objectPath = menu->objectPath();
-
-            setMenuBarForWindow(oldWindow, {}, {});
-            setMenuBarForWindow(newWindow, serviceName, objectPath);
-        });
+            if (newWindow != nullptr) {
+                setMenuBarForWindow(newWindow, serviceName, objectPath);
+            } else {
+                setGlobalMenuBar(serviceName, objectPath);
+            }
+        };
+        QObject::connect(menu, &QDBusMenuBarWrapper::windowChanged, menu, updater);
+        updater(nullptr, nullptr);
 
         return menu;
     }
@@ -528,7 +537,14 @@ void KdePlatformTheme::setMenuBarForWindow(QWindow *window, const QString &servi
     }
 
     if (m_kwaylandIntegration) {
-        m_kwaylandIntegration->setAppMenu(window, serviceName, objectPath);
+        m_kwaylandIntegration->setWindowMenu(window, serviceName, objectPath);
+    }
+}
+
+void KdePlatformTheme::setGlobalMenuBar(const QString &serviceName, const QString &objectPath) const
+{
+    if (m_kwaylandIntegration) {
+        m_kwaylandIntegration->setAppMenu(serviceName, objectPath);
     }
 }
 

@@ -10,15 +10,16 @@
 #include <QWindow>
 #include <qpa/qplatformwindow_p.h>
 
-#include "qwayland-appmenu.h"
 #include "qwayland-server-decoration-palette.h"
+#include "qwayland-xdg-dbus-annotation-v1.h"
 
 #include <KWindowEffects>
 
 static const QByteArray s_schemePropertyName = QByteArrayLiteral("KDE_COLOR_SCHEME_PATH");
 static const QByteArray s_blurBehindPropertyName = QByteArrayLiteral("ENABLE_BLUR_BEHIND_HINT");
+static const QString s_dbusMenuInterface = QStringLiteral("com.canonical.dbusmenu");
 
-class AppMenuManager : public QWaylandClientExtensionTemplate<AppMenuManager>, public QtWayland::org_kde_kwin_appmenu_manager
+class AppMenuManager : public QWaylandClientExtensionTemplate<AppMenuManager>, public QtWayland::xdg_dbus_annotation_manager_v1
 {
     Q_OBJECT
 public:
@@ -29,13 +30,13 @@ public:
     }
 };
 
-class AppMenu : public QtWayland::org_kde_kwin_appmenu
+class AppMenu : public QtWayland::xdg_dbus_annotation_v1
 {
 public:
-    using org_kde_kwin_appmenu::org_kde_kwin_appmenu;
+    using xdg_dbus_annotation_v1::xdg_dbus_annotation_v1;
     ~AppMenu()
     {
-        release();
+        destroy();
     }
 };
 
@@ -147,7 +148,7 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
         m_appMenuManager.reset(new AppMenuManager());
     }
     if (m_appMenuManager->isActive()) {
-        auto menu = new AppMenu(m_appMenuManager->create(s));
+        auto menu = new AppMenu(m_appMenuManager->create_surface(s_dbusMenuInterface, s));
         w->setProperty("org.kde.plasma.integration.appmenu", QVariant::fromValue(menu));
         if (auto it = m_dbusMenuInfos.constFind(w); it != m_dbusMenuInfos.cend()) {
             menu->set_address(it->serviceName, it->objectPath);
@@ -192,7 +193,7 @@ void KWaylandIntegration::installColorScheme(QWindow *w)
     }
 }
 
-void KWaylandIntegration::setAppMenu(QWindow *window, const QString &serviceName, const QString &objectPath)
+void KWaylandIntegration::setWindowMenu(QWindow *window, const QString &serviceName, const QString &objectPath)
 {
     auto menu = window->property("org.kde.plasma.integration.appmenu").value<AppMenu *>();
     if (menu) {
@@ -202,6 +203,19 @@ void KWaylandIntegration::setAppMenu(QWindow *window, const QString &serviceName
     connect(window, &QWindow::destroyed, this, [this, window] {
         m_dbusMenuInfos.remove(window);
     });
+}
+
+void KWaylandIntegration::setAppMenu(const QString &serviceName, const QString &objectPath)
+{
+    auto menu = qApp->property("org.kde.plasma.integration.appmenu").value<AppMenu *>();
+    if (menu == nullptr) {
+        if (!m_appMenuManager) {
+            m_appMenuManager.reset(new AppMenuManager());
+        }
+        menu = new AppMenu(m_appMenuManager->create_client(s_dbusMenuInterface));
+        qApp->setProperty("org.kde.plasma.integration.appmenu", QVariant::fromValue(menu));
+    }
+    menu->set_address(serviceName, objectPath);
 }
 
 wl_surface *KWaylandIntegration::surfaceFromWindow(QWindow *window)

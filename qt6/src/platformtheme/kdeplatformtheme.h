@@ -44,6 +44,7 @@ public:
 
 private:
     void setMenuBarForWindow(QWindow *window, const QString &serviceName, const QString &objectPath) const;
+    void setGlobalMenuBar(const QString &serviceName, const QString &objectPath) const;
     void loadSettings();
     void setQtQuickControlsTheme();
 

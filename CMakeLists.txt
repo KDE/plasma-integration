@@ -35,6 +35,7 @@ include(KDEGitCommitHooks)
 include(ECMDeprecationSettings)
 
 find_package(Wayland 1.9 REQUIRED Client)
+find_package(WaylandProtocols 1.31 REQUIRED)
 find_package(PlasmaWaylandProtocols 1.6.0 CONFIG REQUIRED)
 
 option(BUILD_QT5 "Build for Qt5" ON)

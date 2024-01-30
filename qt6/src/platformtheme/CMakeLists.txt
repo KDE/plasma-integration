@@ -38,7 +38,7 @@ add_library(KDEPlasmaPlatformTheme6 MODULE)
 target_compile_definitions(KDEPlasmaPlatformTheme6 PRIVATE -DKF6_TODO_DBUS_MENUBAR)
 qt6_generate_wayland_protocol_client_sources(KDEPlasmaPlatformTheme6 FILES
     ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
-    ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
+    ${WaylandProtocols_DATADIR}/staging/xdg-dbus-annotation/xdg-dbus-annotation-v1.xml
 )
 target_sources(KDEPlasmaPlatformTheme6 PRIVATE ${platformtheme_SRCS})
 
