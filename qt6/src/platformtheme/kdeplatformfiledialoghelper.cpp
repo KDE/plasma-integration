@@ -28,26 +28,12 @@
 #include <QWindow>
 namespace
 {
-/*
- * Map a KDE filter string into a Qt one.
- */
-static QString kde2QtFilter(const QStringList &list, const QString &kde, const QString &filterText)
-{
-    QStringList::const_iterator it(list.constBegin()), end(list.constEnd());
-    int pos;
-
-    for (; it != end; ++it) {
-        if (-1 != (pos = it->indexOf(kde)) && pos > 0 && (QLatin1Char('(') == (*it)[pos - 1] || QLatin1Char(' ') == (*it)[pos - 1])
-            && it->length() >= kde.length() + pos && (QLatin1Char(')') == (*it)[pos + kde.length()] || QLatin1Char(' ') == (*it)[pos + kde.length()])
-            && (filterText.isEmpty() || it->startsWith(filterText))) {
-            return *it;
-        }
-    }
-    return QString();
-}
-
 static QString fileFilter2NameFilter(const KFileFilter &filter)
 {
+    if (filter.isEmpty()) {
+        return QString();
+    }
+
     return QStringLiteral("%1 (%2)").arg(filter.label(), filter.filePatterns().join(" "));
 }
 }
@@ -416,7 +402,7 @@ void KDEPlatformFileDialogHelper::selectMimeTypeFilter(const QString &filter)
 
 QString KDEPlatformFileDialogHelper::selectedNameFilter() const
 {
-    return kde2QtFilter(options()->nameFilters(), m_dialog->selectedNameFilter(), m_dialog->currentFilterText());
+    return m_dialog->selectedNameFilter();
 }
 
 QUrl KDEPlatformFileDialogHelper::directory() const
