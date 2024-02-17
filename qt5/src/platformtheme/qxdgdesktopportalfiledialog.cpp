@@ -11,14 +11,14 @@
 
 #include "qxdgdesktopportalfiledialog_p.h"
 
-#include <qeventloop.h>
-
 #include <QDBusConnection>
 #include <QDBusMessage>
+#include <QDBusMetaType>
 #include <QDBusPendingCall>
 #include <QDBusPendingCallWatcher>
 #include <QDBusPendingReply>
-#include <QtDBus>
+#include <QEventLoop>
+#include <QRegularExpression>
 
 #include <QFile>
 #include <QMetaType>
