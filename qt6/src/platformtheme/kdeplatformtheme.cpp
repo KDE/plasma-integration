@@ -145,7 +145,7 @@ public:
     }
 
 private:
-    QWidget *const m_parentWidget;
+    QPointer<QWidget> m_parentWidget;
 };
 
 class KIOUiDelegate : public KIO::JobUiDelegate
