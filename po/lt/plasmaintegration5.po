@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-02 02:24+0000\n"
+"POT-Creation-Date: 2024-02-20 02:28+0000\n"
 "PO-Revision-Date: 2024-01-21 01:03+0200\n"
 "Last-Translator: Moo\n"
 "Language-Team: lt\n"
@@ -19,13 +19,13 @@ msgstr ""
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:274
+#: platformtheme/kdeplatformfiledialoghelper.cpp:260
 #, kde-format
 msgctxt "@title:window"
 msgid "Open File"
 msgstr "Atverti failą"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:275
+#: platformtheme/kdeplatformfiledialoghelper.cpp:261
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"

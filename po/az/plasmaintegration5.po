@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-02 02:24+0000\n"
+"POT-Creation-Date: 2024-02-20 02:28+0000\n"
 "PO-Revision-Date: 2020-07-27 17:46+0400\n"
 "Last-Translator: Xəyyam Qocayev <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 20.04.3\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:274
+#: platformtheme/kdeplatformfiledialoghelper.cpp:260
 #, kde-format
 msgctxt "@title:window"
 msgid "Open File"
 msgstr "Faylı açmaq"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:275
+#: platformtheme/kdeplatformfiledialoghelper.cpp:261
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
