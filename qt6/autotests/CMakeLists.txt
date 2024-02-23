@@ -79,6 +79,8 @@ target_sources(kdeplatformtheme_unittest6 PRIVATE
   ../src/platformtheme/x11integration.cpp ../src/platformtheme/x11integration.h
   ../src/platformtheme/qxdgdesktopportalfiledialog.cpp
   ../src/platformtheme/qdbusmenubarwrapper.h
+  ../src/platformtheme/kiodelegate.cpp
+  ../src/platformtheme/kioopenwith.cpp
   ${dbus_interface}
   ${wayland_interfaces}
 )

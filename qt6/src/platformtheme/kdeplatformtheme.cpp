@@ -14,6 +14,7 @@
 #include "kdeplatformtheme.h"
 #include "kfontsettingsdata.h"
 #include "khintssettings.h"
+#include "kiodelegate.h"
 #include "kwaylandintegration.h"
 #include "qdbusmenubarwrapper.h"
 #include "x11integration.h"
@@ -27,16 +28,10 @@
 #include <QPalette>
 #include <QString>
 #include <QVariant>
+#include <QWindow>
 #include <QtQuickControls2/QQuickStyle>
-#include <private/qgenericunixservices_p.h>
-#include <private/qguiapplication_p.h>
-#include <qpa/qplatformintegration.h>
 
 #include <KIO/Global>
-#include <KIO/JobUiDelegate>
-#include <KIO/JobUiDelegateFactory>
-#include <KIO/OpenWithHandlerInterface>
-#include <KJobWidgets>
 #include <KLocalizedString>
 #include <KStandardGuiItem>
 #include <KWindowSystem>
@@ -69,108 +64,6 @@ static bool isDBusGlobalMenuAvailable()
     static bool dbusGlobalMenuAvailable = checkDBusGlobalMenuAvailable();
     return dbusGlobalMenuAvailable;
 }
-
-static QString desktopPortalService()
-{
-    return QStringLiteral("org.freedesktop.impl.portal.desktop.kde");
-}
-
-static QString desktopPortalPath()
-{
-    return QStringLiteral("/org/freedesktop/portal/desktop");
-}
-
-class KIOOpenWith : public KIO::OpenWithHandlerInterface
-{
-    Q_OBJECT
-public:
-    explicit KIOOpenWith(QWidget *parentWidget, QObject *parent = nullptr)
-        : KIO::OpenWithHandlerInterface(parent)
-        , m_parentWidget(parentWidget)
-    {
-    }
-
-    void promptUserForApplication(KJob *job, const QList<QUrl> &urls, const QString &mimeType) override
-    {
-        Q_UNUSED(mimeType);
-
-        QWidget *widget = nullptr;
-        if (job) {
-            widget = KJobWidgets::window(job);
-        }
-
-        if (!widget) {
-            widget = m_parentWidget;
-        }
-
-        QString windowId;
-        if (widget) {
-            widget->window()->winId(); // ensure we have a handle so we can export a window (without this windowHandle() may be null)
-            auto services = QGuiApplicationPrivate::platformIntegration()->services();
-            if (auto unixServices = dynamic_cast<QGenericUnixServices *>(services)) {
-                windowId = unixServices->portalWindowIdentifier(widget->window()->windowHandle());
-            }
-        }
-
-        QDBusMessage message = QDBusMessage::createMethodCall(desktopPortalService(),
-                                                              desktopPortalPath(),
-                                                              QStringLiteral("org.freedesktop.impl.portal.AppChooser"),
-                                                              QStringLiteral("ChooseApplicationPrivate"));
-
-        QStringList urlStrings;
-        for (const auto &url : urls) {
-            urlStrings << url.toString();
-        }
-        message << windowId << urlStrings << QVariantMap{{QStringLiteral("ask"), true}};
-
-        QDBusPendingCall pendingCall = QDBusConnection::sessionBus().asyncCall(message, std::numeric_limits<int>::max());
-        auto watcher = new QDBusPendingCallWatcher(pendingCall, this);
-        connect(watcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *watcher) {
-            watcher->deleteLater();
-
-            QDBusPendingReply<uint, QVariantMap> reply = *watcher;
-            if (reply.isError()) {
-                qWarning() << "Couldn't get reply";
-                qWarning() << "Error: " << reply.error().message();
-                Q_EMIT canceled();
-            } else {
-                if (reply.argumentAt<0>() == 0) {
-                    Q_EMIT serviceSelected(KService::serviceByDesktopName(reply.argumentAt<1>().value(QStringLiteral("choice")).toString()));
-                } else {
-                    Q_EMIT canceled();
-                }
-            }
-        });
-    }
-
-private:
-    QPointer<QWidget> m_parentWidget;
-};
-
-class KIOUiDelegate : public KIO::JobUiDelegate
-{
-public:
-    explicit KIOUiDelegate(KJobUiDelegate::Flags flags = AutoHandlingDisabled, QWidget *window = nullptr)
-        : KIO::JobUiDelegate(flags, window, {new KIOOpenWith(window, nullptr)})
-    {
-    }
-};
-
-class KIOUiFactory : public KIO::JobUiDelegateFactory
-{
-public:
-    KIOUiFactory() = default;
-
-    KJobUiDelegate *createDelegate() const override
-    {
-        return new KIOUiDelegate;
-    }
-
-    KJobUiDelegate *createDelegate(KJobUiDelegate::Flags flags, QWidget *window) const override
-    {
-        return new KIOUiDelegate(flags, window);
-    }
-};
 
 KdePlatformTheme::KdePlatformTheme()
 {
