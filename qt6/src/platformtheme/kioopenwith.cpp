@@ -12,8 +12,14 @@
 #include <private/qguiapplication_p.h>
 #include <qpa/qplatformintegration.h>
 
+#include <KBuildSycocaProgressDialog>
+#include <KCompletion>
+#include <KIO/OpenWith>
 #include <KJob>
 #include <KJobWidgets>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KSharedConfig>
 
 namespace
 {
@@ -65,24 +71,97 @@ void KIOOpenWith::promptUserForApplication(KJob *job, const QList<QUrl> &urls, c
     for (const auto &url : urls) {
         urlStrings << url.toString();
     }
-    message << windowId << urlStrings << QVariantMap{{QStringLiteral("ask"), true}};
+
+    KConfigGroup cg(KSharedConfig::openStateConfig(), QStringLiteral("Open-with settings"));
+    // FIXME not used for anything inside the portal
+    const auto completionMode = cg.readEntry("CompletionMode", int(KCompletion::CompletionNone));
+    const QStringList history = cg.readEntry("History", QStringList());
+    const QString lastChoice = cg.readEntry("LastChoice", QString());
+
+    message << windowId //
+            << urlStrings //
+            << QVariantMap{
+                   {QStringLiteral("ask"), true}, //
+                   {QStringLiteral("last_choice"), lastChoice}, //
+                   {QStringLiteral("history"), history}, //
+                   {QStringLiteral("completionMode"), completionMode}, //
+               };
 
     QDBusPendingCall pendingCall = QDBusConnection::sessionBus().asyncCall(message, std::numeric_limits<int>::max());
     auto watcher = new QDBusPendingCallWatcher(pendingCall, this);
-    connect(watcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *watcher) {
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [this, mimeType, cg, widget](QDBusPendingCallWatcher *watcher) mutable {
         watcher->deleteLater();
-
-        QDBusPendingReply<uint, QVariantMap> reply = *watcher;
-        if (reply.isError()) {
-            qWarning() << "Couldn't get reply";
-            qWarning() << "Error: " << reply.error().message();
-            Q_EMIT canceled();
-        } else {
-            if (reply.argumentAt<0>() == 0) {
-                Q_EMIT serviceSelected(KService::serviceByDesktopName(reply.argumentAt<1>().value(QStringLiteral("choice")).toString()));
-            } else {
-                Q_EMIT canceled();
-            }
-        }
+        onApplicationChosen(*watcher, cg, mimeType, widget);
     });
+}
+
+KService::Ptr KIOOpenWith::makeService(const QVariantMap &resultMap, const QString &mimeType, QWidget *widget)
+{
+    constexpr auto saveNewApps = false; // NOTE: this isn't actually implemented in any UI
+
+    const auto typedExec = resultMap.value(QStringLiteral("choice")).toString();
+    const auto remember = resultMap.value(QStringLiteral("remember")).toBool();
+    const auto openInTerminal = resultMap.value(QStringLiteral("openInTerminal")).toBool();
+    const auto lingerTerminal = resultMap.value(QStringLiteral("lingerTerminal")).toBool();
+
+    auto service = KService::serviceByDesktopName(typedExec);
+    auto result = KIO::OpenWith::accept(service, typedExec, remember, mimeType, openInTerminal, lingerTerminal, saveNewApps);
+    if (!result.accept) {
+        KMessageBox::error(widget, result.error);
+        return {};
+    }
+
+    if (result.rebuildSycoca) {
+        KBuildSycocaProgressDialog::rebuildKSycoca(widget);
+    }
+
+    return service;
+}
+
+void KIOOpenWith::onApplicationChosen(const QDBusPendingReply<uint, QVariantMap> &reply, KConfigGroup cg, const QString &mimeType, QWidget *widget)
+{
+    if (reply.isError()) {
+        qWarning() << "Couldn't get reply";
+        qWarning() << "Error: " << reply.error().message();
+        Q_EMIT canceled();
+        return;
+    }
+
+    if (reply.argumentAt<0>() != 0) {
+        Q_EMIT canceled();
+        return;
+    }
+
+    auto resultMap = reply.argumentAt<1>();
+    const QString choice = resultMap.value(QStringLiteral("choice")).toString();
+    auto service = makeService(resultMap, mimeType, widget);
+    if (!service) {
+        // Message already displayed by makeService!
+        Q_EMIT canceled();
+        return;
+    }
+
+    Q_ASSERT(service);
+    Q_ASSERT(service->isValid());
+    if (!service || !service->isValid()) {
+        KMessageBox::error(widget, i18n("Failed to launch for unknown reasons. Please try with a pre-existing application."));
+        Q_EMIT canceled();
+        return;
+    }
+    Q_EMIT serviceSelected(service);
+
+    // Save new history
+    QStringList history = cg.readEntry("History", QStringList());
+    if (history.contains(choice)) {
+        history.removeAll(choice);
+    }
+    history.prepend(choice);
+    constexpr auto arbitraryHistoryMax = 15;
+    while (history.size() > arbitraryHistoryMax) {
+        history.pop_back();
+    }
+    cg.writeEntry("History", history);
+    if (const auto name = service->desktopEntryName(); !name.isEmpty()) {
+        cg.writeEntry("LastChoice", name);
+    }
 }

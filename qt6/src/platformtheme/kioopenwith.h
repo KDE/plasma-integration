@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <QDBusPendingReply>
 #include <QPointer>
 
 #include <KConfigGroup>
@@ -15,6 +16,10 @@ public:
     explicit KIOOpenWith(QWidget *parentWidget, QObject *parent = nullptr);
     void promptUserForApplication(KJob *job, const QList<QUrl> &urls, const QString &mimeType) override;
 
+private Q_SLOTS:
+    void onApplicationChosen(const QDBusPendingReply<uint, QVariantMap> &reply, KConfigGroup cg, const QString &mimeType, QWidget *widget);
+
 private:
+    [[nodiscard]] KService::Ptr makeService(const QVariantMap &resultMap, const QString &mimeType, QWidget *widget);
     QPointer<QWidget> m_parentWidget;
 };
