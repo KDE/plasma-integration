@@ -322,7 +322,7 @@ void KDEPlatformFileDialogHelper::initializeDialog()
 
 KFileFilter KDEPlatformFileDialogHelper::qtFilterToKFileFilter(const QString &qtFilter) const
 {
-    QString name = qtFilter.left(qtFilter.indexOf(u'(')).trimmed();
+    QString name = qtFilter.left(qtFilter.lastIndexOf(u'(')).trimmed();
     const QStringList extensions = cleanFilterList(qtFilter);
 
     if (name.isEmpty()) {
