@@ -1,94 +1,96 @@
+# translation of plasmaintegration to Esperanto
+# Copyright (C) 2014-2023 Free Software Foundation, Inc.
+# This file is distributed under the same license as the plasma-integration package.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
+#
+# Minuskloj: ĉ ĝ ĵ ĥ ŝ ŭ   Majuskloj: Ĉ Ĝ Ĵ Ĥ Ŝ Ŭ
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: kdeorg\n"
+"Project-Id-Version: desktop files\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-01 00:52+0000\n"
-"PO-Revision-Date: 2024-03-28 19:24\n"
-"Last-Translator: \n"
-"Language-Team: Chinese Simplified\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2023-04-15 08:25+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
+"Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
+"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: kdeorg\n"
-"X-Crowdin-Project-ID: 269464\n"
-"X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf5-stable/messages/plasma-integration/plasmaintegration5."
-"pot\n"
-"X-Crowdin-File-ID: 2364\n"
+"X-Generator: translate-po (https://github.com/zcribe/translate-po)\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: platformtheme/kdeplatformfiledialoghelper.cpp:283
 #, kde-format
 msgctxt "@title:window"
 msgid "Open File"
-msgstr "打开文件"
+msgstr "Malfermi Dosieron"
 
 #: platformtheme/kdeplatformfiledialoghelper.cpp:284
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
-msgstr "保存文件"
+msgstr "Konservi Dosieron"
 
 #: platformtheme/kdeplatformtheme.cpp:288
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
-msgstr "全部保存"
+msgstr "Konservi Ĉion"
 
 #: platformtheme/kdeplatformtheme.cpp:292
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
-msgstr "是(&Y)"
+msgstr "&Jes"
 
 #: platformtheme/kdeplatformtheme.cpp:294
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
-msgstr "全部选是"
+msgstr "Jes al Ĉiuj"
 
 #: platformtheme/kdeplatformtheme.cpp:296
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
-msgstr "否(&N)"
+msgstr "&Ne"
 
 #: platformtheme/kdeplatformtheme.cpp:298
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
-msgstr "全部选否"
+msgstr "Ne al Ĉiuj"
 
 #: platformtheme/kdeplatformtheme.cpp:301
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
-msgstr "中止"
+msgstr "Ĉesi"
 
 #: platformtheme/kdeplatformtheme.cpp:303
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
-msgstr "重试"
+msgstr "Reprovi"
 
 #: platformtheme/kdeplatformtheme.cpp:305
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
-msgstr "忽略"
+msgstr "Ignori"
 
 #: platformtheme/kdirselectdialog.cpp:120
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
-msgstr "新建文件夹"
+msgstr "Nova Dosierujo"
 
 #: platformtheme/kdirselectdialog.cpp:126
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
-msgstr "新建文件夹"
+msgstr "Nova Dosierujo"
 
 #: platformtheme/kdirselectdialog.cpp:127
 #, kde-format
@@ -97,63 +99,62 @@ msgid ""
 "Create new folder in:\n"
 "%1"
 msgstr ""
-"创建新文件夹于：\n"
-"\n"
+"Krei novan dosierujon en:\n"
 "%1"
 
 #: platformtheme/kdirselectdialog.cpp:158
 #, kde-format
 msgid "A file or folder named %1 already exists."
-msgstr "名为“%1”的文件或文件夹已存在。"
+msgstr "Dosiero aŭ dosierujo nomita %1 jam ekzistas."
 
 #: platformtheme/kdirselectdialog.cpp:167
 #, kde-format
 msgid "You do not have permission to create that folder."
-msgstr "您没有创建该文件夹的权限。"
+msgstr "Vi ne havas permeson krei tiun dosierujon."
 
 #: platformtheme/kdirselectdialog.cpp:269
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
-msgstr "选择文件夹"
+msgstr "Elekti Dosierujon"
 
 #: platformtheme/kdirselectdialog.cpp:278
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
-msgstr "新建文件夹..."
+msgstr "Nova dosierujo..."
 
 #: platformtheme/kdirselectdialog.cpp:327
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
-msgstr "新建文件夹..."
+msgstr "Nova dosierujo..."
 
 #: platformtheme/kdirselectdialog.cpp:336
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Move to Trash"
-msgstr "移动到回收站"
+msgstr "Movi al Rubujo"
 
 #: platformtheme/kdirselectdialog.cpp:345
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
-msgstr "删除"
+msgstr "Forigi"
 
 #: platformtheme/kdirselectdialog.cpp:356
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
-msgstr "显示隐藏文件夹"
+msgstr "Montri Kaŝitajn Dosierujojn"
 
 #: platformtheme/kdirselectdialog.cpp:363
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
-msgstr "属性"
+msgstr "Proprecoj"
 
 #: platformtheme/kfiletreeview.cpp:185
 #, kde-format
 msgid "Show Hidden Folders"
-msgstr "显示隐藏文件夹"
+msgstr "Montri Kaŝitajn Dosierujojn"
