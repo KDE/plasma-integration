@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-20 00:39+0000\n"
+"POT-Creation-Date: 2024-04-11 00:39+0000\n"
 "PO-Revision-Date: 2023-11-30 21:35+0000\n"
 "Last-Translator: Guðmundur Erlingsson <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
@@ -29,49 +29,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Vista skrá"
 
-#: platformtheme/kdeplatformtheme.cpp:402
+#: platformtheme/kdeplatformtheme.cpp:401
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Vista allt"
 
-#: platformtheme/kdeplatformtheme.cpp:406
+#: platformtheme/kdeplatformtheme.cpp:405
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&Já"
 
-#: platformtheme/kdeplatformtheme.cpp:408
+#: platformtheme/kdeplatformtheme.cpp:407
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Já við öllu"
 
-#: platformtheme/kdeplatformtheme.cpp:410
+#: platformtheme/kdeplatformtheme.cpp:409
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&Nei"
 
-#: platformtheme/kdeplatformtheme.cpp:412
+#: platformtheme/kdeplatformtheme.cpp:411
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Nei við öllu"
 
-#: platformtheme/kdeplatformtheme.cpp:415
+#: platformtheme/kdeplatformtheme.cpp:414
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Hætta við"
 
-#: platformtheme/kdeplatformtheme.cpp:417
+#: platformtheme/kdeplatformtheme.cpp:416
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Reyna aftur"
 
-#: platformtheme/kdeplatformtheme.cpp:419
+#: platformtheme/kdeplatformtheme.cpp:418
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"

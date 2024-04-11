@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-20 00:39+0000\n"
+"POT-Creation-Date: 2024-04-11 00:39+0000\n"
 "PO-Revision-Date: 2024-03-30 19:36\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -30,49 +30,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "保存文件"
 
-#: platformtheme/kdeplatformtheme.cpp:402
+#: platformtheme/kdeplatformtheme.cpp:401
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "全部保存"
 
-#: platformtheme/kdeplatformtheme.cpp:406
+#: platformtheme/kdeplatformtheme.cpp:405
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "是(&Y)"
 
-#: platformtheme/kdeplatformtheme.cpp:408
+#: platformtheme/kdeplatformtheme.cpp:407
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "全部选是"
 
-#: platformtheme/kdeplatformtheme.cpp:410
+#: platformtheme/kdeplatformtheme.cpp:409
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "否(&N)"
 
-#: platformtheme/kdeplatformtheme.cpp:412
+#: platformtheme/kdeplatformtheme.cpp:411
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "全部选否"
 
-#: platformtheme/kdeplatformtheme.cpp:415
+#: platformtheme/kdeplatformtheme.cpp:414
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "中止"
 
-#: platformtheme/kdeplatformtheme.cpp:417
+#: platformtheme/kdeplatformtheme.cpp:416
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "重试"
 
-#: platformtheme/kdeplatformtheme.cpp:419
+#: platformtheme/kdeplatformtheme.cpp:418
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
