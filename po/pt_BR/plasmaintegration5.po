@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasmaintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-20 02:28+0000\n"
+"POT-Creation-Date: 2024-04-11 02:44+0000\n"
 "PO-Revision-Date: 2022-12-15 11:15-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -31,49 +31,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Salvar arquivo"
 
-#: platformtheme/kdeplatformtheme.cpp:396
+#: platformtheme/kdeplatformtheme.cpp:395
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Salvar tudo"
 
-#: platformtheme/kdeplatformtheme.cpp:400
+#: platformtheme/kdeplatformtheme.cpp:399
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&Sim"
 
-#: platformtheme/kdeplatformtheme.cpp:402
+#: platformtheme/kdeplatformtheme.cpp:401
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Sim para tudo"
 
-#: platformtheme/kdeplatformtheme.cpp:404
+#: platformtheme/kdeplatformtheme.cpp:403
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&Não"
 
-#: platformtheme/kdeplatformtheme.cpp:406
+#: platformtheme/kdeplatformtheme.cpp:405
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Não para tudo"
 
-#: platformtheme/kdeplatformtheme.cpp:409
+#: platformtheme/kdeplatformtheme.cpp:408
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Cancelar"
 
-#: platformtheme/kdeplatformtheme.cpp:411
+#: platformtheme/kdeplatformtheme.cpp:410
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Repetir"
 
-#: platformtheme/kdeplatformtheme.cpp:413
+#: platformtheme/kdeplatformtheme.cpp:412
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
