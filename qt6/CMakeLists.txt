@@ -27,6 +27,9 @@ ecm_set_disabled_deprecation_versions(QT 5.15.2
     KF 5.101
 )
 
+find_package(KF6I18n CONFIG REQUIRED)
+ki18n_install(../po)
+
 add_subdirectory(src)
 if(BUILD_TESTING)
     add_subdirectory(autotests)

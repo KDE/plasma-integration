@@ -97,9 +97,6 @@ if (${BUILD_QT6})
 
     add_definitions(-DTRANSLATION_DOMAIN=\"plasmaintegration5\")
     add_subdirectory(qt6)
-
-    find_package(KF6I18n CONFIG REQUIRED)
-    ki18n_install(po)
 endif()
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
