@@ -29,6 +29,7 @@ public:
     QIcon fileIcon(const QFileInfo &fileInfo, QPlatformTheme::IconOptions iconOptions) const override;
 
     const QPalette *palette(Palette type = SystemPalette) const override;
+    Qt::ColorScheme colorScheme() const override;
     const QFont *font(Font type) const override;
     QIconEngine *createIconEngine(const QString &iconName) const override;
     QList<QKeySequence> keyBindings(QKeySequence::StandardKey key) const override;
