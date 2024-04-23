@@ -128,6 +128,11 @@ const QPalette *KdePlatformTheme::palette(Palette type) const
     }
 }
 
+Qt::ColorScheme KdePlatformTheme::colorScheme() const
+{
+    return m_hints->colorScheme();
+}
+
 const QFont *KdePlatformTheme::font(Font type) const
 {
     KFontSettingsData::FontTypes fdtype;

@@ -28,6 +28,8 @@
 #include <QDBusConnection>
 #include <QDBusInterface>
 
+#include <qpa/qwindowsysteminterface.h>
+
 #include <KSandbox>
 #include <kcolorscheme.h>
 #include <kconfiggroup.h>
@@ -137,6 +139,7 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
     QMetaObject::invokeMethod(this, "setupIconLoader", Qt::QueuedConnection);
 
     loadPalettes();
+    updateColorScheme();
     updateCursorTheme();
 }
 
@@ -249,6 +252,7 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         } else if (qobject_cast<QGuiApplication *>(QCoreApplication::instance())) {
             QGuiApplication::setPalette(*m_palettes[QPlatformTheme::SystemPalette]);
         }
+        updateColorScheme();
         break;
     }
     case SettingsChanged: {
@@ -437,6 +441,27 @@ void KHintsSettings::loadPalettes()
         }
 
         m_palettes[QPlatformTheme::SystemPalette] = new QPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(path)));
+    }
+}
+
+void KHintsSettings::updateColorScheme()
+{
+    Qt::ColorScheme colorScheme = Qt::ColorScheme::Unknown;
+
+    if (auto *systemPalette = m_palettes[QPlatformTheme::SystemPalette]) {
+        // Matches xdg-desktop-portal-kde readFdoColorScheme()
+        const int windowBackgroundGray = qGray(systemPalette->window().color().rgb());
+
+        if (windowBackgroundGray < 192) {
+            colorScheme = Qt::ColorScheme::Dark;
+        } else {
+            colorScheme = Qt::ColorScheme::Light;
+        }
+    }
+
+    if (m_colorScheme != colorScheme) {
+        m_colorScheme = colorScheme;
+        QWindowSystemInterface::handleThemeChange();
     }
 }
 

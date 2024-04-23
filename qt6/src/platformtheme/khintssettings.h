@@ -65,6 +65,11 @@ public:
     }
     QStringList xdgIconThemePaths() const;
 
+    inline Qt::ColorScheme colorScheme() const
+    {
+        return m_colorScheme;
+    }
+
 private Q_SLOTS:
     void delayedDBusConnects();
     void setupIconLoader();
@@ -76,6 +81,7 @@ private:
     QVariant readConfigValue(const QString &group, const QString &key, const QVariant &defaultValue);
     QVariant readConfigValue(const KConfigGroup &cg, const QString &key, const QVariant &defaultValue) const;
     void loadPalettes();
+    void updateColorScheme();
     void iconChanged(int group);
     void updateQtSettings(KConfigGroup &cg);
     void updateShowIconsInMenuItems(KConfigGroup &cg);
@@ -88,6 +94,7 @@ private:
     QHash<QPlatformTheme::ThemeHint, QVariant> m_hints;
     KSharedConfigPtr mKdeGlobals;
     QMap<QString, QVariantMap> mKdeGlobalsPortal;
+    Qt::ColorScheme m_colorScheme = Qt::ColorScheme::Unknown;
     bool mUsePortal;
 };
 
