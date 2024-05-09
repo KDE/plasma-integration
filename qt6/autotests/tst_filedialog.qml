@@ -1,6 +1,6 @@
-import QtQuick 2.2
-import QtTest 1.0
-import QtQuick.Dialogs 1.2
+import QtQuick
+import QtTest
+import QtQuick.Dialogs
 TestCase {
     id: testCase
     width: 400
@@ -11,7 +11,7 @@ TestCase {
 
     FileDialog {
         id: fileDialog
-        folder: shortcuts.home
+        currentFolder: shortcuts.home
     }
 
     function test_filedialog() {
