@@ -123,13 +123,13 @@ msgstr "Seleccioneu una carpeta"
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
-msgstr "Carpeta nova..."
+msgstr "Carpeta nova…"
 
 #: platformtheme/kdirselectdialog.cpp:327
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
-msgstr "Carpeta nova..."
+msgstr "Carpeta nova…"
 
 #: platformtheme/kdirselectdialog.cpp:336
 #, kde-format
