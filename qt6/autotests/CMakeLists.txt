@@ -78,6 +78,7 @@ target_sources(kdeplatformtheme_unittest6 PRIVATE
   ../src/platformtheme/kiodelegate.cpp
   ../src/platformtheme/kioopenwith.cpp
   ../src/platformtheme/kioopenwithxdp.cpp
+  ../src/platformtheme/a11yextension.cpp
   ${dbus_interface}
   ${wayland_interfaces}
 )

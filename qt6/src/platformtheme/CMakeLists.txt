@@ -28,6 +28,7 @@ set(platformtheme_SRCS
     kioopenwith.cpp
     kiodelegate.cpp
     kioopenwithxdp.cpp
+    a11yextension.cpp
 )
 
 qt6_add_dbus_interface(platformtheme_SRCS org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)

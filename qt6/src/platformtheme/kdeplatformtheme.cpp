@@ -9,6 +9,7 @@
 
 #include <config-platformtheme.h>
 
+#include "a11yextension.h"
 #include "kdeplatformfiledialoghelper.h"
 #include "kdeplatformsystemtrayicon.h"
 #include "kdeplatformtheme.h"
@@ -70,6 +71,10 @@ KdePlatformTheme::KdePlatformTheme()
     KIO::setDefaultJobUiDelegateExtension(&delegateExtension);
 
     KCountryFlagEmojiIconEngine::setGlobalDefaultFont(QFont(u"Noto Color Emoji, emoji"_qs));
+
+    if (qEnvironmentVariableIntValue("PLASMA_A11Y_EXTENSION") == 1) {
+        static A11yExtension a11yExtension;
+    }
 }
 
 KdePlatformTheme::~KdePlatformTheme()
