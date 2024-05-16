@@ -27,6 +27,7 @@ set(platformtheme_SRCS
     qxdgdesktopportalfiledialog.cpp
     qtquickrenderersettings.cpp
     qdbusmenubarwrapper.h
+    a11yextension.cpp
 )
 
 qt6_add_dbus_interface(platformtheme_SRCS org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
