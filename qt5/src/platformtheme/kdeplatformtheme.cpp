@@ -304,12 +304,6 @@ KdePlatformTheme::KdePlatformTheme()
 
     QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar, false);
     setQtQuickControlsTheme();
-
-    static KIOUiFactory factory;
-    KIO::setDefaultJobUiDelegateFactoryV2(&factory);
-
-    static KIOUiDelegate delegateExtension;
-    KIO::setDefaultJobUiDelegateExtension(&delegateExtension);
 }
 
 KdePlatformTheme::~KdePlatformTheme()

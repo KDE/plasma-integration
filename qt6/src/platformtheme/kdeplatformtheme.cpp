@@ -191,12 +191,6 @@ KdePlatformTheme::KdePlatformTheme()
     QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar, false);
     setQtQuickControlsTheme();
 
-    static KIOUiFactory factory;
-    KIO::setDefaultJobUiDelegateFactory(&factory);
-
-    static KIOUiDelegate delegateExtension;
-    KIO::setDefaultJobUiDelegateExtension(&delegateExtension);
-
     KCountryFlagEmojiIconEngine::setGlobalDefaultFont(QFont(u"Noto Color Emoji, emoji"_qs));
 }
 
