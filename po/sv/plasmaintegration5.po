@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2016.
+# SPDX-FileCopyrightText: 2016, 2024 Stefan Asserhäll <stefan.asserhall@bredband.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-29 03:10+0000\n"
-"PO-Revision-Date: 2016-04-10 08:12+0100\n"
+"PO-Revision-Date: 2024-06-08 17:22+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: platformtheme/kdeplatformfiledialoghelper.cpp:260
 #, kde-format
@@ -39,7 +39,7 @@ msgstr "Spara alla"
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
-msgstr ""
+msgstr "&Ja"
 
 #: platformtheme/kdeplatformtheme.cpp:401
 #, kde-format
@@ -51,7 +51,7 @@ msgstr "Ja till alla"
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
-msgstr ""
+msgstr "&Nej"
 
 #: platformtheme/kdeplatformtheme.cpp:405
 #, kde-format
