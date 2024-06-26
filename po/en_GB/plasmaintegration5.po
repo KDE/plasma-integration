@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:39+0000\n"
+"POT-Creation-Date: 2024-06-26 00:40+0000\n"
 "PO-Revision-Date: 2022-12-31 15:28+0000\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
@@ -29,49 +29,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Save File"
 
-#: platformtheme/kdeplatformtheme.cpp:401
+#: platformtheme/kdeplatformtheme.cpp:294
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Save All"
 
-#: platformtheme/kdeplatformtheme.cpp:405
+#: platformtheme/kdeplatformtheme.cpp:298
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&Yes"
 
-#: platformtheme/kdeplatformtheme.cpp:407
+#: platformtheme/kdeplatformtheme.cpp:300
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Yes to All"
 
-#: platformtheme/kdeplatformtheme.cpp:409
+#: platformtheme/kdeplatformtheme.cpp:302
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&No"
 
-#: platformtheme/kdeplatformtheme.cpp:411
+#: platformtheme/kdeplatformtheme.cpp:304
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "No to All"
 
-#: platformtheme/kdeplatformtheme.cpp:414
+#: platformtheme/kdeplatformtheme.cpp:307
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Abort"
 
-#: platformtheme/kdeplatformtheme.cpp:416
+#: platformtheme/kdeplatformtheme.cpp:309
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Retry"
 
-#: platformtheme/kdeplatformtheme.cpp:418
+#: platformtheme/kdeplatformtheme.cpp:311
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
@@ -155,6 +155,13 @@ msgstr "Properties"
 #, kde-format
 msgid "Show Hidden Folders"
 msgstr "Show Hidden Folders"
+
+#: platformtheme/kioopenwith.cpp:147
+#, kde-format
+msgid ""
+"Failed to launch for unknown reasons. Please try with a pre-existing "
+"application."
+msgstr ""
 
 #~ msgid "Opening..."
 #~ msgstr "Opening..."

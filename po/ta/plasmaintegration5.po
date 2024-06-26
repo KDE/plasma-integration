@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:39+0000\n"
+"POT-Creation-Date: 2024-06-26 00:40+0000\n"
 "PO-Revision-Date: 2022-11-08 21:21+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -29,49 +29,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "கோப்பை சேமித்தல்"
 
-#: platformtheme/kdeplatformtheme.cpp:401
+#: platformtheme/kdeplatformtheme.cpp:294
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "அனைத்தையும் சேமி"
 
-#: platformtheme/kdeplatformtheme.cpp:405
+#: platformtheme/kdeplatformtheme.cpp:298
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&ஆம்"
 
-#: platformtheme/kdeplatformtheme.cpp:407
+#: platformtheme/kdeplatformtheme.cpp:300
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "அனைத்திற்கும் 'ஆம்'"
 
-#: platformtheme/kdeplatformtheme.cpp:409
+#: platformtheme/kdeplatformtheme.cpp:302
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&இல்லை"
 
-#: platformtheme/kdeplatformtheme.cpp:411
+#: platformtheme/kdeplatformtheme.cpp:304
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "அனைத்திற்கும் 'இல்லை'"
 
-#: platformtheme/kdeplatformtheme.cpp:414
+#: platformtheme/kdeplatformtheme.cpp:307
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "ரத்து செய்"
 
-#: platformtheme/kdeplatformtheme.cpp:416
+#: platformtheme/kdeplatformtheme.cpp:309
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "மீண்டும் முயற்சி"
 
-#: platformtheme/kdeplatformtheme.cpp:418
+#: platformtheme/kdeplatformtheme.cpp:311
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
@@ -155,3 +155,10 @@ msgstr "பண்புகள்"
 #, kde-format
 msgid "Show Hidden Folders"
 msgstr "மறைந்துள்ள அடைவுகளை காட்டு"
+
+#: platformtheme/kioopenwith.cpp:147
+#, kde-format
+msgid ""
+"Failed to launch for unknown reasons. Please try with a pre-existing "
+"application."
+msgstr ""

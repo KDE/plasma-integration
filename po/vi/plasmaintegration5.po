@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:39+0000\n"
+"POT-Creation-Date: 2024-06-26 00:40+0000\n"
 "PO-Revision-Date: 2022-11-14 15:03+0100\n"
 "Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
 "Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
@@ -29,49 +29,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Lưu tệp"
 
-#: platformtheme/kdeplatformtheme.cpp:401
+#: platformtheme/kdeplatformtheme.cpp:294
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Lưu tất cả"
 
-#: platformtheme/kdeplatformtheme.cpp:405
+#: platformtheme/kdeplatformtheme.cpp:298
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&Có"
 
-#: platformtheme/kdeplatformtheme.cpp:407
+#: platformtheme/kdeplatformtheme.cpp:300
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Có cho tất cả"
 
-#: platformtheme/kdeplatformtheme.cpp:409
+#: platformtheme/kdeplatformtheme.cpp:302
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&Không"
 
-#: platformtheme/kdeplatformtheme.cpp:411
+#: platformtheme/kdeplatformtheme.cpp:304
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Không cho tất cả"
 
-#: platformtheme/kdeplatformtheme.cpp:414
+#: platformtheme/kdeplatformtheme.cpp:307
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Huỷ bỏ"
 
-#: platformtheme/kdeplatformtheme.cpp:416
+#: platformtheme/kdeplatformtheme.cpp:309
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Thử lại"
 
-#: platformtheme/kdeplatformtheme.cpp:418
+#: platformtheme/kdeplatformtheme.cpp:311
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
@@ -155,3 +155,10 @@ msgstr "Thuộc tính"
 #, kde-format
 msgid "Show Hidden Folders"
 msgstr "Hiện thư mục ẩn"
+
+#: platformtheme/kioopenwith.cpp:147
+#, kde-format
+msgid ""
+"Failed to launch for unknown reasons. Please try with a pre-existing "
+"application."
+msgstr ""

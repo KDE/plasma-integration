@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frameworkintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:39+0000\n"
+"POT-Creation-Date: 2024-06-26 00:40+0000\n"
 "PO-Revision-Date: 2019-11-02 18:30+0900\n"
 "Last-Translator: Tomohiro Hyakutake <tomhioo@outlook.jp>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -28,49 +28,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "ファイルを保存"
 
-#: platformtheme/kdeplatformtheme.cpp:401
+#: platformtheme/kdeplatformtheme.cpp:294
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "すべて保存"
 
-#: platformtheme/kdeplatformtheme.cpp:405
+#: platformtheme/kdeplatformtheme.cpp:298
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr ""
 
-#: platformtheme/kdeplatformtheme.cpp:407
+#: platformtheme/kdeplatformtheme.cpp:300
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "すべてはい"
 
-#: platformtheme/kdeplatformtheme.cpp:409
+#: platformtheme/kdeplatformtheme.cpp:302
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr ""
 
-#: platformtheme/kdeplatformtheme.cpp:411
+#: platformtheme/kdeplatformtheme.cpp:304
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "すべていいえ"
 
-#: platformtheme/kdeplatformtheme.cpp:414
+#: platformtheme/kdeplatformtheme.cpp:307
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "中断"
 
-#: platformtheme/kdeplatformtheme.cpp:416
+#: platformtheme/kdeplatformtheme.cpp:309
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "再試行"
 
-#: platformtheme/kdeplatformtheme.cpp:418
+#: platformtheme/kdeplatformtheme.cpp:311
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
@@ -154,3 +154,10 @@ msgstr "プロパティ"
 #, kde-format
 msgid "Show Hidden Folders"
 msgstr "隠しフォルダを表示"
+
+#: platformtheme/kioopenwith.cpp:147
+#, kde-format
+msgid ""
+"Failed to launch for unknown reasons. Please try with a pre-existing "
+"application."
+msgstr ""
