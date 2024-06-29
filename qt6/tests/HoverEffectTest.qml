@@ -3,13 +3,14 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-import QtQuick 2.12
-import QtQuick.Templates 2.12
+import QtQuick
+import QtQuick.Templates as T
 
-ApplicationWindow {
+T.ApplicationWindow {
     width: control.implicitWidth + gridUnit*4
     height: control.implicitHeight + gridUnit*4
     color: "white"
+    visible: true
 
     property int gridUnit: fontMetrics.height
 
@@ -17,7 +18,7 @@ ApplicationWindow {
         id: fontMetrics
     }
 
-    Button {
+    T.Button {
         id: control
 
         implicitWidth: Math.round(Math.max(implicitContentWidth + leftPadding + rightPadding))
@@ -32,7 +33,7 @@ ApplicationWindow {
 
         text: "There should be a red outline hover effect on this button"
 
-        contentItem: Label {
+        contentItem: T.Label {
             text: control.text
             font: control.font
             color: "white"
