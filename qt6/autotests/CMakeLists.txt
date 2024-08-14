@@ -61,9 +61,14 @@ frameworkintegration_tests(
     kdeplatformtheme_unittest
 )
 set(wayland_interfaces)
-qt6_generate_wayland_protocol_client_sources(kdeplatformtheme_unittest6 FILES
-    ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
-    ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
+if (Qt6_VERSION VERSION_GREATER_EQUAL "6.8.0")
+    set(private_code_option  "PRIVATE_CODE")
+endif()
+qt6_generate_wayland_protocol_client_sources(kdeplatformtheme_unittest6
+    ${private_code_option}
+    FILES
+      ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
+      ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
 )
 
 target_sources(kdeplatformtheme_unittest6 PRIVATE

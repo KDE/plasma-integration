@@ -37,9 +37,15 @@ add_library(KDEPlasmaPlatformTheme6 MODULE)
 
 # TODO KF6 Port D-Bus menu support
 target_compile_definitions(KDEPlasmaPlatformTheme6 PRIVATE -DKF6_TODO_DBUS_MENUBAR)
-qt6_generate_wayland_protocol_client_sources(KDEPlasmaPlatformTheme6 FILES
-    ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
-    ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
+
+if (Qt6_VERSION VERSION_GREATER_EQUAL "6.8.0")
+    set(private_code_option  "PRIVATE_CODE")
+endif()
+qt6_generate_wayland_protocol_client_sources(KDEPlasmaPlatformTheme6
+    ${private_code_option}
+    FILES
+        ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
+        ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
 )
 target_sources(KDEPlasmaPlatformTheme6 PRIVATE ${platformtheme_SRCS})
 
