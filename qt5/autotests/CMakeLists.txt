@@ -61,11 +61,13 @@ set(wayland_interfaces)
 ecm_add_qtwayland_client_protocol(wayland_interfaces
     PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
     BASENAME appmenu
+    PRIVATE_CODE
 )
 
 ecm_add_qtwayland_client_protocol(wayland_interfaces
     PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
     BASENAME server-decoration-palette
+    PRIVATE_CODE
 )
 
 target_sources(kdeplatformtheme_unittest5 PRIVATE

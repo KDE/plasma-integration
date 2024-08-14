@@ -39,11 +39,13 @@ add_library(KDEPlasmaPlatformTheme5 MODULE)
 ecm_add_qtwayland_client_protocol(platformtheme_SRCS
     PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
     BASENAME appmenu
+    PRIVATE_CODE
 )
 
 ecm_add_qtwayland_client_protocol(platformtheme_SRCS
     PROTOCOL ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
     BASENAME server-decoration-palette
+    PRIVATE_CODE
 )
 target_sources(KDEPlasmaPlatformTheme5 PRIVATE ${platformtheme_SRCS})
 
