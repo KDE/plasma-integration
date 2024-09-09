@@ -28,6 +28,8 @@
 #include <QDBusConnection>
 #include <QDBusInterface>
 
+#include <qpa/qwindowsysteminterface.h>
+
 #include <KSandbox>
 #include <kcolorscheme.h>
 #include <kconfiggroup.h>
@@ -329,6 +331,7 @@ void KHintsSettings::iconChanged(int group)
     KIconLoader::Group iconGroup = (KIconLoader::Group)group;
     if (iconGroup != KIconLoader::MainToolbar) {
         m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue(QStringLiteral("Icons"), QStringLiteral("Theme"), QStringLiteral("breeze"));
+        QWindowSystemInterface::handleThemeChange();
         return;
     }
 
