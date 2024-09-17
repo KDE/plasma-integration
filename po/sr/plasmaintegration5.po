@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasmaintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-26 00:40+0000\n"
+"POT-Creation-Date: 2024-09-17 00:40+0000\n"
 "PO-Revision-Date: 2017-09-28 17:58+0200\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -30,49 +30,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Уписивање фајла"
 
-#: platformtheme/kdeplatformtheme.cpp:294
+#: platformtheme/kdeplatformtheme.cpp:299
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Сачувај све"
 
-#: platformtheme/kdeplatformtheme.cpp:298
+#: platformtheme/kdeplatformtheme.cpp:303
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr ""
 
-#: platformtheme/kdeplatformtheme.cpp:300
+#: platformtheme/kdeplatformtheme.cpp:305
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Да за све"
 
-#: platformtheme/kdeplatformtheme.cpp:302
+#: platformtheme/kdeplatformtheme.cpp:307
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr ""
 
-#: platformtheme/kdeplatformtheme.cpp:304
+#: platformtheme/kdeplatformtheme.cpp:309
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Не за све"
 
-#: platformtheme/kdeplatformtheme.cpp:307
+#: platformtheme/kdeplatformtheme.cpp:312
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Обустави"
 
-#: platformtheme/kdeplatformtheme.cpp:309
+#: platformtheme/kdeplatformtheme.cpp:314
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Покушај поново"
 
-#: platformtheme/kdeplatformtheme.cpp:311
+#: platformtheme/kdeplatformtheme.cpp:316
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
