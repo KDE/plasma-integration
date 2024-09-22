@@ -139,7 +139,8 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
     QMetaObject::invokeMethod(this, "setupIconLoader", Qt::QueuedConnection);
 
     loadPalettes();
-    updateColorScheme();
+    m_colorScheme = determineColorScheme();
+
     updateCursorTheme();
 }
 
@@ -252,7 +253,12 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         } else if (qobject_cast<QGuiApplication *>(QCoreApplication::instance())) {
             QGuiApplication::setPalette(*m_palettes[QPlatformTheme::SystemPalette]);
         }
-        updateColorScheme();
+
+        Qt::ColorScheme newColorScheme = determineColorScheme();
+        if (m_colorScheme != newColorScheme) {
+            m_colorScheme = newColorScheme;
+            QWindowSystemInterface::handleThemeChange();
+        }
         break;
     }
     case SettingsChanged: {
@@ -444,7 +450,7 @@ void KHintsSettings::loadPalettes()
     }
 }
 
-void KHintsSettings::updateColorScheme()
+Qt::ColorScheme KHintsSettings::determineColorScheme() const
 {
     Qt::ColorScheme colorScheme = Qt::ColorScheme::Unknown;
 
@@ -459,10 +465,7 @@ void KHintsSettings::updateColorScheme()
         }
     }
 
-    if (m_colorScheme != colorScheme) {
-        m_colorScheme = colorScheme;
-        QWindowSystemInterface::handleThemeChange();
-    }
+    return colorScheme;
 }
 
 void KHintsSettings::updateCursorTheme()

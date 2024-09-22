@@ -81,7 +81,7 @@ private:
     QVariant readConfigValue(const QString &group, const QString &key, const QVariant &defaultValue);
     QVariant readConfigValue(const KConfigGroup &cg, const QString &key, const QVariant &defaultValue) const;
     void loadPalettes();
-    void updateColorScheme();
+    Qt::ColorScheme determineColorScheme() const;
     void iconChanged(int group);
     void updateQtSettings(KConfigGroup &cg);
     void updateShowIconsInMenuItems(KConfigGroup &cg);
