@@ -235,11 +235,12 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
 
     switch (type) {
     case PaletteChanged: {
+        loadPalettes();
+
         // Don't change the palette if the application has a custom one set
         if (!qApp->property("KDE_COLOR_SCHEME_PATH").toString().isEmpty()) {
             break;
         }
-        loadPalettes();
 
         // QApplication::setPalette and QGuiApplication::setPalette are different functions
         // and non virtual. Call the correct one
