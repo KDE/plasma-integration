@@ -23,9 +23,15 @@ class AppMenuManager : public QWaylandClientExtensionTemplate<AppMenuManager>, p
     Q_OBJECT
 public:
     AppMenuManager()
-        : QWaylandClientExtensionTemplate<AppMenuManager>(1)
+        : QWaylandClientExtensionTemplate<AppMenuManager>(2)
     {
         initialize();
+    }
+    ~AppMenuManager()
+    {
+        if (isActive() && QWaylandClientExtension::version() >= ORG_KDE_KWIN_APPMENU_MANAGER_RELEASE_SINCE_VERSION) {
+            release();
+        }
     }
 };
 
