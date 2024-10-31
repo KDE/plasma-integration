@@ -48,7 +48,6 @@ static bool checkBackend(QOpenGLContext &checkContext)
 void initializeRendererSessions()
 {
     PlasmaQtQuickSettings::RendererSettings s;
-    QOpenGLContext checkContext;
 
     QSGRendererInterface::GraphicsApi graphicsApi = QSGRendererInterface::Unknown;
 
@@ -63,6 +62,7 @@ void initializeRendererSessions()
         graphicsApi = QSGRendererInterface::Vulkan;
         break;
     default:
+        QOpenGLContext checkContext;
         if (!checkBackend(checkContext)) {
             qWarning("Warning: fallback to QtQuick software backend.");
             graphicsApi = QSGRendererInterface::Software;
@@ -76,19 +76,6 @@ void initializeRendererSessions()
     if (!qEnvironmentVariableIsSet("QSG_RENDER_LOOP")) {
         if (s.renderLoop() == PlasmaQtQuickSettings::RendererSettings::basic) {
             qputenv("QSG_RENDER_LOOP", "basic");
-        } else if (QGuiApplication::platformName() == QLatin1String("wayland") && QLibraryInfo::version() < QVersionNumber(6, 6, 3)) {
-#if QT_CONFIG(opengl)
-            // Workaround for Bug 455913 / QTBUG-95817
-            QOffscreenSurface surface;
-            surface.create();
-            if (checkContext.makeCurrent(&surface)) {
-                const char *vendor = reinterpret_cast<const char *>(checkContext.functions()->glGetString(GL_VENDOR));
-                if (qstrcmp(vendor, "NVIDIA Corporation") == 0) {
-                    // Otherwise Qt Quick Windows break when resized
-                    qputenv("QSG_RENDER_LOOP", "basic");
-                }
-            }
-#endif
         }
     }
 }
