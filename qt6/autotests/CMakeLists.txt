@@ -34,8 +34,6 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         Qt6::Test
         Qt6::DBus
         Qt6::QuickControls2
-        ${QT5PLATFORMSUPPORT_LIBS}
-        KF6::ConfigWidgets
         KF6::ConfigCore
         KF6::IconThemes
         KF6::KIOFileWidgets
@@ -49,9 +47,6 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         Wayland::Client
         KF6::XmlGui
     )
-    if (QT_MAJOR_VERSION EQUAL "5")
-        target_link_libraries(${_testname} Qt5::X11Extras)
-    endif()
 endmacro()
 
 set(dbus_interface)

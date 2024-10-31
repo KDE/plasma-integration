@@ -57,6 +57,7 @@ target_link_libraries(KDEPlasmaPlatformTheme6
         Qt6::DBus
         Qt6::QuickControls2
         KF6::ConfigCore
+        KF6::ConfigGui
         KF6::IconThemes
         KF6::KIOFileWidgets # KFileFilterCombo, KDirSortFilterProxyModel, KRecentDirs
         KF6::KIOWidgets
