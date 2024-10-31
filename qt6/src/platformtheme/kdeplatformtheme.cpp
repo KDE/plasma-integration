@@ -16,7 +16,9 @@
 #include "khintssettings.h"
 #include "kiodelegate.h"
 #include "kwaylandintegration.h"
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
 #include "qdbusmenubarwrapper.h"
+#endif
 #include "x11integration.h"
 
 #include <QApplication>
@@ -45,15 +47,12 @@
 
 using namespace Qt::StringLiterals;
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
 static const QByteArray s_x11AppMenuServiceNamePropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_SERVICE_NAME");
 static const QByteArray s_x11AppMenuObjectPathPropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_OBJECT_PATH");
 
 static bool checkDBusGlobalMenuAvailable()
 {
-    if (qEnvironmentVariableIsSet("KDE_NO_GLOBAL_MENU")) {
-        return false;
-    }
-
     QDBusConnection connection = QDBusConnection::sessionBus();
     QString registrarService = QStringLiteral("com.canonical.AppMenu.Registrar");
     return connection.interface()->isServiceRegistered(registrarService);
@@ -64,6 +63,7 @@ static bool isDBusGlobalMenuAvailable()
     static bool dbusGlobalMenuAvailable = checkDBusGlobalMenuAvailable();
     return dbusGlobalMenuAvailable;
 }
+#endif
 
 KdePlatformTheme::KdePlatformTheme()
 {
@@ -356,6 +356,10 @@ QPlatformSystemTrayIcon *KdePlatformTheme::createPlatformSystemTrayIcon() const
 
 QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
 {
+    if (qEnvironmentVariableIsSet("KDE_NO_GLOBAL_MENU")) {
+        return nullptr;
+    }
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
     if (isDBusGlobalMenuAvailable()) {
         auto dbusMenu = QGenericUnixTheme::createPlatformMenuBar();
         if (!dbusMenu) {
@@ -374,6 +378,9 @@ QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
         return menu;
     }
     return nullptr;
+#else
+    return QGenericUnixTheme::createPlatformMenuBar();
+#endif
 }
 
 // Force QtQuickControls to use org.kde.desktop theme for QApplication,
@@ -404,6 +411,7 @@ bool KdePlatformTheme::useXdgDesktopPortal()
     return usePortal;
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
 inline bool windowRelevantForGlobalMenu(QWindow *window)
 {
     return !(window->type() & Qt::WindowType::Popup);
@@ -423,6 +431,7 @@ void KdePlatformTheme::setMenuBarForWindow(QWindow *window, const QString &servi
         m_kwaylandIntegration->setAppMenu(window, serviceName, objectPath);
     }
 }
+#endif
 
 bool KdePlatformTheme::checkIfThemeExists(const QString &themePath)
 {

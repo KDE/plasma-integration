@@ -45,8 +45,15 @@ qt6_generate_wayland_protocol_client_sources(KDEPlasmaPlatformTheme6
     ${private_code_option}
     FILES
         ${PLASMA_WAYLAND_PROTOCOLS_DIR}/server-decoration-palette.xml
-        ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
 )
+if (Qt6_VERSION VERSION_LESS "6.9.0")
+    qt6_generate_wayland_protocol_client_sources(KDEPlasmaPlatformTheme6
+        ${private_code_option}
+        FILES
+            ${PLASMA_WAYLAND_PROTOCOLS_DIR}/appmenu.xml
+    )
+endif()
+
 target_sources(KDEPlasmaPlatformTheme6 PRIVATE ${platformtheme_SRCS})
 
 target_link_libraries(KDEPlasmaPlatformTheme6

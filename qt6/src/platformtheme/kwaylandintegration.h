@@ -12,8 +12,9 @@
 #include <QtWaylandClient/QWaylandClientExtensionTemplate>
 
 class QWindow;
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
 class AppMenuManager;
+#endif
 class ServerSideDecorationPaletteManager;
 
 class KWaylandIntegration : public QObject
@@ -23,7 +24,9 @@ public:
     explicit KWaylandIntegration(KdePlatformTheme *platformTheme);
     ~KWaylandIntegration() override;
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
     void setAppMenu(QWindow *window, const QString &serviceName, const QString &objectPath);
+#endif
     void setPalette(QWindow *window, const QString &paletteName);
 
     bool eventFilter(QObject *watched, QEvent *event) override;
@@ -35,13 +38,15 @@ private:
     void shellSurfaceDestroyed(QWindow *w);
 
     void installColorScheme(QWindow *w);
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
     QScopedPointer<AppMenuManager> m_appMenuManager;
-    QScopedPointer<ServerSideDecorationPaletteManager> m_paletteManager;
     struct DBusMenuInfo {
         QString serviceName;
         QString objectPath;
     };
     QHash<QWindow *, DBusMenuInfo> m_dbusMenuInfos;
+#endif
+    QScopedPointer<ServerSideDecorationPaletteManager> m_paletteManager;
 
     KdePlatformTheme *m_platformTheme;
 };
