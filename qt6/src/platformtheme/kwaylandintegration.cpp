@@ -10,8 +10,11 @@
 #include <QWindow>
 #include <qpa/qplatformwindow_p.h>
 
-#include "qwayland-appmenu.h"
 #include "qwayland-server-decoration-palette.h"
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
+#include "qwayland-appmenu.h"
+#endif
 
 #include <KWindowEffects>
 
