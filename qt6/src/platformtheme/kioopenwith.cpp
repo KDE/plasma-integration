@@ -8,11 +8,7 @@
 #include <QDBusPendingCall>
 #include <QDBusPendingReply>
 #include <QWidget>
-#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
-#include <private/qdesktopunixservices_p.h>
-#else
 #include <private/qgenericunixservices_p.h>
-#endif
 #include <private/qguiapplication_p.h>
 #include <qpa/qplatformintegration.h>
 
@@ -61,11 +57,7 @@ void KIOOpenWith::promptUserForApplication(KJob *job, const QList<QUrl> &urls, c
     if (widget) {
         widget->window()->winId(); // ensure we have a handle so we can export a window (without this windowHandle() may be null)
         auto services = QGuiApplicationPrivate::platformIntegration()->services();
-#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
-        if (auto unixServices = dynamic_cast<QDesktopUnixServices *>(services)) {
-#else
         if (auto unixServices = dynamic_cast<QGenericUnixServices *>(services)) {
-#endif
             windowId = unixServices->portalWindowIdentifier(widget->window()->windowHandle());
         }
     }
