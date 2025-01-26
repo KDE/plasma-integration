@@ -6,12 +6,19 @@
 
 #include "../src/platformtheme/kdirselectdialog_p.h"
 #include "../src/platformtheme/kfiletreeview_p.h"
+#include <QStandardPaths>
 #include <QTest>
 
 class KDirSelectDialog_UnitTest : public QObject
 {
     Q_OBJECT
 private Q_SLOTS:
+
+    void init()
+    {
+        QStandardPaths::setTestModeEnabled(true);
+    }
+
     void testSetCurrentUrl_data()
     {
         QTest::addColumn<QUrl>("url");

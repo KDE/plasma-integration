@@ -8,6 +8,7 @@
 #include <KFileWidget>
 #include <QDir>
 #include <QFileDialog>
+#include <QStandardPaths>
 #include <QTemporaryDir>
 #include <QTemporaryFile>
 #include <QTest>
@@ -28,6 +29,7 @@ private Q_SLOTS:
 
     void init()
     {
+        QStandardPaths::setTestModeEnabled(true);
     }
 
     void cleanupTestCase()

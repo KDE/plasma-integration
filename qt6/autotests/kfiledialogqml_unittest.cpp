@@ -8,6 +8,7 @@
 #include <KFileWidget>
 #include <QQmlComponent>
 #include <QQmlEngine>
+#include <QStandardPaths>
 #include <QTest>
 
 class KFileDialogQml_UnitTest : public QObject
@@ -17,6 +18,7 @@ class KFileDialogQml_UnitTest : public QObject
 private Q_SLOTS:
     void initTestCase()
     {
+        QStandardPaths::setTestModeEnabled(true);
         m_engine = new QQmlEngine;
     }
 
