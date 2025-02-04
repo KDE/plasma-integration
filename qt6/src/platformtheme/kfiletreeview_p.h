@@ -102,9 +102,15 @@ Q_SIGNALS:
 protected:
     void contextMenuEvent(QContextMenuEvent *) override;
 
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
 private:
     class Private;
     Private *const d;
+
+    bool ignoreThumbButtonEvent(QMouseEvent *event);
 };
 
 #endif

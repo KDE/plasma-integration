@@ -190,6 +190,48 @@ void KFileTreeView::contextMenuEvent(QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
+void KFileTreeView::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if (ignoreThumbButtonEvent(event)) {
+        return;
+    }
+    QTreeView::mousePressEvent(event);
+}
+
+void KFileTreeView::mousePressEvent(QMouseEvent *event)
+{
+    if (ignoreThumbButtonEvent(event)) {
+        return;
+    }
+    QTreeView::mousePressEvent(event);
+}
+
+void KFileTreeView::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (ignoreThumbButtonEvent(event)) {
+        return;
+    }
+    QTreeView::mouseReleaseEvent(event);
+}
+
+bool KFileTreeView::ignoreThumbButtonEvent(QMouseEvent *event)
+{
+    // Ignore mouse thumb buttons (Back and Forward) here.
+    // In file dialog they're used for navigating history, but
+    // since this does not have history, we should just do nothing with them to avoid confusion
+    if (event) {
+        switch (event->button()) {
+        case Qt::BackButton:
+            return true;
+        case Qt::ForwardButton:
+            return true;
+        default:
+            return false;
+        }
+    }
+    return false;
+}
+
 bool KFileTreeView::showHiddenFiles() const
 {
     return d->mSourceModel->dirLister()->showHiddenFiles();
