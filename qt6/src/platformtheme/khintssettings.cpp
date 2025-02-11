@@ -394,7 +394,9 @@ void KHintsSettings::updateShowIconsInMenuItems(KConfigGroup &cg)
 {
     bool showIcons = readConfigValue(cg, QStringLiteral("ShowIconsInMenuItems"), true).toBool();
     QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, !showIcons);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 3)
     m_hints[QPlatformTheme::ShowIconsInMenus] = showIcons;
+#endif
 }
 
 Qt::ToolButtonStyle KHintsSettings::toolButtonStyle(const KConfigGroup &cg)
