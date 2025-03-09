@@ -159,10 +159,10 @@ void QXdgDesktopPortalFileDialog::openPortal()
     options.insert(QStringLiteral("multiple"), d->multipleFiles);
     options.insert(QStringLiteral("directory"), d->selectDirectory);
 
-    if (d->saveFile) {
-        if (!d->directory.isEmpty())
-            options.insert(QStringLiteral("current_folder"), QFile::encodeName(d->directory.toLocalFile()).append('\0'));
+    if (!d->directory.isEmpty())
+        options.insert(QStringLiteral("current_folder"), QFile::encodeName(d->directory.toLocalFile()).append('\0'));
 
+    if (d->saveFile) {
         if (!d->selectedFiles.isEmpty())
             options.insert(QStringLiteral("current_file"), QFile::encodeName(d->selectedFiles.first().toLocalFile()).append('\0'));
     }
