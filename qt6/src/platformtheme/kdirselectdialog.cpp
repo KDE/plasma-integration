@@ -103,6 +103,10 @@ void KDirSelectDialog::Private::readConfig(const KSharedConfig::Ptr &config, con
     if (size.isValid()) {
         m_parent->resize(size);
     }
+
+    if (auto splitter = m_parent->findChild<QSplitter *>()) {
+        splitter->restoreState(conf.readEntry("Splitter State", QByteArray()));
+    }
 }
 
 void KDirSelectDialog::Private::saveConfig(KSharedConfig::Ptr config, const QString &group)
@@ -111,6 +115,7 @@ void KDirSelectDialog::Private::saveConfig(KSharedConfig::Ptr config, const QStr
     KConfigGroup::WriteConfigFlags flags(KConfigGroup::Persistent | KConfigGroup::Global);
     conf.writePathEntry("History Items", m_urlCombo->historyItems(), flags);
     conf.writeEntry("DirSelectDialog Size", m_parent->size(), flags);
+    conf.writeEntry("Splitter State", m_parent->findChild<QSplitter *>()->saveState(), flags);
 
     config->sync();
 }
@@ -269,7 +274,7 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     : d(new Private(localOnly, this))
 {
     setWindowTitle(i18nc("@title:window", "Select Folder"));
-    setMinimumSize({200, 200});
+    setMinimumSize({600, 200});
 
     QVBoxLayout *topLayout = new QVBoxLayout;
     topLayout->setContentsMargins({});
@@ -283,12 +288,12 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
 
     auto splitter = new QSplitter(this);
     splitter->setChildrenCollapsible(false);
-    splitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     topLayout->addWidget(splitter);
 
     auto mainWidget = new QWidget(splitter);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
     mainLayout->setContentsMargins({});
+    mainWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     d->m_actions = new KActionCollection(this);
     d->m_actions->addAssociatedWidget(this);
@@ -296,8 +301,9 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     d->m_placesView->setModel(new KFilePlacesModel(d->m_placesView));
     d->m_placesView->setObjectName(QStringLiteral("speedbar"));
     d->m_placesView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    d->m_placesView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    d->m_placesView->setMinimumSize(250, 200);
+    d->m_placesView->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+    d->m_placesView->setMinimumWidth(100);
+    d->m_placesView->setMaximumWidth(400);
     connect(d->m_placesView, &KFilePlacesView::urlChanged, this, &KDirSelectDialog::setCurrentUrl);
 
     splitter->addWidget(d->m_placesView);
