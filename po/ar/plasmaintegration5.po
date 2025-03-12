@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-25 00:42+0000\n"
+"POT-Creation-Date: 2025-03-12 00:43+0000\n"
 "PO-Revision-Date: 2024-06-26 22:34+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -79,19 +79,19 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "تجاهل"
 
-#: platformtheme/kdirselectdialog.cpp:122
+#: platformtheme/kdirselectdialog.cpp:127
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
 msgstr "مجلّد جديد"
 
-#: platformtheme/kdirselectdialog.cpp:128
+#: platformtheme/kdirselectdialog.cpp:133
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
 msgstr "مجلّد جديد"
 
-#: platformtheme/kdirselectdialog.cpp:129
+#: platformtheme/kdirselectdialog.cpp:134
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -101,53 +101,53 @@ msgstr ""
 "أنشئ مجلّدًا جديدًا في:\n"
 "%1"
 
-#: platformtheme/kdirselectdialog.cpp:160
+#: platformtheme/kdirselectdialog.cpp:165
 #, kde-format
 msgid "A file or folder named %1 already exists."
 msgstr "ثمّة ملفّ أو مجلّد بالاسم %1 موجود."
 
-#: platformtheme/kdirselectdialog.cpp:169
+#: platformtheme/kdirselectdialog.cpp:174
 #, kde-format
 msgid "You do not have permission to create that folder."
 msgstr "لا صلاحيّة لك لإنشاء هذا المجلّد."
 
-#: platformtheme/kdirselectdialog.cpp:271
+#: platformtheme/kdirselectdialog.cpp:276
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
 msgstr "اختر مجلّدًا"
 
-#: platformtheme/kdirselectdialog.cpp:279
+#: platformtheme/kdirselectdialog.cpp:284
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
 msgstr "مجلّد جديد..."
 
-#: platformtheme/kdirselectdialog.cpp:336
+#: platformtheme/kdirselectdialog.cpp:342
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
 msgstr "مجلّد جديد..."
 
-#: platformtheme/kdirselectdialog.cpp:345
+#: platformtheme/kdirselectdialog.cpp:351
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Move to Trash"
 msgstr "انقل إلى المهملات"
 
-#: platformtheme/kdirselectdialog.cpp:354
+#: platformtheme/kdirselectdialog.cpp:360
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
 msgstr "احذف"
 
-#: platformtheme/kdirselectdialog.cpp:365
+#: platformtheme/kdirselectdialog.cpp:371
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
 msgstr "أظهر المجلّدات المخفيّة"
 
-#: platformtheme/kdirselectdialog.cpp:372
+#: platformtheme/kdirselectdialog.cpp:378
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
