@@ -356,8 +356,8 @@ void KHintsSettings::iconChanged(int group)
 
 void KHintsSettings::updateQtSettings(KConfigGroup &cg)
 {
-    int flash = qBound(200, cg.readEntry("CursorBlinkRate", 1000), 2000);
-    m_hints[QPlatformTheme::CursorFlashTime] = flash;
+    const auto cursorBlinkRate = cg.readEntry("CursorBlinkRate", 1000);
+    m_hints[QPlatformTheme::CursorFlashTime] = cursorBlinkRate > 0 ? qBound(200, cursorBlinkRate, 2000) : 0; // 0 => no blinking
 
     int doubleClickInterval = cg.readEntry("DoubleClickInterval", 400);
     m_hints[QPlatformTheme::MouseDoubleClickInterval] = doubleClickInterval;
