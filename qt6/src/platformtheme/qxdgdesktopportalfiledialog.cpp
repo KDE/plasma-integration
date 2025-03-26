@@ -3,7 +3,11 @@
 
 #include "qxdgdesktopportalfiledialog_p.h"
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
 #include <private/qdesktopunixservices_p.h>
+#else
+#include <private/qgenericunixservices_p.h>
+#endif
 #include <private/qguiapplication_p.h>
 #include <qpa/qplatformintegration.h>
 
@@ -27,6 +31,12 @@
 QT_BEGIN_NAMESPACE
 
 using namespace Qt::StringLiterals;
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+using UnixServices = QDesktopUnixServices;
+#else
+using UnixServices = QGenericUnixServices;
+#endif
 
 QDBusArgument &operator <<(QDBusArgument &arg, const QXdgDesktopPortalFileDialog::FilterCondition &filterCondition)
 {
@@ -269,7 +279,7 @@ void QXdgDesktopPortalFileDialog::openPortal(Qt::WindowFlags windowFlags, Qt::Wi
     // TODO choices a(ssa(ss)s)
     // List of serialized combo boxes to add to the file chooser.
 
-    auto unixServices = dynamic_cast<QDesktopUnixServices *>(
+    auto unixServices = dynamic_cast<UnixServices *>(
             QGuiApplicationPrivate::platformIntegration()->services());
     if (parent && unixServices)
         message << unixServices->portalWindowIdentifier(parent);
