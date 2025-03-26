@@ -1,18 +1,10 @@
-/*
-
-    SPDX-FileCopyrightText: 2017-2018 Red Hat Inc
-    Contact: https://www.qt.io/licensing/
-
-    This file is part of the plugins of the Qt Toolkit.
-
-    SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only OR LicenseRef-KFQF-Accepted-GPL OR LicenseRef-Qt-Commercial
-
-*/
+// Copyright (C) 2017-2018 Red Hat, Inc
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 #ifndef QXDGDESKTOPPORTALFILEDIALOG_P_H
 #define QXDGDESKTOPPORTALFILEDIALOG_P_H
 
-#include <QVector>
 #include <qpa/qplatformdialoghelper.h>
+#include <QList>
 
 QT_BEGIN_NAMESPACE
 
@@ -23,9 +15,14 @@ class QXdgDesktopPortalFileDialog : public QPlatformFileDialogHelper
     Q_OBJECT
     Q_DECLARE_PRIVATE(QXdgDesktopPortalFileDialog)
 public:
+    enum FallbackType {
+        GenericFallback,
+        OpenFallback
+    };
+
     enum ConditionType : uint {
         GlobalPattern = 0,
-        MimeType = 1,
+        MimeType = 1
     };
     // Filters a(sa(us))
     // Example: [('Images', [(0, '*.ico'), (1, 'image/png')]), ('Text', [(0, '*.txt')])]
@@ -33,15 +30,15 @@ public:
         ConditionType type;
         QString pattern; // E.g. '*ico' or 'image/png'
     };
-    typedef QVector<FilterCondition> FilterConditionList;
+    typedef QList<FilterCondition> FilterConditionList;
 
     struct Filter {
         QString name; // E.g. 'Images' or 'Text
-        FilterConditionList filterConditions; // E.g. [(0, '*.ico'), (1, 'image/png')] or [(0, '*.txt')]
+        FilterConditionList filterConditions;; // E.g. [(0, '*.ico'), (1, 'image/png')] or [(0, '*.txt')]
     };
-    typedef QVector<Filter> FilterList;
+    typedef QList<Filter> FilterList;
 
-    QXdgDesktopPortalFileDialog(QPlatformFileDialogHelper *nativeFileDialog = nullptr);
+    QXdgDesktopPortalFileDialog(QPlatformFileDialogHelper *nativeFileDialog = nullptr, uint fileChooserPortalVersion = 0);
     ~QXdgDesktopPortalFileDialog();
 
     bool defaultNameFilterDisables() const override;
@@ -52,6 +49,8 @@ public:
     void setFilter() override;
     void selectNameFilter(const QString &filter) override;
     QString selectedNameFilter() const override;
+    void selectMimeTypeFilter(const QString &filter) override;
+    QString selectedMimeTypeFilter() const override;
 
     void exec() override;
     bool show(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent) override;
@@ -62,16 +61,18 @@ private Q_SLOTS:
 
 private:
     void initializeDialog();
-    void openPortal();
+    void openPortal(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent);
+    bool useNativeFileDialog(FallbackType fallbackType = GenericFallback) const;
 
     QScopedPointer<QXdgDesktopPortalFileDialogPrivate> d_ptr;
 };
 
 QT_END_NAMESPACE
 
-Q_DECLARE_METATYPE(QXdgDesktopPortalFileDialog::FilterCondition)
-Q_DECLARE_METATYPE(QXdgDesktopPortalFileDialog::FilterConditionList)
-Q_DECLARE_METATYPE(QXdgDesktopPortalFileDialog::Filter)
-Q_DECLARE_METATYPE(QXdgDesktopPortalFileDialog::FilterList)
+Q_DECLARE_METATYPE(QXdgDesktopPortalFileDialog::FilterCondition);
+Q_DECLARE_METATYPE(QXdgDesktopPortalFileDialog::FilterConditionList);
+Q_DECLARE_METATYPE(QXdgDesktopPortalFileDialog::Filter);
+Q_DECLARE_METATYPE(QXdgDesktopPortalFileDialog::FilterList);
 
 #endif // QXDGDESKTOPPORTALFILEDIALOG_P_H
+

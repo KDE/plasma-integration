@@ -1,35 +1,34 @@
-/*
-
-    SPDX-FileCopyrightText: 2017-2018 Red Hat Inc
-    Contact: https://www.qt.io/licensing/
-
-    This file is part of the plugins of the Qt Toolkit.
-
-    SPDX-License-Identifier: LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only OR LicenseRef-KFQF-Accepted-GPL OR LicenseRef-Qt-Commercial
-
-*/
+// Copyright (C) 2017-2018 Red Hat, Inc
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 
 #include "qxdgdesktopportalfiledialog_p.h"
 
+#include <private/qdesktopunixservices_p.h>
+#include <private/qguiapplication_p.h>
+#include <qpa/qplatformintegration.h>
+
 #include <QDBusConnection>
 #include <QDBusMessage>
-#include <QDBusMetaType>
 #include <QDBusPendingCall>
 #include <QDBusPendingCallWatcher>
 #include <QDBusPendingReply>
-#include <QEventLoop>
-#include <QRegularExpression>
+#include <QDBusMetaType>
 
+#include <QEventLoop>
 #include <QFile>
+#include <QFileInfo>
 #include <QMetaType>
-#include <QMimeDatabase>
 #include <QMimeType>
+#include <QMimeDatabase>
 #include <QRandomGenerator>
 #include <QWindow>
+#include <QRegularExpression>
 
 QT_BEGIN_NAMESPACE
 
-QDBusArgument &operator<<(QDBusArgument &arg, const QXdgDesktopPortalFileDialog::FilterCondition &filterCondition)
+using namespace Qt::StringLiterals;
+
+QDBusArgument &operator <<(QDBusArgument &arg, const QXdgDesktopPortalFileDialog::FilterCondition &filterCondition)
 {
     arg.beginStructure();
     arg << filterCondition.type << filterCondition.pattern;
@@ -37,7 +36,7 @@ QDBusArgument &operator<<(QDBusArgument &arg, const QXdgDesktopPortalFileDialog:
     return arg;
 }
 
-const QDBusArgument &operator>>(const QDBusArgument &arg, QXdgDesktopPortalFileDialog::FilterCondition &filterCondition)
+const QDBusArgument &operator >>(const QDBusArgument &arg, QXdgDesktopPortalFileDialog::FilterCondition &filterCondition)
 {
     uint type;
     QString filterPattern;
@@ -50,7 +49,7 @@ const QDBusArgument &operator>>(const QDBusArgument &arg, QXdgDesktopPortalFileD
     return arg;
 }
 
-QDBusArgument &operator<<(QDBusArgument &arg, const QXdgDesktopPortalFileDialog::Filter filter)
+QDBusArgument &operator <<(QDBusArgument &arg, const QXdgDesktopPortalFileDialog::Filter filter)
 {
     arg.beginStructure();
     arg << filter.name << filter.filterConditions;
@@ -58,7 +57,7 @@ QDBusArgument &operator<<(QDBusArgument &arg, const QXdgDesktopPortalFileDialog:
     return arg;
 }
 
-const QDBusArgument &operator>>(const QDBusArgument &arg, QXdgDesktopPortalFileDialog::Filter &filter)
+const QDBusArgument &operator >>(const QDBusArgument &arg, QXdgDesktopPortalFileDialog::Filter &filter)
 {
     QString name;
     QXdgDesktopPortalFileDialog::FilterConditionList filterConditions;
@@ -74,35 +73,43 @@ const QDBusArgument &operator>>(const QDBusArgument &arg, QXdgDesktopPortalFileD
 class QXdgDesktopPortalFileDialogPrivate
 {
 public:
-    QXdgDesktopPortalFileDialogPrivate(QPlatformFileDialogHelper *nativeFileDialog)
+    QXdgDesktopPortalFileDialogPrivate(QPlatformFileDialogHelper *nativeFileDialog, uint fileChooserPortalVersion)
         : nativeFileDialog(nativeFileDialog)
-    {
-    }
+        , fileChooserPortalVersion(fileChooserPortalVersion)
+    { }
 
-    WId winId = 0;
-    bool modal = false;
-    bool multipleFiles = false;
-    bool selectDirectory = false;
-    bool saveFile = false;
+    QEventLoop loop;
     QString acceptLabel;
     QUrl directory;
     QString title;
     QStringList nameFilters;
     QStringList mimeTypesFilters;
-    QList<QUrl> selectedFiles;
-    QPlatformFileDialogHelper *nativeFileDialog = nullptr;
+    // maps user-visible name for portal to full name filter
+    QMap<QString, QString> userVisibleToNameFilter;
+    QString selectedMimeTypeFilter;
+    QString selectedNameFilter;
+    QStringList selectedFiles;
+    std::unique_ptr<QPlatformFileDialogHelper> nativeFileDialog;
+    uint fileChooserPortalVersion = 0;
+    bool failedToOpen = false;
+    bool directoryMode = false;
+    bool multipleFiles = false;
+    bool saveFile = false;
 };
 
-QXdgDesktopPortalFileDialog::QXdgDesktopPortalFileDialog(QPlatformFileDialogHelper *nativeFileDialog)
+QXdgDesktopPortalFileDialog::QXdgDesktopPortalFileDialog(QPlatformFileDialogHelper *nativeFileDialog, uint fileChooserPortalVersion)
     : QPlatformFileDialogHelper()
-    , d_ptr(new QXdgDesktopPortalFileDialogPrivate(nativeFileDialog))
+    , d_ptr(new QXdgDesktopPortalFileDialogPrivate(nativeFileDialog, fileChooserPortalVersion))
 {
     Q_D(QXdgDesktopPortalFileDialog);
 
     if (d->nativeFileDialog) {
-        connect(d->nativeFileDialog, SIGNAL(accept()), this, SIGNAL(accept()));
-        connect(d->nativeFileDialog, SIGNAL(reject()), this, SIGNAL(reject()));
+        connect(d->nativeFileDialog.get(), SIGNAL(accept()), this, SIGNAL(accept()));
+        connect(d->nativeFileDialog.get(), SIGNAL(reject()), this, SIGNAL(reject()));
     }
+
+    d->loop.connect(this, SIGNAL(accept()), SLOT(quit()));
+    d->loop.connect(this, SIGNAL(reject()), SLOT(quit()));
 }
 
 QXdgDesktopPortalFileDialog::~QXdgDesktopPortalFileDialog()
@@ -119,9 +126,8 @@ void QXdgDesktopPortalFileDialog::initializeDialog()
     if (options()->fileMode() == QFileDialogOptions::ExistingFiles)
         d->multipleFiles = true;
 
-    if (options()->fileMode() == QFileDialogOptions::Directory || options()->fileMode() == QFileDialogOptions::DirectoryOnly) {
-        d->selectDirectory = true;
-    }
+    if (options()->fileMode() == QFileDialogOptions::Directory || options()->fileMode() == QFileDialogOptions::DirectoryOnly)
+        d->directoryMode = true;
 
     if (options()->isLabelExplicitlySet(QFileDialogOptions::Accept))
         d->acceptLabel = options()->labelText(QFileDialogOptions::Accept);
@@ -138,33 +144,43 @@ void QXdgDesktopPortalFileDialog::initializeDialog()
     if (!options()->mimeTypeFilters().isEmpty())
         d->mimeTypesFilters = options()->mimeTypeFilters();
 
+    if (!options()->initiallySelectedMimeTypeFilter().isEmpty())
+        d->selectedMimeTypeFilter = options()->initiallySelectedMimeTypeFilter();
+
+    if (!options()->initiallySelectedNameFilter().isEmpty())
+        d->selectedNameFilter = options()->initiallySelectedNameFilter();
+
     setDirectory(options()->initialDirectory());
 }
 
-void QXdgDesktopPortalFileDialog::openPortal()
+void QXdgDesktopPortalFileDialog::openPortal(Qt::WindowFlags windowFlags, Qt::WindowModality windowModality, QWindow *parent)
 {
-    Q_D(const QXdgDesktopPortalFileDialog);
+    Q_D(QXdgDesktopPortalFileDialog);
 
-    QDBusMessage message = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.portal.Desktop"),
-                                                          QStringLiteral("/org/freedesktop/portal/desktop"),
-                                                          QStringLiteral("org.freedesktop.portal.FileChooser"),
-                                                          d->saveFile ? QStringLiteral("SaveFile") : QStringLiteral("OpenFile"));
-    QString parentWindowId = QStringLiteral("x11:") + QString::number(d->winId, 16);
-
+    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.portal.Desktop"_L1,
+                                                          "/org/freedesktop/portal/desktop"_L1,
+                                                          "org.freedesktop.portal.FileChooser"_L1,
+                                                          d->saveFile ? "SaveFile"_L1 : "OpenFile"_L1);
     QVariantMap options;
     if (!d->acceptLabel.isEmpty())
-        options.insert(QStringLiteral("accept_label"), d->acceptLabel);
+        options.insert("accept_label"_L1, d->acceptLabel);
 
-    options.insert(QStringLiteral("modal"), d->modal);
-    options.insert(QStringLiteral("multiple"), d->multipleFiles);
-    options.insert(QStringLiteral("directory"), d->selectDirectory);
+    options.insert("modal"_L1, windowModality != Qt::NonModal);
+    options.insert("multiple"_L1, d->multipleFiles);
+    options.insert("directory"_L1, d->directoryMode);
 
     if (!d->directory.isEmpty())
-        options.insert(QStringLiteral("current_folder"), QFile::encodeName(d->directory.toLocalFile()).append('\0'));
+        options.insert("current_folder"_L1, QFile::encodeName(d->directory.toLocalFile()).append('\0'));
 
-    if (d->saveFile) {
-        if (!d->selectedFiles.isEmpty())
-            options.insert(QStringLiteral("current_file"), QFile::encodeName(d->selectedFiles.first().toLocalFile()).append('\0'));
+    if (d->saveFile && !d->selectedFiles.isEmpty()) {
+        // current_file for the file to be pre-selected, current_name for the file name to be
+        // pre-filled current_file accepts absolute path and requires the file to exist while
+        // current_name accepts just file name
+        QFileInfo selectedFileInfo(d->selectedFiles.constFirst());
+        if (selectedFileInfo.exists())
+            options.insert("current_file"_L1,
+                           QFile::encodeName(d->selectedFiles.constFirst()).append('\0'));
+        options.insert("current_name"_L1, selectedFileInfo.fileName());
     }
 
     // Insert filters
@@ -174,6 +190,9 @@ void QXdgDesktopPortalFileDialog::openPortal()
     qDBusRegisterMetaType<FilterList>();
 
     FilterList filterList;
+    auto selectedFilterIndex = filterList.size() - 1;
+
+    d->userVisibleToNameFilter.clear();
 
     if (!d->mimeTypesFilters.isEmpty()) {
         for (const QString &mimeTypefilter : d->mimeTypesFilters) {
@@ -194,20 +213,31 @@ void QXdgDesktopPortalFileDialog::openPortal()
             filter.name = mimeType.comment();
             filter.filterConditions = filterConditions;
 
+            if (filter.name.isEmpty())
+                filter.name = mimeTypefilter;
+
             filterList << filter;
+
+            if (!d->selectedMimeTypeFilter.isEmpty() && d->selectedMimeTypeFilter == mimeTypefilter)
+                selectedFilterIndex = filterList.size() - 1;
         }
     } else if (!d->nameFilters.isEmpty()) {
-        for (const QString &filter : d->nameFilters) {
+        for (const QString &nameFilter : d->nameFilters) {
             // Do parsing:
             // Supported format is ("Images (*.png *.jpg)")
-            QRegularExpression regexp(QString::fromLatin1(QPlatformFileDialogHelper::filterRegExp));
-            QRegularExpressionMatch match = regexp.match(filter);
+            QRegularExpression regexp(QPlatformFileDialogHelper::filterRegExp);
+            QRegularExpressionMatch match = regexp.match(nameFilter);
             if (match.hasMatch()) {
                 QString userVisibleName = match.captured(1);
-                QStringList filterStrings = match.captured(2).split(QLatin1Char(' '), Qt::SkipEmptyParts);
+                QStringList filterStrings = match.captured(2).split(u' ', Qt::SkipEmptyParts);
+
+                if (filterStrings.isEmpty()) {
+                    qWarning() << "Filter " << userVisibleName << " is empty and will be ignored.";
+                    continue;
+                }
 
                 FilterConditionList filterConditions;
-                for (const QString &filterString : std::as_const(filterStrings)) {
+                for (const QString &filterString : filterStrings) {
                     FilterCondition filterCondition;
                     filterCondition.type = GlobalPattern;
                     filterCondition.pattern = filterString;
@@ -219,34 +249,58 @@ void QXdgDesktopPortalFileDialog::openPortal()
                 filter.filterConditions = filterConditions;
 
                 filterList << filter;
+
+                d->userVisibleToNameFilter.insert(userVisibleName, nameFilter);
+
+                if (!d->selectedNameFilter.isEmpty() && d->selectedNameFilter == nameFilter)
+                    selectedFilterIndex = filterList.size() - 1;
             }
         }
     }
 
     if (!filterList.isEmpty())
-        options.insert(QStringLiteral("filters"), QVariant::fromValue(filterList));
+        options.insert("filters"_L1, QVariant::fromValue(filterList));
 
-    options.insert(QStringLiteral("handle_token"), QStringLiteral("qt%1").arg(QRandomGenerator::global()->generate()));
+    if (selectedFilterIndex != -1)
+        options.insert("current_filter"_L1, QVariant::fromValue(filterList[selectedFilterIndex]));
+
+    options.insert("handle_token"_L1, QStringLiteral("qt%1").arg(QRandomGenerator::global()->generate()));
 
     // TODO choices a(ssa(ss)s)
     // List of serialized combo boxes to add to the file chooser.
 
-    message << parentWindowId << d->title << options;
+    auto unixServices = dynamic_cast<QDesktopUnixServices *>(
+            QGuiApplicationPrivate::platformIntegration()->services());
+    if (parent && unixServices)
+        message << unixServices->portalWindowIdentifier(parent);
+    else
+        message << QString();
+
+    message << d->title << options;
 
     QDBusPendingCall pendingCall = QDBusConnection::sessionBus().asyncCall(message);
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(pendingCall);
-    connect(watcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *watcher) {
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [this, d, windowFlags, windowModality, parent] (QDBusPendingCallWatcher *watcher) {
         QDBusPendingReply<QDBusObjectPath> reply = *watcher;
-        if (reply.isError()) {
-            Q_EMIT reject();
+        // Any error means the dialog is not shown and we need to fallback
+        d->failedToOpen = reply.isError();
+        if (d->failedToOpen) {
+            if (d->nativeFileDialog) {
+                d->nativeFileDialog->show(windowFlags, windowModality, parent);
+                if (d->loop.isRunning())
+                    d->nativeFileDialog->exec();
+            } else {
+                Q_EMIT reject();
+            }
         } else {
-            QDBusConnection::sessionBus().connect({},
+            QDBusConnection::sessionBus().connect(nullptr,
                                                   reply.value().path(),
-                                                  QStringLiteral("org.freedesktop.portal.Request"),
-                                                  QStringLiteral("Response"),
+                                                  "org.freedesktop.portal.Request"_L1,
+                                                  "Response"_L1,
                                                   this,
-                                                  SLOT(gotResponse(uint, QVariantMap)));
+                                                  SLOT(gotResponse(uint,QVariantMap)));
         }
+        watcher->deleteLater();
     });
 }
 
@@ -271,7 +325,7 @@ QUrl QXdgDesktopPortalFileDialog::directory() const
 {
     Q_D(const QXdgDesktopPortalFileDialog);
 
-    if (d->nativeFileDialog && (options()->fileMode() == QFileDialogOptions::Directory || options()->fileMode() == QFileDialogOptions::DirectoryOnly))
+    if (d->nativeFileDialog && useNativeFileDialog())
         return d->nativeFileDialog->directory();
 
     return d->directory;
@@ -286,17 +340,21 @@ void QXdgDesktopPortalFileDialog::selectFile(const QUrl &filename)
         d->nativeFileDialog->selectFile(filename);
     }
 
-    d->selectedFiles << filename;
+    d->selectedFiles << filename.path();
 }
 
 QList<QUrl> QXdgDesktopPortalFileDialog::selectedFiles() const
 {
     Q_D(const QXdgDesktopPortalFileDialog);
 
-    if (d->nativeFileDialog && (options()->fileMode() == QFileDialogOptions::Directory || options()->fileMode() == QFileDialogOptions::DirectoryOnly))
+    if (d->nativeFileDialog && useNativeFileDialog())
         return d->nativeFileDialog->selectedFiles();
 
-    return d->selectedFiles;
+    QList<QUrl> files;
+    for (const QString &file : d->selectedFiles) {
+        files << QUrl(file);
+    }
+    return files;
 }
 
 void QXdgDesktopPortalFileDialog::setFilter()
@@ -307,6 +365,21 @@ void QXdgDesktopPortalFileDialog::setFilter()
         d->nativeFileDialog->setOptions(options());
         d->nativeFileDialog->setFilter();
     }
+}
+
+void QXdgDesktopPortalFileDialog::selectMimeTypeFilter(const QString &filter)
+{
+    Q_D(QXdgDesktopPortalFileDialog);
+    if (d->nativeFileDialog) {
+        d->nativeFileDialog->setOptions(options());
+        d->nativeFileDialog->selectMimeTypeFilter(filter);
+    }
+}
+
+QString QXdgDesktopPortalFileDialog::selectedMimeTypeFilter() const
+{
+    Q_D(const QXdgDesktopPortalFileDialog);
+    return d->selectedMimeTypeFilter;
 }
 
 void QXdgDesktopPortalFileDialog::selectNameFilter(const QString &filter)
@@ -321,24 +394,21 @@ void QXdgDesktopPortalFileDialog::selectNameFilter(const QString &filter)
 
 QString QXdgDesktopPortalFileDialog::selectedNameFilter() const
 {
-    // TODO
-    return QString();
+    Q_D(const QXdgDesktopPortalFileDialog);
+    return d->selectedNameFilter;
 }
 
 void QXdgDesktopPortalFileDialog::exec()
 {
     Q_D(QXdgDesktopPortalFileDialog);
 
-    if (d->nativeFileDialog && (options()->fileMode() == QFileDialogOptions::Directory || options()->fileMode() == QFileDialogOptions::DirectoryOnly)) {
+    if (d->nativeFileDialog && useNativeFileDialog()) {
         d->nativeFileDialog->exec();
         return;
     }
 
     // HACK we have to avoid returning until we emit that the dialog was accepted or rejected
-    QEventLoop loop;
-    QObject::connect(this, &QXdgDesktopPortalFileDialog::accept, &loop, &QEventLoop::quit);
-    QObject::connect(this, &QXdgDesktopPortalFileDialog::reject, &loop, &QEventLoop::quit);
-    loop.exec();
+    d->loop.exec();
 }
 
 void QXdgDesktopPortalFileDialog::hide()
@@ -355,13 +425,10 @@ bool QXdgDesktopPortalFileDialog::show(Qt::WindowFlags windowFlags, Qt::WindowMo
 
     initializeDialog();
 
-    d->modal = windowModality != Qt::NonModal;
-    d->winId = parent ? parent->winId() : 0;
-
-    if (d->nativeFileDialog && (options()->fileMode() == QFileDialogOptions::Directory || options()->fileMode() == QFileDialogOptions::DirectoryOnly))
+    if (d->nativeFileDialog && useNativeFileDialog(OpenFallback))
         return d->nativeFileDialog->show(windowFlags, windowModality, parent);
 
-    openPortal();
+    openPortal(windowFlags, windowModality, parent);
 
     return true;
 }
@@ -371,19 +438,41 @@ void QXdgDesktopPortalFileDialog::gotResponse(uint response, const QVariantMap &
     Q_D(QXdgDesktopPortalFileDialog);
 
     if (!response) {
-        if (results.contains(QStringLiteral("uris"))) {
-            const QStringList uris = results.value(QStringLiteral("uris")).toStringList();
-            d->selectedFiles.clear();
-            d->selectedFiles.reserve(uris.size());
-            for (const QString &uri : uris) {
-                // uris are expected to have proper "file:" scheme set
-                d->selectedFiles.append(QUrl(uri));
+        if (results.contains("uris"_L1))
+            d->selectedFiles = results.value("uris"_L1).toStringList();
+
+        if (results.contains("current_filter"_L1)) {
+            const Filter selectedFilter = qdbus_cast<Filter>(results.value(QStringLiteral("current_filter")));
+            if (!selectedFilter.filterConditions.empty() && selectedFilter.filterConditions[0].type == MimeType) {
+                // s.a. QXdgDesktopPortalFileDialog::openPortal which basically does the inverse
+                d->selectedMimeTypeFilter = selectedFilter.filterConditions[0].pattern;
+                d->selectedNameFilter.clear();
+            } else {
+                d->selectedNameFilter = d->userVisibleToNameFilter.value(selectedFilter.name);
+                d->selectedMimeTypeFilter.clear();
             }
         }
         Q_EMIT accept();
     } else {
         Q_EMIT reject();
     }
+}
+
+bool QXdgDesktopPortalFileDialog::useNativeFileDialog(QXdgDesktopPortalFileDialog::FallbackType fallbackType) const
+{
+    Q_D(const QXdgDesktopPortalFileDialog);
+
+    if (d->failedToOpen && fallbackType != OpenFallback)
+        return true;
+
+    if (d->fileChooserPortalVersion < 3) {
+        if (options()->fileMode() == QFileDialogOptions::Directory)
+            return true;
+        else if (options()->fileMode() == QFileDialogOptions::DirectoryOnly)
+            return true;
+    }
+
+    return false;
 }
 
 QT_END_NAMESPACE
