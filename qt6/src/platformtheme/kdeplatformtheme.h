@@ -10,7 +10,11 @@
 #include <QHash>
 #include <QKeySequence>
 
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 10, 0))
+#include <private/qgenericunixtheme_p.h>
+#else
 #include <private/qgenericunixthemes_p.h>
+#endif
 
 class KHintsSettings;
 class KFontSettingsData;
