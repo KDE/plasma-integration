@@ -85,7 +85,7 @@ void KFontSettingsData::dropFontSettingsCache()
         mFonts[i] = nullptr;
     }
 
-    QWindowSystemInterface::handleThemeChange(nullptr);
+    QWindowSystemInterface::handleThemeChange();
 
     if (qobject_cast<QApplication *>(QCoreApplication::instance())) {
         QApplication::setFont(*font(KFontSettingsData::GeneralFont));
