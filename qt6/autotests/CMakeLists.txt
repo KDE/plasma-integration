@@ -77,7 +77,6 @@ target_sources(kdeplatformtheme_unittest6 PRIVATE
   ../src/platformtheme/kfiletreeview.cpp
   ../src/platformtheme/kwaylandintegration.cpp ../src/platformtheme/kwaylandintegration.h
   ../src/platformtheme/x11integration.cpp ../src/platformtheme/x11integration.h
-  ../src/platformtheme/qxdgdesktopportalfiledialog.cpp
   ../src/platformtheme/qdbusmenubarwrapper.h
   ../src/platformtheme/kiodelegate.cpp
   ../src/platformtheme/kioopenwith.cpp

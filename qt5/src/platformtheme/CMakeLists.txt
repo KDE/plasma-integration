@@ -28,7 +28,6 @@ set(platformtheme_SRCS
     kwaylandintegration.cpp kwaylandintegration.h
     x11integration.cpp x11integration.h
     main.cpp
-    qxdgdesktopportalfiledialog.cpp
     qtquickrenderersettings.cpp
 )
 list(APPEND platformtheme_SRCS qdbusmenubar.cpp) # fork of Qt's qdbusmenubar with some added setters for our convenience

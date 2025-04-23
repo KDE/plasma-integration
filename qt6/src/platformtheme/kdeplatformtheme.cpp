@@ -41,8 +41,6 @@
 #include <kiconloader.h>
 #include <kstandardshortcut.h>
 
-#include "qxdgdesktopportalfiledialog_p.h"
-
 #include <KCountryFlagEmojiIconEngine>
 
 using namespace Qt::StringLiterals;
@@ -337,9 +335,6 @@ QPlatformDialogHelper *KdePlatformTheme::createPlatformDialogHelper(QPlatformThe
 {
     switch (type) {
     case QPlatformTheme::FileDialog:
-        if (useXdgDesktopPortal()) {
-            return new QXdgDesktopPortalFileDialog;
-        }
         return new KDEPlatformFileDialogHelper;
     case QPlatformTheme::FontDialog:
     case QPlatformTheme::ColorDialog:
@@ -403,12 +398,6 @@ void KdePlatformTheme::setQtQuickControlsTheme()
     if (checkIfThemeExists(QStringLiteral("/org/kde/desktop"))) {
         QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
     }
-}
-
-bool KdePlatformTheme::useXdgDesktopPortal()
-{
-    static bool usePortal = qEnvironmentVariableIntValue("PLASMA_INTEGRATION_USE_PORTAL") == 1;
-    return usePortal;
 }
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)

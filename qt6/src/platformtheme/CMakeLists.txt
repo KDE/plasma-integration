@@ -24,7 +24,6 @@ set(platformtheme_SRCS
     kwaylandintegration.cpp kwaylandintegration.h
     x11integration.cpp x11integration.h
     main.cpp
-    qxdgdesktopportalfiledialog.cpp
     qtquickrenderersettings.cpp
     qdbusmenubarwrapper.h
     kioopenwith.cpp

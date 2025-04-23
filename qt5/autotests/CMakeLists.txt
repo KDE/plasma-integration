@@ -79,7 +79,6 @@ target_sources(kdeplatformtheme_unittest5 PRIVATE
   ../src/platformtheme/kfiletreeview.cpp
   ../src/platformtheme/kwaylandintegration.cpp ../src/platformtheme/kwaylandintegration.h
   ../src/platformtheme/x11integration.cpp ../src/platformtheme/x11integration.h
-  ../src/platformtheme/qxdgdesktopportalfiledialog.cpp
   ${dbus_interface}
   ${wayland_interfaces}
 )

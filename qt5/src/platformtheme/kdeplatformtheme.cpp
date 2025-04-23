@@ -44,7 +44,6 @@
 #include <kstandardshortcut.h>
 
 #include "qdbusmenubar_p.h"
-#include "qxdgdesktopportalfiledialog_p.h"
 
 static const QByteArray s_x11AppMenuServiceNamePropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_SERVICE_NAME");
 static const QByteArray s_x11AppMenuObjectPathPropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_OBJECT_PATH");
@@ -551,9 +550,6 @@ QPlatformDialogHelper *KdePlatformTheme::createPlatformDialogHelper(QPlatformThe
 {
     switch (type) {
     case QPlatformTheme::FileDialog:
-        if (useXdgDesktopPortal()) {
-            return new QXdgDesktopPortalFileDialog;
-        }
         return new KDEPlatformFileDialogHelper;
     case QPlatformTheme::FontDialog:
     case QPlatformTheme::ColorDialog:
@@ -608,12 +604,6 @@ void KdePlatformTheme::setQtQuickControlsTheme()
         return;
     }
     QQuickStyle::setStyle(QLatin1String("org.kde.desktop"));
-}
-
-bool KdePlatformTheme::useXdgDesktopPortal()
-{
-    static bool usePortal = qEnvironmentVariableIntValue("PLASMA_INTEGRATION_USE_PORTAL") == 1;
-    return usePortal;
 }
 
 inline bool windowRelevantForGlobalMenu(QWindow *window)

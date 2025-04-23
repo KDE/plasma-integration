@@ -56,8 +56,6 @@ private:
 
     static void setWindowProperty(QWindow *window, const QByteArray &name, const QByteArray &value);
 
-    static bool useXdgDesktopPortal();
-
     static bool checkIfThemeExists(const QString &themePath);
 
     KHintsSettings *m_hints = nullptr;
