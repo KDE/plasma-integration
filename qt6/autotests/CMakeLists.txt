@@ -46,6 +46,7 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         XCB::XCB
         Wayland::Client
         KF6::XmlGui
+        KF6::ColorScheme
     )
 endmacro()
 
