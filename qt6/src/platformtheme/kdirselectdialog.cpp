@@ -413,6 +413,8 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     mainLayout->addWidget(urlComboWrapper, 0);
     mainLayout->addWidget(d->m_buttons);
 
+    d->m_treeView->setFocus();
+
     connect(d->m_treeView, &KFileTreeView::currentUrlChanged, this, [this](const QUrl &url) {
         d->slotCurrentChanged(url);
     });
