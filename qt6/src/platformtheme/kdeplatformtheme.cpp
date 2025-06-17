@@ -16,6 +16,7 @@
 #include "khintssettings.h"
 #include "kiodelegate.h"
 #include "kwaylandintegration.h"
+#include "messageboxsoundhandlerqt.h"
 #if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
 #include "qdbusmenubarwrapper.h"
 #endif
@@ -91,6 +92,10 @@ KdePlatformTheme::KdePlatformTheme()
     KIO::setDefaultJobUiDelegateExtension(&delegateExtension);
 
     KCountryFlagEmojiIconEngine::setGlobalDefaultFont(QFont(u"Noto Color Emoji, emoji"_qs));
+
+    if (auto app = qobject_cast<QApplication *>(QCoreApplication::instance())) {
+        new MessageBoxSoundHandlerQt(app);
+    }
 }
 
 KdePlatformTheme::~KdePlatformTheme()

@@ -82,6 +82,7 @@ target_sources(kdeplatformtheme_unittest6 PRIVATE
   ../src/platformtheme/qdbusmenubarwrapper.h
   ../src/platformtheme/kiodelegate.cpp
   ../src/platformtheme/kioopenwith.cpp
+  ../src/platformtheme/messageboxsoundhandlerqt.cpp ../src/platformtheme/messageboxsoundhandlerqt.h
   ${dbus_interface}
   ${wayland_interfaces}
 )
