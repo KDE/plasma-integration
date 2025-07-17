@@ -345,7 +345,7 @@ void KDEPlatformFileDialogHelper::hide()
 
 void KDEPlatformFileDialogHelper::saveSize()
 {
-    KSharedConfig::Ptr conf = KSharedConfig::openConfig();
+    KSharedConfig::Ptr conf = KSharedConfig::openStateConfig();
     KConfigGroup group = conf->group("FileDialogSize");
     KWindowConfig::saveWindowSize(m_dialog->windowHandle(), group);
 }
@@ -353,12 +353,16 @@ void KDEPlatformFileDialogHelper::saveSize()
 void KDEPlatformFileDialogHelper::restoreSize()
 {
     m_dialog->winId(); // ensure there's a window created
-    KSharedConfig::Ptr conf = KSharedConfig::openConfig();
+    KSharedConfig::Ptr oldConf = KSharedConfig::openConfig();
+
+    auto conf = KSharedConfig::openStateConfig();
+    auto stateGroup = conf->group("FileDialogSize");
+    oldConf->group("FileDialogSize").moveValuesTo(stateGroup);
 
     // see the note below
     m_dialog->windowHandle()->resize(m_dialog->sizeHint());
 
-    KWindowConfig::restoreWindowSize(m_dialog->windowHandle(), conf->group("FileDialogSize"));
+    KWindowConfig::restoreWindowSize(m_dialog->windowHandle(), stateGroup);
     // NOTICE: QWindow::setGeometry() does NOT impact the backing QWidget geometry even if the platform
     // window was created -> QTBUG-40584. We therefore copy the size here.
     // TODO: remove once this was resolved in QWidget QPA
