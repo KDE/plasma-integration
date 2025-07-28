@@ -462,4 +462,9 @@ bool KdePlatformTheme::checkIfThemeExists(const QString &themePath)
     return false;
 }
 
+Qt::ContrastPreference KdePlatformTheme::contrastPreference() const
+{
+    return Qt::ContrastPreference::NoPreference;
+}
+
 #include "kdeplatformtheme.moc"

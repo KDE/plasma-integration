@@ -37,6 +37,7 @@ public:
     const QFont *font(Font type) const override;
     QIconEngine *createIconEngine(const QString &iconName) const override;
     QList<QKeySequence> keyBindings(QKeySequence::StandardKey key) const override;
+    Qt::ContrastPreference contrastPreference() const override;
 
     QPlatformDialogHelper *createPlatformDialogHelper(DialogType type) const override;
     bool usePlatformNativeDialog(DialogType type) const override;
