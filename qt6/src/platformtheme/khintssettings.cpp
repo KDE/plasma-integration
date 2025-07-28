@@ -142,6 +142,9 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
     loadPalettes();
     m_colorScheme = determineColorScheme();
 
+    float frameContrast = readConfigValue(QStringLiteral("KDE"), QStringLiteral("frameContrast"), 0.2).toFloat();
+    m_contrastPreference = frameContrast > 0.5 ? Qt::ContrastPreference::HighContrast : Qt::ContrastPreference::NoPreference;
+
     updateCursorTheme();
 }
 
@@ -265,6 +268,10 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
             m_colorScheme = newColorScheme;
             QWindowSystemInterface::handleThemeChange();
         }
+
+        float frameContrast = readConfigValue(QStringLiteral("KDE"), QStringLiteral("frameContrast"), 0.2).toFloat();
+        m_contrastPreference = frameContrast > 0.5 ? Qt::ContrastPreference::HighContrast : Qt::ContrastPreference::NoPreference;
+
         break;
     }
     case SettingsChanged: {

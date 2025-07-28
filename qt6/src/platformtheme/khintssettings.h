@@ -70,6 +70,11 @@ public:
         return m_colorScheme;
     }
 
+    inline Qt::ContrastPreference contrastPreference() const
+    {
+        return m_contrastPreference;
+    }
+
 private Q_SLOTS:
     void delayedDBusConnects();
     void setupIconLoader();
@@ -95,6 +100,7 @@ private:
     KSharedConfigPtr mKdeGlobals;
     QMap<QString, QVariantMap> mKdeGlobalsPortal;
     Qt::ColorScheme m_colorScheme = Qt::ColorScheme::Unknown;
+    Qt::ContrastPreference m_contrastPreference = Qt::ContrastPreference::NoPreference;
     bool mUsePortal;
 };
 
