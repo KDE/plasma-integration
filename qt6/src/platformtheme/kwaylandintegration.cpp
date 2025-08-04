@@ -5,6 +5,8 @@
 */
 #include "kwaylandintegration.h"
 
+#include <QDBusConnection>
+#include <QDBusMessage>
 #include <QExposeEvent>
 #include <QGuiApplication>
 #include <QWindow>
@@ -86,6 +88,28 @@ KWaylandIntegration::KWaylandIntegration(KdePlatformTheme *platformTheme)
     , m_platformTheme(platformTheme)
 {
     QCoreApplication::instance()->installEventFilter(this);
+
+    if (const QString activationToken = qEnvironmentVariable("XDG_ACTIVATION_TOKEN"); activationToken.isEmpty()) {
+        // can we ask Konsole for a token?
+        const auto konsoleService = qEnvironmentVariable("KONSOLE_DBUS_SERVICE");
+        const auto konsoleSession = qEnvironmentVariable("KONSOLE_DBUS_SESSION");
+        const auto konsoleSessionId = qEnvironmentVariable("SHELL_SESSION_ID");
+
+        if (!konsoleService.isEmpty() && !konsoleSession.isEmpty() && !konsoleSessionId.isEmpty() && QDBusConnection::sessionBus().interface()) {
+            // we ask the current shell session
+            QDBusMessage m =
+                QDBusMessage::createMethodCall(konsoleService, konsoleSession, QStringLiteral("org.kde.konsole.Session"), QStringLiteral("activationToken"));
+            // use the session id as cookie
+            m.setArguments({konsoleSessionId});
+
+            // get the token, if possible
+            const auto tokenAnswer = QDBusConnection::sessionBus().call(m);
+            if (!tokenAnswer.arguments().isEmpty()) {
+                const QString token = tokenAnswer.arguments().first().toString();
+                qputenv("XDG_ACTIVATION_TOKEN", token.toUtf8());
+            }
+        }
+    }
 }
 
 KWaylandIntegration::~KWaylandIntegration() = default;
