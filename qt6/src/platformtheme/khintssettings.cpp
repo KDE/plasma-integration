@@ -20,6 +20,7 @@
 #include <QScreen>
 #include <QStandardPaths>
 #include <QString>
+#include <QStyle>
 #include <QTemporaryFile>
 #include <QToolBar>
 #include <QToolButton>
@@ -305,7 +306,11 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         }
         m_hints[QPlatformTheme::StyleNames] = styleNames;
 
-        app->setStyle(theme);
+        // Changing QStyle is quite heavy (QApplication::setStyle doesn't check) and can cause issues in applications.
+        // QStyleFactory::create does toLower() internally.
+        if (!app->style() || app->style()->name().compare(theme, Qt::CaseInsensitive) != 0) {
+            app->setStyle(theme);
+        }
         loadPalettes();
         break;
     }
