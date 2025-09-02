@@ -117,7 +117,7 @@ msgstr "No teniu permís per a crear esta carpeta."
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
-msgstr "Seleccioneu una carpeta"
+msgstr "Trieu una carpeta"
 
 #: platformtheme/kdirselectdialog.cpp:284
 #, kde-format
