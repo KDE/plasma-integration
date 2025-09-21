@@ -6,7 +6,6 @@
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QDBusPendingCall>
-#include <QDBusPendingReply>
 #include <QWidget>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
 #include <private/qdesktopunixservices_p.h>
