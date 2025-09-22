@@ -61,8 +61,8 @@ public:
     {
     }
 
-    void readConfig(const KSharedConfigPtr &config, const QString &group);
-    void saveConfig(KSharedConfigPtr config, const QString &group);
+    void readConfig();
+    void saveConfig();
     void slotMkdir();
 
     void slotCurrentChanged(const QUrl &url);
@@ -92,11 +92,17 @@ public:
     QDialogButtonBox *m_buttons = nullptr;
 };
 
-void KDirSelectDialog::Private::readConfig(const KSharedConfig::Ptr &config, const QString &group)
+void KDirSelectDialog::Private::readConfig()
 {
     m_urlCombo->clear();
 
-    KConfigGroup conf(config, group);
+    KConfig config(QStringLiteral("kdirselectstaterc"), KConfig::SimpleConfig, QStandardPaths::GenericStateLocation);
+
+    KConfigGroup conf(&config, QStringLiteral("DirSelect Dialog"));
+
+    KConfig oldConfig("kdeglobals", KConfig::SimpleConfig);
+    oldConfig.group(QStringLiteral("DirSelect Dialog")).moveValuesTo(conf);
+
     m_urlCombo->setHistoryItems(conf.readPathEntry("History Items", QStringList()));
 
     const QSize size = conf.readEntry("DirSelectDialog Size", QSize());
@@ -109,15 +115,15 @@ void KDirSelectDialog::Private::readConfig(const KSharedConfig::Ptr &config, con
     }
 }
 
-void KDirSelectDialog::Private::saveConfig(KSharedConfig::Ptr config, const QString &group)
+void KDirSelectDialog::Private::saveConfig()
 {
-    KConfigGroup conf(config, group);
+    KConfig config(QStringLiteral("kdirselectstaterc"), KConfig::SimpleConfig, QStandardPaths::GenericStateLocation);
+
+    KConfigGroup conf(&config, QStringLiteral("DirSelect Dialog"));
     KConfigGroup::WriteConfigFlags flags(KConfigGroup::Persistent | KConfigGroup::Global);
     conf.writePathEntry("History Items", m_urlCombo->historyItems(), flags);
     conf.writeEntry("DirSelectDialog Size", m_parent->size(), flags);
     conf.writeEntry("Splitter State", m_parent->findChild<QSplitter *>()->saveState(), flags);
-
-    config->sync();
 }
 
 void KDirSelectDialog::Private::slotMkdir()
@@ -397,7 +403,7 @@ KDirSelectDialog::KDirSelectDialog(const QUrl &startDir, bool localOnly, QWidget
     d->m_startDir = d->m_startURL;
     d->m_rootUrl = d->m_treeView->rootUrl();
 
-    d->readConfig(KSharedConfig::openConfig(), QStringLiteral("DirSelect Dialog"));
+    d->readConfig();
 
     d->m_buttons = new QDialogButtonBox(mainWidget);
     d->m_buttons->setContentsMargins(style()->pixelMetric(QStyle::PM_LayoutLeftMargin),
@@ -535,7 +541,7 @@ void KDirSelectDialog::accept()
 
 void KDirSelectDialog::hideEvent(QHideEvent *event)
 {
-    d->saveConfig(KSharedConfig::openConfig(), QStringLiteral("DirSelect Dialog"));
+    d->saveConfig();
 
     QDialog::hideEvent(event);
 }
