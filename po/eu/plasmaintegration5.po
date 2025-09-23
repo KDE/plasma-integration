@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integrtion\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-12 00:43+0000\n"
+"POT-Creation-Date: 2025-09-23 00:45+0000\n"
 "PO-Revision-Date: 2024-07-04 13:00+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -159,7 +159,7 @@ msgstr "Propietateak"
 msgid "Show Hidden Folders"
 msgstr "Erakutsi ezkutuko karpetak"
 
-#: platformtheme/kioopenwith.cpp:155
+#: platformtheme/kioopenwith.cpp:154
 #, kde-format
 msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "
