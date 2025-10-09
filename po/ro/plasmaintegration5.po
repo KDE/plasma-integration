@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-23 00:45+0000\n"
+"POT-Creation-Date: 2025-10-09 00:44+0000\n"
 "PO-Revision-Date: 2023-04-10 19:09+0100\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -78,19 +78,19 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "Ignoră"
 
-#: platformtheme/kdirselectdialog.cpp:127
+#: platformtheme/kdirselectdialog.cpp:133
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
 msgstr "Dosar nou"
 
-#: platformtheme/kdirselectdialog.cpp:133
+#: platformtheme/kdirselectdialog.cpp:139
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
 msgstr "Dosar nou"
 
-#: platformtheme/kdirselectdialog.cpp:134
+#: platformtheme/kdirselectdialog.cpp:140
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -100,53 +100,53 @@ msgstr ""
 "Creează un dosar nou în:\n"
 "%1"
 
-#: platformtheme/kdirselectdialog.cpp:165
+#: platformtheme/kdirselectdialog.cpp:171
 #, kde-format
 msgid "A file or folder named %1 already exists."
 msgstr "Există deja un fișier sau un dosar cu denumirea %1."
 
-#: platformtheme/kdirselectdialog.cpp:174
+#: platformtheme/kdirselectdialog.cpp:180
 #, kde-format
 msgid "You do not have permission to create that folder."
 msgstr "Nu aveți permisiuni pentru a crea acel dosar."
 
-#: platformtheme/kdirselectdialog.cpp:276
+#: platformtheme/kdirselectdialog.cpp:282
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
 msgstr "Alege dosarul"
 
-#: platformtheme/kdirselectdialog.cpp:284
+#: platformtheme/kdirselectdialog.cpp:290
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
 msgstr "Dosar nou..."
 
-#: platformtheme/kdirselectdialog.cpp:342
+#: platformtheme/kdirselectdialog.cpp:348
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
 msgstr "Dosar nou..."
 
-#: platformtheme/kdirselectdialog.cpp:351
+#: platformtheme/kdirselectdialog.cpp:357
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Move to Trash"
 msgstr "Mută la gunoi"
 
-#: platformtheme/kdirselectdialog.cpp:360
+#: platformtheme/kdirselectdialog.cpp:366
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
 msgstr "Șterge"
 
-#: platformtheme/kdirselectdialog.cpp:371
+#: platformtheme/kdirselectdialog.cpp:377
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
 msgstr "Arată dosarele ascunse"
 
-#: platformtheme/kdirselectdialog.cpp:378
+#: platformtheme/kdirselectdialog.cpp:384
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
