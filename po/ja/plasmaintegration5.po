@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frameworkintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-12 00:43+0000\n"
+"POT-Creation-Date: 2025-10-09 02:42+0000\n"
 "PO-Revision-Date: 2019-11-02 18:30+0900\n"
 "Last-Translator: Tomohiro Hyakutake <tomhioo@outlook.jp>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -76,19 +76,19 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "無視"
 
-#: platformtheme/kdirselectdialog.cpp:127
+#: platformtheme/kdirselectdialog.cpp:133
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
 msgstr "新しいフォルダ"
 
-#: platformtheme/kdirselectdialog.cpp:133
+#: platformtheme/kdirselectdialog.cpp:139
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
 msgstr "新しいフォルダ"
 
-#: platformtheme/kdirselectdialog.cpp:134
+#: platformtheme/kdirselectdialog.cpp:140
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -98,53 +98,53 @@ msgstr ""
 "以下の場所に新しいフォルダを作成:\n"
 "‘%1’"
 
-#: platformtheme/kdirselectdialog.cpp:165
+#: platformtheme/kdirselectdialog.cpp:171
 #, kde-format
 msgid "A file or folder named %1 already exists."
 msgstr "%1 という名前のファイルまたはフォルダは既に存在します。"
 
-#: platformtheme/kdirselectdialog.cpp:174
+#: platformtheme/kdirselectdialog.cpp:180
 #, kde-format
 msgid "You do not have permission to create that folder."
 msgstr "あなたにはそのフォルダを作成する権限がありません。"
 
-#: platformtheme/kdirselectdialog.cpp:276
+#: platformtheme/kdirselectdialog.cpp:282
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
 msgstr "フォルダを選択"
 
-#: platformtheme/kdirselectdialog.cpp:284
+#: platformtheme/kdirselectdialog.cpp:290
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
 msgstr "新しいフォルダ..."
 
-#: platformtheme/kdirselectdialog.cpp:342
+#: platformtheme/kdirselectdialog.cpp:348
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
 msgstr "新しいフォルダ..."
 
-#: platformtheme/kdirselectdialog.cpp:351
+#: platformtheme/kdirselectdialog.cpp:357
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Move to Trash"
 msgstr "ごみ箱に移動"
 
-#: platformtheme/kdirselectdialog.cpp:360
+#: platformtheme/kdirselectdialog.cpp:366
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
 msgstr "削除"
 
-#: platformtheme/kdirselectdialog.cpp:371
+#: platformtheme/kdirselectdialog.cpp:377
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
 msgstr "隠しフォルダを表示"
 
-#: platformtheme/kdirselectdialog.cpp:378
+#: platformtheme/kdirselectdialog.cpp:384
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"

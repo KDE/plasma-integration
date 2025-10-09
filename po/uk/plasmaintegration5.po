@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasmaintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-12 00:43+0000\n"
+"POT-Creation-Date: 2025-10-09 02:42+0000\n"
 "PO-Revision-Date: 2024-06-26 20:32+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
@@ -80,19 +80,19 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "Ігнорувати"
 
-#: platformtheme/kdirselectdialog.cpp:127
+#: platformtheme/kdirselectdialog.cpp:133
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
 msgstr "Нова тека"
 
-#: platformtheme/kdirselectdialog.cpp:133
+#: platformtheme/kdirselectdialog.cpp:139
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
 msgstr "Створення теки"
 
-#: platformtheme/kdirselectdialog.cpp:134
+#: platformtheme/kdirselectdialog.cpp:140
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -102,53 +102,53 @@ msgstr ""
 "Створити нову теку у:\n"
 "%1"
 
-#: platformtheme/kdirselectdialog.cpp:165
+#: platformtheme/kdirselectdialog.cpp:171
 #, kde-format
 msgid "A file or folder named %1 already exists."
 msgstr "Файл або тека з назвою %1 вже існує."
 
-#: platformtheme/kdirselectdialog.cpp:174
+#: platformtheme/kdirselectdialog.cpp:180
 #, kde-format
 msgid "You do not have permission to create that folder."
 msgstr "У вас немає прав для створення теки."
 
-#: platformtheme/kdirselectdialog.cpp:276
+#: platformtheme/kdirselectdialog.cpp:282
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
 msgstr "Вибір теки"
 
-#: platformtheme/kdirselectdialog.cpp:284
+#: platformtheme/kdirselectdialog.cpp:290
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
 msgstr "Створити теку…"
 
-#: platformtheme/kdirselectdialog.cpp:342
+#: platformtheme/kdirselectdialog.cpp:348
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
 msgstr "Створити теку…"
 
-#: platformtheme/kdirselectdialog.cpp:351
+#: platformtheme/kdirselectdialog.cpp:357
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Move to Trash"
 msgstr "Пересунути до смітника"
 
-#: platformtheme/kdirselectdialog.cpp:360
+#: platformtheme/kdirselectdialog.cpp:366
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
 msgstr "Вилучити"
 
-#: platformtheme/kdirselectdialog.cpp:371
+#: platformtheme/kdirselectdialog.cpp:377
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
 msgstr "Показувати приховані теки"
 
-#: platformtheme/kdirselectdialog.cpp:378
+#: platformtheme/kdirselectdialog.cpp:384
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"

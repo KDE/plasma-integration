@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-12 00:43+0000\n"
+"POT-Creation-Date: 2025-10-09 02:42+0000\n"
 "PO-Revision-Date: 2023-09-25 23:45+0530\n"
 "Last-Translator: Ashish Kumar Prasad\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -78,19 +78,19 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "उपेक्ष्यताम्"
 
-#: platformtheme/kdirselectdialog.cpp:127
+#: platformtheme/kdirselectdialog.cpp:133
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
 msgstr "नूतनं पुटम्"
 
-#: platformtheme/kdirselectdialog.cpp:133
+#: platformtheme/kdirselectdialog.cpp:139
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
 msgstr "नूतनं पुटम्"
 
-#: platformtheme/kdirselectdialog.cpp:134
+#: platformtheme/kdirselectdialog.cpp:140
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -100,53 +100,53 @@ msgstr ""
 "अस्मिन् नूतनं पुटं रचयन्तु:\n"
 "%1"
 
-#: platformtheme/kdirselectdialog.cpp:165
+#: platformtheme/kdirselectdialog.cpp:171
 #, kde-format
 msgid "A file or folder named %1 already exists."
 msgstr "%1 इति नाम्ना सञ्चिका अथवा पुटं पूर्वमेव अस्ति ।."
 
-#: platformtheme/kdirselectdialog.cpp:174
+#: platformtheme/kdirselectdialog.cpp:180
 #, kde-format
 msgid "You do not have permission to create that folder."
 msgstr "तत् पुटं निर्मातुं भवतः अनुमतिः नास्ति ।."
 
-#: platformtheme/kdirselectdialog.cpp:276
+#: platformtheme/kdirselectdialog.cpp:282
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
 msgstr "पुटम् इति चिनोतु"
 
-#: platformtheme/kdirselectdialog.cpp:284
+#: platformtheme/kdirselectdialog.cpp:290
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
 msgstr "नूतनं पुटम्..."
 
-#: platformtheme/kdirselectdialog.cpp:342
+#: platformtheme/kdirselectdialog.cpp:348
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
 msgstr "नूतनं पुटम्..."
 
-#: platformtheme/kdirselectdialog.cpp:351
+#: platformtheme/kdirselectdialog.cpp:357
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Move to Trash"
 msgstr "पुनःप्रयोगस्य कूपं मध्ये स्थानान्तरणम्"
 
-#: platformtheme/kdirselectdialog.cpp:360
+#: platformtheme/kdirselectdialog.cpp:366
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
 msgstr "विलोपयतु"
 
-#: platformtheme/kdirselectdialog.cpp:371
+#: platformtheme/kdirselectdialog.cpp:377
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
 msgstr "गुप्तपुटं दर्शयन्तु"
 
-#: platformtheme/kdirselectdialog.cpp:378
+#: platformtheme/kdirselectdialog.cpp:384
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
