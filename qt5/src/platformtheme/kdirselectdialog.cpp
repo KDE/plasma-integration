@@ -525,8 +525,7 @@ void KDirSelectDialog::setCurrentUrl(const QUrl &url)
     }
 
     // Check if url represents a hidden folder and enable showing them
-    QString fileName = url.fileName();
-    // TODO a better hidden file check?
+    QString fileName = url.adjusted(QUrl::StripTrailingSlash).fileName();
     bool isHidden = fileName.length() > 1 && fileName[0] == QLatin1Char('.') && (fileName.length() > 2 ? fileName[1] != QLatin1Char('.') : true);
     bool showHiddenFiles = isHidden && !d->m_treeView->showHiddenFiles();
     if (showHiddenFiles) {
