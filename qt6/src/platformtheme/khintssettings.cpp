@@ -233,7 +233,6 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
 {
     mKdeGlobals->reparseConfiguration();
     KConfigGroup cg(mKdeGlobals, "KDE");
-
     switch (type) {
     case PaletteChanged: {
         loadPalettes();

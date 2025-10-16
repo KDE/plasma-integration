@@ -99,19 +99,15 @@ private:
         QDBusConnection::sessionBus().send(message);
     }
 
-    QEventLoop m_loop;
     QToolButton m_toolBtn;
     KdePlatformTheme *m_qpa;
 private Q_SLOTS:
     void initTestCase()
     {
         m_qpa = new KdePlatformTheme();
-        QDBusConnection::sessionBus().connect(QString(),
-                                              QStringLiteral("/KGlobalSettings"),
-                                              QStringLiteral("org.kde.KGlobalSettings"),
-                                              QStringLiteral("notifyChange"),
-                                              &m_loop,
-                                              SLOT(quit()));
+        // KHintsSettings makes dbus connections delayed, these need to be done
+        // so we can be sure the theme has seen our signals
+        QCoreApplication::processEvents();
     }
 
     void cleanupTestCase()
@@ -212,14 +208,12 @@ private Q_SLOTS:
 
         EventTest tester(&m_toolBtn, QEvent::StyleChange);
         sendNotifyChange(KHintsSettings::SettingsChanged, KHintsSettings::SETTINGS_QT);
-        m_loop.exec();
 
-        QCOMPARE(qApp->cursorFlashTime(), 1022);
+        QTRY_COMPARE(qApp->cursorFlashTime(), 1022);
 
         sendNotifyChange(KHintsSettings::SettingsChanged, KHintsSettings::SETTINGS_MOUSE);
-        m_loop.exec();
 
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::ItemViewActivateItemOnSingleClick).toBool(), true);
+        QTRY_COMPARE(m_qpa->themeHint(QPlatformTheme::ItemViewActivateItemOnSingleClick).toBool(), true);
         QCOMPARE(qApp->doubleClickInterval(), 401);
         QCOMPARE(qApp->startDragDistance(), 35);
         QCOMPARE(qApp->startDragTime(), 501);
@@ -228,36 +222,31 @@ private Q_SLOTS:
         QCOMPARE(qApp->testAttribute(Qt::AA_DontShowIconsInMenus), true);
 
         sendNotifyChange(KHintsSettings::ToolbarStyleChanged, 2);
-        m_loop.exec();
 
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::ToolButtonStyle).toInt(), (int)Qt::ToolButtonTextUnderIcon);
+        QTRY_COMPARE(m_qpa->themeHint(QPlatformTheme::ToolButtonStyle).toInt(), (int)Qt::ToolButtonTextUnderIcon);
         QCOMPARE(tester.gotEvent, true);
 
         sendNotifyChange(KHintsSettings::StyleChanged, 2);
-        m_loop.exec();
 
         QStringList styles;
         styles << QStringLiteral("another-non-existent-widget-style") << QStringLiteral("breeze") << QStringLiteral("oxygen") << QStringLiteral("fusion")
                << QStringLiteral("windows");
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::StyleNames).toStringList(), styles);
+        QTRY_COMPARE(m_qpa->themeHint(QPlatformTheme::StyleNames).toStringList(), styles);
 
         sendNotifyChange(KHintsSettings::SettingsChanged, KHintsSettings::SETTINGS_STYLE);
-        m_loop.exec();
 
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::DialogButtonBoxButtonsHaveIcons).toBool(), true);
+        QTRY_COMPARE(m_qpa->themeHint(QPlatformTheme::DialogButtonBoxButtonsHaveIcons).toBool(), true);
 
         sendNotifyChange(KHintsSettings::IconChanged, 4);
-        m_loop.exec();
 
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::SystemIconThemeName).toString(), QLatin1String("other-non-existent"));
+        QTRY_COMPARE(m_qpa->themeHint(QPlatformTheme::SystemIconThemeName).toString(), QLatin1String("other-non-existent"));
     }
 
     void testPlatformPaletteChanges()
     {
         EventTest tester(QGuiApplication::instance(), QEvent::ApplicationPaletteChange);
         sendNotifyChange(KHintsSettings::PaletteChanged, 0);
-        m_loop.exec();
-        QCOMPARE(tester.gotEvent, true);
+        QTRY_COMPARE(tester.gotEvent, true);
 
         const QPalette *palette = m_qpa->palette();
         QPalette::ColorGroup states[3] = {QPalette::Active, QPalette::Inactive, QPalette::Disabled};
