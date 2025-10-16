@@ -10,6 +10,7 @@ ShowIconsOnPushButtons=false
 GraphicEffectsLevel=0
 WheelScrollLines=1234
 ShowIconsInMenuItems=true
+contrast=7
 
 [Toolbar style]
 ToolButtonStyle=textonly

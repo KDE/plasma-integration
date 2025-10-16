@@ -292,9 +292,9 @@ private Q_SLOTS:
             // KColorScheme applies modifications and we can't disable them, so I extracted
             // the values and blindly compare them.
             QCOMPARE(palette->color(states[i], QPalette::Light).red(), 230);
-            QCOMPARE(palette->color(states[i], QPalette::Midlight).red(), 203);
+            QCOMPARE(palette->color(states[i], QPalette::Midlight).red(), 202);
             QCOMPARE(palette->color(states[i], QPalette::Mid).red(), 149);
-            QCOMPARE(palette->color(states[i], QPalette::Dark).red(), 84);
+            QCOMPARE(palette->color(states[i], QPalette::Dark).red(), 85);
             QCOMPARE(palette->color(states[i], QPalette::Shadow).red(), 60);
 
             QCOMPARE(palette->brush(states[i], QPalette::AlternateBase), redBrush);
