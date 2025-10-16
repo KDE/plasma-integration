@@ -30,7 +30,7 @@ void KHintsSettingsTest::testDefaults()
     QCOMPARE(hints.hint(QPlatformTheme::ToolButtonStyle).toInt(), int(Qt::ToolButtonTextBesideIcon));
 
     QCOMPARE(hints.hint(QPlatformTheme::ToolBarIconSize).toInt(), 22);
-    QCOMPARE(hints.hint(QPlatformTheme::ItemViewActivateItemOnSingleClick).toBool(), true);
+    QCOMPARE(hints.hint(QPlatformTheme::ItemViewActivateItemOnSingleClick).toBool(), false);
 
     QCOMPARE(hints.hint(QPlatformTheme::SystemIconThemeName).toString(), QStringLiteral("breeze"));
     QCOMPARE(hints.hint(QPlatformTheme::SystemIconFallbackThemeName).toString(), QStringLiteral("hicolor"));
