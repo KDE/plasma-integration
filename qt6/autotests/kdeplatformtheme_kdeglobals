@@ -18,9 +18,6 @@ ToolButtonStyleOtherToolbars=textundericon
 [Icons]
 Theme=non-existent-icon-theme
 
-[MainToolbarIcons]
-Size=2
-
 [ColorEffects:Active]
 ChangeSelectionColor=false
 Enable=false
