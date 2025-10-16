@@ -48,9 +48,6 @@ public:
     QPlatformMenuBar *createPlatformMenuBar() const override;
 
 private:
-#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
-    void setMenuBarForWindow(QWindow *window, const QString &serviceName, const QString &objectPath) const;
-#endif
     void loadSettings();
     void setQtQuickControlsTheme();
 

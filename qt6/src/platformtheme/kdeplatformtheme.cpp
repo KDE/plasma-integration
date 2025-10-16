@@ -16,9 +16,6 @@
 #include "khintssettings.h"
 #include "kiodelegate.h"
 #include "kwaylandintegration.h"
-#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
-#include "qdbusmenubarwrapper.h"
-#endif
 #include "x11integration.h"
 
 #include <QApplication>
@@ -46,24 +43,6 @@
 #include <KCountryFlagEmojiIconEngine>
 
 using namespace Qt::StringLiterals;
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
-static const QByteArray s_x11AppMenuServiceNamePropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_SERVICE_NAME");
-static const QByteArray s_x11AppMenuObjectPathPropertyName = QByteArrayLiteral("_KDE_NET_WM_APPMENU_OBJECT_PATH");
-
-static bool checkDBusGlobalMenuAvailable()
-{
-    QDBusConnection connection = QDBusConnection::sessionBus();
-    QString registrarService = QStringLiteral("com.canonical.AppMenu.Registrar");
-    return connection.interface()->isServiceRegistered(registrarService);
-}
-
-static bool isDBusGlobalMenuAvailable()
-{
-    static bool dbusGlobalMenuAvailable = checkDBusGlobalMenuAvailable();
-    return dbusGlobalMenuAvailable;
-}
-#endif
 
 KdePlatformTheme::KdePlatformTheme()
 {
@@ -359,28 +338,7 @@ QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
     if (qEnvironmentVariableIsSet("KDE_NO_GLOBAL_MENU")) {
         return nullptr;
     }
-#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
-    if (isDBusGlobalMenuAvailable()) {
-        auto dbusMenu = QGenericUnixTheme::createPlatformMenuBar();
-        if (!dbusMenu) {
-            return nullptr;
-        }
-        auto menu = new QDBusMenuBarWrapper(dbusMenu);
-
-        QObject::connect(menu, &QDBusMenuBarWrapper::windowChanged, menu, [this, menu](QWindow *newWindow, QWindow *oldWindow) {
-            const QString &serviceName = QDBusConnection::sessionBus().baseService();
-            const QString &objectPath = menu->objectPath();
-
-            setMenuBarForWindow(oldWindow, {}, {});
-            setMenuBarForWindow(newWindow, serviceName, objectPath);
-        });
-
-        return menu;
-    }
-    return nullptr;
-#else
     return QGenericUnixTheme::createPlatformMenuBar();
-#endif
 }
 
 // Force QtQuickControls to use org.kde.desktop theme for QApplication,
@@ -410,28 +368,6 @@ bool KdePlatformTheme::useXdgDesktopPortal()
     static bool usePortal = qEnvironmentVariableIntValue("PLASMA_INTEGRATION_USE_PORTAL") == 1;
     return usePortal;
 }
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
-inline bool windowRelevantForGlobalMenu(QWindow *window)
-{
-    return !(window->type() & Qt::WindowType::Popup);
-}
-
-void KdePlatformTheme::setMenuBarForWindow(QWindow *window, const QString &serviceName, const QString &objectPath) const
-{
-    if (!window)
-        return;
-
-    if (m_x11Integration) {
-        m_x11Integration->setWindowProperty(window, s_x11AppMenuServiceNamePropertyName, serviceName.toUtf8());
-        m_x11Integration->setWindowProperty(window, s_x11AppMenuObjectPathPropertyName, objectPath.toUtf8());
-    }
-
-    if (m_kwaylandIntegration) {
-        m_kwaylandIntegration->setAppMenu(window, serviceName, objectPath);
-    }
-}
-#endif
 
 bool KdePlatformTheme::checkIfThemeExists(const QString &themePath)
 {

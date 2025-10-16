@@ -12,44 +12,10 @@
 
 #include "qwayland-server-decoration-palette.h"
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
-#include "qwayland-appmenu.h"
-#endif
-
 #include <KWindowEffects>
 
 static const QByteArray s_schemePropertyName = QByteArrayLiteral("KDE_COLOR_SCHEME_PATH");
 static const QByteArray s_blurBehindPropertyName = QByteArrayLiteral("ENABLE_BLUR_BEHIND_HINT");
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
-class AppMenuManager : public QWaylandClientExtensionTemplate<AppMenuManager>, public QtWayland::org_kde_kwin_appmenu_manager
-{
-    Q_OBJECT
-public:
-    AppMenuManager()
-        : QWaylandClientExtensionTemplate<AppMenuManager>(2)
-    {
-        initialize();
-    }
-    ~AppMenuManager()
-    {
-        if (isActive() && QWaylandClientExtension::version() >= ORG_KDE_KWIN_APPMENU_MANAGER_RELEASE_SINCE_VERSION) {
-            release();
-        }
-    }
-};
-
-class AppMenu : public QtWayland::org_kde_kwin_appmenu
-{
-public:
-    using org_kde_kwin_appmenu::org_kde_kwin_appmenu;
-    ~AppMenu()
-    {
-        release();
-    }
-};
-Q_DECLARE_METATYPE(AppMenu *);
-#endif
 
 class ServerSideDecorationPaletteManager : public QWaylandClientExtensionTemplate<ServerSideDecorationPaletteManager>,
                                            public QtWayland::org_kde_kwin_server_decoration_palette_manager
@@ -153,31 +119,10 @@ void KWaylandIntegration::shellSurfaceCreated(QWindow *w)
     if (!s) {
         return;
     }
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
-    if (!m_appMenuManager) {
-        m_appMenuManager.reset(new AppMenuManager());
-    }
-    if (m_appMenuManager->isActive()) {
-        auto menu = new AppMenu(m_appMenuManager->create(s));
-        w->setProperty("org.kde.plasma.integration.appmenu", QVariant::fromValue(menu));
-        if (auto it = m_dbusMenuInfos.constFind(w); it != m_dbusMenuInfos.cend()) {
-            menu->set_address(it->serviceName, it->objectPath);
-        }
-    }
-#endif
 }
 
 void KWaylandIntegration::shellSurfaceDestroyed(QWindow *w)
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
-    auto appMenu = w->property("org.kde.plasma.integration.appmenu").value<AppMenu *>();
-    if (appMenu) {
-        delete appMenu;
-    }
-    w->setProperty("org.kde.plasma.integration.appmenu", QVariant());
-#endif
-
     auto decoPallete = w->property("org.kde.plasma.integration.palette").value<ServerSideDecorationPalette *>();
     if (decoPallete) {
         delete decoPallete;
@@ -206,20 +151,6 @@ void KWaylandIntegration::installColorScheme(QWindow *w)
         palette->set_palette(qApp->property(s_schemePropertyName.constData()).toString());
     }
 }
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
-void KWaylandIntegration::setAppMenu(QWindow *window, const QString &serviceName, const QString &objectPath)
-{
-    auto menu = window->property("org.kde.plasma.integration.appmenu").value<AppMenu *>();
-    if (menu) {
-        menu->set_address(serviceName, objectPath);
-    }
-    m_dbusMenuInfos.insert(window, {serviceName, objectPath});
-    connect(window, &QWindow::destroyed, this, [this, window] {
-        m_dbusMenuInfos.remove(window);
-    });
-}
-#endif
 
 wl_surface *KWaylandIntegration::surfaceFromWindow(QWindow *window)
 {
