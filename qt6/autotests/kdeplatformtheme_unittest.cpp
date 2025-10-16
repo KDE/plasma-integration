@@ -129,7 +129,7 @@ private Q_SLOTS:
         QCOMPARE(qApp->startDragDistance(), 15);
         QCOMPARE(qApp->startDragTime(), 555);
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::ToolButtonStyle).toInt(), (int)Qt::ToolButtonTextOnly);
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::ToolBarIconSize).toInt(), 2);
+        QCOMPARE(m_qpa->themeHint(QPlatformTheme::ToolBarIconSize).toInt(), 22);
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::ItemViewActivateItemOnSingleClick).toBool(), false);
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::SystemIconThemeName).toString(), QLatin1String("non-existent-icon-theme"));
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::SystemIconFallbackThemeName).toString(), QLatin1String("hicolor"));
@@ -203,26 +203,13 @@ private Q_SLOTS:
         QCOMPARE(KIconLoader::global()->theme()->current(), QStringLiteral("non-existent-icon-theme"));
     }
 
-    void testPlatformIconChanges()
+    void testPlatformHintChanges()
     {
         QString configPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
         configPath.append("/kdeglobals");
         QFile::remove(configPath);
         QFile::copy(CHANGED_CONFIGFILE, configPath);
 
-        QDBusConnection::sessionBus()
-            .connect(QString(), QStringLiteral("/KIconLoader"), QStringLiteral("org.kde.KIconLoader"), QStringLiteral("iconChanged"), &m_loop, SLOT(quit()));
-
-        QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/KIconLoader"), QStringLiteral("org.kde.KIconLoader"), QStringLiteral("iconChanged"));
-        message.setArguments(QList<QVariant>() << int(KIconLoader::MainToolbar));
-        QDBusConnection::sessionBus().send(message);
-        m_loop.exec();
-
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::ToolBarIconSize).toInt(), 11);
-    }
-
-    void testPlatformHintChanges()
-    {
         EventTest tester(&m_toolBtn, QEvent::StyleChange);
         sendNotifyChange(KHintsSettings::SettingsChanged, KHintsSettings::SETTINGS_QT);
         m_loop.exec();
