@@ -42,3 +42,4 @@ Dependencies:
     'third-party/wayland': '@latest'
 Options:
  force-inject-asan: True
+ require-passing-tests-on: ['@all']
