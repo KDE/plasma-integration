@@ -40,3 +40,5 @@ Dependencies:
     'frameworks/kxmlgui': '@latest-kf6'
     'plasma/breeze': '@same'
     'third-party/wayland': '@latest'
+Options:
+ force-inject-asan: True
