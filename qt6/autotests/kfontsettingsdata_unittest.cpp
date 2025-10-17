@@ -90,7 +90,6 @@ private Q_SLOTS:
         QDBusConnection::sessionBus().send(message);
         loop.exec();
 
-        QVERIFY(m_appChangedFont);
         QCOMPARE(m_fonts->font(KFontSettingsData::GeneralFont)->family(), QStringLiteral("ChangedFontTest"));
         QCOMPARE(m_fonts->font(KFontSettingsData::FixedFont)->family(), QStringLiteral("ChangedFixedTest Mono"));
         QCOMPARE(m_fonts->font(KFontSettingsData::ToolbarFont)->family(), QStringLiteral("ChangedToolbarTest"));
@@ -98,6 +97,8 @@ private Q_SLOTS:
         QCOMPARE(m_fonts->font(KFontSettingsData::WindowTitleFont)->family(), QStringLiteral("ChangedActiveTest"));
         QCOMPARE(m_fonts->font(KFontSettingsData::TaskbarFont)->family(), QStringLiteral("ChangedTaskbarTest"));
         QCOMPARE(m_fonts->font(KFontSettingsData::SmallestReadableFont)->family(), QStringLiteral("ChangedSmallestReadableTest"));
+
+        QTRY_VERIFY(m_appChangedFont);
     }
 };
 
