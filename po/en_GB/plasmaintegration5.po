@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-09 00:44+0000\n"
+"POT-Creation-Date: 2025-10-17 00:44+0000\n"
 "PO-Revision-Date: 2024-06-29 11:29+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
@@ -29,49 +29,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Save File"
 
-#: platformtheme/kdeplatformtheme.cpp:299
+#: platformtheme/kdeplatformtheme.cpp:278
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Save All"
 
-#: platformtheme/kdeplatformtheme.cpp:303
+#: platformtheme/kdeplatformtheme.cpp:282
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&Yes"
 
-#: platformtheme/kdeplatformtheme.cpp:305
+#: platformtheme/kdeplatformtheme.cpp:284
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Yes to All"
 
-#: platformtheme/kdeplatformtheme.cpp:307
+#: platformtheme/kdeplatformtheme.cpp:286
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&No"
 
-#: platformtheme/kdeplatformtheme.cpp:309
+#: platformtheme/kdeplatformtheme.cpp:288
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "No to All"
 
-#: platformtheme/kdeplatformtheme.cpp:312
+#: platformtheme/kdeplatformtheme.cpp:291
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Abort"
 
-#: platformtheme/kdeplatformtheme.cpp:314
+#: platformtheme/kdeplatformtheme.cpp:293
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Retry"
 
-#: platformtheme/kdeplatformtheme.cpp:316
+#: platformtheme/kdeplatformtheme.cpp:295
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
@@ -156,7 +156,7 @@ msgstr "Properties"
 msgid "Show Hidden Folders"
 msgstr "Show Hidden Folders"
 
-#: platformtheme/kioopenwith.cpp:154
+#: platformtheme/kioopenwith.cpp:146
 #, kde-format
 msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "

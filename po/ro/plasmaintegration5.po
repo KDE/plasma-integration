@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-09 00:44+0000\n"
+"POT-Creation-Date: 2025-10-17 00:44+0000\n"
 "PO-Revision-Date: 2023-04-10 19:09+0100\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -30,49 +30,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Salvează fișierul"
 
-#: platformtheme/kdeplatformtheme.cpp:299
+#: platformtheme/kdeplatformtheme.cpp:278
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Salvează toate"
 
-#: platformtheme/kdeplatformtheme.cpp:303
+#: platformtheme/kdeplatformtheme.cpp:282
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&Da"
 
-#: platformtheme/kdeplatformtheme.cpp:305
+#: platformtheme/kdeplatformtheme.cpp:284
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Da la toate"
 
-#: platformtheme/kdeplatformtheme.cpp:307
+#: platformtheme/kdeplatformtheme.cpp:286
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&Nu"
 
-#: platformtheme/kdeplatformtheme.cpp:309
+#: platformtheme/kdeplatformtheme.cpp:288
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Nu la toate"
 
-#: platformtheme/kdeplatformtheme.cpp:312
+#: platformtheme/kdeplatformtheme.cpp:291
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Abandonează"
 
-#: platformtheme/kdeplatformtheme.cpp:314
+#: platformtheme/kdeplatformtheme.cpp:293
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Reîncearcă"
 
-#: platformtheme/kdeplatformtheme.cpp:316
+#: platformtheme/kdeplatformtheme.cpp:295
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
@@ -157,7 +157,7 @@ msgstr "Proprietăți"
 msgid "Show Hidden Folders"
 msgstr "Arată dosarele ascunse"
 
-#: platformtheme/kioopenwith.cpp:154
+#: platformtheme/kioopenwith.cpp:146
 #, kde-format
 msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "

@@ -3,13 +3,13 @@
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Josep M. Ferrer <txemaq@gmail.com>, 2016, 2017, 2022, 2024.
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2020.
+# SPDX-FileCopyrightText: 2016, 2017, 2022, 2024 Josep M. Ferrer <txemaq@gmail.com>
+# SPDX-FileCopyrightText: 2020 Antoni Bella Pérez <antonibella5@yahoo.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-09 00:44+0000\n"
+"POT-Creation-Date: 2025-10-17 00:44+0000\n"
 "PO-Revision-Date: 2024-06-26 10:20+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -33,49 +33,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Desa el fitxer"
 
-#: platformtheme/kdeplatformtheme.cpp:299
+#: platformtheme/kdeplatformtheme.cpp:278
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Desa-ho tot"
 
-#: platformtheme/kdeplatformtheme.cpp:303
+#: platformtheme/kdeplatformtheme.cpp:282
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&Sí"
 
-#: platformtheme/kdeplatformtheme.cpp:305
+#: platformtheme/kdeplatformtheme.cpp:284
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Sí a tot"
 
-#: platformtheme/kdeplatformtheme.cpp:307
+#: platformtheme/kdeplatformtheme.cpp:286
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&No"
 
-#: platformtheme/kdeplatformtheme.cpp:309
+#: platformtheme/kdeplatformtheme.cpp:288
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "No a tot"
 
-#: platformtheme/kdeplatformtheme.cpp:312
+#: platformtheme/kdeplatformtheme.cpp:291
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Interromp"
 
-#: platformtheme/kdeplatformtheme.cpp:314
+#: platformtheme/kdeplatformtheme.cpp:293
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Reintenta"
 
-#: platformtheme/kdeplatformtheme.cpp:316
+#: platformtheme/kdeplatformtheme.cpp:295
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
@@ -160,7 +160,7 @@ msgstr "Propietats"
 msgid "Show Hidden Folders"
 msgstr "Mostra les carpetes ocultes"
 
-#: platformtheme/kioopenwith.cpp:154
+#: platformtheme/kioopenwith.cpp:146
 #, kde-format
 msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "

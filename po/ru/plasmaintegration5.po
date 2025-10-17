@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-09 00:44+0000\n"
+"POT-Creation-Date: 2025-10-17 00:44+0000\n"
 "PO-Revision-Date: 2024-09-20 11:55+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -31,49 +31,49 @@ msgctxt "@title:window"
 msgid "Save File"
 msgstr "Сохранение файла"
 
-#: platformtheme/kdeplatformtheme.cpp:299
+#: platformtheme/kdeplatformtheme.cpp:278
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Сохранить все"
 
-#: platformtheme/kdeplatformtheme.cpp:303
+#: platformtheme/kdeplatformtheme.cpp:282
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&Да"
 
-#: platformtheme/kdeplatformtheme.cpp:305
+#: platformtheme/kdeplatformtheme.cpp:284
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Да для всех"
 
-#: platformtheme/kdeplatformtheme.cpp:307
+#: platformtheme/kdeplatformtheme.cpp:286
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&Нет"
 
-#: platformtheme/kdeplatformtheme.cpp:309
+#: platformtheme/kdeplatformtheme.cpp:288
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Нет для всех"
 
-#: platformtheme/kdeplatformtheme.cpp:312
+#: platformtheme/kdeplatformtheme.cpp:291
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Прервать"
 
-#: platformtheme/kdeplatformtheme.cpp:314
+#: platformtheme/kdeplatformtheme.cpp:293
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Повторить"
 
-#: platformtheme/kdeplatformtheme.cpp:316
+#: platformtheme/kdeplatformtheme.cpp:295
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
@@ -158,7 +158,7 @@ msgstr "Свойства"
 msgid "Show Hidden Folders"
 msgstr "Показывать скрытые папки"
 
-#: platformtheme/kioopenwith.cpp:154
+#: platformtheme/kioopenwith.cpp:146
 #, kde-format
 msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "
