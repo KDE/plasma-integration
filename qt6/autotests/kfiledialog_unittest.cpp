@@ -262,23 +262,31 @@ private Q_SLOTS:
     {
         QTest::addColumn<QFileDialog::FileMode>("qtFileMode");
         QTest::addColumn<KFile::Modes>("kdeFileMode");
-        QTest::newRow("anyfile") << QFileDialog::AnyFile << KFile::Modes(KFile::File);
-        QTest::newRow("existingfile") << QFileDialog::ExistingFile << KFile::Modes(KFile::File | KFile::ExistingOnly);
-        QTest::newRow("directory") << QFileDialog::Directory << KFile::Modes(KFile::Directory | KFile::ExistingOnly);
-        QTest::newRow("existingfiles") << QFileDialog::ExistingFiles << KFile::Modes(KFile::Files | KFile::ExistingOnly);
+        QTest::addColumn<bool>("usingDirDialog");
+        QTest::newRow("anyfile") << QFileDialog::AnyFile << KFile::Modes(KFile::File) << false;
+        QTest::newRow("existingfile") << QFileDialog::ExistingFile << KFile::Modes(KFile::File | KFile::ExistingOnly) << false;
+        QTest::newRow("directory") << QFileDialog::Directory << KFile::Modes(KFile::Directory | KFile::ExistingOnly) << true;
+        QTest::newRow("existingfiles") << QFileDialog::ExistingFiles << KFile::Modes(KFile::Files | KFile::ExistingOnly) << false;
     }
 
     void testSetFileMode()
     {
         QFETCH(QFileDialog::FileMode, qtFileMode);
         QFETCH(KFile::Modes, kdeFileMode);
+        QFETCH(bool, usingDirDialog);
         QFileDialog dialog;
         dialog.setFileMode(qtFileMode);
         dialog.show();
 
-        KFileWidget *fw = findFileWidget();
-        QVERIFY(fw);
-        QCOMPARE(fw->mode(), kdeFileMode);
+        if (usingDirDialog) {
+            QVERIFY(std::ranges::any_of(QApplication::topLevelWidgets(), [](const QWidget *widget) {
+                return widget->metaObject()->className() == QByteArrayLiteral("KDirSelectDialog");
+            }));
+        } else {
+            KFileWidget *fw = findFileWidget();
+            QVERIFY(fw);
+            QCOMPARE(fw->mode(), kdeFileMode);
+        }
 
         QCOMPARE(dialog.fileMode(), qtFileMode);
     }
