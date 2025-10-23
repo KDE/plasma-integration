@@ -172,6 +172,18 @@ void KDEPlatformFileDialog::selectMimeTypeFilter(const QString &filter)
 
 void KDEPlatformFileDialog::selectNameFilter(const KFileFilter &filter)
 {
+    // If there multiple filters with the same patterns KIO doesnt consider the name, we can work
+    // around it by making the wanted filter the first in the list
+    auto filters = m_fileWidget->filterWidget()->filters();
+    auto firstOnlyExtension = std::ranges::find(filters, filter);
+    auto findNameAndExtension = [&filter](const KFileFilter &candidate) {
+        return candidate.filePatterns() == filter.filePatterns() && candidate.label() == filter.label();
+    };
+    auto wantedFilter = std::ranges::find_if(firstOnlyExtension, std::ranges::end(filters), findNameAndExtension);
+    if (wantedFilter != firstOnlyExtension && wantedFilter != std::ranges::end(filters)) {
+        std::swap(*wantedFilter, *firstOnlyExtension);
+    }
+    m_fileWidget->filterWidget()->setFilters(filters);
     m_fileWidget->filterWidget()->setCurrentFilter(filter);
 }
 

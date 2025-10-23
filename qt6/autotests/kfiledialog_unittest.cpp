@@ -76,7 +76,6 @@ private Q_SLOTS:
         QCOMPARE(dialog.selectedNameFilter(), selectNameFilter);
 
         dialog.show();
-        QEXPECT_FAIL("", "broken by kio commit a7c9d59f273fecd68892602f68c108a5966d98fc", Continue);
         QCOMPARE(dialog.selectedNameFilter(), selectNameFilter);
     }
 
