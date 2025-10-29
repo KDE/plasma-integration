@@ -255,6 +255,10 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         } else if (qobject_cast<QGuiApplication *>(QCoreApplication::instance())) {
             QGuiApplication::setPalette(*m_palettes[QPlatformTheme::SystemPalette]);
         }
+        // Unconditionally send an ApplicationPaletteChange event, because otherwise
+        // the change of KColorScheme frameContrast wouldn't be covered
+        QEvent paletteChange(QEvent::ApplicationPaletteChange);
+        qApp->sendEvent(qApp, &paletteChange);
 
         Qt::ColorScheme newColorScheme = determineColorScheme();
         if (m_colorScheme != newColorScheme) {
