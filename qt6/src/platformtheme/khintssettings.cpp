@@ -238,33 +238,9 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
     case PaletteChanged: {
         loadPalettes();
 
-        // Don't change the palette if the application has a custom one set
-        if (!qApp->property("KDE_COLOR_SCHEME_PATH").toString().isEmpty()) {
-            break;
-        }
+        m_colorScheme = determineColorScheme();
 
-        // QApplication::setPalette and QGuiApplication::setPalette are different functions
-        // and non virtual. Call the correct one
-        if (qobject_cast<QApplication *>(QCoreApplication::instance())) {
-            QPalette palette = *m_palettes[QPlatformTheme::SystemPalette];
-            QApplication::setPalette(palette);
-            // QTBUG QGuiApplication::paletteChanged() signal is only emitted by QGuiApplication
-            // so things like SystemPalette QtQuick item that use it won't notice a palette
-            // change when a QApplication which causes e.g. QML System Settings modules to not update
-            Q_EMIT qApp->paletteChanged(palette);
-        } else if (qobject_cast<QGuiApplication *>(QCoreApplication::instance())) {
-            QGuiApplication::setPalette(*m_palettes[QPlatformTheme::SystemPalette]);
-        }
-        // Unconditionally send an ApplicationPaletteChange event, because otherwise
-        // the change of KColorScheme frameContrast wouldn't be covered
-        QEvent paletteChange(QEvent::ApplicationPaletteChange);
-        qApp->sendEvent(qApp, &paletteChange);
-
-        Qt::ColorScheme newColorScheme = determineColorScheme();
-        if (m_colorScheme != newColorScheme) {
-            m_colorScheme = newColorScheme;
-            QWindowSystemInterface::handleThemeChange();
-        }
+        QWindowSystemInterface::handleThemeChange();
         break;
     }
     case SettingsChanged: {
