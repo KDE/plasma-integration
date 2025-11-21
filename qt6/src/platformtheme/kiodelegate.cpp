@@ -3,10 +3,24 @@
 
 #include "kiodelegate.h"
 
+#include <KSandbox>
+
 #include "kioopenwith.h"
+#include "kioopenwithxdp.h"
+
+namespace
+{
+KIO::OpenWithHandlerInterface *makeOpenWithHandlerInterface(QWidget *window)
+{
+    if (static auto sandbox = KSandbox::isInside(); sandbox) {
+        return new KIOOpenWithXDP(window, nullptr);
+    }
+    return new KIOOpenWith(window, nullptr);
+}
+} // namespace
 
 KIOUiDelegate::KIOUiDelegate(KJobUiDelegate::Flags flags, QWidget *window)
-    : KIO::JobUiDelegate(flags, window, {new KIOOpenWith(window, nullptr)})
+    : KIO::JobUiDelegate(flags, window, {makeOpenWithHandlerInterface(window)})
 {
 }
 
