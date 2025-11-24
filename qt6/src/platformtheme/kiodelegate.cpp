@@ -12,6 +12,8 @@ namespace
 {
 KIO::OpenWithHandlerInterface *makeOpenWithHandlerInterface(QWidget *window)
 {
+    // Ownership of these transfers to the caller. The caller is expected to eventually pass them into a KJob where the
+    // life time will be managed manually (also see KJob::setUiDelegate). We must not set parents here!
     if (static auto sandbox = KSandbox::isInside(); sandbox) {
         return new KIOOpenWithXDP(window, nullptr);
     }
