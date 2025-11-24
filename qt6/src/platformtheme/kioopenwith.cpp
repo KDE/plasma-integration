@@ -6,19 +6,15 @@
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QDBusPendingCall>
-#include <QWidget>
-#include <private/qdesktopunixservices_p.h>
-#include <private/qguiapplication_p.h>
-#include <qpa/qplatformintegration.h>
 
 #include <KBuildSycocaProgressDialog>
 #include <KCompletion>
 #include <KIO/OpenWith>
-#include <KJob>
-#include <KJobWidgets>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KSharedConfig>
+
+#include "kioopenwith_windowid.h"
 
 namespace
 {
@@ -43,24 +39,6 @@ void KIOOpenWith::promptUserForApplication(KJob *job, const QList<QUrl> &urls, c
 {
     Q_UNUSED(mimeType);
 
-    QWidget *widget = nullptr;
-    if (job) {
-        widget = KJobWidgets::window(job);
-    }
-
-    if (!widget) {
-        widget = m_parentWidget;
-    }
-
-    QString windowId;
-    if (widget) {
-        widget->window()->winId(); // ensure we have a handle so we can export a window (without this windowHandle() may be null)
-        auto services = QGuiApplicationPrivate::platformIntegration()->services();
-        if (auto unixServices = dynamic_cast<QDesktopUnixServices *>(services)) {
-            windowId = unixServices->portalWindowIdentifier(widget->window()->windowHandle());
-        }
-    }
-
     QDBusMessage message = QDBusMessage::createMethodCall(desktopPortalService(),
                                                           desktopPortalPath(),
                                                           QStringLiteral("org.freedesktop.impl.portal.AppChooser"),
@@ -76,8 +54,9 @@ void KIOOpenWith::promptUserForApplication(KJob *job, const QList<QUrl> &urls, c
     const auto completionMode = cg.readEntry("CompletionMode", int(KCompletion::CompletionNone));
     const QStringList history = cg.readEntry("History", QStringList());
     const QString lastChoice = cg.readEntry("LastChoice", QString());
+    const auto windowIdResult = WindowId::make(job, m_parentWidget);
 
-    message << windowId //
+    message << windowIdResult.portalIdentifier //
             << urlStrings //
             << QVariantMap{
                    {QStringLiteral("ask"), true}, //
@@ -88,7 +67,7 @@ void KIOOpenWith::promptUserForApplication(KJob *job, const QList<QUrl> &urls, c
 
     QDBusPendingCall pendingCall = QDBusConnection::sessionBus().asyncCall(message, std::numeric_limits<int>::max());
     auto watcher = new QDBusPendingCallWatcher(pendingCall, this);
-    connect(watcher, &QDBusPendingCallWatcher::finished, this, [this, mimeType, cg, widget](QDBusPendingCallWatcher *watcher) mutable {
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [this, mimeType, cg, widget = windowIdResult.widget](QDBusPendingCallWatcher *watcher) mutable {
         watcher->deleteLater();
         onApplicationChosen(*watcher, cg, mimeType, widget);
     });

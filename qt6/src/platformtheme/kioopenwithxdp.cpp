@@ -10,13 +10,8 @@
 #include <QDBusPendingCall>
 #include <QDBusReply>
 #include <QDBusUnixFileDescriptor>
-#include <QWidget>
-#include <private/qdesktopunixservices_p.h>
-#include <private/qguiapplication_p.h>
-#include <qpa/qplatformintegration.h>
 
-#include <KJob>
-#include <KJobWidgets>
+#include "kioopenwith_windowid.h"
 
 using namespace Qt::StringLiterals;
 
@@ -30,23 +25,7 @@ void KIOOpenWithXDP::promptUserForApplication(KJob *job, const QList<QUrl> &urls
 {
     Q_UNUSED(mimeType);
 
-    QWidget *widget = nullptr;
-    if (job) {
-        widget = KJobWidgets::window(job);
-    }
-
-    if (!widget) {
-        widget = m_parentWidget;
-    }
-
-    QString windowId;
-    if (widget) {
-        widget->window()->winId(); // ensure we have a handle so we can export a window (without this windowHandle() may be null)
-        auto services = QGuiApplicationPrivate::platformIntegration()->services();
-        if (auto unixServices = dynamic_cast<QDesktopUnixServices *>(services)) {
-            windowId = unixServices->portalWindowIdentifier(widget->window()->windowHandle());
-        }
-    }
+    const auto windowIdResult = WindowId::make(job, m_parentWidget);
 
     for (const QUrl &url : urls) {
         const auto message = [&] {
@@ -69,7 +48,7 @@ void KIOOpenWithXDP::promptUserForApplication(KJob *job, const QList<QUrl> &urls
                 QDBusUnixFileDescriptor dbusFd;
                 dbusFd.giveFileDescriptor(fd);
 
-                message << windowId //
+                message << windowIdResult.portalIdentifier //
                         << QVariant::fromValue(dbusFd) //
                         << QVariantMap{
                                {QStringLiteral("ask"), true}, //
@@ -84,7 +63,7 @@ void KIOOpenWithXDP::promptUserForApplication(KJob *job, const QList<QUrl> &urls
                                                                   u"org.freedesktop.portal.OpenURI"_s,
                                                                   u"OpenURI"_s);
 
-            message << windowId //
+            message << windowIdResult.portalIdentifier //
                     << url.toString() //
                     << QVariantMap{
                            {QStringLiteral("ask"), true}, //
