@@ -10,6 +10,7 @@
 
 #include <KJob>
 #include <KJobWidgets>
+#include <KJobWindows>
 
 namespace WindowId
 {
@@ -36,6 +37,10 @@ inline MakeResult make(KJob *job, QWidget *parentWidget)
         if (widget) {
             widget->window()->winId(); // ensure we have a handle so we can export a window (without this windowHandle() may be null)
             return widget->windowHandle();
+        }
+
+        if (job) {
+            return KJobWindows::window(job);
         }
 
         return nullptr;
