@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:53+0000\n"
+"POT-Creation-Date: 2025-11-27 00:45+0000\n"
 "PO-Revision-Date: 2016-07-29 20:02+0200\n"
 "Last-Translator: Dimitris Kardarakos <dimkard@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -156,7 +156,7 @@ msgstr "Ιδιότητες"
 msgid "Show Hidden Folders"
 msgstr "Εμφάνιση κρυφών φακέλων"
 
-#: platformtheme/kioopenwith.cpp:146
+#: platformtheme/kioopenwith.cpp:125
 #, kde-format
 msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "

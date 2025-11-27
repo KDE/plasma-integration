@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frameworkintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:53+0000\n"
+"POT-Creation-Date: 2025-11-27 00:45+0000\n"
 "PO-Revision-Date: 2019-11-02 18:30+0900\n"
 "Last-Translator: Tomohiro Hyakutake <tomhioo@outlook.jp>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -155,7 +155,7 @@ msgstr "プロパティ"
 msgid "Show Hidden Folders"
 msgstr "隠しフォルダを表示"
 
-#: platformtheme/kioopenwith.cpp:146
+#: platformtheme/kioopenwith.cpp:125
 #, kde-format
 msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "

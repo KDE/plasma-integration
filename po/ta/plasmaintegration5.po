@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:53+0000\n"
+"POT-Creation-Date: 2025-11-27 00:45+0000\n"
 "PO-Revision-Date: 2024-06-30 13:38+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -156,7 +156,7 @@ msgstr "பண்புகள்"
 msgid "Show Hidden Folders"
 msgstr "மறைந்துள்ள அடைவுகளை காட்டு"
 
-#: platformtheme/kioopenwith.cpp:146
+#: platformtheme/kioopenwith.cpp:125
 #, kde-format
 msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "
