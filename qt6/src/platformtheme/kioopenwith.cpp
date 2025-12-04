@@ -130,9 +130,7 @@ void KIOOpenWith::onApplicationChosen(const QDBusPendingReply<uint, QVariantMap>
 
     // Save new history
     QStringList history = cg.readEntry("History", QStringList());
-    if (history.contains(choice)) {
-        history.removeAll(choice);
-    }
+    history.removeAll(choice);
     history.prepend(choice);
     constexpr auto arbitraryHistoryMax = 15;
     while (history.size() > arbitraryHistoryMax) {
