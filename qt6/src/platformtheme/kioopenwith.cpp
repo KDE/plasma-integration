@@ -111,7 +111,6 @@ void KIOOpenWith::onApplicationChosen(const QDBusPendingReply<uint, QVariantMap>
     }
 
     auto resultMap = reply.argumentAt<1>();
-    const QString choice = resultMap.value(QStringLiteral("choice")).toString();
     auto service = makeService(resultMap, mimeType, widget);
     if (!service) {
         // Message already displayed by makeService!
@@ -129,9 +128,10 @@ void KIOOpenWith::onApplicationChosen(const QDBusPendingReply<uint, QVariantMap>
     Q_EMIT serviceSelected(service);
 
     // Save new history
+    const QString serviceName = service->name();
     QStringList history = cg.readEntry("History", QStringList());
-    history.removeAll(choice);
-    history.prepend(choice);
+    history.removeAll(serviceName);
+    history.prepend(serviceName);
     constexpr auto arbitraryHistoryMax = 15;
     while (history.size() > arbitraryHistoryMax) {
         history.pop_back();
