@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(PlasmaIntegration)
-set(PROJECT_VERSION "6.5.90")
+set(PROJECT_VERSION "6.6.80")
 
 set(QT5_MIN_VERSION "5.15.2")
 set(QT_MIN_VERSION "6.10.0")
