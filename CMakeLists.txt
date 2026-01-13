@@ -4,7 +4,7 @@ project(PlasmaIntegration)
 set(PROJECT_VERSION "6.5.80")
 
 set(QT5_MIN_VERSION "5.15.2")
-set(QT_MIN_VERSION "6.9.0")
+set(QT_MIN_VERSION "6.10.0")
 set(KF5_MIN_VERSION "5.102.0")
 set(KF6_MIN_VERSION "6.22.0")
 set(KDE_COMPILERSETTINGS_LEVEL "5.82")
