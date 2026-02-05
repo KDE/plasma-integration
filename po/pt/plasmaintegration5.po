@@ -1,39 +1,39 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# SPDX-FileCopyrightText: 2026 César A. P. Cláudio <cesarapclaudio@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: plasmaintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-27 00:45+0000\n"
-"PO-Revision-Date: 2022-11-04 10:46+0000\n"
-"Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
-"Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
+"PO-Revision-Date: 2026-02-04 00:40+0000\n"
+"Last-Translator: César A. P. Cláudio <cesarapclaudio@gmail.com>\n"
+"Language-Team: pt\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 25.12.1\n"
 
 #: platformtheme/kdeplatformfiledialoghelper.cpp:260
 #, kde-format
 msgctxt "@title:window"
 msgid "Open File"
-msgstr "Abrir um Ficheiro"
+msgstr "Abrir ficheiro"
 
 #: platformtheme/kdeplatformfiledialoghelper.cpp:261
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
-msgstr "Gravar o Ficheiro"
+msgstr "Guardar ficheiro"
 
 #: platformtheme/kdeplatformtheme.cpp:278
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
-msgstr "Gravar Tudo"
+msgstr "Guardar tudo"
 
 #: platformtheme/kdeplatformtheme.cpp:282
 #, kde-format
@@ -45,7 +45,7 @@ msgstr "&Sim"
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
-msgstr "Sim a Tudo"
+msgstr "Sim a tudo"
 
 #: platformtheme/kdeplatformtheme.cpp:286
 #, kde-format
@@ -57,13 +57,13 @@ msgstr "&Não"
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
-msgstr "Não a Tudo"
+msgstr "Não a tudo"
 
 #: platformtheme/kdeplatformtheme.cpp:291
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
-msgstr "Interromper"
+msgstr "Cancelar"
 
 #: platformtheme/kdeplatformtheme.cpp:293
 #, kde-format
@@ -81,13 +81,13 @@ msgstr "Ignorar"
 #, kde-format
 msgctxt "folder name"
 msgid "New Folder"
-msgstr "Nova Pasta"
+msgstr "Nova pasta"
 
 #: platformtheme/kdirselectdialog.cpp:139
 #, kde-format
 msgctxt "@title:window"
 msgid "New Folder"
-msgstr "Nova Pasta"
+msgstr "Nova pasta"
 
 #: platformtheme/kdirselectdialog.cpp:140
 #, kde-format
@@ -96,13 +96,13 @@ msgid ""
 "Create new folder in:\n"
 "%1"
 msgstr ""
-"Criar uma pasta nova em:\n"
+"Criar nova pasta em:\n"
 "%1"
 
 #: platformtheme/kdirselectdialog.cpp:171
 #, kde-format
 msgid "A file or folder named %1 already exists."
-msgstr "Já existe um ficheiro ou pasta chamado %1."
+msgstr "Já existe um ficheiro ou pasta com o nome %1."
 
 #: platformtheme/kdirselectdialog.cpp:180
 #, kde-format
@@ -113,19 +113,19 @@ msgstr "Não tem permissões para criar essa pasta."
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Folder"
-msgstr "Seleccionar a Pasta"
+msgstr "Selecionar pasta"
 
 #: platformtheme/kdirselectdialog.cpp:290
 #, kde-format
 msgctxt "@action:button"
 msgid "New Folder..."
-msgstr "Nova Pasta..."
+msgstr "Nova pasta..."
 
 #: platformtheme/kdirselectdialog.cpp:348
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Folder..."
-msgstr "Nova Pasta..."
+msgstr "Nova pasta..."
 
 #: platformtheme/kdirselectdialog.cpp:357
 #, kde-format
@@ -137,13 +137,13 @@ msgstr "Enviar para o Lixo"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete"
-msgstr "Apagar"
+msgstr "Eliminar"
 
 #: platformtheme/kdirselectdialog.cpp:377
 #, kde-format
 msgctxt "@option:check"
 msgid "Show Hidden Folders"
-msgstr "Mostrar as Pastas Escondidas"
+msgstr "Mostra pastas ocultas"
 
 #: platformtheme/kdirselectdialog.cpp:384
 #, kde-format
@@ -154,7 +154,7 @@ msgstr "Propriedades"
 #: platformtheme/kfiletreeview.cpp:185
 #, kde-format
 msgid "Show Hidden Folders"
-msgstr "Mostrar as Pastas Escondidas"
+msgstr "Mostrar pastas ocultas"
 
 #: platformtheme/kioopenwith.cpp:125
 #, kde-format
@@ -162,3 +162,5 @@ msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "
 "application."
 msgstr ""
+"Falha ao iniciar por razões desconhecidas. Tente com uma aplicação já "
+"existente."
