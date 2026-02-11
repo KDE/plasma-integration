@@ -345,6 +345,14 @@ QPlatformMenuBar *KdePlatformTheme::createPlatformMenuBar() const
 // and org.kde.breeze for QGuiApplication unless it's otherwise set.
 void KdePlatformTheme::setQtQuickControlsTheme()
 {
+    // if the user has explicitly set something else, don't meddle
+    if (!QQuickStyle::name().isEmpty()) {
+        // Ignore the default Fusion style if it was not explicitly set
+        if (QQuickStyle::name() != QLatin1String("Fusion") || qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_STYLE")) {
+            return;
+        }
+    }
+
     // if the user is running only a QGuiApplication, use org.kde.breeze style if it's installed.
     if (!qobject_cast<QApplication *>(qApp)) {
         // /org/kde/breeze/components is not installed by org.kde.breeze, but the impl folder is
@@ -353,11 +361,7 @@ void KdePlatformTheme::setQtQuickControlsTheme()
         }
         return;
     }
-    // if the user has explicitly set something else, don't meddle
-    // Also ignore the default Fusion style
-    if (!QQuickStyle::name().isEmpty() && QQuickStyle::name() != QLatin1String("Fusion")) {
-        return;
-    }
+
     if (checkIfThemeExists(QStringLiteral("/org/kde/desktop"))) {
         QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
     }
