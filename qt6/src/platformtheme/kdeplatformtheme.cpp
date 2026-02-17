@@ -10,6 +10,7 @@
 #include <config-platformtheme.h>
 
 #include "kdeplatformfiledialoghelper.h"
+#include "kdeplatformmessagedialoghelper.h"
 #include "kdeplatformsystemtrayicon.h"
 #include "kdeplatformtheme.h"
 #include "kfontsettingsdata.h"
@@ -261,7 +262,7 @@ QList<QKeySequence> KdePlatformTheme::keyBindings(QKeySequence::StandardKey key)
 
 bool KdePlatformTheme::usePlatformNativeDialog(QPlatformTheme::DialogType type) const
 {
-    return type == QPlatformTheme::FileDialog && qobject_cast<QApplication *>(QCoreApplication::instance());
+    return (type == QPlatformTheme::FileDialog || type == QPlatformTheme::MessageDialog) && qobject_cast<QApplication *>(QCoreApplication::instance());
 }
 
 QString KdePlatformTheme::standardButtonText(int button) const
@@ -320,9 +321,10 @@ QPlatformDialogHelper *KdePlatformTheme::createPlatformDialogHelper(QPlatformThe
             return new QXdgDesktopPortalFileDialog;
         }
         return new KDEPlatformFileDialogHelper;
+    case QPlatformTheme::MessageDialog:
+        return new KDEPlatformMessageDialogHelper;
     case QPlatformTheme::FontDialog:
     case QPlatformTheme::ColorDialog:
-    case QPlatformTheme::MessageDialog:
     default:
         return nullptr;
     }
