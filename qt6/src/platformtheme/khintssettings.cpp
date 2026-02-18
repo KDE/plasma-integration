@@ -141,6 +141,9 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
 
     loadPalettes();
     m_colorScheme = determineColorScheme();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 12, 0)
+    m_motionPreference = determineMotionPreference();
+#endif
 
     updateCursorTheme();
 }
@@ -271,6 +274,13 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         SettingsCategory category = static_cast<SettingsCategory>(arg);
         if (category == SETTINGS_QT || category == SETTINGS_MOUSE) {
             updateQtSettings(cg);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 12, 0)
+            const Qt::MotionPreference newMotionPreference = determineMotionPreference();
+            if (m_motionPreference != newMotionPreference) {
+                m_motionPreference = newMotionPreference;
+                QWindowSystemInterface::handleThemeChange();
+            }
+#endif
         } else if (category == SETTINGS_STYLE) {
             m_hints[QPlatformTheme::DialogButtonBoxButtonsHaveIcons] = cg.readEntry("ShowIconsOnPushButtons", true);
             m_hints[QPlatformTheme::UiEffects] = cg.readEntry("GraphicEffectsLevel", 0) != 0 ? QPlatformTheme::GeneralUiEffect : 0;
@@ -478,6 +488,14 @@ Qt::ColorScheme KHintsSettings::determineColorScheme() const
 
     return colorScheme;
 }
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 12, 0)
+Qt::MotionPreference KHintsSettings::determineMotionPreference()
+{
+    const bool reducedMotion = qFuzzyIsNull(readConfigValue(QStringLiteral("KDE"), QStringLiteral("AnimationDurationFactor"), 1.0).toFloat());
+    return reducedMotion ? Qt::MotionPreference::ReducedMotion : Qt::MotionPreference::NoPreference;
+}
+#endif
 
 void KHintsSettings::updateCursorTheme()
 {

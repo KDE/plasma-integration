@@ -70,6 +70,13 @@ public:
         return m_colorScheme;
     }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 12, 0)
+    inline Qt::MotionPreference motionPreference() const
+    {
+        return m_motionPreference;
+    }
+#endif
+
 private Q_SLOTS:
     void delayedDBusConnects();
     void setupIconLoader();
@@ -82,6 +89,9 @@ private:
     QVariant readConfigValue(const KConfigGroup &cg, const QString &key, const QVariant &defaultValue) const;
     void loadPalettes();
     Qt::ColorScheme determineColorScheme() const;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 12, 0)
+    Qt::MotionPreference determineMotionPreference();
+#endif
     void iconChanged(int group);
     void updateQtSettings(KConfigGroup &cg);
     void updateShowIconsInMenuItems(KConfigGroup &cg);
@@ -95,6 +105,9 @@ private:
     KSharedConfigPtr mKdeGlobals;
     QMap<QString, QVariantMap> mKdeGlobalsPortal;
     Qt::ColorScheme m_colorScheme = Qt::ColorScheme::Unknown;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 12, 0)
+    Qt::MotionPreference m_motionPreference = Qt::MotionPreference::NoPreference;
+#endif
     bool mUsePortal;
 };
 

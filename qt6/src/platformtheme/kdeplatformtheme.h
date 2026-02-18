@@ -34,6 +34,9 @@ public:
 
     const QPalette *palette(Palette type = SystemPalette) const override;
     Qt::ColorScheme colorScheme() const override;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 12, 0)
+    Qt::MotionPreference motionPreference() const override;
+#endif
     const QFont *font(Font type) const override;
     QIconEngine *createIconEngine(const QString &iconName) const override;
     QList<QKeySequence> keyBindings(QKeySequence::StandardKey key) const override;

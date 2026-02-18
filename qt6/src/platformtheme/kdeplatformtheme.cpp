@@ -112,6 +112,13 @@ Qt::ColorScheme KdePlatformTheme::colorScheme() const
     return m_hints->colorScheme();
 }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 12, 0)
+Qt::MotionPreference KdePlatformTheme::motionPreference() const
+{
+    return m_hints->motionPreference();
+}
+#endif
+
 const QFont *KdePlatformTheme::font(Font type) const
 {
     KFontSettingsData::FontTypes fdtype;
