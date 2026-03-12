@@ -54,7 +54,14 @@ bool KDEPlatformMessageDialogHelper::show(Qt::WindowFlags windowFlags, Qt::Windo
                        static_cast<QPlatformDialogHelper::ButtonRole>(m_box->buttonRole(button)));
     });
 
-    m_box->open();
+    // HACK: Delayed to work around QTBUG-144324
+    QMetaObject::invokeMethod(
+        this,
+        [this]() {
+            m_box->open();
+        },
+        Qt::QueuedConnection);
+
     return true;
 }
 
