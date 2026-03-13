@@ -279,15 +279,9 @@ private Q_SLOTS:
         dialog.setFileMode(qtFileMode);
         dialog.show();
 
-        if (usingDirDialog) {
-            QVERIFY(std::ranges::any_of(QApplication::topLevelWidgets(), [](const QWidget *widget) {
-                return widget->metaObject()->className() == QByteArrayLiteral("KDirSelectDialog");
-            }));
-        } else {
-            KFileWidget *fw = findFileWidget();
-            QVERIFY(fw);
-            QCOMPARE(fw->mode(), kdeFileMode);
-        }
+        KFileWidget *fw = findFileWidget();
+        QVERIFY(fw);
+        QCOMPARE(fw->mode(), kdeFileMode);
 
         QCOMPARE(dialog.fileMode(), qtFileMode);
     }
@@ -369,6 +363,33 @@ private Q_SLOTS:
             QCOMPARE(dialog.directoryUrl().adjusted(QUrl::StripTrailingSlash), dir);
             fw->slotCancel();
         }
+    }
+
+    void testSetCurrentDirectoryUrl_data()
+    {
+        QTest::addColumn<QUrl>("url");
+        QTest::addColumn<QUrl>("expectedUrl");
+
+        QTest::newRow("only_scheme") << QUrl(QStringLiteral("trash:")) << QUrl(QStringLiteral("trash:"));
+        QTest::newRow("with_no_host") << QUrl(QStringLiteral("trash://")) << QUrl(QStringLiteral("trash://"));
+        QTest::newRow("with_root_path") << QUrl(QStringLiteral("trash:///")) << QUrl(QStringLiteral("trash:///"));
+    }
+
+    void testSetCurrentDirectoryUrl()
+    {
+        QFETCH(QUrl, url);
+        QFETCH(QUrl, expectedUrl);
+
+        QFileDialog dialog;
+        dialog.setFileMode(QFileDialog::Directory);
+        dialog.open();
+
+        KFileWidget *fw = findFileWidget();
+        QVERIFY(fw);
+        QCOMPARE(fw->isVisible(), true);
+        fw->setUrl(url);
+
+        QCOMPARE(fw->baseUrl(), expectedUrl);
     }
 
 private:

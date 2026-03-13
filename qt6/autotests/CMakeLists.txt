@@ -71,8 +71,6 @@ target_sources(kdeplatformtheme_unittest6 PRIVATE
   ../src/platformtheme/kdeplatformfiledialoghelper.cpp ../src/platformtheme/kdeplatformfiledialoghelper.h
   ../src/platformtheme/kdeplatformfiledialogbase.cpp
   ../src/platformtheme/kdeplatformsystemtrayicon.cpp ../src/platformtheme/kdeplatformsystemtrayicon.h
-  ../src/platformtheme/kdirselectdialog.cpp
-  ../src/platformtheme/kfiletreeview.cpp
   ../src/platformtheme/kwaylandintegration.cpp ../src/platformtheme/kwaylandintegration.h
   ../src/platformtheme/x11integration.cpp ../src/platformtheme/x11integration.h
   ../src/platformtheme/qxdgdesktopportalfiledialog.cpp
@@ -103,13 +101,6 @@ frameworkintegration_tests(
   kdeplatformsystemtrayicon_unittest
   ../src/platformtheme/kdeplatformsystemtrayicon.cpp ../src/platformtheme/kdeplatformsystemtrayicon.h
   ${dbus_interface}
-)
-
-frameworkintegration_tests(
-  kdirselectdialog_unittest
-  ../src/platformtheme/kdeplatformfiledialogbase.cpp
-  ../src/platformtheme/kdirselectdialog.cpp
-  ../src/platformtheme/kfiletreeview.cpp
 )
 
 frameworkintegration_tests(
