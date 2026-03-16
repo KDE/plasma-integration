@@ -362,6 +362,33 @@ private Q_SLOTS:
         }
     }
 
+    void testSetCurrentDirectoryUrl_data()
+    {
+        QTest::addColumn<QUrl>("url");
+        QTest::addColumn<QUrl>("expectedUrl");
+
+        QTest::newRow("only_scheme") << QUrl(QStringLiteral("trash:")) << QUrl(QStringLiteral("trash:"));
+        QTest::newRow("with_no_host") << QUrl(QStringLiteral("trash://")) << QUrl(QStringLiteral("trash://"));
+        QTest::newRow("with_root_path") << QUrl(QStringLiteral("trash:///")) << QUrl(QStringLiteral("trash:///"));
+    }
+
+    void testSetCurrentDirectoryUrl()
+    {
+        QFETCH(QUrl, url);
+        QFETCH(QUrl, expectedUrl);
+
+        QFileDialog dialog;
+        dialog.setFileMode(QFileDialog::Directory);
+        dialog.open();
+
+        KFileWidget *fw = findFileWidget();
+        QVERIFY(fw);
+        QCOMPARE(fw->isVisible(), true);
+        fw->setUrl(url);
+
+        QCOMPARE(fw->baseUrl(), expectedUrl);
+    }
+
 private:
     QTemporaryDir m_tempDir;
 

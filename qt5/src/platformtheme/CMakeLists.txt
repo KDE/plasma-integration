@@ -23,8 +23,6 @@ set(platformtheme_SRCS
     kdeplatformfiledialoghelper.cpp kdeplatformfiledialoghelper.h
     kdeplatformfiledialogbase.cpp
     kdeplatformsystemtrayicon.cpp kdeplatformsystemtrayicon.h
-    kfiletreeview.cpp
-    kdirselectdialog.cpp
     kwaylandintegration.cpp kwaylandintegration.h
     x11integration.cpp x11integration.h
     main.cpp

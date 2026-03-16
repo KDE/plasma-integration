@@ -6,7 +6,6 @@
 */
 
 #include "kdeplatformfiledialoghelper.h"
-#include "kdirselectdialog_p.h"
 
 #include <KIO/StatJob>
 #include <KJobWidgets>
@@ -257,80 +256,78 @@ KDEPlatformFileDialogHelper::~KDEPlatformFileDialogHelper()
 void KDEPlatformFileDialogHelper::initializeDialog()
 {
     m_dialogInitialized = true;
-    if (options()->testOption(QFileDialogOptions::ShowDirsOnly)) {
-        m_dialog->deleteLater();
-        KDirSelectDialog *dialog = new KDirSelectDialog(options()->initialDirectory());
-        m_dialog = dialog;
-        connect(dialog, &QDialog::accepted, this, &QPlatformDialogHelper::accept);
-        connect(dialog, &QDialog::rejected, this, &QPlatformDialogHelper::reject);
-        if (options()->isLabelExplicitlySet(QFileDialogOptions::Accept)) { // OK button
-            dialog->setOkButtonText(options()->labelText(QFileDialogOptions::Accept));
-        } else if (options()->isLabelExplicitlySet(QFileDialogOptions::Reject)) { // Cancel button
-            dialog->setCancelButtonText(options()->labelText(QFileDialogOptions::Reject));
-        } else if (options()->isLabelExplicitlySet(QFileDialogOptions::LookIn)) { // Location label
-            // Not implemented yet.
+    const bool directoryMode = options()->testOption(QFileDialogOptions::ShowDirsOnly);
+    // needed for accessing m_fileWidget
+    KDEPlatformFileDialog *dialog = qobject_cast<KDEPlatformFileDialog *>(m_dialog);
+    dialog->m_fileWidget->setOperationMode(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? KFileWidget::Opening : KFileWidget::Saving);
+    if (options()->windowTitle().isEmpty()) {
+        auto dialogTitle = i18nc("@title:window", "Save File");
+        if (options()->acceptMode() == QFileDialogOptions::AcceptOpen) {
+            dialogTitle = directoryMode ? i18nc("@title:window", "Select Folder") : i18nc("@title:window", "Open File");
         }
-
-        if (!options()->windowTitle().isEmpty())
-            m_dialog->setWindowTitle(options()->windowTitle());
+        dialog->setWindowTitle(dialogTitle);
     } else {
-        // needed for accessing m_fileWidget
-        KDEPlatformFileDialog *dialog = qobject_cast<KDEPlatformFileDialog *>(m_dialog);
-        dialog->m_fileWidget->setOperationMode(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? KFileWidget::Opening : KFileWidget::Saving);
-        if (options()->windowTitle().isEmpty()) {
-            dialog->setWindowTitle(options()->acceptMode() == QFileDialogOptions::AcceptOpen ? i18nc("@title:window", "Open File")
-                                                                                             : i18nc("@title:window", "Save File"));
-        } else {
-            dialog->setWindowTitle(options()->windowTitle());
-        }
-        if (!m_directorySet) {
-            setDirectory(options()->initialDirectory());
-        }
-        // dialog->setViewMode(options()->viewMode()); // don't override our options, fixes remembering the chosen view mode and sizes!
-        dialog->setFileMode(options()->fileMode());
+        dialog->setWindowTitle(options()->windowTitle());
+    }
+    if (!m_directorySet) {
+        setDirectory(options()->initialDirectory());
+    }
+    // dialog->setViewMode(options()->viewMode()); // don't override our options, fixes remembering the chosen view mode and sizes!
+    dialog->setFileMode(options()->fileMode());
 
-        // custom labels
-        if (options()->isLabelExplicitlySet(QFileDialogOptions::Accept)) { // OK button
-            dialog->setCustomLabel(QFileDialogOptions::Accept, options()->labelText(QFileDialogOptions::Accept));
-        } else if (options()->isLabelExplicitlySet(QFileDialogOptions::Reject)) { // Cancel button
-            dialog->setCustomLabel(QFileDialogOptions::Reject, options()->labelText(QFileDialogOptions::Reject));
-        } else if (options()->isLabelExplicitlySet(QFileDialogOptions::LookIn)) { // Location label
-            dialog->setCustomLabel(QFileDialogOptions::LookIn, options()->labelText(QFileDialogOptions::LookIn));
-        }
+    // custom labels
+    if (options()->isLabelExplicitlySet(QFileDialogOptions::Accept)) { // OK button
+        dialog->setCustomLabel(QFileDialogOptions::Accept, options()->labelText(QFileDialogOptions::Accept));
+    } else if (options()->isLabelExplicitlySet(QFileDialogOptions::Reject)) { // Cancel button
+        dialog->setCustomLabel(QFileDialogOptions::Reject, options()->labelText(QFileDialogOptions::Reject));
+    } else if (options()->isLabelExplicitlySet(QFileDialogOptions::LookIn)) { // Location label
+        dialog->setCustomLabel(QFileDialogOptions::LookIn, options()->labelText(QFileDialogOptions::LookIn));
+    }
 
-        const QStringList mimeFilters = options()->mimeTypeFilters();
-        const QStringList nameFilters = options()->nameFilters();
-        if (!mimeFilters.isEmpty()) {
-            QString defaultMimeFilter;
-            if (options()->acceptMode() == QFileDialogOptions::AcceptSave) {
-                defaultMimeFilter = options()->initiallySelectedMimeTypeFilter();
-                if (defaultMimeFilter.isEmpty()) {
-                    defaultMimeFilter = mimeFilters.at(0);
-                }
+    const QStringList mimeFilters = options()->mimeTypeFilters();
+    const QStringList nameFilters = options()->nameFilters();
+    if (!mimeFilters.isEmpty()) {
+        QString defaultMimeFilter;
+        if (options()->acceptMode() == QFileDialogOptions::AcceptSave) {
+            defaultMimeFilter = options()->initiallySelectedMimeTypeFilter();
+            if (defaultMimeFilter.isEmpty()) {
+                defaultMimeFilter = mimeFilters.at(0);
             }
-            dialog->m_fileWidget->setMimeFilter(mimeFilters, defaultMimeFilter);
-
-            if (mimeFilters.contains(QStringLiteral("inode/directory")))
-                dialog->m_fileWidget->setMode(dialog->m_fileWidget->mode() | KFile::Directory);
-        } else if (!nameFilters.isEmpty()) {
-            dialog->m_fileWidget->setFilter(qt2KdeFilter(nameFilters));
         }
+        dialog->m_fileWidget->setMimeFilter(mimeFilters, defaultMimeFilter);
 
-        if (!options()->initiallySelectedMimeTypeFilter().isEmpty()) {
-            selectMimeTypeFilter(options()->initiallySelectedMimeTypeFilter());
-        } else if (!options()->initiallySelectedNameFilter().isEmpty()) {
-            selectNameFilter(options()->initiallySelectedNameFilter());
-        }
+        if (mimeFilters.contains(QStringLiteral("inode/directory")))
+            dialog->m_fileWidget->setMode(dialog->m_fileWidget->mode() | KFile::Directory);
+    } else if (!nameFilters.isEmpty()) {
+        dialog->m_fileWidget->setFilter(qt2KdeFilter(nameFilters));
+    }
 
-        // overwrite option
-        if (options()->testOption(QFileDialogOptions::FileDialogOption::DontConfirmOverwrite)) {
-            dialog->m_fileWidget->setConfirmOverwrite(false);
-        } else if (options()->acceptMode() == QFileDialogOptions::AcceptSave) {
-            dialog->m_fileWidget->setConfirmOverwrite(true);
-        }
+    if (!options()->initiallySelectedMimeTypeFilter().isEmpty()) {
+        selectMimeTypeFilter(options()->initiallySelectedMimeTypeFilter());
+    } else if (!options()->initiallySelectedNameFilter().isEmpty()) {
+        selectNameFilter(options()->initiallySelectedNameFilter());
+    }
 
-        const QStringList schemes = options()->supportedSchemes();
-        dialog->m_fileWidget->setSupportedSchemes(schemes);
+    // overwrite option
+    if (options()->testOption(QFileDialogOptions::FileDialogOption::DontConfirmOverwrite)) {
+        dialog->m_fileWidget->setConfirmOverwrite(false);
+    } else if (options()->acceptMode() == QFileDialogOptions::AcceptSave) {
+        dialog->m_fileWidget->setConfirmOverwrite(true);
+    }
+
+    const QStringList schemes = options()->supportedSchemes();
+    dialog->m_fileWidget->setSupportedSchemes(schemes);
+
+    if (directoryMode) {
+        // We want to always have detail tree view in folder mode
+        dialog->m_fileWidget->setViewMode(KFile::DetailTree);
+        // If we're in directory mode, set the filters to directory and disable the filterWidget
+        // so it cant be accidentally changed, and to tell the user it's in directory only mode
+        dialog->m_fileWidget->setMimeFilter({QStringLiteral("inode/directory")});
+        dialog->m_fileWidget->filterWidget()->setDisabled(true);
+    } else {
+        // Default icon view for files and such
+        dialog->m_fileWidget->setViewMode(KFile::Default);
     }
 }
 
