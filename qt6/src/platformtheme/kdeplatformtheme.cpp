@@ -362,9 +362,7 @@ void KdePlatformTheme::setQtQuickControlsTheme()
         return;
     }
 
-    if (checkIfThemeExists(QStringLiteral("/org/kde/union"))) {
-        QQuickStyle::setStyle(QStringLiteral("org.kde.union"));
-    } else if (checkIfThemeExists(QStringLiteral("/org/kde/desktop"))) {
+    if (checkIfThemeExists(QStringLiteral("/org/kde/desktop"))) {
         QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
     }
 }
