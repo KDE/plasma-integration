@@ -20,7 +20,6 @@ class SystemTrayMenu : public QPlatformMenu
     Q_OBJECT
 public:
     SystemTrayMenu();
-    ~SystemTrayMenu() override;
     void insertMenuItem(QPlatformMenuItem *menuItem, QPlatformMenuItem *before) override;
     QPlatformMenuItem *menuItemAt(int position) const override;
     QPlatformMenuItem *menuItemForTag(quintptr tag) const override;

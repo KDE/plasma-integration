@@ -23,13 +23,6 @@ SystemTrayMenu::SystemTrayMenu()
 {
 }
 
-SystemTrayMenu::~SystemTrayMenu()
-{
-    if (m_menu) {
-        m_menu->deleteLater();
-    }
-}
-
 QPlatformMenuItem *SystemTrayMenu::createMenuItem() const
 {
     return new SystemTrayMenuItem();
