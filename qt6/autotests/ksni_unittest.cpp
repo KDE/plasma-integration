@@ -16,6 +16,9 @@ class KSniUnitTest : public QObject
 private Q_SLOTS:
     // test for BUG 343976
     void testHideDontCrash();
+
+    // test for BUG 517599
+    void testDeleteMenu();
 };
 
 void KSniUnitTest::testHideDontCrash()
@@ -35,6 +38,24 @@ void KSniUnitTest::testHideDontCrash()
     // now delete it
     delete sti;
     QVERIFY(menuDestroyedSpy.wait());
+}
+
+void KSniUnitTest::testDeleteMenu()
+{
+    QMenu *menu = new QMenu;
+
+    QSystemTrayIcon *icon = new QSystemTrayIcon(QIcon::fromTheme("cuttlefish"));
+
+    icon->setContextMenu(menu);
+    icon->show();
+
+    QTest::qWait(10);
+
+    delete menu;
+
+    QTest::qWait(10);
+
+    delete icon;
 }
 
 QTEST_MAIN(KSniUnitTest)
