@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-27 00:45+0000\n"
+"POT-Creation-Date: 2026-03-25 00:46+0000\n"
 "PO-Revision-Date: 2024-07-06 14:36+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -18,17 +18,23 @@ msgstr ""
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:260
-#, kde-format
-msgctxt "@title:window"
-msgid "Open File"
-msgstr "Opna fil"
-
-#: platformtheme/kdeplatformfiledialoghelper.cpp:261
+#: platformtheme/kdeplatformfiledialoghelper.cpp:242
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
 msgstr "Lagra fil"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:244
+#, kde-format
+msgctxt "@title:window"
+msgid "Select Folder"
+msgstr "Vel mappe"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:244
+#, kde-format
+msgctxt "@title:window"
+msgid "Open File"
+msgstr "Opna fil"
 
 #: platformtheme/kdeplatformtheme.cpp:278
 #, kde-format
@@ -78,85 +84,6 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "Ignorer"
 
-#: platformtheme/kdirselectdialog.cpp:133
-#, kde-format
-msgctxt "folder name"
-msgid "New Folder"
-msgstr "Ny mappe"
-
-#: platformtheme/kdirselectdialog.cpp:139
-#, kde-format
-msgctxt "@title:window"
-msgid "New Folder"
-msgstr "Ny mappe"
-
-#: platformtheme/kdirselectdialog.cpp:140
-#, kde-format
-msgctxt "@label:textbox"
-msgid ""
-"Create new folder in:\n"
-"%1"
-msgstr ""
-"Lag ny mappe i:\n"
-"%1"
-
-#: platformtheme/kdirselectdialog.cpp:171
-#, kde-format
-msgid "A file or folder named %1 already exists."
-msgstr "Ei fil eller mappe med namnet %1 finst frå før."
-
-#: platformtheme/kdirselectdialog.cpp:180
-#, kde-format
-msgid "You do not have permission to create that folder."
-msgstr "Du har ikkje løyve til å oppretta mappa."
-
-#: platformtheme/kdirselectdialog.cpp:282
-#, kde-format
-msgctxt "@title:window"
-msgid "Select Folder"
-msgstr "Vel mappe"
-
-#: platformtheme/kdirselectdialog.cpp:290
-#, kde-format
-msgctxt "@action:button"
-msgid "New Folder..."
-msgstr "Ny mappe …"
-
-#: platformtheme/kdirselectdialog.cpp:348
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "New Folder..."
-msgstr "Ny mappe …"
-
-#: platformtheme/kdirselectdialog.cpp:357
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Move to Trash"
-msgstr "Flytt til papirkorga"
-
-#: platformtheme/kdirselectdialog.cpp:366
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Delete"
-msgstr "Slett"
-
-#: platformtheme/kdirselectdialog.cpp:377
-#, kde-format
-msgctxt "@option:check"
-msgid "Show Hidden Folders"
-msgstr "Vis gøymde mapper"
-
-#: platformtheme/kdirselectdialog.cpp:384
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Properties"
-msgstr "Eigenskapar"
-
-#: platformtheme/kfiletreeview.cpp:185
-#, kde-format
-msgid "Show Hidden Folders"
-msgstr "Vis gøymde mapper"
-
 #: platformtheme/kioopenwith.cpp:125
 #, kde-format
 msgid ""
@@ -164,3 +91,52 @@ msgid ""
 "application."
 msgstr ""
 "Klarte ikkje starta, av ukjend grunn. Prøv med eit eksisterande program."
+
+#~ msgctxt "folder name"
+#~ msgid "New Folder"
+#~ msgstr "Ny mappe"
+
+#~ msgctxt "@title:window"
+#~ msgid "New Folder"
+#~ msgstr "Ny mappe"
+
+#~ msgctxt "@label:textbox"
+#~ msgid ""
+#~ "Create new folder in:\n"
+#~ "%1"
+#~ msgstr ""
+#~ "Lag ny mappe i:\n"
+#~ "%1"
+
+#~ msgid "A file or folder named %1 already exists."
+#~ msgstr "Ei fil eller mappe med namnet %1 finst frå før."
+
+#~ msgid "You do not have permission to create that folder."
+#~ msgstr "Du har ikkje løyve til å oppretta mappa."
+
+#~ msgctxt "@action:button"
+#~ msgid "New Folder..."
+#~ msgstr "Ny mappe …"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "New Folder..."
+#~ msgstr "Ny mappe …"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Move to Trash"
+#~ msgstr "Flytt til papirkorga"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Delete"
+#~ msgstr "Slett"
+
+#~ msgctxt "@option:check"
+#~ msgid "Show Hidden Folders"
+#~ msgstr "Vis gøymde mapper"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Properties"
+#~ msgstr "Eigenskapar"
+
+#~ msgid "Show Hidden Folders"
+#~ msgstr "Vis gøymde mapper"

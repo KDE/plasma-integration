@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasmaintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-27 00:45+0000\n"
+"POT-Creation-Date: 2026-03-25 00:46+0000\n"
 "PO-Revision-Date: 2024-06-26 20:32+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
@@ -20,17 +20,23 @@ msgstr ""
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 23.04.3\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:260
-#, kde-format
-msgctxt "@title:window"
-msgid "Open File"
-msgstr "Відкриття файла"
-
-#: platformtheme/kdeplatformfiledialoghelper.cpp:261
+#: platformtheme/kdeplatformfiledialoghelper.cpp:242
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
 msgstr "Збереження файла"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:244
+#, kde-format
+msgctxt "@title:window"
+msgid "Select Folder"
+msgstr "Вибір теки"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:244
+#, kde-format
+msgctxt "@title:window"
+msgid "Open File"
+msgstr "Відкриття файла"
 
 #: platformtheme/kdeplatformtheme.cpp:278
 #, kde-format
@@ -80,85 +86,6 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "Ігнорувати"
 
-#: platformtheme/kdirselectdialog.cpp:133
-#, kde-format
-msgctxt "folder name"
-msgid "New Folder"
-msgstr "Нова тека"
-
-#: platformtheme/kdirselectdialog.cpp:139
-#, kde-format
-msgctxt "@title:window"
-msgid "New Folder"
-msgstr "Створення теки"
-
-#: platformtheme/kdirselectdialog.cpp:140
-#, kde-format
-msgctxt "@label:textbox"
-msgid ""
-"Create new folder in:\n"
-"%1"
-msgstr ""
-"Створити нову теку у:\n"
-"%1"
-
-#: platformtheme/kdirselectdialog.cpp:171
-#, kde-format
-msgid "A file or folder named %1 already exists."
-msgstr "Файл або тека з назвою %1 вже існує."
-
-#: platformtheme/kdirselectdialog.cpp:180
-#, kde-format
-msgid "You do not have permission to create that folder."
-msgstr "У вас немає прав для створення теки."
-
-#: platformtheme/kdirselectdialog.cpp:282
-#, kde-format
-msgctxt "@title:window"
-msgid "Select Folder"
-msgstr "Вибір теки"
-
-#: platformtheme/kdirselectdialog.cpp:290
-#, kde-format
-msgctxt "@action:button"
-msgid "New Folder..."
-msgstr "Створити теку…"
-
-#: platformtheme/kdirselectdialog.cpp:348
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "New Folder..."
-msgstr "Створити теку…"
-
-#: platformtheme/kdirselectdialog.cpp:357
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Move to Trash"
-msgstr "Пересунути до смітника"
-
-#: platformtheme/kdirselectdialog.cpp:366
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Delete"
-msgstr "Вилучити"
-
-#: platformtheme/kdirselectdialog.cpp:377
-#, kde-format
-msgctxt "@option:check"
-msgid "Show Hidden Folders"
-msgstr "Показувати приховані теки"
-
-#: platformtheme/kdirselectdialog.cpp:384
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Properties"
-msgstr "Властивості"
-
-#: platformtheme/kfiletreeview.cpp:185
-#, kde-format
-msgid "Show Hidden Folders"
-msgstr "Показати приховані теки"
-
 #: platformtheme/kioopenwith.cpp:125
 #, kde-format
 msgid ""
@@ -167,6 +94,55 @@ msgid ""
 msgstr ""
 "Не вдалося запустити з невідомих причин. Будь ласка, спробуйте із раніше "
 "наявною програмою."
+
+#~ msgctxt "folder name"
+#~ msgid "New Folder"
+#~ msgstr "Нова тека"
+
+#~ msgctxt "@title:window"
+#~ msgid "New Folder"
+#~ msgstr "Створення теки"
+
+#~ msgctxt "@label:textbox"
+#~ msgid ""
+#~ "Create new folder in:\n"
+#~ "%1"
+#~ msgstr ""
+#~ "Створити нову теку у:\n"
+#~ "%1"
+
+#~ msgid "A file or folder named %1 already exists."
+#~ msgstr "Файл або тека з назвою %1 вже існує."
+
+#~ msgid "You do not have permission to create that folder."
+#~ msgstr "У вас немає прав для створення теки."
+
+#~ msgctxt "@action:button"
+#~ msgid "New Folder..."
+#~ msgstr "Створити теку…"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "New Folder..."
+#~ msgstr "Створити теку…"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Move to Trash"
+#~ msgstr "Пересунути до смітника"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Delete"
+#~ msgstr "Вилучити"
+
+#~ msgctxt "@option:check"
+#~ msgid "Show Hidden Folders"
+#~ msgstr "Показувати приховані теки"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Properties"
+#~ msgstr "Властивості"
+
+#~ msgid "Show Hidden Folders"
+#~ msgstr "Показати приховані теки"
 
 #~ msgid "Opening..."
 #~ msgstr "Відкриття…"

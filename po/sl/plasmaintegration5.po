@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-27 00:45+0000\n"
+"POT-Creation-Date: 2026-03-25 00:46+0000\n"
 "PO-Revision-Date: 2024-06-26 12:25+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -19,17 +19,23 @@ msgstr ""
 "%100==4 ? 3 : 0);\n"
 "X-Generator: Poedit 3.4.4\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:260
-#, kde-format
-msgctxt "@title:window"
-msgid "Open File"
-msgstr "&Odpri datoteko"
-
-#: platformtheme/kdeplatformfiledialoghelper.cpp:261
+#: platformtheme/kdeplatformfiledialoghelper.cpp:242
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
 msgstr "Shrani datoteko"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:244
+#, kde-format
+msgctxt "@title:window"
+msgid "Select Folder"
+msgstr "Izberite mapo"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:244
+#, kde-format
+msgctxt "@title:window"
+msgid "Open File"
+msgstr "&Odpri datoteko"
 
 #: platformtheme/kdeplatformtheme.cpp:278
 #, kde-format
@@ -79,85 +85,6 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "Prezri"
 
-#: platformtheme/kdirselectdialog.cpp:133
-#, kde-format
-msgctxt "folder name"
-msgid "New Folder"
-msgstr "Nova mapa"
-
-#: platformtheme/kdirselectdialog.cpp:139
-#, kde-format
-msgctxt "@title:window"
-msgid "New Folder"
-msgstr "Nova mapa"
-
-#: platformtheme/kdirselectdialog.cpp:140
-#, kde-format
-msgctxt "@label:textbox"
-msgid ""
-"Create new folder in:\n"
-"%1"
-msgstr ""
-"Ustvari novo mapo v:\n"
-"%1"
-
-#: platformtheme/kdirselectdialog.cpp:171
-#, kde-format
-msgid "A file or folder named %1 already exists."
-msgstr "Datoteka ali mapa %1 že obstaja."
-
-#: platformtheme/kdirselectdialog.cpp:180
-#, kde-format
-msgid "You do not have permission to create that folder."
-msgstr "Nimate dovoljenja za ustvaritev te mape."
-
-#: platformtheme/kdirselectdialog.cpp:282
-#, kde-format
-msgctxt "@title:window"
-msgid "Select Folder"
-msgstr "Izberite mapo"
-
-#: platformtheme/kdirselectdialog.cpp:290
-#, kde-format
-msgctxt "@action:button"
-msgid "New Folder..."
-msgstr "Nova mapa ..."
-
-#: platformtheme/kdirselectdialog.cpp:348
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "New Folder..."
-msgstr "Nova mapa ..."
-
-#: platformtheme/kdirselectdialog.cpp:357
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Move to Trash"
-msgstr "Premakni v Smeti"
-
-#: platformtheme/kdirselectdialog.cpp:366
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Delete"
-msgstr "Izbriši"
-
-#: platformtheme/kdirselectdialog.cpp:377
-#, kde-format
-msgctxt "@option:check"
-msgid "Show Hidden Folders"
-msgstr "Pokaži skrite mape"
-
-#: platformtheme/kdirselectdialog.cpp:384
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Properties"
-msgstr "Lastnosti"
-
-#: platformtheme/kfiletreeview.cpp:185
-#, kde-format
-msgid "Show Hidden Folders"
-msgstr "Pokaži skrite mape"
-
 #: platformtheme/kioopenwith.cpp:125
 #, kde-format
 msgid ""
@@ -166,6 +93,55 @@ msgid ""
 msgstr ""
 "Iz neznanih razlogov ni bilo mogoče zagnati. Poskusite z že obstoječo "
 "aplikacijo."
+
+#~ msgctxt "folder name"
+#~ msgid "New Folder"
+#~ msgstr "Nova mapa"
+
+#~ msgctxt "@title:window"
+#~ msgid "New Folder"
+#~ msgstr "Nova mapa"
+
+#~ msgctxt "@label:textbox"
+#~ msgid ""
+#~ "Create new folder in:\n"
+#~ "%1"
+#~ msgstr ""
+#~ "Ustvari novo mapo v:\n"
+#~ "%1"
+
+#~ msgid "A file or folder named %1 already exists."
+#~ msgstr "Datoteka ali mapa %1 že obstaja."
+
+#~ msgid "You do not have permission to create that folder."
+#~ msgstr "Nimate dovoljenja za ustvaritev te mape."
+
+#~ msgctxt "@action:button"
+#~ msgid "New Folder..."
+#~ msgstr "Nova mapa ..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "New Folder..."
+#~ msgstr "Nova mapa ..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Move to Trash"
+#~ msgstr "Premakni v Smeti"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Delete"
+#~ msgstr "Izbriši"
+
+#~ msgctxt "@option:check"
+#~ msgid "Show Hidden Folders"
+#~ msgstr "Pokaži skrite mape"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Properties"
+#~ msgstr "Lastnosti"
+
+#~ msgid "Show Hidden Folders"
+#~ msgstr "Pokaži skrite mape"
 
 #~ msgid "Opening..."
 #~ msgstr "Odpiranje ..."

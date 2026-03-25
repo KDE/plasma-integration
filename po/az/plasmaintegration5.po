@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-27 00:45+0000\n"
+"POT-Creation-Date: 2026-03-25 00:46+0000\n"
 "PO-Revision-Date: 2020-07-27 17:46+0400\n"
 "Last-Translator: Xəyyam Qocayev <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -17,17 +17,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 20.04.3\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:260
-#, kde-format
-msgctxt "@title:window"
-msgid "Open File"
-msgstr "Faylı açmaq"
-
-#: platformtheme/kdeplatformfiledialoghelper.cpp:261
+#: platformtheme/kdeplatformfiledialoghelper.cpp:242
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
 msgstr "Faylı saxlamaq"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:244
+#, kde-format
+msgctxt "@title:window"
+msgid "Select Folder"
+msgstr "Qovluq Seç"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:244
+#, kde-format
+msgctxt "@title:window"
+msgid "Open File"
+msgstr "Faylı açmaq"
 
 #: platformtheme/kdeplatformtheme.cpp:278
 #, kde-format
@@ -77,88 +83,58 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "İmtina"
 
-#: platformtheme/kdirselectdialog.cpp:133
-#, kde-format
-msgctxt "folder name"
-msgid "New Folder"
-msgstr "Yeni Qovluq"
-
-#: platformtheme/kdirselectdialog.cpp:139
-#, kde-format
-msgctxt "@title:window"
-msgid "New Folder"
-msgstr "Yeni Qovluq"
-
-#: platformtheme/kdirselectdialog.cpp:140
-#, kde-format
-msgctxt "@label:textbox"
-msgid ""
-"Create new folder in:\n"
-"%1"
-msgstr ""
-"Burada yeni qovluq yaratmaq:\n"
-"%1"
-
-#: platformtheme/kdirselectdialog.cpp:171
-#, kde-format
-msgid "A file or folder named %1 already exists."
-msgstr "%1 adlı fayl və ya qovluq adı artıq mövcuddur."
-
-#: platformtheme/kdirselectdialog.cpp:180
-#, kde-format
-msgid "You do not have permission to create that folder."
-msgstr "Sizin bu qovluğu yaratmağa icazəniz yoxdur."
-
-#: platformtheme/kdirselectdialog.cpp:282
-#, kde-format
-msgctxt "@title:window"
-msgid "Select Folder"
-msgstr "Qovluq Seç"
-
-#: platformtheme/kdirselectdialog.cpp:290
-#, kde-format
-msgctxt "@action:button"
-msgid "New Folder..."
-msgstr "Yeni Qovluq..."
-
-#: platformtheme/kdirselectdialog.cpp:348
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "New Folder..."
-msgstr "Yeni Qovluq..."
-
-#: platformtheme/kdirselectdialog.cpp:357
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Move to Trash"
-msgstr "Səbət At"
-
-#: platformtheme/kdirselectdialog.cpp:366
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Delete"
-msgstr "Silmək"
-
-#: platformtheme/kdirselectdialog.cpp:377
-#, kde-format
-msgctxt "@option:check"
-msgid "Show Hidden Folders"
-msgstr "Gizli Qovluqları göstərmək"
-
-#: platformtheme/kdirselectdialog.cpp:384
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Properties"
-msgstr "Xüsusiyyətlər"
-
-#: platformtheme/kfiletreeview.cpp:185
-#, kde-format
-msgid "Show Hidden Folders"
-msgstr "Gizli Qovluqları göstərmək"
-
 #: platformtheme/kioopenwith.cpp:125
 #, kde-format
 msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "
 "application."
 msgstr ""
+
+#~ msgctxt "folder name"
+#~ msgid "New Folder"
+#~ msgstr "Yeni Qovluq"
+
+#~ msgctxt "@title:window"
+#~ msgid "New Folder"
+#~ msgstr "Yeni Qovluq"
+
+#~ msgctxt "@label:textbox"
+#~ msgid ""
+#~ "Create new folder in:\n"
+#~ "%1"
+#~ msgstr ""
+#~ "Burada yeni qovluq yaratmaq:\n"
+#~ "%1"
+
+#~ msgid "A file or folder named %1 already exists."
+#~ msgstr "%1 adlı fayl və ya qovluq adı artıq mövcuddur."
+
+#~ msgid "You do not have permission to create that folder."
+#~ msgstr "Sizin bu qovluğu yaratmağa icazəniz yoxdur."
+
+#~ msgctxt "@action:button"
+#~ msgid "New Folder..."
+#~ msgstr "Yeni Qovluq..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "New Folder..."
+#~ msgstr "Yeni Qovluq..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Move to Trash"
+#~ msgstr "Səbət At"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Delete"
+#~ msgstr "Silmək"
+
+#~ msgctxt "@option:check"
+#~ msgid "Show Hidden Folders"
+#~ msgstr "Gizli Qovluqları göstərmək"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Properties"
+#~ msgstr "Xüsusiyyətlər"
+
+#~ msgid "Show Hidden Folders"
+#~ msgstr "Gizli Qovluqları göstərmək"

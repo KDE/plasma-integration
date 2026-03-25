@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-27 00:45+0000\n"
+"POT-Creation-Date: 2026-03-25 00:46+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -18,17 +18,23 @@ msgstr ""
 "pot\n"
 "X-Crowdin-File-ID: 43187\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:260
-#, kde-format
-msgctxt "@title:window"
-msgid "Open File"
-msgstr "打开文件"
-
-#: platformtheme/kdeplatformfiledialoghelper.cpp:261
+#: platformtheme/kdeplatformfiledialoghelper.cpp:242
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
 msgstr "保存文件"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:244
+#, kde-format
+msgctxt "@title:window"
+msgid "Select Folder"
+msgstr "选择文件夹"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:244
+#, kde-format
+msgctxt "@title:window"
+msgid "Open File"
+msgstr "打开文件"
 
 #: platformtheme/kdeplatformtheme.cpp:278
 #, kde-format
@@ -78,89 +84,59 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "忽略"
 
-#: platformtheme/kdirselectdialog.cpp:133
-#, kde-format
-msgctxt "folder name"
-msgid "New Folder"
-msgstr "新建文件夹"
-
-#: platformtheme/kdirselectdialog.cpp:139
-#, kde-format
-msgctxt "@title:window"
-msgid "New Folder"
-msgstr "新建文件夹"
-
-#: platformtheme/kdirselectdialog.cpp:140
-#, kde-format
-msgctxt "@label:textbox"
-msgid ""
-"Create new folder in:\n"
-"%1"
-msgstr ""
-"创建新文件夹于：\n"
-"\n"
-"%1"
-
-#: platformtheme/kdirselectdialog.cpp:171
-#, kde-format
-msgid "A file or folder named %1 already exists."
-msgstr "名为“%1”的文件或文件夹已存在。"
-
-#: platformtheme/kdirselectdialog.cpp:180
-#, kde-format
-msgid "You do not have permission to create that folder."
-msgstr "您没有创建该文件夹的权限。"
-
-#: platformtheme/kdirselectdialog.cpp:282
-#, kde-format
-msgctxt "@title:window"
-msgid "Select Folder"
-msgstr "选择文件夹"
-
-#: platformtheme/kdirselectdialog.cpp:290
-#, kde-format
-msgctxt "@action:button"
-msgid "New Folder..."
-msgstr "新建文件夹..."
-
-#: platformtheme/kdirselectdialog.cpp:348
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "New Folder..."
-msgstr "新建文件夹..."
-
-#: platformtheme/kdirselectdialog.cpp:357
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Move to Trash"
-msgstr "移动到回收站"
-
-#: platformtheme/kdirselectdialog.cpp:366
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Delete"
-msgstr "删除"
-
-#: platformtheme/kdirselectdialog.cpp:377
-#, kde-format
-msgctxt "@option:check"
-msgid "Show Hidden Folders"
-msgstr "显示隐藏文件夹"
-
-#: platformtheme/kdirselectdialog.cpp:384
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Properties"
-msgstr "属性"
-
-#: platformtheme/kfiletreeview.cpp:185
-#, kde-format
-msgid "Show Hidden Folders"
-msgstr "显示隐藏文件夹"
-
 #: platformtheme/kioopenwith.cpp:125
 #, kde-format
 msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "
 "application."
 msgstr "启动失败，原因未知。请尝试使用已有的应用程序。"
+
+#~ msgctxt "folder name"
+#~ msgid "New Folder"
+#~ msgstr "新建文件夹"
+
+#~ msgctxt "@title:window"
+#~ msgid "New Folder"
+#~ msgstr "新建文件夹"
+
+#~ msgctxt "@label:textbox"
+#~ msgid ""
+#~ "Create new folder in:\n"
+#~ "%1"
+#~ msgstr ""
+#~ "创建新文件夹于：\n"
+#~ "\n"
+#~ "%1"
+
+#~ msgid "A file or folder named %1 already exists."
+#~ msgstr "名为“%1”的文件或文件夹已存在。"
+
+#~ msgid "You do not have permission to create that folder."
+#~ msgstr "您没有创建该文件夹的权限。"
+
+#~ msgctxt "@action:button"
+#~ msgid "New Folder..."
+#~ msgstr "新建文件夹..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "New Folder..."
+#~ msgstr "新建文件夹..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Move to Trash"
+#~ msgstr "移动到回收站"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Delete"
+#~ msgstr "删除"
+
+#~ msgctxt "@option:check"
+#~ msgid "Show Hidden Folders"
+#~ msgstr "显示隐藏文件夹"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Properties"
+#~ msgstr "属性"
+
+#~ msgid "Show Hidden Folders"
+#~ msgstr "显示隐藏文件夹"

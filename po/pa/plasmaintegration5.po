@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-27 00:45+0000\n"
+"POT-Creation-Date: 2026-03-25 00:46+0000\n"
 "PO-Revision-Date: 2024-01-01 10:12-0600\n"
 "Last-Translator: A S Alam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <kde-i18n-doc@kde.org>\n"
@@ -17,17 +17,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 23.08.4\n"
 
-#: platformtheme/kdeplatformfiledialoghelper.cpp:260
-#, kde-format
-msgctxt "@title:window"
-msgid "Open File"
-msgstr "ਫਾਇਲ ਨੂੰ ਖੋਲ੍ਹੋ"
-
-#: platformtheme/kdeplatformfiledialoghelper.cpp:261
+#: platformtheme/kdeplatformfiledialoghelper.cpp:242
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File"
 msgstr "ਫਾਇਲ ਨੂੰ ਸੰਭਾਲੋ"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:244
+#, kde-format
+msgctxt "@title:window"
+msgid "Select Folder"
+msgstr "ਫੋਲਡਰ ਨੂੰ ਚੁਣੋ"
+
+#: platformtheme/kdeplatformfiledialoghelper.cpp:244
+#, kde-format
+msgctxt "@title:window"
+msgid "Open File"
+msgstr "ਫਾਇਲ ਨੂੰ ਖੋਲ੍ਹੋ"
 
 #: platformtheme/kdeplatformtheme.cpp:278
 #, kde-format
@@ -77,88 +83,58 @@ msgctxt "@action:button"
 msgid "Ignore"
 msgstr "ਅਣਡਿੱਠਾ ਕਰੋ"
 
-#: platformtheme/kdirselectdialog.cpp:133
-#, kde-format
-msgctxt "folder name"
-msgid "New Folder"
-msgstr "ਨਵਾਂ ਫੋਲਡਰ"
-
-#: platformtheme/kdirselectdialog.cpp:139
-#, kde-format
-msgctxt "@title:window"
-msgid "New Folder"
-msgstr "ਨਵਾਂ ਫੋਲਡਰ"
-
-#: platformtheme/kdirselectdialog.cpp:140
-#, kde-format
-msgctxt "@label:textbox"
-msgid ""
-"Create new folder in:\n"
-"%1"
-msgstr ""
-"ਇਸ 'ਚ ਨਵਾਂ ਫੋਲਡਰ ਬਣਾਓ:\n"
-"%1"
-
-#: platformtheme/kdirselectdialog.cpp:171
-#, kde-format
-msgid "A file or folder named %1 already exists."
-msgstr "%1 ਨਾਂ ਨਾਲ ਫੋਲਡਰ ਜਾਂ ਫਾਇਲ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ।"
-
-#: platformtheme/kdirselectdialog.cpp:180
-#, kde-format
-msgid "You do not have permission to create that folder."
-msgstr "ਇਹ ਫੋਲਡਰ ਬਣਾਉਣ ਲਈ ਤੁਹਾਡੇ ਕੋਲ ਅਧਿਕਾਰ ਨਹੀਂ ਹਨ।"
-
-#: platformtheme/kdirselectdialog.cpp:282
-#, kde-format
-msgctxt "@title:window"
-msgid "Select Folder"
-msgstr "ਫੋਲਡਰ ਨੂੰ ਚੁਣੋ"
-
-#: platformtheme/kdirselectdialog.cpp:290
-#, kde-format
-msgctxt "@action:button"
-msgid "New Folder..."
-msgstr "ਨਵਾਂ ਫੋਲਡਰ..."
-
-#: platformtheme/kdirselectdialog.cpp:348
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "New Folder..."
-msgstr "ਨਵਾਂ ਫੋਲਡਰ..."
-
-#: platformtheme/kdirselectdialog.cpp:357
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Move to Trash"
-msgstr "ਰੱਦੀ 'ਚ ਭੇਜੋ"
-
-#: platformtheme/kdirselectdialog.cpp:366
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Delete"
-msgstr "ਹਟਾਓ"
-
-#: platformtheme/kdirselectdialog.cpp:377
-#, kde-format
-msgctxt "@option:check"
-msgid "Show Hidden Folders"
-msgstr "ਲੁਕਵੇਂ ਫੋਲਡਰਾਂ ਨੂੰ ਵੇਖੋ"
-
-#: platformtheme/kdirselectdialog.cpp:384
-#, kde-format
-msgctxt "@action:inmenu"
-msgid "Properties"
-msgstr "ਵਿਸ਼ੇਸ਼ਤਾ"
-
-#: platformtheme/kfiletreeview.cpp:185
-#, kde-format
-msgid "Show Hidden Folders"
-msgstr "ਲੁਕਵੇਂ ਫੋਲਡਰਾਂ ਨੂੰ ਵੇਖੋ"
-
 #: platformtheme/kioopenwith.cpp:125
 #, kde-format
 msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "
 "application."
 msgstr ""
+
+#~ msgctxt "folder name"
+#~ msgid "New Folder"
+#~ msgstr "ਨਵਾਂ ਫੋਲਡਰ"
+
+#~ msgctxt "@title:window"
+#~ msgid "New Folder"
+#~ msgstr "ਨਵਾਂ ਫੋਲਡਰ"
+
+#~ msgctxt "@label:textbox"
+#~ msgid ""
+#~ "Create new folder in:\n"
+#~ "%1"
+#~ msgstr ""
+#~ "ਇਸ 'ਚ ਨਵਾਂ ਫੋਲਡਰ ਬਣਾਓ:\n"
+#~ "%1"
+
+#~ msgid "A file or folder named %1 already exists."
+#~ msgstr "%1 ਨਾਂ ਨਾਲ ਫੋਲਡਰ ਜਾਂ ਫਾਇਲ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ।"
+
+#~ msgid "You do not have permission to create that folder."
+#~ msgstr "ਇਹ ਫੋਲਡਰ ਬਣਾਉਣ ਲਈ ਤੁਹਾਡੇ ਕੋਲ ਅਧਿਕਾਰ ਨਹੀਂ ਹਨ।"
+
+#~ msgctxt "@action:button"
+#~ msgid "New Folder..."
+#~ msgstr "ਨਵਾਂ ਫੋਲਡਰ..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "New Folder..."
+#~ msgstr "ਨਵਾਂ ਫੋਲਡਰ..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Move to Trash"
+#~ msgstr "ਰੱਦੀ 'ਚ ਭੇਜੋ"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Delete"
+#~ msgstr "ਹਟਾਓ"
+
+#~ msgctxt "@option:check"
+#~ msgid "Show Hidden Folders"
+#~ msgstr "ਲੁਕਵੇਂ ਫੋਲਡਰਾਂ ਨੂੰ ਵੇਖੋ"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "Properties"
+#~ msgstr "ਵਿਸ਼ੇਸ਼ਤਾ"
+
+#~ msgid "Show Hidden Folders"
+#~ msgstr "ਲੁਕਵੇਂ ਫੋਲਡਰਾਂ ਨੂੰ ਵੇਖੋ"
