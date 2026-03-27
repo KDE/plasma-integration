@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-25 00:46+0000\n"
+"POT-Creation-Date: 2026-03-27 00:47+0000\n"
 "PO-Revision-Date: 2024-06-26 22:34+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -37,49 +37,49 @@ msgctxt "@title:window"
 msgid "Open File"
 msgstr "افتح ملفًّا"
 
-#: platformtheme/kdeplatformtheme.cpp:278
+#: platformtheme/kdeplatformtheme.cpp:285
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "احفظ الكلّ"
 
-#: platformtheme/kdeplatformtheme.cpp:282
+#: platformtheme/kdeplatformtheme.cpp:289
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&نعم"
 
-#: platformtheme/kdeplatformtheme.cpp:284
+#: platformtheme/kdeplatformtheme.cpp:291
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "نعم للكلّ"
 
-#: platformtheme/kdeplatformtheme.cpp:286
+#: platformtheme/kdeplatformtheme.cpp:293
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&لا"
 
-#: platformtheme/kdeplatformtheme.cpp:288
+#: platformtheme/kdeplatformtheme.cpp:295
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "لا للكلّ"
 
-#: platformtheme/kdeplatformtheme.cpp:291
+#: platformtheme/kdeplatformtheme.cpp:298
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "أجهض"
 
-#: platformtheme/kdeplatformtheme.cpp:293
+#: platformtheme/kdeplatformtheme.cpp:300
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "حاول مجدّدًا"
 
-#: platformtheme/kdeplatformtheme.cpp:295
+#: platformtheme/kdeplatformtheme.cpp:302
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"

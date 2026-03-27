@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-25 00:46+0000\n"
+"POT-Creation-Date: 2026-03-27 00:47+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -36,49 +36,49 @@ msgctxt "@title:window"
 msgid "Open File"
 msgstr "打开文件"
 
-#: platformtheme/kdeplatformtheme.cpp:278
+#: platformtheme/kdeplatformtheme.cpp:285
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "全部保存"
 
-#: platformtheme/kdeplatformtheme.cpp:282
+#: platformtheme/kdeplatformtheme.cpp:289
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "是(&Y)"
 
-#: platformtheme/kdeplatformtheme.cpp:284
+#: platformtheme/kdeplatformtheme.cpp:291
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "全部选是"
 
-#: platformtheme/kdeplatformtheme.cpp:286
+#: platformtheme/kdeplatformtheme.cpp:293
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "否(&N)"
 
-#: platformtheme/kdeplatformtheme.cpp:288
+#: platformtheme/kdeplatformtheme.cpp:295
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "全部选否"
 
-#: platformtheme/kdeplatformtheme.cpp:291
+#: platformtheme/kdeplatformtheme.cpp:298
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "中止"
 
-#: platformtheme/kdeplatformtheme.cpp:293
+#: platformtheme/kdeplatformtheme.cpp:300
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "重试"
 
-#: platformtheme/kdeplatformtheme.cpp:295
+#: platformtheme/kdeplatformtheme.cpp:302
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
@@ -90,53 +90,3 @@ msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "
 "application."
 msgstr "启动失败，原因未知。请尝试使用已有的应用程序。"
-
-#~ msgctxt "folder name"
-#~ msgid "New Folder"
-#~ msgstr "新建文件夹"
-
-#~ msgctxt "@title:window"
-#~ msgid "New Folder"
-#~ msgstr "新建文件夹"
-
-#~ msgctxt "@label:textbox"
-#~ msgid ""
-#~ "Create new folder in:\n"
-#~ "%1"
-#~ msgstr ""
-#~ "创建新文件夹于：\n"
-#~ "\n"
-#~ "%1"
-
-#~ msgid "A file or folder named %1 already exists."
-#~ msgstr "名为“%1”的文件或文件夹已存在。"
-
-#~ msgid "You do not have permission to create that folder."
-#~ msgstr "您没有创建该文件夹的权限。"
-
-#~ msgctxt "@action:button"
-#~ msgid "New Folder..."
-#~ msgstr "新建文件夹..."
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "New Folder..."
-#~ msgstr "新建文件夹..."
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "Move to Trash"
-#~ msgstr "移动到回收站"
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "Delete"
-#~ msgstr "删除"
-
-#~ msgctxt "@option:check"
-#~ msgid "Show Hidden Folders"
-#~ msgstr "显示隐藏文件夹"
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "Properties"
-#~ msgstr "属性"
-
-#~ msgid "Show Hidden Folders"
-#~ msgstr "显示隐藏文件夹"
