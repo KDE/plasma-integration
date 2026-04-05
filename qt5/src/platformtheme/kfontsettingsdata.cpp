@@ -89,21 +89,21 @@ static int convertWeights(int weight, bool inverted)
 }
 
 // Qt5: https://invent.kde.org/qt/qt/qtbase/blob/5.15/src/gui/text/qfont.cpp#L2110
-// Qt6: https://invent.kde.org/qt/qt/qtbase/blob/6.7/src/gui/text/qfont.cpp#L2135
+// Qt6: https://invent.kde.org/qt/qt/qtbase/blob/6.11/src/gui/text/qfont.cpp#L2155
 static QString convertQt6FontStringToQt5(const QString &fontInfo)
 {
     const auto parts = fontInfo.trimmed().split(QLatin1Char(','));
     const int count = parts.count();
 
-    if (count != 16 && count != 17) {
+    if (count < 16) {
         return fontInfo;
     }
 
     auto result = parts.mid(0, 10);
     result[4] = QString::number(convertWeights(parts[4].toInt(), true));
 
-    if (count == 17) {
-        result << parts.last();
+    if (count >= 17) {
+        result << parts[16];
     }
     return result.join(QLatin1Char(','));
 }
