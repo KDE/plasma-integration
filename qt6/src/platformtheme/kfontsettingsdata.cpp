@@ -53,6 +53,25 @@ static const KFontData DefaultFontData[KFontSettingsData::FontTypesCount] = {
     {GeneralId, "smallestReadableFont", DefaultFont, 8, QFont::Normal, QFont::SansSerif, "Regular"},
 };
 
+// For Qt versions under 6.11, the maximum fontstring length is 17. Chop off the remaining items.
+// See difference between: https://invent.kde.org/qt/qt/qtbase/blob/6.7/src/gui/text/qfont.cpp#L2135
+// and: https://invent.kde.org/qt/qt/qtbase/blob/6.11/src/gui/text/qfont.cpp#L2155
+static QString convertFontString(const QString &fontInfo)
+{
+#if QT_VERSION < QT_VERSION_CHECK(6, 11, 0)
+    const auto parts = fontInfo.trimmed().split(QLatin1Char(','), Qt::KeepEmptyParts);
+    const int count = parts.count();
+
+    if (count <= 17) {
+        return fontInfo;
+    }
+    auto result = parts.mid(0, 17);
+    return result.join(QLatin1Char(','));
+#else
+    return fontInfo;
+#endif
+}
+
 QFont *KFontSettingsData::font(FontTypes fontType)
 {
     QFont *cachedFont = mFonts[fontType];
@@ -67,7 +86,7 @@ QFont *KFontSettingsData::font(FontTypes fontType)
         // If we have serialized information for this font, restore it
         // NOTE: We are not using KConfig directly because we can't call QFont::QFont from here
         if (!fontInfo.isEmpty()) {
-            cachedFont->fromString(fontInfo);
+            cachedFont->fromString(convertFontString(fontInfo));
         }
         // Don't set default font style names, as it prevents different font weights from being used (the QFont::Normal weight should work)
 
