@@ -100,6 +100,30 @@ private Q_SLOTS:
 
         QTRY_VERIFY(m_appChangedFont);
     }
+
+    void testFontChop()
+    {
+        const QStringList fontStrings = {
+            m_fonts->font(KFontSettingsData::GeneralFont)->toString(),
+            m_fonts->font(KFontSettingsData::GeneralFont)->toString(),
+            m_fonts->font(KFontSettingsData::FixedFont)->toString(),
+            m_fonts->font(KFontSettingsData::ToolbarFont)->toString(),
+            m_fonts->font(KFontSettingsData::MenuFont)->toString(),
+            m_fonts->font(KFontSettingsData::WindowTitleFont)->toString(),
+            m_fonts->font(KFontSettingsData::TaskbarFont)->toString(),
+            m_fonts->font(KFontSettingsData::SmallestReadableFont)->toString(),
+        };
+
+        for (const auto &fontString : fontStrings) {
+            const auto parts = fontString.trimmed().split(QLatin1Char(','), Qt::KeepEmptyParts);
+            const int count = parts.count();
+#if QT_VERSION < QT_VERSION_CHECK(6, 11, 0)
+            QCOMPARE_LE(count, 17);
+#else
+            QCOMPARE_GE(count, 17);
+#endif
+        }
+    }
 };
 
 QTEST_MAIN(KFontSettingsData_UnitTest)
