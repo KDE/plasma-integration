@@ -43,3 +43,4 @@ Dependencies:
 Options:
  force-inject-asan: True
  require-passing-tests-on: ['@all']
+ enable-lsan: True
