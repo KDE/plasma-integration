@@ -13,6 +13,7 @@
 #include <QTemporaryFile>
 #include <QTest>
 #include <QTimer>
+#include <qtestsupport_core.h>
 
 Q_DECLARE_METATYPE(QFileDialog::ViewMode)
 Q_DECLARE_METATYPE(QFileDialog::FileMode)
@@ -351,6 +352,8 @@ private Q_SLOTS:
             QCOMPARE(fw->isVisible(), true);
             fw->setUrl(dir);
             fw->slotCancel();
+
+            QTest::qWait(1000);
         }
         // Open another filedialog, check that the default directory is the one from above
         {
@@ -362,6 +365,8 @@ private Q_SLOTS:
             QCOMPARE(fw->isVisible(), true);
             QCOMPARE(dialog.directoryUrl().adjusted(QUrl::StripTrailingSlash), dir);
             fw->slotCancel();
+
+            QTest::qWait(1000);
         }
     }
 
@@ -390,6 +395,8 @@ private Q_SLOTS:
         fw->setUrl(url);
 
         QCOMPARE(fw->baseUrl(), expectedUrl);
+
+        QTest::qWait(1000);
     }
 
 private:
