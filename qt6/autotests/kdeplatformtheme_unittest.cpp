@@ -112,6 +112,8 @@ private Q_SLOTS:
 
     void cleanupTestCase()
     {
+        delete m_qpa;
+
         QString configPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
         configPath.append("/kdeglobals");
 
