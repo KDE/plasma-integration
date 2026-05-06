@@ -190,14 +190,14 @@ private Q_SLOTS:
 
     void testPlatformIconEngine()
     {
-        QIconEngine *engine = m_qpa->createIconEngine(QStringLiteral("test-icon"));
+        std::unique_ptr<QIconEngine> engine(m_qpa->createIconEngine(QStringLiteral("test-icon")));
         QCOMPARE(engine->key(), QStringLiteral("KIconEngine"));
     }
 
     void testPlatformIconEngineTheme()
     {
         // The current theme should be what we defined.
-        KdePlatformTheme().createIconEngine(QStringLiteral("test-icon"));
+        std::unique_ptr<QIconEngine> engine(KdePlatformTheme().createIconEngine(QStringLiteral("test-icon")));
         QCOMPARE(KIconLoader::global()->theme()->current(), QStringLiteral("non-existent-icon-theme"));
     }
 
