@@ -396,6 +396,9 @@ QString KDEPlatformFileDialogHelper::selectedMimeTypeFilter() const
 
 void KDEPlatformFileDialogHelper::selectMimeTypeFilter(const QString &filter)
 {
+    if (!m_dialogInitialized && (!options()->nameFilters().isEmpty() || !options()->mimeTypeFilters().isEmpty())) {
+        initializeDialog();
+    }
     m_dialog->selectMimeTypeFilter(filter);
 }
 
@@ -425,6 +428,9 @@ void KDEPlatformFileDialogHelper::setDirectory(const QUrl &directory)
 
 void KDEPlatformFileDialogHelper::selectNameFilter(const QString &filter)
 {
+    if (!m_dialogInitialized && (!options()->nameFilters().isEmpty() || !options()->mimeTypeFilters().isEmpty())) {
+        initializeDialog();
+    }
     m_dialog->selectNameFilter(qtFilterToKFileFilter(filter));
 }
 

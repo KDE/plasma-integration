@@ -55,7 +55,6 @@ private Q_SLOTS:
 
         QString selectNameFilter(QStringLiteral("h (*.h)"));
         dialog.selectNameFilter(selectNameFilter);
-        QEXPECT_FAIL("", "Does currently not work. Works, once the dialog gets shown, though.", Continue);
         QCOMPARE(dialog.selectedNameFilter(), selectNameFilter);
 
         dialog.show();
@@ -72,7 +71,6 @@ private Q_SLOTS:
 
         QString selectNameFilter(QStringLiteral("h2 (*.h)"));
         dialog.selectNameFilter(selectNameFilter);
-        QEXPECT_FAIL("", "Does currently not work. Works, once the dialog gets shown, though.", Continue);
         QCOMPARE(dialog.selectedNameFilter(), selectNameFilter);
 
         dialog.show();

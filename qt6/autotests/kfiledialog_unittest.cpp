@@ -55,7 +55,6 @@ private Q_SLOTS:
 
         QString selectNameFilter(QStringLiteral("h (*.h)"));
         dialog.selectNameFilter(selectNameFilter);
-        QEXPECT_FAIL("", "Does currently not work. Works, once the dialog gets shown, though.", Continue);
         QCOMPARE(dialog.selectedNameFilter(), selectNameFilter);
 
         dialog.show();
@@ -72,11 +71,14 @@ private Q_SLOTS:
 
         QString selectNameFilter(QStringLiteral("h2 (*.h)"));
         dialog.selectNameFilter(selectNameFilter);
-        QEXPECT_FAIL("", "Does currently not work. Works, once the dialog gets shown, though.", Continue);
+        // TODO: Remove these QEXPECT_FAILs once KFileFilter::operator== is fixed in kio.
+        //       It currently does not handle the "no loaded filters" case correctly
+        //       even after early initializeDialog().
+        QEXPECT_FAIL("", "KFileFilter::operator== does not handle the no loaded filters case", Continue);
         QCOMPARE(dialog.selectedNameFilter(), selectNameFilter);
 
         dialog.show();
-        QEXPECT_FAIL("", "broken by kio commit a7c9d59f273fecd68892602f68c108a5966d98fc", Continue);
+        QEXPECT_FAIL("", "KFileFilter::operator== does not handle the no loaded filters case", Continue);
         QCOMPARE(dialog.selectedNameFilter(), selectNameFilter);
     }
 
