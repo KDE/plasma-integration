@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-29 00:47+0000\n"
+"POT-Creation-Date: 2026-05-12 00:46+0000\n"
 "PO-Revision-Date: 2026-03-13 11:38+0100\n"
 "Last-Translator:  Vít Pelčák <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -36,49 +36,49 @@ msgctxt "@title:window"
 msgid "Open File"
 msgstr "Otevřít soubor"
 
-#: platformtheme/kdeplatformtheme.cpp:286
+#: platformtheme/kdeplatformtheme.cpp:288
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Uložit vše"
 
-#: platformtheme/kdeplatformtheme.cpp:290
+#: platformtheme/kdeplatformtheme.cpp:292
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&Ano"
 
-#: platformtheme/kdeplatformtheme.cpp:292
+#: platformtheme/kdeplatformtheme.cpp:294
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Ano všem"
 
-#: platformtheme/kdeplatformtheme.cpp:294
+#: platformtheme/kdeplatformtheme.cpp:296
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&Ne"
 
-#: platformtheme/kdeplatformtheme.cpp:296
+#: platformtheme/kdeplatformtheme.cpp:298
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Ne všem"
 
-#: platformtheme/kdeplatformtheme.cpp:299
+#: platformtheme/kdeplatformtheme.cpp:301
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Přerušit"
 
-#: platformtheme/kdeplatformtheme.cpp:301
+#: platformtheme/kdeplatformtheme.cpp:303
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Zkusit znovu"
 
-#: platformtheme/kdeplatformtheme.cpp:303
+#: platformtheme/kdeplatformtheme.cpp:305
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"

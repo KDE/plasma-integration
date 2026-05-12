@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma-integration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-29 00:47+0000\n"
+"POT-Creation-Date: 2026-05-12 00:46+0000\n"
 "PO-Revision-Date: 2024-07-06 01:51+0300\n"
 "Last-Translator: Moo\n"
 "Language-Team: lt\n"
@@ -37,49 +37,49 @@ msgctxt "@title:window"
 msgid "Open File"
 msgstr "Atverti failą"
 
-#: platformtheme/kdeplatformtheme.cpp:286
+#: platformtheme/kdeplatformtheme.cpp:288
 #, kde-format
 msgctxt "@action:button"
 msgid "Save All"
 msgstr "Įrašyti visus"
 
-#: platformtheme/kdeplatformtheme.cpp:290
+#: platformtheme/kdeplatformtheme.cpp:292
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
 msgstr "&Taip"
 
-#: platformtheme/kdeplatformtheme.cpp:292
+#: platformtheme/kdeplatformtheme.cpp:294
 #, kde-format
 msgctxt "@action:button"
 msgid "Yes to All"
 msgstr "Visiems taip"
 
-#: platformtheme/kdeplatformtheme.cpp:294
+#: platformtheme/kdeplatformtheme.cpp:296
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
 msgstr "&Ne"
 
-#: platformtheme/kdeplatformtheme.cpp:296
+#: platformtheme/kdeplatformtheme.cpp:298
 #, kde-format
 msgctxt "@action:button"
 msgid "No to All"
 msgstr "Visiems ne"
 
-#: platformtheme/kdeplatformtheme.cpp:299
+#: platformtheme/kdeplatformtheme.cpp:301
 #, kde-format
 msgctxt "@action:button"
 msgid "Abort"
 msgstr "Nutraukti"
 
-#: platformtheme/kdeplatformtheme.cpp:301
+#: platformtheme/kdeplatformtheme.cpp:303
 #, kde-format
 msgctxt "@action:button"
 msgid "Retry"
 msgstr "Bandyti dar kartą"
 
-#: platformtheme/kdeplatformtheme.cpp:303
+#: platformtheme/kdeplatformtheme.cpp:305
 #, kde-format
 msgctxt "@action:button"
 msgid "Ignore"
