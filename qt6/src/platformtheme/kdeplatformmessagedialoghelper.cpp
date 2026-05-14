@@ -3,6 +3,7 @@
 
 #include "kdeplatformmessagedialoghelper.h"
 
+#include <KNotification>
 #include <KWindowSystem>
 
 #include <QCheckBox>
@@ -61,6 +62,32 @@ bool KDEPlatformMessageDialogHelper::show(Qt::WindowFlags windowFlags, Qt::Windo
             m_box->open();
         },
         Qt::QueuedConnection);
+
+    QString messageType;
+    switch (options()->standardIcon()) {
+    case QMessageDialogOptions::NoIcon:
+        break;
+    case QMessageDialogOptions::Information:
+        messageType = QStringLiteral("messageInformation");
+        break;
+    case QMessageDialogOptions::Warning:
+        messageType = QStringLiteral("messageWarning");
+        break;
+    case QMessageDialogOptions::Critical:
+        messageType = QStringLiteral("messageCritical");
+        break;
+    case QMessageDialogOptions::Question:
+        messageType = QStringLiteral("messageQuestion");
+        break;
+    }
+
+    if (!messageType.isEmpty()) {
+        KNotification::event(messageType,
+                             options()->windowTitle(),
+                             options()->text(),
+                             options()->iconPixmap(),
+                             KNotification::DefaultEvent | KNotification::CloseOnTimeout);
+    }
 
     return true;
 }
