@@ -35,6 +35,7 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         Qt6::DBus
         Qt6::QuickControls2
         KF6::ConfigCore
+        KF6::ConfigGui
         KF6::IconThemes
         KF6::KIOFileWidgets
         KF6::I18n
@@ -45,7 +46,6 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         Qt6::WaylandClient
         XCB::XCB
         Wayland::Client
-        KF6::XmlGui
         KF6::ColorScheme
     )
 endmacro()

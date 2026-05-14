@@ -21,8 +21,8 @@ if(Qt6_VERSION_MINOR GREATER 6)
 endif()
 
 find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS
-                Config ConfigWidgets I18n IconThemes KIO Notifications
-                WindowSystem GuiAddons XmlGui
+                Config I18n IconThemes KIO Notifications
+                WindowSystem GuiAddons
                 StatusNotifierItem
 )
 

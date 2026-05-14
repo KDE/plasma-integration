@@ -55,7 +55,6 @@ target_link_libraries(KDEPlasmaPlatformTheme5
         KF5::KIOFileWidgets # KFileFilterCombo, KDirSortFilterProxyModel, KRecentDirs
         KF5::KIOWidgets
         KF5::KIOGui
-        KF5::XmlGui
         KF5::I18n
         KF5::Notifications
         KF5::WindowSystem
@@ -68,7 +67,6 @@ target_link_libraries(KDEPlasmaPlatformTheme5
         KF5::WaylandClient
 )
 target_link_libraries(KDEPlasmaPlatformTheme5 PRIVATE Qt5::X11Extras)
-target_link_libraries(KDEPlasmaPlatformTheme5 PRIVATE KF5::ConfigWidgets)
 
 if(HAVE_X11)
   target_link_libraries(KDEPlasmaPlatformTheme5 PRIVATE ${X11_Xcursor_LIB} ${XCB_XCB_LIBRARY})

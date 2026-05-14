@@ -34,8 +34,8 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         Qt5::DBus
         Qt5::QuickControls2
         ${QT5PLATFORMSUPPORT_LIBS}
-        KF5::ConfigWidgets
         KF5::ConfigCore
+        KF5::ConfigGui
         KF5::IconThemes
         KF5::KIOFileWidgets
         KF5::I18n
@@ -46,7 +46,6 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         XCB::XCB
         Wayland::Client
         KF5::WaylandClient
-        KF5::XmlGui
         Qt5::X11Extras
     )
 endmacro()
