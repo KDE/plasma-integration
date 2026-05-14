@@ -60,7 +60,6 @@ target_link_libraries(KDEPlasmaPlatformTheme6
         KF6::KIOWidgets
         KF6::KIOGui
         KF6::StatusNotifierItem
-        KF6::XmlGui
         KF6::I18n
         KF6::Notifications
         KF6::WindowSystem
