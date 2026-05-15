@@ -26,7 +26,7 @@ if(BUILD_TESTING)
     enable_testing()
 endif()
 
-option(DEFAULT_UNION_STYLE "Use the Union QtQuick Controls Style by default." ON)
+option(DEFAULT_UNION_STYLE "Use the Union QtQuick Controls Style by default." OFF)
 if (DEFAULT_UNION_STYLE)
     add_definitions(-DDEFAULT_UNION_STYLE)
 endif()
