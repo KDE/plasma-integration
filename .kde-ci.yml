@@ -16,7 +16,6 @@ Dependencies:
     'frameworks/kservice': '@latest'
     'frameworks/kwidgetsaddons': '@latest'
     'frameworks/kwindowsystem': '@latest'
-    'frameworks/kxmlgui': '@latest'
     'plasma/kwayland': 'kf5'
     'plasma/breeze': '@same'
     'third-party/wayland': '@latest'
@@ -37,7 +36,6 @@ Dependencies:
     'frameworks/kstatusnotifieritem': '@latest-kf6'
     'frameworks/kwidgetsaddons': '@latest-kf6'
     'frameworks/kwindowsystem': '@latest-kf6'
-    'frameworks/kxmlgui': '@latest-kf6'
     'plasma/breeze': '@same'
     'third-party/wayland': '@latest'
 Options:
