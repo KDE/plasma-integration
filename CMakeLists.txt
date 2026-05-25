@@ -63,19 +63,19 @@ set_package_properties(XCB PROPERTIES
 
 find_package(FontNotoSans)
 set_package_properties(FontNotoSans PROPERTIES
-    PURPOSE "Default sans-serif font -- this is not detected automatically, pass -DCMAKE_DISABLE_FIND_PACKAGE_FontNotoSans=true to mark it ignored."
+    PURPOSE "Default sans-serif font"
     URL "https://www.google.com/get/noto/"
     TYPE RUNTIME
 )
 find_package(FontNotoColorEmoji)
 set_package_properties(FontNotoColorEmoji PROPERTIES
-    PURPOSE "Default emoji font -- this is not detected automatically, pass -DCMAKE_DISABLE_FIND_PACKAGE_FontNotoColorEmoji=true to mark it ignored."
+    PURPOSE "Default emoji font"
     URL "https://www.google.com/get/noto/"
     TYPE RUNTIME
 )
 find_package(FontHack)
 set_package_properties(FontHack PROPERTIES
-    PURPOSE "Default monospace font -- this is not detected automatically, pass -DCMAKE_DISABLE_FIND_PACKAGE_FontHack=true to mark it ignored."
+    PURPOSE "Default monospace font"
     URL "https://sourcefoundry.org/hack/"
     TYPE RUNTIME
 )
