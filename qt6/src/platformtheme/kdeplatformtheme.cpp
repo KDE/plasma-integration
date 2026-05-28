@@ -373,15 +373,16 @@ void KdePlatformTheme::setQtQuickControlsTheme()
         return;
     }
 
-#ifdef DEFAULT_UNION_STYLE
     KConfigGroup cg(KSharedConfig::openConfig(), "KDE");
-    // Can't use qApp->style()->name() here because accessing it will reset to breeze
     const QString theme = cg.readEntry(QStringLiteral("widgetStyle"), QStringLiteral("breeze")).toLower();
+    // Can't use qApp->style()->name() here because accessing it will reset to breeze
+#ifdef DEFAULT_UNION_STYLE
     if ((theme == QStringLiteral("breeze") || theme == QStringLiteral("union")) && checkIfThemeExists(QStringLiteral("/org/kde/union"))) {
-        QQuickStyle::setStyle(QStringLiteral("org.kde.union"));
-    } else
+#else
+    if (theme == QStringLiteral("union") && checkIfThemeExists(QStringLiteral("/org/kde/union"))) {
 #endif
-        if (checkIfThemeExists(QStringLiteral("/org/kde/desktop"))) {
+        QQuickStyle::setStyle(QStringLiteral("org.kde.union"));
+    } else if (checkIfThemeExists(QStringLiteral("/org/kde/desktop"))) {
         QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
     }
 }
