@@ -36,8 +36,6 @@ bool KDEPlatformMessageDialogHelper::show(Qt::WindowFlags windowFlags, Qt::Windo
         m_box->setCheckBox(checkBox);
         connect(checkBox, &QCheckBox::checkStateChanged, this, &KDEPlatformMessageDialogHelper::checkBoxStateChanged);
     }
-    connect(m_box, &QDialog::accepted, this, &QPlatformDialogHelper::accept);
-    connect(m_box, &QDialog::rejected, this, &QPlatformDialogHelper::reject);
 
     for (const auto &button : options()->customButtons()) {
         m_box->addButton(button.label, static_cast<QMessageBox::ButtonRole>(button.role));
