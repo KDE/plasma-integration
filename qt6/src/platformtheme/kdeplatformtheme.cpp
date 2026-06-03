@@ -9,6 +9,7 @@
 
 #include <config-platformtheme.h>
 
+#include "kdeplatformcolordialoghelper.h"
 #include "kdeplatformfiledialoghelper.h"
 #include "kdeplatformmessagedialoghelper.h"
 #include "kdeplatformsystemtrayicon.h"
@@ -271,7 +272,8 @@ QList<QKeySequence> KdePlatformTheme::keyBindings(QKeySequence::StandardKey key)
 
 bool KdePlatformTheme::usePlatformNativeDialog(QPlatformTheme::DialogType type) const
 {
-    return (type == QPlatformTheme::FileDialog || type == QPlatformTheme::MessageDialog) && qobject_cast<QApplication *>(QCoreApplication::instance());
+    return (type == QPlatformTheme::FileDialog || type == QPlatformTheme::MessageDialog || type == QPlatformTheme::ColorDialog)
+        && qobject_cast<QApplication *>(QCoreApplication::instance());
 }
 
 QString KdePlatformTheme::standardButtonText(int button) const
@@ -334,6 +336,18 @@ QPlatformDialogHelper *KdePlatformTheme::createPlatformDialogHelper(QPlatformThe
         return new KDEPlatformMessageDialogHelper;
     case QPlatformTheme::FontDialog:
     case QPlatformTheme::ColorDialog:
+        // HACK: QTBUG-119055
+        // QColorDialog does not honor DontUseNativeDialog, so when implementing QColorDialog using QColorDialog,
+        // we would get an endless loop here. To break this, return nullptr if we're currently in the creation of a native dialog.
+        // Qt is fine with getting a nullptr here and will fallback to the non-native implementation.
+        static auto creatingColorDialog = false;
+        if (!creatingColorDialog) {
+            creatingColorDialog = true;
+            auto dialog = new KDEPlatformColorDialogHelper;
+            creatingColorDialog = false;
+            return dialog;
+        }
+
     default:
         return nullptr;
     }

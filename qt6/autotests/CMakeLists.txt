@@ -70,6 +70,7 @@ target_sources(kdeplatformtheme_unittest6 PRIVATE
   ../src/platformtheme/khintssettings.cpp ../src/platformtheme/khintssettings.h
   ../src/platformtheme/kdeplatformfiledialoghelper.cpp ../src/platformtheme/kdeplatformfiledialoghelper.h
   ../src/platformtheme/kdeplatformmessagedialoghelper.cpp ../src/platformtheme/kdeplatformmessagedialoghelper.h
+  ../src/platformtheme/kdeplatformcolordialoghelper.cpp ../src/platformtheme/kdeplatformcolordialoghelper.h
   ../src/platformtheme/kdeplatformfiledialogbase.cpp
   ../src/platformtheme/kdeplatformsystemtrayicon.cpp ../src/platformtheme/kdeplatformsystemtrayicon.h
   ../src/platformtheme/kwaylandintegration.cpp ../src/platformtheme/kwaylandintegration.h
