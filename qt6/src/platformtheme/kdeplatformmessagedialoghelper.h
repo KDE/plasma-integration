@@ -6,6 +6,7 @@
 #include <qpa/qplatformdialoghelper.h>
 
 class QMessageBox;
+class QAbstractButton;
 
 class KDEPlatformMessageDialogHelper : public QPlatformMessageDialogHelper
 {
@@ -18,4 +19,5 @@ public:
 
 private:
     QMessageBox *m_box = nullptr;
+    QMap<QAbstractButton *, int> m_customButtonIds;
 };

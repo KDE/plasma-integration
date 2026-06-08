@@ -7,6 +7,7 @@
 
 #include <QCheckBox>
 #include <QMessageBox>
+#include <QPushButton>
 #include <QWindow>
 
 void KDEPlatformMessageDialogHelper::exec()
@@ -38,7 +39,8 @@ bool KDEPlatformMessageDialogHelper::show(Qt::WindowFlags windowFlags, Qt::Windo
     }
 
     for (const auto &button : options()->customButtons()) {
-        m_box->addButton(button.label, static_cast<QMessageBox::ButtonRole>(button.role));
+        const auto newButton = m_box->addButton(button.label, static_cast<QMessageBox::ButtonRole>(button.role));
+        m_customButtonIds.insert(newButton, button.id);
     }
 
     for (int i = StandardButton::FirstButton; i < StandardButton::LastButton; i <<= 1) {
@@ -48,8 +50,11 @@ bool KDEPlatformMessageDialogHelper::show(Qt::WindowFlags windowFlags, Qt::Windo
     }
 
     connect(m_box, &QMessageBox::buttonClicked, this, [this](const auto &button) {
-        Q_EMIT clicked(static_cast<QPlatformDialogHelper::StandardButton>(m_box->standardButton(button)),
-                       static_cast<QPlatformDialogHelper::ButtonRole>(m_box->buttonRole(button)));
+        auto standardButton = static_cast<QPlatformDialogHelper::StandardButton>(m_box->standardButton(button));
+        if (standardButton == QPlatformDialogHelper::StandardButton::NoButton) {
+            standardButton = static_cast<QPlatformDialogHelper::StandardButton>(m_customButtonIds[button]);
+        }
+        Q_EMIT clicked(standardButton, static_cast<QPlatformDialogHelper::ButtonRole>(m_box->buttonRole(button)));
     });
 
     // HACK: Delayed to work around QTBUG-144324
