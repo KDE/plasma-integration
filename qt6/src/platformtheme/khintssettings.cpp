@@ -325,7 +325,6 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
         if (!app->style() || app->style()->name().compare(theme, Qt::CaseInsensitive) != 0) {
             app->setStyle(theme);
         }
-        loadPalettes();
         break;
     }
     default:
