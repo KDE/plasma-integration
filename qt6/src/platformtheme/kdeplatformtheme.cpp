@@ -334,7 +334,6 @@ QPlatformDialogHelper *KdePlatformTheme::createPlatformDialogHelper(QPlatformThe
         return new KDEPlatformFileDialogHelper;
     case QPlatformTheme::MessageDialog:
         return new KDEPlatformMessageDialogHelper;
-    case QPlatformTheme::FontDialog:
     case QPlatformTheme::ColorDialog:
         // HACK: QTBUG-119055
         // QColorDialog does not honor DontUseNativeDialog, so when implementing QColorDialog using QColorDialog,
@@ -347,7 +346,7 @@ QPlatformDialogHelper *KdePlatformTheme::createPlatformDialogHelper(QPlatformThe
             creatingColorDialog = false;
             return dialog;
         }
-
+    case QPlatformTheme::FontDialog:
     default:
         return nullptr;
     }
