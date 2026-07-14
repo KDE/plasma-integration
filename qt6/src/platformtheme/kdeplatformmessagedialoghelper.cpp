@@ -11,6 +11,17 @@
 #include <QPushButton>
 #include <QWindow>
 
+KDEPlatformMessageDialogHelper::KDEPlatformMessageDialogHelper()
+    : QPlatformMessageDialogHelper()
+    , m_box(new QMessageBox)
+{
+}
+
+KDEPlatformMessageDialogHelper::~KDEPlatformMessageDialogHelper()
+{
+    delete m_box;
+}
+
 void KDEPlatformMessageDialogHelper::exec()
 {
     m_box->exec();
@@ -18,13 +29,11 @@ void KDEPlatformMessageDialogHelper::exec()
 
 bool KDEPlatformMessageDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowModality modality, QWindow *parent)
 {
-    m_box = new QMessageBox();
     m_box->setWindowTitle(options()->windowTitle());
     m_box->setWindowModality(modality);
     m_box->setWindowFlags(windowFlags);
     m_box->winId();
     m_box->windowHandle()->setTransientParent(parent);
-    m_box->setAttribute(Qt::WA_DeleteOnClose);
     m_box->setOption(QMessageBox::Option::DontUseNativeDialog);
     m_box->setText(options()->text());
     m_box->setDetailedText(options()->detailedText());

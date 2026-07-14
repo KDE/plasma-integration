@@ -13,6 +13,8 @@ class KDEPlatformMessageDialogHelper : public QPlatformMessageDialogHelper
     Q_OBJECT
 public:
     using QPlatformMessageDialogHelper::QPlatformMessageDialogHelper;
+    KDEPlatformMessageDialogHelper();
+    ~KDEPlatformMessageDialogHelper() override;
     void exec() override;
     bool show(Qt::WindowFlags windowFlags, Qt::WindowModality modality, QWindow *parent) override;
     void hide() override;
