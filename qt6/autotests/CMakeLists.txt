@@ -44,10 +44,12 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         KF6::WindowSystem
         KF6::GuiAddons
         Qt6::WaylandClient
-        XCB::XCB
         Wayland::Client
         KF6::ColorScheme
     )
+    if(WITH_X11)
+        target_link_libraries(${_testname}6 X11::Xcursor XCB::XCB)
+    endif()
 endmacro()
 
 set(dbus_interface)
@@ -74,7 +76,6 @@ target_sources(kdeplatformtheme_unittest6 PRIVATE
   ../src/platformtheme/kdeplatformfiledialogbase.cpp
   ../src/platformtheme/kdeplatformsystemtrayicon.cpp ../src/platformtheme/kdeplatformsystemtrayicon.h
   ../src/platformtheme/kwaylandintegration.cpp ../src/platformtheme/kwaylandintegration.h
-  ../src/platformtheme/x11integration.cpp ../src/platformtheme/x11integration.h
   ../src/platformtheme/qxdgdesktopportalfiledialog.cpp
   ../src/platformtheme/qdbusmenubarwrapper.h
   ../src/platformtheme/kiodelegate.cpp
@@ -85,6 +86,12 @@ target_sources(kdeplatformtheme_unittest6 PRIVATE
 )
 # TODO KF6 Port D-Bus menu support
 target_compile_definitions(kdeplatformtheme_unittest6 PRIVATE -DKF6_TODO_DBUS_MENUBAR)
+
+if(WITH_X11)
+  target_sources(kdeplatformtheme_unittest6 PRIVATE
+    ../src/platformtheme/x11integration.cpp ../src/platformtheme/x11integration.h
+  )
+endif()
 
 frameworkintegration_tests(
   kfontsettingsdata_unittest

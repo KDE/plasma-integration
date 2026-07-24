@@ -1,1 +1,1 @@
-#cmakedefine01 HAVE_X11
+#cmakedefine01 WITH_X11

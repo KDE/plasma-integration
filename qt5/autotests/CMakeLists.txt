@@ -43,11 +43,12 @@ macro(FRAMEWORKINTEGRATION_TESTS _testname)
         KF5::WindowSystem
         KF5::GuiAddons
         Qt5::WaylandClient
-        XCB::XCB
         Wayland::Client
         KF5::WaylandClient
-        Qt5::X11Extras
     )
+    if(WITH_X11)
+        target_link_libraries(${_testname}5 Qt5::X11Extras X11::Xcursor XCB::XCB)
+    endif()
 endmacro()
 
 set(dbus_interface)
@@ -75,7 +76,6 @@ target_sources(kdeplatformtheme_unittest5 PRIVATE
   ../src/platformtheme/kdeplatformfiledialogbase.cpp
   ../src/platformtheme/kdeplatformsystemtrayicon.cpp ../src/platformtheme/kdeplatformsystemtrayicon.h
   ../src/platformtheme/kwaylandintegration.cpp ../src/platformtheme/kwaylandintegration.h
-  ../src/platformtheme/x11integration.cpp ../src/platformtheme/x11integration.h
   ../src/platformtheme/qxdgdesktopportalfiledialog.cpp
   ${dbus_interface}
   ${wayland_interfaces}
@@ -83,6 +83,12 @@ target_sources(kdeplatformtheme_unittest5 PRIVATE
 target_sources(kdeplatformtheme_unittest5 PRIVATE
   ../src/platformtheme/qdbusmenubar.cpp # fork of Qt's qdbusmenubar with some added setters for our convenience
 )
+
+if(WITH_X11)
+  target_sources(kdeplatformtheme_unittest5 PRIVATE
+    ../src/platformtheme/x11integration.cpp ../src/platformtheme/x11integration.h
+  )
+endif()
 
 frameworkintegration_tests(
   kfontsettingsdata_unittest

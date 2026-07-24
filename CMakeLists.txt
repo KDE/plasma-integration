@@ -53,13 +53,25 @@ elseif($ENV{CI_JOB_NAME_SLUG} MATCHES "qt6")
     set(BUILD_QT6 ON)
 endif()
 
-find_package(XCB COMPONENTS XCB)
-set_package_properties(XCB PROPERTIES
-    DESCRIPTION "X protocol C-language Binding"
-    URL "https://xcb.freedesktop.org"
-    TYPE REQUIRED
-    PURPOSE "Required to pass style properties to native Windows on X11 Platform"
-)
+option(WITH_X11 "Build platformtheme with X11 (and XWayland) support" ON)
+
+if (WITH_X11)
+    find_package(XCB COMPONENTS XCB)
+    set_package_properties(XCB PROPERTIES
+        DESCRIPTION "X protocol C-language Binding"
+        URL "https://xcb.freedesktop.org"
+        TYPE REQUIRED
+        PURPOSE "Required to pass style properties to native Windows on X11 Platform"
+    )
+    find_package(X11)
+    set_package_properties(X11 PROPERTIES DESCRIPTION "Required for updating the Cursor theme on X11"
+                            URL "https://www.x.org"
+                            TYPE REQUIRED
+                            )
+    if (NOT TARGET X11::Xcursor)
+        message(SEND_ERROR "Required component Xcursor of X11 was not found")
+    endif()
+endif()
 
 find_package(FontNotoSans)
 set_package_properties(FontNotoSans PROPERTIES

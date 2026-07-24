@@ -1,15 +1,3 @@
-find_package(X11)
-set_package_properties(X11 PROPERTIES DESCRIPTION "Required for updating the Cursor theme on X11"
-                        URL "https://www.x.org"
-                        TYPE REQUIRED
-                        )
-set(HAVE_X11 ${X11_FOUND})
-if(HAVE_X11)
-
-  find_package(XCB COMPONENTS XCB)
-  set_package_properties(XCB PROPERTIES TYPE REQUIRED)
-endif()
-
 configure_file(config-platformtheme.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-platformtheme.h )
 
 set(platformtheme_SRCS
@@ -22,7 +10,6 @@ set(platformtheme_SRCS
     kdeplatformcolordialoghelper.cpp kdeplatformcolordialoghelper.h
     kdeplatformsystemtrayicon.cpp kdeplatformsystemtrayicon.h
     kwaylandintegration.cpp kwaylandintegration.h
-    x11integration.cpp x11integration.h
     main.cpp
     qxdgdesktopportalfiledialog.cpp
     qtquickrenderersettings.cpp
@@ -31,6 +18,12 @@ set(platformtheme_SRCS
     kiodelegate.cpp
     kioopenwithxdp.cpp
 )
+
+if(WITH_X11)
+    list(APPEND platformtheme_SRCS
+        x11integration.cpp x11integration.h
+    )
+endif()
 
 qt6_add_dbus_interface(platformtheme_SRCS org.kde.StatusNotifierWatcher.xml statusnotifierwatcher_interface)
 kconfig_add_kcfg_files(platformtheme_SRCS renderersettings.kcfgc)
@@ -65,16 +58,14 @@ target_link_libraries(KDEPlasmaPlatformTheme6
         KF6::Notifications
         KF6::WindowSystem
         KF6::GuiAddons
-        XCB::XCB
         Qt6::WaylandClient
-        Qt6::GuiPrivate
         Wayland::Client
 )
 
 target_link_libraries(KDEPlasmaPlatformTheme6 PRIVATE KF6::ColorScheme)
 
-if(HAVE_X11)
-  target_link_libraries(KDEPlasmaPlatformTheme6 PRIVATE ${X11_Xcursor_LIB} ${XCB_XCB_LIBRARY})
+if(WITH_X11)
+    target_link_libraries(KDEPlasmaPlatformTheme6 PRIVATE X11::Xcursor XCB::XCB)
 endif()
 
 set_target_properties(KDEPlasmaPlatformTheme6 PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/platformthemes/")

@@ -287,7 +287,7 @@ KdePlatformTheme::KdePlatformTheme()
         m_kwaylandIntegration.reset(new KWaylandIntegration(this));
     }
 
-#if HAVE_X11
+#if WITH_X11
     if (KWindowSystem::isPlatformX11()) {
         m_x11Integration.reset(new X11Integration(this));
         m_x11Integration->init();

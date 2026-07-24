@@ -34,11 +34,7 @@
 #include <kiconloader.h>
 
 #include <config-platformtheme.h>
-#ifdef UNIT_TEST
-#undef HAVE_X11
-#define HAVE_X11 0
-#endif
-#if HAVE_X11
+#if WITH_X11
 #include <QX11Info>
 #include <X11/Xcursor/Xcursor.h>
 #endif
@@ -457,7 +453,7 @@ void KHintsSettings::updateCursorTheme()
 
 void KHintsSettings::updateX11CursorTheme()
 {
-#if HAVE_X11
+#if WITH_X11
     if (QX11Info::isPlatformX11()) {
         KConfig config(QStringLiteral("kcminputrc"));
         KConfigGroup g(&config, "Mouse");
