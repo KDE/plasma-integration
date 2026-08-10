@@ -11,13 +11,20 @@
 #include <QPushButton>
 #include <QWindow>
 
+KDEPlatformMessageDialogHelper::~KDEPlatformMessageDialogHelper()
+{
+    delete m_box;
+}
+
 void KDEPlatformMessageDialogHelper::exec()
 {
-    m_box->exec();
+    if (m_box)
+        m_box->exec();
 }
 
 bool KDEPlatformMessageDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowModality modality, QWindow *parent)
 {
+    delete m_box;
     m_box = new QMessageBox();
     m_box->setWindowTitle(options()->windowTitle());
     m_box->setWindowModality(modality);
@@ -97,7 +104,8 @@ bool KDEPlatformMessageDialogHelper::show(Qt::WindowFlags windowFlags, Qt::Windo
 
 void KDEPlatformMessageDialogHelper::hide()
 {
-    m_box->hide();
+    if (m_box)
+        m_box->hide();
 }
 
 #include "moc_kdeplatformmessagedialoghelper.cpp"
