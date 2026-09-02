@@ -35,6 +35,7 @@
 #include <kcolorscheme.h>
 #include <kconfiggroup.h>
 #include <kiconloader.h>
+#include <kicontheme.h>
 
 #include <config-platformtheme.h>
 #if WITH_X11
@@ -89,7 +90,12 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
 
     m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = readConfigValue(cg, QStringLiteral("SingleClick"), false);
 
-    m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue(QStringLiteral("Icons"), QStringLiteral("Theme"), QStringLiteral("breeze"));
+    QString iconTheme = readConfigValue(QStringLiteral("Icons"), QStringLiteral("Theme"), QStringLiteral("breeze")).toString();
+    KIconTheme theme(iconTheme, {});
+    if (!theme.isValid()) {
+        iconTheme = QStringLiteral("breeze");
+    }
+    m_hints[QPlatformTheme::SystemIconThemeName] = iconTheme;
 
     m_hints[QPlatformTheme::SystemIconFallbackThemeName] = QStringLiteral("hicolor");
     m_hints[QPlatformTheme::IconThemeSearchPaths] = xdgIconThemePaths();
@@ -353,7 +359,13 @@ void KHintsSettings::iconChanged(int group)
 {
     KIconLoader::Group iconGroup = (KIconLoader::Group)group;
     if (iconGroup != KIconLoader::MainToolbar) {
-        m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue(QStringLiteral("Icons"), QStringLiteral("Theme"), QStringLiteral("breeze"));
+        QString iconTheme = readConfigValue(QStringLiteral("Icons"), QStringLiteral("Theme"), QStringLiteral("breeze")).toString();
+        KIconTheme theme(iconTheme, {});
+        if (!theme.isValid()) {
+            iconTheme = QStringLiteral("breeze");
+        }
+        m_hints[QPlatformTheme::SystemIconThemeName] = iconTheme;
+
         return;
     }
 
