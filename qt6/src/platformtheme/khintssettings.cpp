@@ -36,6 +36,8 @@
 #include <kconfiggroup.h>
 #include <kiconloader.h>
 
+#include <utility>
+
 #include <config-platformtheme.h>
 #if WITH_X11
 #include <X11/Xcursor/Xcursor.h>
@@ -43,6 +45,32 @@
 #endif
 
 static const QString defaultLookAndFeelPackage = QStringLiteral("org.kde.breeze.desktop");
+
+static int toolbarIconSize(const QString &themeName)
+{
+    QStringList iconDirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("icons"), QStandardPaths::LocateDirectory);
+    iconDirs += QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("pixmaps"), QStandardPaths::LocateDirectory);
+    iconDirs << QStringLiteral(":/icons");
+
+    const QString themePathSuffix = QLatin1Char('/') + themeName + QLatin1Char('/');
+    for (const QString &iconDir : std::as_const(iconDirs)) {
+        const QString themePath = iconDir + themePathSuffix;
+        QString configFile = themePath + QStringLiteral("index.theme");
+        QString configGroup = QStringLiteral("Icon Theme");
+        if (!QFileInfo::exists(configFile)) {
+            configFile = themePath + QStringLiteral("theme.desktop");
+            configGroup = QStringLiteral("KDE Icon Theme");
+            if (!QFileInfo::exists(configFile)) {
+                continue;
+            }
+        }
+
+        const KConfigGroup iconThemeConfig(KSharedConfig::openConfig(configFile, KConfig::SimpleConfig), configGroup);
+        return iconThemeConfig.readEntry("ToolbarDefault", 22);
+    }
+
+    return 22;
+}
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, QMap<QString, QVariantMap> &map)
 {
@@ -85,9 +113,14 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
     KConfigGroup cgToolbar(mKdeGlobals, "Toolbar style");
     m_hints[QPlatformTheme::ToolButtonStyle] = toolButtonStyle(cgToolbar);
 
-    m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = readConfigValue(cg, QStringLiteral("SingleClick"), false);
+    const QString iconThemeName = readConfigValue(QStringLiteral("Icons"), QStringLiteral("Theme"), QStringLiteral("breeze")).toString();
+    m_hints[QPlatformTheme::SystemIconThemeName] = iconThemeName;
+    // We need to reimplement the logic of the reading of default toolbar icon size
+    // because we can't instantiate yet a KiconLoader and KIconTheme, as they in turn need this
+    // to already exist in order to have their defaults set correctly
+    m_hints[QPlatformTheme::ToolBarIconSize] = toolbarIconSize(iconThemeName);
 
-    m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue(QStringLiteral("Icons"), QStringLiteral("Theme"), QStringLiteral("breeze"));
+    m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = readConfigValue(cg, QStringLiteral("SingleClick"), false);
 
     m_hints[QPlatformTheme::SystemIconFallbackThemeName] = QStringLiteral("breeze");
     m_hints[QPlatformTheme::IconThemeSearchPaths] = xdgIconThemePaths();
@@ -206,7 +239,6 @@ void KHintsSettings::delayedDBusConnects()
 
 void KHintsSettings::setupIconLoader()
 {
-    m_hints[QPlatformTheme::ToolBarIconSize] = KIconLoader::global()->currentSize(KIconLoader::MainToolbar);
     connect(KIconLoader::global(), &KIconLoader::iconChanged, this, &KHintsSettings::iconChanged);
 }
 
