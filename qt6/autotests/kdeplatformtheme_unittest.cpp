@@ -31,6 +31,12 @@
 #include <KWindowInfo>
 #include <kiconloader.h>
 
+static int allEffects()
+{
+    using enum QPlatformTheme::UiEffect;
+    return GeneralUiEffect | FadeMenuUiEffect | AnimateComboUiEffect | FadeTooltipUiEffect | AnimateToolBoxUiEffect | HoverEffect;
+}
+
 static void prepareEnvironment()
 {
     QStandardPaths::setTestModeEnabled(true);
@@ -145,7 +151,7 @@ private Q_SLOTS:
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::DialogButtonBoxButtonsHaveIcons).toBool(), false);
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::UseFullScreenForPopupMenu).toBool(), true);
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::KeyboardScheme).toInt(), (int)QPlatformTheme::KdeKeyboardScheme);
-        QCOMPARE(m_qpa->themeHint(QPlatformTheme::UiEffects).toInt(), QPlatformTheme::HoverEffect);
+        QCOMPARE(m_qpa->themeHint(QPlatformTheme::UiEffects).toInt(), allEffects());
         QCOMPARE(m_qpa->themeHint(QPlatformTheme::IconPixmapSizes).value<QList<int>>(), QList<int>() << 512 << 256 << 128 << 64 << 32 << 22 << 16 << 8);
 
         QCOMPARE(qApp->wheelScrollLines(), 1234);

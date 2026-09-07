@@ -114,9 +114,8 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
     m_hints[QPlatformTheme::UseFullScreenForPopupMenu] = true;
     m_hints[QPlatformTheme::KeyboardScheme] = QPlatformTheme::KdeKeyboardScheme;
 
-    int uiEffectsFlags = readConfigValue(cg, QStringLiteral("GraphicEffectsLevel"), 0) != 0 ? QPlatformTheme::GeneralUiEffect : 0;
-    uiEffectsFlags |= QPlatformTheme::HoverEffect;
-    m_hints[QPlatformTheme::UiEffects] = uiEffectsFlags;
+    using enum QPlatformTheme::UiEffect;
+    m_hints[QPlatformTheme::UiEffects] = GeneralUiEffect | FadeMenuUiEffect | AnimateComboUiEffect | FadeTooltipUiEffect | AnimateToolBoxUiEffect | HoverEffect;
 
     m_hints[QPlatformTheme::IconPixmapSizes] = QVariant::fromValue(QList<int>() << 512 << 256 << 128 << 64 << 32 << 22 << 16 << 8);
 
@@ -254,7 +253,6 @@ void KHintsSettings::slotNotifyChange(int type, int arg)
             updateQtSettings(cg);
         } else if (category == SETTINGS_STYLE) {
             m_hints[QPlatformTheme::DialogButtonBoxButtonsHaveIcons] = cg.readEntry("ShowIconsOnPushButtons", true);
-            m_hints[QPlatformTheme::UiEffects] = cg.readEntry("GraphicEffectsLevel", 0) != 0 ? QPlatformTheme::GeneralUiEffect : 0;
 
             updateShowIconsInMenuItems(cg);
         }
