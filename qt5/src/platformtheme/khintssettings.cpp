@@ -82,13 +82,11 @@ KHintsSettings::KHintsSettings(const KSharedConfig::Ptr &kdeglobals)
     KConfigGroup cgToolbar(mKdeGlobals, "Toolbar style");
     m_hints[QPlatformTheme::ToolButtonStyle] = toolButtonStyle(cgToolbar);
 
-    m_hints[QPlatformTheme::ToolBarIconSize] = KIconLoader::global()->currentSize(KIconLoader::MainToolbar);
-
     m_hints[QPlatformTheme::ItemViewActivateItemOnSingleClick] = readConfigValue(cg, QStringLiteral("SingleClick"), false);
 
     m_hints[QPlatformTheme::SystemIconThemeName] = readConfigValue(QStringLiteral("Icons"), QStringLiteral("Theme"), QStringLiteral("breeze"));
 
-    m_hints[QPlatformTheme::SystemIconFallbackThemeName] = QStringLiteral("hicolor");
+    m_hints[QPlatformTheme::SystemIconFallbackThemeName] = QStringLiteral("breeze");
     m_hints[QPlatformTheme::IconThemeSearchPaths] = xdgIconThemePaths();
 
     QStringList styleNames{
@@ -200,6 +198,7 @@ void KHintsSettings::delayedDBusConnects()
 
 void KHintsSettings::setupIconLoader()
 {
+    m_hints[QPlatformTheme::ToolBarIconSize] = KIconLoader::global()->currentSize(KIconLoader::MainToolbar);
     connect(KIconLoader::global(), &KIconLoader::iconChanged, this, &KHintsSettings::iconChanged);
 }
 
