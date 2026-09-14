@@ -26,11 +26,6 @@ if(BUILD_TESTING)
     enable_testing()
 endif()
 
-option(DEFAULT_UNION_STYLE "Use the Union QtQuick Controls Style by default." ON)
-if (DEFAULT_UNION_STYLE)
-    add_definitions(-DDEFAULT_UNION_STYLE)
-endif()
-
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(FeatureSummary)
 include(GenerateExportHeader)
