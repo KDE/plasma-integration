@@ -48,6 +48,10 @@ bool KDEPlatformMessageDialogHelper::show(Qt::WindowFlags windowFlags, Qt::Windo
         connect(checkBox, &QCheckBox::checkStateChanged, this, &KDEPlatformMessageDialogHelper::checkBoxStateChanged);
     }
 
+    for (const auto button : m_box->buttons()) {
+        m_box->removeButton(button);
+    }
+
     for (const auto &button : options()->customButtons()) {
         const auto newButton = m_box->addButton(button.label, static_cast<QMessageBox::ButtonRole>(button.role));
         m_customButtonIds.insert(newButton, button.id);
