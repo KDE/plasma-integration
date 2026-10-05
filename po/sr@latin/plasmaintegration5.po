@@ -1,12 +1,13 @@
 # Translation of plasmaintegration5.po into Serbian.
 # Chusslove Illich <caslav.ilic@gmx.net>, 2014, 2016, 2017.
+# Nemanja Hiršl <nemhirsl@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: plasmaintegration5\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-16 00:47+0000\n"
-"PO-Revision-Date: 2017-09-28 17:58+0200\n"
-"Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
+"PO-Revision-Date: 2026-10-03 22:09+0200\n"
+"Last-Translator: Nemanja Hiršl <nemhirsl@gmail.com>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
 "Language: sr@latin\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +47,7 @@ msgstr "Sačuvaj sve"
 #, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
-msgstr ""
+msgstr "&Da"
 
 #: platformtheme/kdeplatformtheme.cpp:296
 #, kde-format
@@ -58,7 +59,7 @@ msgstr "Da za sve"
 #, kde-format
 msgctxt "@action:button"
 msgid "&No"
-msgstr ""
+msgstr "&Ne"
 
 #: platformtheme/kdeplatformtheme.cpp:300
 #, kde-format
@@ -90,52 +91,5 @@ msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "
 "application."
 msgstr ""
-
-#~ msgctxt "folder name"
-#~ msgid "New Folder"
-#~ msgstr "Nova fascikla"
-
-#~ msgctxt "@title:window"
-#~ msgid "New Folder"
-#~ msgstr "Nova fascikla"
-
-#~ msgctxt "@label:textbox"
-#~ msgid ""
-#~ "Create new folder in:\n"
-#~ "%1"
-#~ msgstr ""
-#~ "Napravi novu fasciklu u:\n"
-#~ "‘%1’"
-
-#~ msgid "A file or folder named %1 already exists."
-#~ msgstr "Fajl ili fascikla po imenu ‘%1’ već postoji."
-
-#~ msgid "You do not have permission to create that folder."
-#~ msgstr "Nemate dozvolu da napravite tu fasciklu."
-
-#~ msgctxt "@action:button"
-#~ msgid "New Folder..."
-#~ msgstr "Nova fascikla..."
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "New Folder..."
-#~ msgstr "Nova fascikla..."
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "Move to Trash"
-#~ msgstr "Premesti u smeće"
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "Delete"
-#~ msgstr "Obriši"
-
-#~ msgctxt "@option:check"
-#~ msgid "Show Hidden Folders"
-#~ msgstr "Skrivene fascikle"
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "Properties"
-#~ msgstr "Svojstva"
-
-#~ msgid "Show Hidden Folders"
-#~ msgstr "Skrivene fascikle"
+"Ne mogu da pokrenem iz nepoznatih razloga. Pokušajte sa nekim postojećim "
+"programom."
