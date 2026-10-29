@@ -105,6 +105,8 @@ private:
         const QByteArray identity = (QDir::cleanPath(canonicalPath) + QLatin1Char('/') + appId).toUtf8();
         const QString lockName = QString::fromLatin1(QCryptographicHash::hash(identity, QCryptographicHash::Sha256).toHex());
         m_lock = std::make_unique<QLockFile>(runtimePath + QLatin1String("/plasma-qt-session-") + lockName + QLatin1String(".lock"));
+        // Held for the process lifetime; disable age-based stale detection.
+        m_lock->setStaleLockTime(0);
         m_initialized = true;
         // A second live instance must not replace the first instance's session.
         // Retry storage ownership, but never replace a backend after this point.
