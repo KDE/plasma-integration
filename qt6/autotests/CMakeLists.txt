@@ -76,6 +76,7 @@ target_sources(kdeplatformtheme_unittest6 PRIVATE
   ../src/platformtheme/kdeplatformfiledialogbase.cpp
   ../src/platformtheme/kdeplatformsystemtrayicon.cpp ../src/platformtheme/kdeplatformsystemtrayicon.h
   ../src/platformtheme/kwaylandintegration.cpp ../src/platformtheme/kwaylandintegration.h
+  ../src/platformtheme/kwaylandsessionmanagement.cpp ../src/platformtheme/kwaylandsessionmanagement.h
   ../src/platformtheme/qxdgdesktopportalfiledialog.cpp
   ../src/platformtheme/qdbusmenubarwrapper.h
   ../src/platformtheme/kiodelegate.cpp

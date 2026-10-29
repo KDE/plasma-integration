@@ -4,6 +4,7 @@
     SPDX-License-Identifier: LGPL-2.0-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 */
 #include "kwaylandintegration.h"
+#include "kwaylandsessionmanagement.h"
 
 #include <QExposeEvent>
 #include <QGuiApplication>
@@ -51,6 +52,7 @@ KWaylandIntegration::KWaylandIntegration(KdePlatformTheme *platformTheme)
     : QObject()
     , m_platformTheme(platformTheme)
 {
+    initializeWaylandSessionManagement();
     QCoreApplication::instance()->installEventFilter(this);
 }
 

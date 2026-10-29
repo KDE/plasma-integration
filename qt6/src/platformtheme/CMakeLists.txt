@@ -10,6 +10,7 @@ set(platformtheme_SRCS
     kdeplatformcolordialoghelper.cpp kdeplatformcolordialoghelper.h
     kdeplatformsystemtrayicon.cpp kdeplatformsystemtrayicon.h
     kwaylandintegration.cpp kwaylandintegration.h
+    kwaylandsessionmanagement.cpp kwaylandsessionmanagement.h
     main.cpp
     qxdgdesktopportalfiledialog.cpp
     qtquickrenderersettings.cpp
