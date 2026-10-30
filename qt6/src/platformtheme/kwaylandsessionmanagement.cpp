@@ -8,13 +8,13 @@
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 12, 0) && !defined(QT_NO_SESSIONMANAGER)
 #include <QCryptographicHash>
+#include <QDebug>
 #include <QDir>
 #include <QFileInfo>
 #include <QLockFile>
 #include <QPlatformSurfaceEvent>
 #include <QSessionManager>
 #include <QStandardPaths>
-#include <QTimer>
 #include <QWindow>
 #include <private/qguiapplication_p.h>
 #include <private/qsessionmanager_p.h>
@@ -35,12 +35,6 @@ public:
         : QObject(parent)
     {
         qApp->installEventFilter(this);
-        m_lockRetryTimer.setInterval(5000);
-        connect(&m_lockRetryTimer, &QTimer::timeout, this, [this] {
-            // Existing windows keep their native session. A new lock owner
-            // persists that session instead of restoring another backend.
-            saveSessionId();
-        });
         connect(qApp, &QCoreApplication::aboutToQuit, this, [this] {
             saveSessionId();
         });
@@ -104,17 +98,15 @@ private:
         }
         const QByteArray identity = (QDir::cleanPath(canonicalPath) + QLatin1Char('/') + appId).toUtf8();
         const QString lockName = QString::fromLatin1(QCryptographicHash::hash(identity, QCryptographicHash::Sha256).toHex());
-        m_lock = std::make_unique<QLockFile>(runtimePath + QLatin1String("/plasma-qt-session-") + lockName + QLatin1String(".lock"));
+        m_restoreLock = std::make_unique<QLockFile>(runtimePath + QLatin1String("/plasma-qt-session-") + lockName + QLatin1String(".lock"));
         // Held for the process lifetime; disable age-based stale detection.
-        m_lock->setStaleLockTime(0);
+        m_restoreLock->setStaleLockTime(0);
         m_initialized = true;
-        // A second live instance must not replace the first instance's session.
-        // Retry storage ownership, but never replace a backend after this point.
-        if (!m_lock->tryLock(0)) {
-            m_lockRetryTimer.start();
+        // Only one live process may restore the persisted session. Other
+        // processes retain their independent Qt sessions and save on exit.
+        if (!m_restoreLock->tryLock(0)) {
             return;
         }
-        m_storeSession = true;
 
         const QString savedId = KConfigGroup(m_config, QStringLiteral("XdgSessionManagement")).readEntry(appId, QString());
         if (!savedId.isEmpty() && savedId != qApp->sessionId()) {
@@ -131,36 +123,34 @@ private:
 
     void saveSessionId()
     {
-        if (!m_lock || !QGuiApplicationPrivate::instance()->session_manager) {
+        if (!m_restoreLock || !QGuiApplicationPrivate::instance()->session_manager) {
             return;
         }
         const QString id = qApp->sessionId();
         if (id.isEmpty()) {
             return;
         }
-        if (!m_storeSession) {
-            if (!m_lock->tryLock(0)) {
-                return;
-            }
-            m_storeSession = true;
-            m_lockRetryTimer.stop();
-        }
         // QSessionManager::sessionId() delegates to platformSessionManager, so
         // this is the current native ID even after replacing that backend.
-        KConfigGroup group(m_config, QStringLiteral("XdgSessionManagement"));
+        // Read the current on-disk value independently of the application's
+        // shared KConfig cache: another process may have saved since startup.
+        // KConfig's short-lived write lock serializes configuration updates;
+        // the lifetime lock above protects restoration only.
+        KConfig config(m_config->name(), KConfig::NoGlobals, m_config->locationType());
+        KConfigGroup group(&config, QStringLiteral("XdgSessionManagement"));
         if (group.readEntry(m_appId, QString()) == id) {
             return;
         }
         group.writeEntry(m_appId, id);
-        group.sync();
+        if (!group.sync()) {
+            qWarning() << "Failed to persist native Wayland session ID in" << config.name();
+        }
     }
 
     bool m_initialized = false;
-    bool m_storeSession = false;
     KSharedConfig::Ptr m_config;
     QString m_appId;
-    std::unique_ptr<QLockFile> m_lock;
-    QTimer m_lockRetryTimer;
+    std::unique_ptr<QLockFile> m_restoreLock;
 };
 }
 #endif
