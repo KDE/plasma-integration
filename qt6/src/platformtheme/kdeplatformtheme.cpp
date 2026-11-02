@@ -272,8 +272,11 @@ QList<QKeySequence> KdePlatformTheme::keyBindings(QKeySequence::StandardKey key)
 
 bool KdePlatformTheme::usePlatformNativeDialog(QPlatformTheme::DialogType type) const
 {
-    return (type == QPlatformTheme::FileDialog || type == QPlatformTheme::MessageDialog || type == QPlatformTheme::ColorDialog)
-        && qobject_cast<QApplication *>(QCoreApplication::instance());
+    if (type == QPlatformTheme::FileDialog) {
+        return useXdgDesktopPortal() || qobject_cast<QApplication *>(QCoreApplication::instance());
+    }
+
+    return (type == QPlatformTheme::MessageDialog || type == QPlatformTheme::ColorDialog) && qobject_cast<QApplication *>(QCoreApplication::instance());
 }
 
 QString KdePlatformTheme::standardButtonText(int button) const
@@ -398,7 +401,7 @@ void KdePlatformTheme::setQtQuickControlsTheme()
 
 bool KdePlatformTheme::useXdgDesktopPortal()
 {
-    static bool usePortal = qEnvironmentVariableIntValue("PLASMA_INTEGRATION_USE_PORTAL") == 1;
+    static bool usePortal = qEnvironmentVariableIntegerValue("PLASMA_INTEGRATION_USE_PORTAL").value_or(1);
     return usePortal;
 }
 
