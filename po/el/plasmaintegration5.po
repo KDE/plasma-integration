@@ -42,10 +42,10 @@ msgid "Save All"
 msgstr "Αποθήκευση όλων"
 
 #: platformtheme/kdeplatformtheme.cpp:294
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Yes"
-msgstr ""
+msgstr "&Ναι"
 
 #: platformtheme/kdeplatformtheme.cpp:296
 #, kde-format
@@ -54,10 +54,10 @@ msgid "Yes to All"
 msgstr "Ναι σε όλα"
 
 #: platformtheme/kdeplatformtheme.cpp:298
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&No"
-msgstr ""
+msgstr "&Όχι"
 
 #: platformtheme/kdeplatformtheme.cpp:300
 #, kde-format
@@ -84,11 +84,13 @@ msgid "Ignore"
 msgstr "Αγνόηση"
 
 #: platformtheme/kioopenwith.cpp:125
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "Failed to launch for unknown reasons. Please try with a pre-existing "
 "application."
 msgstr ""
+"Αποτυχία εκκίνησης για άγνωστους λόγους. Παρακαλούμε δοκιμάστε με μία ήδη "
+"υπάρχουσα εφαρμογή."
 
 #~ msgctxt "folder name"
 #~ msgid "New Folder"
