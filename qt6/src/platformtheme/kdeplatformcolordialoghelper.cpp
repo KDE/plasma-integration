@@ -35,6 +35,17 @@ bool KDEPlatformColorDialogHelper::show(Qt::WindowFlags windowFlags, Qt::WindowM
     m_dialog->setWindowModality(windowModality);
     m_dialog->winId();
     m_dialog->windowHandle()->setTransientParent(parent);
+    // Alpha channel
+    bool allowAlpha =
+        options()->testOption(QColorDialogOptions::ShowAlphaChannel);
+    m_dialog->setOption(QColorDialog::ColorDialogOption::ShowAlphaChannel,
+                        allowAlpha);
+    // Color picker
+    bool showPicker =
+        options()->testOption(QColorDialogOptions::NoEyeDropperButton);
+    m_dialog->setOption(QColorDialog::ColorDialogOption::NoEyeDropperButton,
+                        showPicker);
+
     m_dialog->setOption(QColorDialog::ColorDialogOption::DontUseNativeDialog);
 
     connect(m_dialog.get(), &QColorDialog::accepted, this, &KDEPlatformColorDialogHelper::accept);
